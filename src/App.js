@@ -10,7 +10,13 @@ function App() {
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <img src={banner} alt="banner" />
         <p>
-          ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and holding tank data required by the Florida Fish and Wildlife Conservation Commission (FWC).
+          ROSTER (Record Of Sea Turtles Electronic Reports)
+        </p>
+        <p>
+          collects marine turtle and holding tank data
+        </p>
+        <p>
+          required by the Florida Fish and Wildlife Conservation Commission (FWC)
         </p>
         <a
           className="App-link"
