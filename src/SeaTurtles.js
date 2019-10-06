@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@reach/router';
-import './SeaTurtles.css';
+import './SeaTurtles.sass';
 
 function SeaTurtles() {
   return (

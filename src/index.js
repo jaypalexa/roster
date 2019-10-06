@@ -5,7 +5,8 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';
 import NotFound from './NotFound';
 import SeaTurtles from './SeaTurtles';
-import './index.css';
+import 'bulma/css/bulma.css';
+import './index.sass';
 
 ReactDOM.render(
   <Router>
