@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from './assets/images/logo.svg';
-import banner from './assets/images/roster-banner.gif';
+import { Link } from '@reach/router';
 import './App.css';
+import banner from './assets/images/roster-banner.gif';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         <p>
           required by the Florida Fish and Wildlife Conservation Commission (FWC)
         </p>
+        <Link to="/sea-turtles">Sea Turtles</Link>
         <a
           className="App-link"
           href="http://turtlegeek.com"
