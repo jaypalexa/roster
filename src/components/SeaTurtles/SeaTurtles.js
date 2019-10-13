@@ -6,7 +6,6 @@ function SeaTurtles() {
   return (
     <div className="SeaTurtles">
       <header className="SeaTurtles-header">
-        {/* <img src={logo} className="SeaTurtles-logo" alt="logo" /> */}
         <p>
           Sea Turtles
         </p>

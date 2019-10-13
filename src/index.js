@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from '@reach/router';
 import * as serviceWorker from './serviceWorker';
-import App from './App';
-import NotFound from './NotFound';
-import SeaTurtles from './SeaTurtles';
+import App from './components/App/App';
+import NotFound from './components/NotFound/NotFound';
+import SeaTurtles from './components/SeaTurtles/SeaTurtles';
 import 'bulma/css/bulma.css';
 import './index.sass';
 

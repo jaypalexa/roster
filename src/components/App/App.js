@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import './App.sass';
-import banner from './assets/images/roster-banner.gif';
+import banner from '../../assets/images/roster-banner.gif';
 
 function App() {
   return (
