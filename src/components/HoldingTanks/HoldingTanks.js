@@ -4,7 +4,7 @@ import Heading from 'react-bulma-components/lib/components/heading';
 import './HoldingTanks.sass';
 
 export default () => (
-  <div className='HoldingTanks'>
+  <div className='holding-tanks-component'>
     <Heading>Holding Tanks</Heading>
     <Link to='/'>Home</Link>
   </div>

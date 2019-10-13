@@ -4,7 +4,7 @@ import Heading from 'react-bulma-components/lib/components/heading';
 import './Reports.sass';
 
 export default () => (
-  <div className='Reports'>
+  <div className='reports-component'>
     <Heading>Reports</Heading>
     <Link to='/'>Home</Link>
   </div>
