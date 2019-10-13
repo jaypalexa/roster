@@ -2,9 +2,12 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router } from '@reach/router';
 import * as serviceWorker from './serviceWorker';
+import HatchlingEvents from './components/HatchlingEvents/HatchlingEvents';
+import HoldingTanks from './components/HoldingTanks/HoldingTanks';
 import Home from './components/Home/Home';
 import MainLogo from './components/MainLogo/MainLogo';
 import NotFound from './components/NotFound/NotFound';
+import Reports from './components/Reports/Reports';
 import SeaTurtles from './components/SeaTurtles/SeaTurtles';
 import 'bulma/css/bulma.css';
 import './index.sass';
@@ -15,6 +18,9 @@ render(
     <Router>
       <Home path='/' />
       <SeaTurtles path='/sea-turtles' />
+      <HoldingTanks path='/holding-tanks' />
+      <HatchlingEvents path='/hatchling-events' />
+      <Reports path='/reports' />
       <NotFound default />
     </Router>
   </div>, 

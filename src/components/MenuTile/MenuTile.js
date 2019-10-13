@@ -9,4 +9,4 @@ export default props => (
     <Heading>{props.title}</Heading>
     <Link to={props.linkTo}>{props.title}</Link>
   </Tile>
-  );
+);

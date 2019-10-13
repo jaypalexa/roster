@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import Heading from 'react-bulma-components/lib/components/heading';
-import './NotFound.sass';
+import './HatchlingEvents.sass';
 
 export default () => (
-  <div className='NotFound'>
-    <Heading>Not Found</Heading>
+  <div className='HatchlingEvents'>
+    <Heading>Hatchling Events</Heading>
     <Link to='/'>Home</Link>
   </div>
 );

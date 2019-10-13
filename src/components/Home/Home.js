@@ -10,11 +10,11 @@ export default props => (
       <Tile kind='ancestor'>
         <Tile size={6} vertical kind='parent'>
           <MenuTile color='primary' title='Sea Turtles' linkTo='/sea-turtles' />
-          <MenuTile color='warning' title='Hatchling Events' linkTo='/sea-turtles' />
+          <MenuTile color='warning' title='Hatchling Events' linkTo='/hatchling-events' />
         </Tile>
         <Tile size={6} vertical kind='parent'>
-          <MenuTile color='danger' title='Holding Tanks' linkTo='/sea-turtles' />
-          <MenuTile title='Reports' linkTo='/sea-turtles' />
+          <MenuTile color='danger' title='Holding Tanks' linkTo='/holding-tanks' />
+          <MenuTile title='Reports' linkTo='/reports' />
         </Tile>
       </Tile>
     </Columns.Column>

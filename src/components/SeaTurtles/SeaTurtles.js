@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from '@reach/router';
+import Heading from 'react-bulma-components/lib/components/heading';
 import './SeaTurtles.sass';
 
 export default () => (
   <div className='SeaTurtles'>
-    <h1>
-      Sea Turtles
-    </h1>
+    <Heading>Sea Turtles</Heading>
     <Link to='/'>Home</Link>
   </div>
 );
