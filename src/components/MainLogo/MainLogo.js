@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from '@reach/router';
 import './MainLogo.sass';
 import banner from '../../assets/images/roster-banner.gif';
 
 export default () => (
-  <img src={banner} alt="banner" />
+  <Link to='/'><img src={banner} title='ROSTER' alt='ROSTER'/></Link>
 );

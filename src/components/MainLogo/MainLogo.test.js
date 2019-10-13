@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MainMenu from './MainMenu';
+import MainLogo from './MainLogo';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<MainMenu />, div);
+  ReactDOM.render(<MainLogo />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

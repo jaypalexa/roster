@@ -4,12 +4,12 @@ import './NotFound.sass';
 
 function NotFound() {
   return (
-    <div className="NotFound">
-      <header className="NotFound-header">
+    <div className='NotFound'>
+      <header className='NotFound-header'>
         <p>
           Not Found
         </p>
-        <Link to="/">Home</Link>
+        <Link to='/'>Home</Link>
       </header>
     </div>
   );

@@ -13,8 +13,8 @@ render(
   <div>
     <MainLogo />
     <Router>
-      <Home path="/" />
-      <SeaTurtles path="/sea-turtles" />
+      <Home path='/' />
+      <SeaTurtles path='/sea-turtles' />
       <NotFound default />
     </Router>
   </div>, 

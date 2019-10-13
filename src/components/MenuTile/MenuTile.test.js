@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './Home';
+import MenuTile from './MenuTile';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Home />, div);
+  ReactDOM.render(<MenuTile />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
