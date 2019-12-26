@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import React from 'react';
+import { Button } from 'react-bulma-components';
 import './App.sass';
 
 const App: React.FC = () => {
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         >
           Learn React
         </a>
+        <Button color="primary">My Bulma button</Button>
       </header>
     </div>
   );
