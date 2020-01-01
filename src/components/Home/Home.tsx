@@ -5,7 +5,7 @@ import './Home.sass';
 
 const Home: React.FC = () => {
   return (
-    <div id='home' className='home-component'>
+    <div id='home' className='has-text-centered home-component'>
       <Columns className='is-centered'>
         <Columns.Column className='is-four-fifths has-text-centered'>
           <Tile kind='ancestor'>

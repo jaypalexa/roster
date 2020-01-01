@@ -1,5 +1,5 @@
-import React from 'react';
 import Organization from './Organization';
+import React from 'react';
 import { queryByAttribute, render } from '@testing-library/react';
 
 test('renders component', () => {

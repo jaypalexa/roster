@@ -5,7 +5,7 @@ import './HatchlingEvents.sass';
 
 const HatchlingEvents: React.FC = () => {
   return (
-    <div id='hatchling-events' className='hatchling-events-component'>
+    <div id='hatchling-events' className='has-text-centered'>
       <Heading>Hatchling Events</Heading>
       <Button color='dark' onClick={() => browserHistory.push('/')}>Home</Button>
     </div>
