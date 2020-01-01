@@ -1,7 +1,6 @@
 import browserHistory from '../../browserHistory';
 import React from 'react';
-import { Button } from 'react-bulma-components';
-import { Heading } from 'react-bulma-components';
+import { Button, Heading } from 'react-bulma-components';
 import './HoldingTanks.sass';
 
 const HoldingTanks: React.FC = () => {

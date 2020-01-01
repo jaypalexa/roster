@@ -1,7 +1,6 @@
 import browserHistory from '../../browserHistory';
 import React from 'react';
-import { Button } from 'react-bulma-components';
-import { Heading } from 'react-bulma-components';
+import { Button, Heading } from 'react-bulma-components';
 import './HatchlingEvents.sass';
 
 const HatchlingEvents: React.FC = () => {
