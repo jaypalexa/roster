@@ -1,63 +1,81 @@
-import browserHistory from '../../browserHistory';
+import * as yup from 'yup';
 import React from 'react';
-import { Button, Columns, Form, Heading } from 'react-bulma-components';
-import { Controller, ErrorMessage, useForm } from 'react-hook-form';
+import { Heading } from 'react-bulma-components';
+import { useForm } from 'react-hook-form';
 import './Organization.sass';
-
-interface jjj {
-  example: string
-}
+// import browserHistory from '../../browserHistory';
 
 const Organization: React.FC = () => {
-  const { control, register, handleSubmit, watch, errors, reset } = useForm()
-  const onSubmit = (data: any) => { console.log(data) }
 
-  console.log(watch('organizationName')) // watch input value by passing the name of it
+  type FormData = {
+    stringField: string;
+    numberField: string;
+    dateField: Date;
+  };
+
+  const validationSchema = yup.object().shape({
+    stringField: yup.string().required('required field'),
+    numberField: yup
+      .number()
+      .min(1, 'number must be greater than 0')
+      .max(10, 'number must be lower than 10')
+      .typeError('you must specify a number')
+      .required('required field'),
+    dateField: yup
+      .date()
+      .typeError('invalid date')
+      .min(new Date('2019-12-01'), 'must be greater than 01/12/2019')
+      .max(new Date('2019-12-31'), 'Debe ser menor al 31/12/2019')
+      .required('required field')
+  });
+
+  const defaultValues: FormData = {
+    stringField: '',
+    numberField: '0',
+    dateField: new Date()
+  };
+
+  const methods = useForm<FormData>({
+    validationSchema: validationSchema,
+    defaultValues: defaultValues
+  });
+
+  const { register, handleSubmit, errors } = methods;
+
+  const onSubmit = handleSubmit((values: FormData) => {
+    const { stringField, numberField, dateField } = values;
+    console.log('stringField: ' + stringField);
+    console.log('numberField: ' + numberField);
+    console.log('dateField: ' + dateField);
+  });
+
+  console.log(errors.dateField);
 
   return (
     <div id='organization' className='has-text-centered'>
       <Heading>Organization</Heading>
       {/* <Button color='dark' onClick={() => browserHistory.push('/')}>Home</Button> */}
-      <Columns>
-        <Columns.Column className='has-text-left is-half'>
-          {/* 'handleSubmit' will validate your inputs before invoking 'onSubmit' */}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the 'register' function */}
-            {/* <input name='example' defaultValue='test' ref={register} /> */}
-            <Form.Field>
-              <Form.Label>Organization Name</Form.Label>
-              <Form.Control>
-                <Controller as={<Form.Input />} name='organizationName' control={control} rules={{ required: true }} />
-                {/* include validation with required or other standard HTML validation rules */}
-                {/* <input name='exampleRequired' ref={register({ required: true })} /> */}
-                {/* errors will return when field validation fails  */}
-                {errors.organizationNameRequired && <span>This field is required</span>}
-                <ErrorMessage errors={errors} name='organizationName' />
-              </Form.Control>
-            </Form.Field>
-            <Form.Field>
-              <Form.Label>Address</Form.Label>
-              <Form.Control>
-                <Controller as={<Form.Input />} name='addressLine1' control={control} />
-              </Form.Control>
-            </Form.Field>
-            <input type='submit' />
-            <input
-              style={{ display: 'block', marginTop: 20 }}
-              type="reset"
-              onClick={reset}
-              value="Custom Reset Field Values & Errors"
-            />
-            {/* <Button color='success'>Save</Button> */}
-            {/* <Button color='danger' onClick={() => reset()}>Clear</Button> */}
-            {/* <Button.Group>
-              <Button color='success' submit>Save</Button>
-              <Button color='danger' onClick={reset}>Clear</Button>
-            </Button.Group> */}
+      <form onSubmit={onSubmit}>
+        <label>String Field</label>
+        <input name='stringField' ref={register} />
+        <label style={{ color: 'red' }}>
+          {errors.stringField && errors.stringField.message}
+        </label>
 
-          </form>
-        </Columns.Column>
-      </Columns>
+        <label>Number Field</label>
+        <input name='numberField' type='number' ref={register} />
+        <label style={{ color: 'red' }}>
+          {errors.numberField && errors.numberField.message}
+        </label>
+
+        <label>Date Field</label>
+        <input name='dateField' type='date' ref={register} />
+        <label style={{ color: 'red' }}>
+          {errors.dateField && errors.dateField.message}
+        </label>
+
+        <input type='submit' />
+      </form>
     </div>
   );
 };
