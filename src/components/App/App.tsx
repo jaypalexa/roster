@@ -1,14 +1,14 @@
+import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
+import React from 'react';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
-import React from 'react';
 import { Columns, Menu } from 'react-bulma-components';
 import { Route, Router, Switch } from 'react-router-dom';
-import browserHistory from '../../browserHistory';
 import './App.sass';
 
 // import logo from './logo.svg';
@@ -47,7 +47,7 @@ function App() {
                 </Menu.List>
               </Menu>
             </Columns.Column>
-            <Columns.Column className='is-four-fifths has-text-centered'>
+            <Columns.Column className='is-four-fifths'>
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/sea-turtles' component={SeaTurtles} />

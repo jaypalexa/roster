@@ -1,81 +1,115 @@
-import * as yup from 'yup';
 import React from 'react';
-import { Heading } from 'react-bulma-components';
 import { useForm } from 'react-hook-form';
 import './Organization.sass';
-// import browserHistory from '../../browserHistory';
 
 const Organization: React.FC = () => {
 
   type FormData = {
-    stringField: string;
-    numberField: string;
-    dateField: Date;
+    organizationName: string;
+    addressLine1: string;
+    addressLine2: string;
   };
 
-  const validationSchema = yup.object().shape({
-    stringField: yup.string().required('required field'),
-    numberField: yup
-      .number()
-      .min(1, 'number must be greater than 0')
-      .max(10, 'number must be lower than 10')
-      .typeError('you must specify a number')
-      .required('required field'),
-    dateField: yup
-      .date()
-      .typeError('invalid date')
-      .min(new Date('2019-12-01'), 'must be greater than 01/12/2019')
-      .max(new Date('2019-12-31'), 'Debe ser menor al 31/12/2019')
-      .required('required field')
-  });
-
   const defaultValues: FormData = {
-    stringField: '',
-    numberField: '0',
-    dateField: new Date()
+    organizationName: '',
+    addressLine1: '',
+    addressLine2: ''
   };
 
   const methods = useForm<FormData>({
-    validationSchema: validationSchema,
     defaultValues: defaultValues
   });
 
-  const { register, handleSubmit, errors } = methods;
+  const { register, handleSubmit, errors, watch } = methods;
 
   const onSubmit = handleSubmit((values: FormData) => {
-    const { stringField, numberField, dateField } = values;
-    console.log('stringField: ' + stringField);
-    console.log('numberField: ' + numberField);
-    console.log('dateField: ' + dateField);
+    console.log('values', values);
   });
 
-  console.log(errors.dateField);
-
   return (
-    <div id='organization' className='has-text-centered'>
-      <Heading>Organization</Heading>
-      {/* <Button color='dark' onClick={() => browserHistory.push('/')}>Home</Button> */}
-      <form onSubmit={onSubmit}>
-        <label>String Field</label>
-        <input name='stringField' ref={register} />
-        <label style={{ color: 'red' }}>
-          {errors.stringField && errors.stringField.message}
-        </label>
+    <div id='organization' className='container'>
+      <div className='columns'>
+        <div className='column is-four-fifths'>
+          <h1 className='title has-text-centered'>Organization</h1>
+          <form onSubmit={onSubmit}>
 
-        <label>Number Field</label>
-        <input name='numberField' type='number' ref={register} />
-        <label style={{ color: 'red' }}>
-          {errors.numberField && errors.numberField.message}
-        </label>
+            <div className='field'>
+              <label className='label'>Organization Name</label>
+              <div className='control'>
+                <input name='organizationName'
+                  className={`input ${!watch('organizationName') ? 'is-danger' : ''}`}
+                  type='text'
+                  placeholder='Organization Name'
+                  ref={register({ required: 'Organization Name is required' })}
+                />
+              </div>
+              <p className='help has-text-danger'>{errors.organizationName && errors.organizationName.message}</p>
+            </div>
 
-        <label>Date Field</label>
-        <input name='dateField' type='date' ref={register} />
-        <label style={{ color: 'red' }}>
-          {errors.dateField && errors.dateField.message}
-        </label>
+            <div className='field'>
+              <label className='label'>Address</label>
+              <div className='control'>
+                <input name='addressLine1' className='input' type='text' placeholder='Address Line 1' ref={register} />
+              </div>
+            </div>
 
-        <input type='submit' />
-      </form>
+            <div className='field'>
+              <div className='control'>
+                <input name='addressLine2' className='input' type='text' placeholder='Address Line 2' ref={register} />
+              </div>
+            </div>
+
+            <div className='field is-horizontal'>
+              <div className='field-body'>
+                <div className='field'>
+                  <div className='control is-expanded'>
+                    <input name='city' className='input' type='text' placeholder='City' />
+                  </div>
+                </div>
+                <div className='field'>
+                  <div className='control is-expanded'>
+                    <input name='state' className='input' type='text' placeholder='State' />
+                  </div>
+                </div>
+                <div className='field'>
+                  <div className='control is-expanded'>
+                    <input name='zipCode' className='input' type='text' placeholder='ZIP Code' />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className='field is-horizontal'>
+              <div className='field-body'>
+                <div className='field'>
+                  <label className='label'>Phone</label>
+                  <div className='control is-expanded'>
+                    <input name='phone' className='input' type='text' placeholder='Phone' />
+                  </div>
+                </div>
+                <div className='field'>
+                  <label className='label'>Fax</label>
+                  <div className='control is-expanded'>
+                    <input name='fax' className='input' type='text' placeholder='Fax' />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className='field is-grouped is-grouped-right'>
+              <p className='control'>
+                <input type='submit' className='button is-success is-fixed-width-medium' value='Save' />
+              </p>
+              <p className='control'>
+                <button className='button is-danger is-fixed-width-medium'>
+                  Cancel
+                </button>
+              </p>
+            </div>
+
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
