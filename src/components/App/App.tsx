@@ -1,27 +1,29 @@
-import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
+import MeasurementUnits from 'components/MeasurementUnits/MeasurementUnits';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
-import React from 'react';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
-import { Columns, Menu } from 'react-bulma-components';
+import React from 'react';
+import { Menu } from 'react-bulma-components';
 import { Route, Router, Switch } from 'react-router-dom';
+import browserHistory from '../../browserHistory';
 import './App.sass';
 
 // import logo from './logo.svg';
 
-//const App: React.FC = () => {
-function App() {
+const App: React.FC = () => {
   return (
     //<img src={logo} className='App-logo' alt='logo' />
     <div id='app'>
       <Router history={browserHistory}>
-        <div>
-          <Columns>
-            <Columns.Column className='app-menu is-one-sixth'>
+          <div className='columns'>
+            <div className='column is-2 app-menu'>
+              <div className='app-home' onClick={() => browserHistory.push('/')}>
+                <span className='is-size-4'>ROSTER</span>
+              </div>
               <Menu>
                 <Menu.List title='General'>
                   <Menu.List.Item onClick={() => browserHistory.push('/sea-turtles')}>
@@ -41,13 +43,16 @@ function App() {
                   <Menu.List.Item onClick={() => browserHistory.push('/organization')}>
                     Organization
                   </Menu.List.Item>
+                  <Menu.List.Item onClick={() => browserHistory.push('/starting-balances')}>
+                    Starting Balances
+                  </Menu.List.Item>
                   <Menu.List.Item onClick={() => browserHistory.push('/measurement-units')}>
                     Measurement Units
                   </Menu.List.Item>
                 </Menu.List>
               </Menu>
-            </Columns.Column>
-            <Columns.Column className='is-four-fifths'>
+            </div>
+            <div className='column'>
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/sea-turtles' component={SeaTurtles} />
@@ -55,11 +60,11 @@ function App() {
                 <Route path='/hatchling-events' component={HatchlingEvents} />
                 <Route path='/reports' component={Reports} />
                 <Route path='/organization' component={Organization} />
+                <Route path='/measurement-units' component={MeasurementUnits} />
                 <Route path='*' component={NotFound} />
               </Switch>
-            </Columns.Column>
-          </Columns>
-        </div>
+            </div>
+          </div>
       </Router>
     </div>
   );

@@ -66,6 +66,8 @@ const Organization: React.FC = () => {
     city: string;
     state: string;
     zipCode: string;
+    phone: string;
+    fax: string;
   };
 
   // const defaultValues: FormData = {
@@ -94,7 +96,7 @@ const Organization: React.FC = () => {
   };
 
   return (
-    <div id='organization' className='container'>
+    <div id='organization'>
       <div className='columns'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Organization</h1>
@@ -165,13 +167,13 @@ const Organization: React.FC = () => {
                 <div className='field'>
                   <label className='label'>Phone</label>
                   <div className='control is-expanded'>
-                    <input name='phone' className='input' type='text' placeholder='Phone' />
+                    <input name='phone' className='input' type='text' placeholder='Phone' ref={register} />
                   </div>
                 </div>
                 <div className='field'>
                   <label className='label'>Fax</label>
                   <div className='control is-expanded'>
-                    <input name='fax' className='input' type='text' placeholder='Fax' />
+                    <input name='fax' className='input' type='text' placeholder='Fax' ref={register} />
                   </div>
                 </div>
               </div>
