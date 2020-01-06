@@ -7,8 +7,7 @@ import Organization from 'components/Organization/Organization';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import React from 'react';
-import { Menu } from 'react-bulma-components';
-import { Route, Router, Switch } from 'react-router-dom';
+import { Link, Route, Router, Switch } from 'react-router-dom';
 import browserHistory from '../../browserHistory';
 import './App.sass';
 
@@ -24,33 +23,21 @@ const App: React.FC = () => {
               <div className='app-home' onClick={() => browserHistory.push('/')}>
                 <span className='is-size-4'>ROSTER</span>
               </div>
-              <Menu>
-                <Menu.List title='General'>
-                  <Menu.List.Item onClick={() => browserHistory.push('/sea-turtles')}>
-                    Sea Turtles
-                  </Menu.List.Item>
-                  <Menu.List.Item onClick={() => browserHistory.push('/holding-tanks')}>
-                    Holding Tanks
-                  </Menu.List.Item>
-                  <Menu.List.Item onClick={() => browserHistory.push('/hatchling-events')}>
-                    Hatchling Events
-                  </Menu.List.Item>
-                  <Menu.List.Item onClick={() => browserHistory.push('/reports')}>
-                    Reports
-                  </Menu.List.Item>
-                </Menu.List>
-                <Menu.List title='Settings'>
-                  <Menu.List.Item onClick={() => browserHistory.push('/organization')}>
-                    Organization
-                  </Menu.List.Item>
-                  <Menu.List.Item onClick={() => browserHistory.push('/starting-balances')}>
-                    Starting Balances
-                  </Menu.List.Item>
-                  <Menu.List.Item onClick={() => browserHistory.push('/measurement-units')}>
-                    Measurement Units
-                  </Menu.List.Item>
-                </Menu.List>
-              </Menu>
+              <div className='menu'>
+                <p className='menu-label'>General</p>
+                <ul className='menu-list'>
+                  <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
+                  <li><Link to='/holding-tanks'>Holding Tanks</Link></li>
+                  <li><Link to='/hatchling-events'>Hatchling Events</Link></li>
+                  <li><Link to='/reports'>Reports</Link></li>
+                </ul>
+                <p className='menu-label'>Settings</p>
+                  <ul className='menu-list'>
+                    <li><Link to='/organization'>Organization</Link></li>
+                    <li><Link to='/starting-balances'>Starting Balances</Link></li>
+                    <li><Link to='/measurement-units'>Measurement Units</Link></li>
+                  </ul>
+              </div>
             </div>
             <div className='column'>
               <Switch>
