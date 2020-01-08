@@ -1,98 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import OrganizationService from '../../services/OrganizationService';
+import StatesService from '../../services/StatesService';
+import OrganizationModel from '../../types/OrganizationModel';
 import './Organization.sass';
 
 const Organization: React.FC = () => {
 
-  const states = [
-    { value: '', name: '' },
-    { value: 'AK', name: 'AK' },
-    { value: 'AL', name: 'AL' },
-    { value: 'AR', name: 'AR' },
-    { value: 'AZ', name: 'AZ' },
-    { value: 'CA', name: 'CA' },
-    { value: 'CO', name: 'CO' },
-    { value: 'CT', name: 'CT' },
-    { value: 'DC', name: 'DC' },
-    { value: 'DE', name: 'DE' },
-    { value: 'FL', name: 'FL' },
-    { value: 'GA', name: 'GA' },
-    { value: 'HI', name: 'HI' },
-    { value: 'IA', name: 'IA' },
-    { value: 'ID', name: 'ID' },
-    { value: 'IL', name: 'IL' },
-    { value: 'IN', name: 'IN' },
-    { value: 'KS', name: 'KS' },
-    { value: 'KY', name: 'KY' },
-    { value: 'LA', name: 'LA' },
-    { value: 'MA', name: 'MA' },
-    { value: 'MD', name: 'MD' },
-    { value: 'ME', name: 'ME' },
-    { value: 'MI', name: 'MI' },
-    { value: 'MN', name: 'MN' },
-    { value: 'MO', name: 'MO' },
-    { value: 'MS', name: 'MS' },
-    { value: 'MT', name: 'MT' },
-    { value: 'NC', name: 'NC' },
-    { value: 'ND', name: 'ND' },
-    { value: 'NE', name: 'NE' },
-    { value: 'NH', name: 'NH' },
-    { value: 'NJ', name: 'NJ' },
-    { value: 'NM', name: 'NM' },
-    { value: 'NV', name: 'NV' },
-    { value: 'NY', name: 'NY' },
-    { value: 'OH', name: 'OH' },
-    { value: 'OK', name: 'OK' },
-    { value: 'OR', name: 'OR' },
-    { value: 'PA', name: 'PA' },
-    { value: 'RI', name: 'RI' },
-    { value: 'SC', name: 'SC' },
-    { value: 'SD', name: 'SD' },
-    { value: 'TN', name: 'TN' },
-    { value: 'TX', name: 'TX' },
-    { value: 'UT', name: 'UT' },
-    { value: 'VA', name: 'VA' },
-    { value: 'VT', name: 'VT' },
-    { value: 'WA', name: 'WA' },
-    { value: 'WI', name: 'WI' },
-    { value: 'WV', name: 'WV' },
-    { value: 'WY', name: 'WY' }         
-  ];
+  const states = StatesService.getStates();
+  const [currentOrganization, setCurrentOrganization] = useState({});
+  const { errors, handleSubmit, register, reset, watch } = useForm<OrganizationModel>();
 
-  type FormData = {
-    organizationName: string;
-    addressLine1: string;
-    addressLine2: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    phone: string;
-    fax: string;
-  };
+  useEffect(() => {
+    // you can do async server request and fill up form
+    // setTimeout(() => {
+    //   const fetchedOrganization = OrganizationService.getOrganization();
+    //   reset(fetchedOrganization);
+    //   setCurrentOrganization(fetchedOrganization);
+    // }, 1000);
+    const getOrganization = async () => {
+      const fetchedOrganization = await OrganizationService.getOrganization();
+      reset(fetchedOrganization);
+      setCurrentOrganization(fetchedOrganization);
+    };
+    getOrganization();
+  }, [reset]);
 
-  // const defaultValues: FormData = {
-  //   organizationName: '',
-  //   addressLine1: '',
-  //   addressLine2: ''
-  // };
-
-  let defaultValues = JSON.parse(localStorage.getItem('organization') || '{}');
-
-  const methods = useForm<FormData>({
-    defaultValues: defaultValues
-  });
-
-  const { errors, handleSubmit, register, reset, watch } = methods;
-
-  const onSubmit = handleSubmit((values: FormData) => {
-    console.log('in handleSubmit(): values', values);
-    localStorage.setItem('organization', JSON.stringify(values));
-    defaultValues = {...values};
+  const onSubmit = handleSubmit((organization: OrganizationModel) => {
+    console.log('in handleSubmit(): organization', organization);
+    OrganizationService.saveOrganization(organization);
+    setCurrentOrganization({...organization});
   });
 
   const handleCancel = (): void => {
     console.log('in handleCancel()...');
-    reset({ ...defaultValues });
+    reset({ ...currentOrganization });
   };
 
   return (

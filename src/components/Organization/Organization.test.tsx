@@ -1,6 +1,6 @@
-import Organization from './Organization';
-import React from 'react';
 import { queryByAttribute, render } from '@testing-library/react';
+import React from 'react';
+import Organization from './Organization';
 
 test('renders component', () => {
   const getById = queryByAttribute.bind(null, 'id');
