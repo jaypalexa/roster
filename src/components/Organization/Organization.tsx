@@ -7,9 +7,9 @@ import './Organization.sass';
 
 const Organization: React.FC = () => {
 
-  const states = StatesService.getStates();
   const [currentOrganization, setCurrentOrganization] = useState({});
   const { errors, handleSubmit, register, reset, watch } = useForm<OrganizationModel>();
+  const states = StatesService.getStates();
 
   useEffect(() => {
     // you can do async server request and fill up form
@@ -26,15 +26,17 @@ const Organization: React.FC = () => {
     getOrganization();
   }, [reset]);
 
-  const onSubmit = handleSubmit((organization: OrganizationModel) => {
-    console.log('in handleSubmit(): organization', organization);
-    OrganizationService.saveOrganization(organization);
-    setCurrentOrganization({...organization});
+  const onSubmit = handleSubmit((modifiedOrganization: OrganizationModel) => {
+    console.log('in handleSubmit(): modifiedOrganization', modifiedOrganization);
+    const patchedOrganization = {...currentOrganization, ...modifiedOrganization};
+    console.log('in handleSubmit(): patchedOrganization', patchedOrganization);
+    OrganizationService.saveOrganization(patchedOrganization);
+    setCurrentOrganization(patchedOrganization);
   });
 
-  const handleCancel = (): void => {
-    console.log('in handleCancel()...');
-    reset({ ...currentOrganization });
+  const onCancel = () => {
+    console.log('in onCancel()...');
+    reset(currentOrganization);
   };
 
   return (
@@ -57,16 +59,20 @@ const Organization: React.FC = () => {
               <p className='help has-text-danger'>{errors.organizationName && errors.organizationName.message}</p>
             </div>
 
-            <div className='field'>
-              <label className='label'>Address / City / State / ZIP Code</label>
-              <div className='control'>
-                <input name='addressLine1' className='input' type='text' placeholder='Address Line 1' ref={register} />
-              </div>
-            </div>
-
-            <div className='field'>
-              <div className='control'>
-                <input name='addressLine2' className='input' type='text' placeholder='Address Line 2' ref={register} />
+            <div className='field is-horizontal'>
+              <div className='field-body'>
+                <div className='field'>
+                  <label className='label'>Address</label>
+                  <div className='control is-expanded'>
+                    <input name='address1' className='input' type='text' placeholder='Address Line 1' ref={register} />
+                  </div>
+                </div>
+                <div className='field'>
+                  <label className='label'>&nbsp;</label>
+                  <div className='control is-expanded'>
+                    <input name='address2' className='input' type='text' placeholder='Address Line 2' ref={register} />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -121,13 +127,27 @@ const Organization: React.FC = () => {
               </div>
             </div>
 
+            <div className='field'>
+              <label className='label'>Units Type</label>
+              <div className='control'>
+                <label className='radio'>
+                  <input type='radio' name='preferredUnitsType' value='M' ref={register}/>
+                  Metric
+                </label>
+                <label className='radio'>
+                  <input type='radio' name='preferredUnitsType' value='I' ref={register}/>
+                  Imperial
+                </label>
+              </div>
+            </div>
+
             <div className='field is-grouped is-grouped-right'>
               <p className='control'>
                 <input 
                   type='button' 
                   className='button is-danger is-fixed-width-medium' 
                   value='Cancel'
-                  onClick={() => handleCancel()}
+                  onClick={() => onCancel()}
                 />
               </p>
 
@@ -135,8 +155,9 @@ const Organization: React.FC = () => {
                 <input type='submit' className='button is-success is-fixed-width-medium' value='Save' />
               </p>
             </div>
-
+            
           </form>
+
         </div>
       </div>
     </div>

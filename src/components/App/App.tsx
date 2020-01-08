@@ -1,7 +1,6 @@
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
-import MeasurementUnits from 'components/MeasurementUnits/MeasurementUnits';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
 import Reports from 'components/Reports/Reports';
@@ -34,8 +33,6 @@ const App: React.FC = () => {
                 <p className='menu-label'>Settings</p>
                   <ul className='menu-list'>
                     <li><Link to='/organization'>Organization</Link></li>
-                    <li><Link to='/starting-balances'>Starting Balances</Link></li>
-                    <li><Link to='/measurement-units'>Measurement Units</Link></li>
                   </ul>
               </div>
             </div>
@@ -47,7 +44,6 @@ const App: React.FC = () => {
                 <Route path='/hatchling-events' component={HatchlingEvents} />
                 <Route path='/reports' component={Reports} />
                 <Route path='/organization' component={Organization} />
-                <Route path='/measurement-units' component={MeasurementUnits} />
                 <Route path='*' component={NotFound} />
               </Switch>
             </div>
