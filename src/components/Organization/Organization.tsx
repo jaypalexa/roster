@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Prompt } from 'react-router';
 import OrganizationService from '../../services/OrganizationService';
 import StatesService from '../../services/StatesService';
 import OrganizationModel from '../../types/OrganizationModel';
@@ -8,7 +9,7 @@ import './Organization.sass';
 const Organization: React.FC = () => {
 
   const [currentOrganization, setCurrentOrganization] = useState({});
-  const { errors, handleSubmit, register, reset, watch } = useForm<OrganizationModel>();
+  const { errors, handleSubmit, formState, register, reset, watch } = useForm<OrganizationModel>();
   const states = StatesService.getStates();
 
   useEffect(() => {
@@ -26,6 +27,8 @@ const Organization: React.FC = () => {
     getOrganization();
   }, [reset]);
 
+  console.log(JSON.stringify(formState));
+
   const onSubmit = handleSubmit((modifiedOrganization: OrganizationModel) => {
     console.log('in handleSubmit(): modifiedOrganization', modifiedOrganization);
     const patchedOrganization = {...currentOrganization, ...modifiedOrganization};
@@ -41,6 +44,10 @@ const Organization: React.FC = () => {
 
   return (
     <div id='organization'>
+      <Prompt
+        when={formState.dirty}
+        message='You have unsaved changes, are you sure you want to leave?'
+      />
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Organization</h1>
