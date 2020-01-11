@@ -6,7 +6,7 @@ const SeaTurtles: React.FC = () => {
   return (
     <div id='sea-turtles'>
       <div className='columns'>
-        <div className='column is-four-fifths has-text-centered'>
+        <div className='column has-text-centered'>
           <h1 className='title has-text-centered'>Sea Turtles</h1>
           <button className='button is-dark' onClick={() => browserHistory.push('/')}>Home</button>
         </div>

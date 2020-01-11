@@ -4,13 +4,9 @@ import './HoldingTanks.sass';
 
 const HoldingTanks: React.FC = () => {
   return (
-    <div id='holding-tanks'>
-      <div className='columns'>
-        <div className='column is-four-fifths has-text-centered'>
-          <h1 className='title has-text-centered'>Holding Tanks</h1>
-          <button className='button is-dark' onClick={() => browserHistory.push('/')}>Home</button>
-        </div>
-      </div>
+    <div id='holding-tanks' className='has-text-centered'>
+      <h1 className='title has-text-centered'>Holding Tanks</h1>
+      <button className='button is-dark' onClick={() => browserHistory.push('/')}>Home</button>
     </div>
   );
 };

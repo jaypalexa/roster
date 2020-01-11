@@ -1,4 +1,5 @@
 export default interface OrganizationModel {
+  organizationId: string;
   organizationName: string;
   address1: string;
   address2: string;
@@ -7,5 +8,20 @@ export default interface OrganizationModel {
   zipCode: string;
   phone: string;
   fax: string;
+  emailAddress: string;
+  permitNumber: string;
+  contactName: string;
   preferredUnitsType: string;
+  hatchlingBalanceAsOfDate: Date;
+  ccHatchlingStartingBalance: number;
+  cmHatchlingStartingBalance: number;
+  dcHatchlingStartingBalance: number;
+  otherHatchlingStartingBalance: number;
+  unknownHatchlingStartingBalance: number;
+  washbackBalanceAsOfDate: Date;
+  ccWashbackStartingBalance: number;
+  cmWashbackStartingBalance: number;
+  dcWashbackStartingBalance: number;
+  otherWashbackStartingBalance: number;
+  unknownWashbackStartingBalance: number;
 };

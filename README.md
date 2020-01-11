@@ -1,7 +1,13 @@
-# roster
-ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and holding tank data required by the Florida Fish and Wildlife Conservation Commission (FWC)
+# ROSTER
+ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## TODO
+
+| Item | Notes |
+|------|-------|
+| User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
+| Database | [Amazon DynamoDB](https://aws.amazon.com/dynamodb) |
+| Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 
 ## Available Scripts
 

@@ -41,22 +41,38 @@ const Organization: React.FC = () => {
 
   return (
     <div id='organization'>
-      <div className='columns'>
+      <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Organization</h1>
           <form onSubmit={onSubmit}>
 
-            <div className='field'>
-              <label className='label'>Organization Name</label>
-              <div className='control'>
-                <input name='organizationName'
-                  className={`input ${!watch('organizationName') ? 'is-danger' : ''}`}
-                  type='text'
-                  placeholder='Organization Name'
-                  ref={register({ required: 'Organization Name is required' })}
-                />
+            <div className='field is-horizontal'>
+              <div className='field-body'>
+                <div className='field'>
+                  <label className='label'>Organization Name</label>
+                  <div className='control'>
+                    <input name='organizationName'
+                      className={`input ${!watch('organizationName') ? 'is-danger' : ''}`}
+                      type='text'
+                      placeholder='Organization Name'
+                      ref={register({ required: 'Organization Name is required' })}
+                    />
+                  </div>
+                  <p className='help has-text-danger'>{errors.organizationName && errors.organizationName.message}</p>
+                </div>
+                <div className='field'>
+                  <label className='label'>Permit Number</label>
+                  <div className='control is-expanded'>
+                    <input name='permitNumber' className='input' type='text' placeholder='Permit Number' ref={register} />
+                  </div>
+                </div>
+                <div className='field'>
+                  <label className='label'>Contact Name</label>
+                  <div className='control is-expanded'>
+                    <input name='contactName' className='input' type='text' placeholder='Contact Name' ref={register} />
+                  </div>
+                </div>
               </div>
-              <p className='help has-text-danger'>{errors.organizationName && errors.organizationName.message}</p>
             </div>
 
             <div className='field is-horizontal'>
@@ -123,6 +139,23 @@ const Organization: React.FC = () => {
                   <div className='control is-expanded'>
                     <input name='fax' className='input' type='text' placeholder='Fax' ref={register} />
                   </div>
+                </div>
+                <div className='field'>
+                  <label className='label'>Email Address</label>
+                  <div className='control is-expanded'>
+                    <input 
+                      name='emailAddress' 
+                      className='input' 
+                      type='text' 
+                      placeholder='Email Address' 
+                      ref={register({ 
+                        pattern: { 
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 
+                          message: 'Invalid email address' 
+                        }})}
+                    />
+                  </div>
+                  <p className='help has-text-danger'>{errors.emailAddress && errors.emailAddress.message}</p>
                 </div>
               </div>
             </div>
