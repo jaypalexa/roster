@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Prompt } from 'react-router';
+import ReactModal from 'react-modal';
+import NavigationPrompt from "react-router-navigation-prompt";
 import OrganizationService from '../../services/OrganizationService';
 import StatesService from '../../services/StatesService';
 import OrganizationModel from '../../types/OrganizationModel';
@@ -13,12 +14,7 @@ const Organization: React.FC = () => {
   const states = StatesService.getStates();
 
   useEffect(() => {
-    // you can do async server request and fill up form
-    // setTimeout(() => {
-    //   const fetchedOrganization = OrganizationService.getOrganization();
-    //   reset(fetchedOrganization);
-    //   setCurrentOrganization(fetchedOrganization);
-    // }, 1000);
+    // make async server request
     const getOrganization = async () => {
       const fetchedOrganization = await OrganizationService.getOrganization();
       reset(fetchedOrganization);
@@ -34,6 +30,7 @@ const Organization: React.FC = () => {
     const patchedOrganization = {...currentOrganization, ...modifiedOrganization};
     console.log('in handleSubmit(): patchedOrganization', patchedOrganization);
     OrganizationService.saveOrganization(patchedOrganization);
+    reset(patchedOrganization);
     setCurrentOrganization(patchedOrganization);
   });
 
@@ -44,10 +41,15 @@ const Organization: React.FC = () => {
 
   return (
     <div id='organization'>
-      <Prompt
-        when={formState.dirty}
-        message='You have unsaved changes, are you sure you want to leave?'
-      />
+      <NavigationPrompt when={formState.dirty}>
+        {({ onConfirm, onCancel }) => (
+          <ReactModal isOpen={true} ariaHideApp={false} className='loader-style'>
+            <h3>You have unsaved changes, are you sure you want to leave?</h3>
+            <button onClick={onConfirm}>Yes</button>
+            <button onClick={onCancel}>No</button>
+          </ReactModal>
+        )}
+      </NavigationPrompt>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Organization</h1>
@@ -62,7 +64,7 @@ const Organization: React.FC = () => {
                       className={`input ${!watch('organizationName') ? 'is-danger' : ''}`}
                       type='text'
                       placeholder='Organization Name'
-                      ref={register({ required: 'Organization Name is required' })}
+                      ref={register({required: 'Organization Name is required'})}
                     />
                   </div>
                   <p className='help has-text-danger'>{errors.organizationName && errors.organizationName.message}</p>
