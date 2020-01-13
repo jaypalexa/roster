@@ -51,6 +51,9 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/reports' onClick={closeMenu}>Reports</Link>
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
+            <div className='navbar-end'>
+              <Link className='navbar-item' to='/login' onClick={closeMenu}>Log In</Link>
+            </div>
           </div>
         </nav>
 
