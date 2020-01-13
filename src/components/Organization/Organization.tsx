@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import ReactModal from 'react-modal';
 import NavigationPrompt from "react-router-navigation-prompt";
 import OrganizationService from '../../services/OrganizationService';
 import StatesService from '../../services/StatesService';
@@ -43,11 +42,21 @@ const Organization: React.FC = () => {
     <div id='organization'>
       <NavigationPrompt when={formState.dirty}>
         {({ onConfirm, onCancel }) => (
-          <ReactModal isOpen={true} ariaHideApp={false} className='loader-style'>
-            <h3>You have unsaved changes, are you sure you want to leave?</h3>
-            <button onClick={onConfirm}>Yes</button>
-            <button onClick={onCancel}>No</button>
-          </ReactModal>
+          <div className='modal is-active'>
+            <div className='modal-background'></div>
+            <div className='modal-card'>
+              <header className='modal-card-head'>
+                <p className='modal-card-title'>Unsaved Changes</p>
+              </header>
+              <section className='modal-card-body'>
+                <p>You have unsaved changes. Are you sure you want to leave?</p>
+              </section>
+              <footer className='modal-card-foot'>
+                <button className='button is-success' onClick={onConfirm}>Yes</button>
+                <button className='button is-danger' onClick={onCancel}>No</button>
+              </footer>
+            </div>
+          </div>
         )}
       </NavigationPrompt>
       <div className='columns is-centered'>
