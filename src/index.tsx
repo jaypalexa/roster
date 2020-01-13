@@ -1,11 +1,14 @@
-import * as serviceWorker from './serviceWorker';
-import App from './components/App/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/App/App';
+import { AppContextProvider } from './contexts/AppContext';
 import './index.sass';
+import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <App />
+  <AppContextProvider>
+    <App />
+  </AppContextProvider>
   , document.getElementById('root')
 );
 
