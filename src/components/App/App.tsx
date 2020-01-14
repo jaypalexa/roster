@@ -1,15 +1,18 @@
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
+import Login from 'components/Login/Login';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
+import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import React from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import AuthenticationService from '../../services/AuthenticationService';
 import './App.sass';
-
 // import logo from './logo.svg';
 
 const App: React.FC = () => {
@@ -28,6 +31,25 @@ const App: React.FC = () => {
     document.querySelector('.navbar-menu')?.classList.remove('is-active');
     document.querySelector('.navbar-burger')?.classList.remove('is-active');
   };
+
+  const [appContext, setAppContext] = useAppContext();
+
+  const setRedirectPathOnAuthentication = (path: string) => {
+    setAppContext({...appContext, redirectPathOnAuthentication: path});
+  }
+
+  const defaultProtectedRouteProps: ProtectedRouteProps = {
+    isAuthenticated: !!appContext.isAuthenticated,
+    redirectPathOnAuthentication: appContext.redirectPathOnAuthentication || '',
+    setRedirectPathOnAuthentication
+  };
+
+  const logOut = () => {
+    AuthenticationService.authenticate(() => {
+      setAppContext({...appContext, isAuthenticated: false});
+      closeMenu();
+    })
+  }
 
   return (
     //<img src={logo} className='App-logo' alt='logo' />
@@ -52,19 +74,21 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
             <div className='navbar-end'>
-              <Link className='navbar-item' to='/login' onClick={closeMenu}>Log In</Link>
+              <Link className={`navbar-item ${!!appContext.isAuthenticated ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
+              <Link className={`navbar-item ${!!appContext.isAuthenticated ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
             </div>
           </div>
         </nav>
 
         <div className='content-container'>
           <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/sea-turtles' component={SeaTurtles} />
-            <Route path='/holding-tanks' component={HoldingTanks} />
-            <Route path='/hatchling-events' component={HatchlingEvents} />
-            <Route path='/reports' component={Reports} />
-            <Route path='/organization' component={Organization} />
+            <ProtectedRoute {...defaultProtectedRouteProps} exact={true} path='/' component={Home} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtles' component={SeaTurtles} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tanks' component={HoldingTanks} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/hatchling-events' component={HatchlingEvents} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/reports' component={Reports} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/organization' component={Organization} />
+            <Route path='/login' component={Login} />
             <Route path='*' component={NotFound} />
           </Switch>
           <div className='has-text-centered bottom-panel'>

@@ -1,7 +1,7 @@
 import NameValuePair from '../types/NameValuePair';
 
 const StatesService = {
-  getStates: function(): NameValuePair[] {
+  getStates(): NameValuePair[] {
       return [
         { name: '', value: '' },
         { name: 'AK', value: 'AK' },

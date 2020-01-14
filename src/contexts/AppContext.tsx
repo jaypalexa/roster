@@ -1,32 +1,31 @@
-import React, { createContext, Dispatch, SetStateAction, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 interface Props {
   children: React.ReactNode;
 };
 
 interface AppContextStore {
-  organizationId: string;
-  setOrganizationId: Dispatch<SetStateAction<string>>;
+  isAuthenticated?: boolean;
+  redirectPathOnAuthentication?: string;
+  organizationId?: string;
 };
 
-const initialAppContextStore: AppContextStore = {
-  organizationId: '11111111-1111-1111-1111-111111111111',
-  setOrganizationId: (): void => {
-    throw new Error('setOrganizationId function must be overridden');
-  }
-};
+const initialAppContextStore: AppContextStore = {};
 
-const AppContext = createContext<AppContextStore>(initialAppContextStore);
+const AppContext = createContext<[AppContextStore, (appContextStore: AppContextStore) => void]>([initialAppContextStore, () => {}]);
 
 const AppContextProvider = ({ children }: Props): JSX.Element => {
-  const [organizationId, setOrganizationId] = useState<string>(initialAppContextStore.organizationId);
-
+  const [appContext, setAppContext] = useState(initialAppContextStore);
+  const defaultAppContext: [AppContextStore, typeof setAppContext] = [appContext, setAppContext];
+  
   return (
-    <AppContext.Provider value={{ organizationId, setOrganizationId }}>
+    <AppContext.Provider value={defaultAppContext}>
       {children}
     </AppContext.Provider>
   );
 };
 
-export { AppContext, AppContextProvider };
+const useAppContext = () => useContext(AppContext);
+
+export { AppContext, AppContextProvider, useAppContext };
 

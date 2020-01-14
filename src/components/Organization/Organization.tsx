@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import NavigationPrompt from "react-router-navigation-prompt";
-import { AppContext } from '../../contexts/AppContext';
+import { useAppContext } from '../../contexts/AppContext';
 import OrganizationService from '../../services/OrganizationService';
 import StatesService from '../../services/StatesService';
 import OrganizationModel from '../../types/OrganizationModel';
@@ -9,7 +9,8 @@ import './Organization.sass';
 
 const Organization: React.FC = () => {
 
-  const appContext = useContext(AppContext);
+  // const appContext = useContext(AppContext);
+  const [appContext, setAppContext] = useAppContext();
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
   const { errors, handleSubmit, formState, register, reset, watch } = useForm<OrganizationModel>();
   const states = StatesService.getStates();
@@ -42,7 +43,8 @@ const Organization: React.FC = () => {
   const onCancel = () => {
     console.log('in onCancel()...');
     reset(currentOrganization);
-    appContext.setOrganizationId('22222222-2222-2222-2222-222222222222');
+    // appContext.setOrganizationId('22222222-2222-2222-2222-222222222222');
+    setAppContext({...appContext, organizationId: '22222222-2222-2222-2222-222222222222'});
   };
 
   return (
