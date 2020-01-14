@@ -43,7 +43,6 @@ const Organization: React.FC = () => {
   const onCancel = () => {
     console.log('in onCancel()...');
     reset(currentOrganization);
-    // appContext.setOrganizationId('22222222-2222-2222-2222-222222222222');
     setAppContext({...appContext, organizationId: '22222222-2222-2222-2222-222222222222'});
   };
 

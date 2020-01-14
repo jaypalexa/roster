@@ -75,6 +75,8 @@ const App: React.FC = () => {
             </div>
             <div className='navbar-end'>
               <Link className={`navbar-item ${!!appContext.isAuthenticated ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
+              <span className={`navbar-item ${!!appContext.isAuthenticated ? '' : 'hidden'}`} >{appContext.loggedInUserName}</span>
+              <span className={`navbar-item ${!!appContext.isAuthenticated ? '' : 'hidden'}`} >|</span>
               <Link className={`navbar-item ${!!appContext.isAuthenticated ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
             </div>
           </div>
