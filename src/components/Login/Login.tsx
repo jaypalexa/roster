@@ -25,23 +25,23 @@ const Login: React.FC = () => {
   }
 
   const onSubmit = handleSubmit((modifiedLogin: LoginModel) => {
-    console.log('in handleSubmit(): modifiedLogin', modifiedLogin);
+    // .log('in handleSubmit(): modifiedLogin', modifiedLogin);
     const patchedLogin = {...currentLogin, ...modifiedLogin};
-    console.log('in handleSubmit(): patchedLogin', patchedLogin);
+    // console.log('in handleSubmit(): patchedLogin', patchedLogin);
     // LoginService.saveLogin(patchedLogin);
     reset(patchedLogin);
     setCurrentLogin(patchedLogin);
-
-    AuthenticationService.authenticate(() => {
-      setAppContext({...appContext, isAuthenticated: true, redirectPathOnAuthentication: '', loggedInUserName: modifiedLogin.userName});
+    
+    AuthenticationService.authenticate(modifiedLogin.userName, () => {
+      setAppContext({...appContext, redirectPathOnAuthentication: ''});
+      setAppContext({...appContext, organizationId: '22222222-2222-2222-2222-222222222222'}); //TODO: REMOVE FAKE ORGANIZATION ID
       browserHistory.push(getPath());
     })
   });
 
   const onCancel = () => {
-    console.log('in onCancel()...');
+    // console.log('in onCancel()...');
     reset(currentLogin);
-    // setAppContext({...appContext, organizationId: '22222222-2222-2222-2222-222222222222'});
   };
 
   return (
@@ -60,7 +60,7 @@ const Login: React.FC = () => {
                   placeholder='User Name'
                   ref={(e: HTMLInputElement) => {
                     register(e, {required: 'User Name is required'})
-                    userNameRef.current = e // you can still assign to your own ref
+                    userNameRef.current = e
                   }}
                 />
               </div>

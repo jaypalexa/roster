@@ -1,7 +1,7 @@
 import OrganizationModel from '../types/OrganizationModel';
 
 const OrganizationService = {
-  getOrganization(): OrganizationModel {
+  getOrganization(organizationId?: string): OrganizationModel {
     return JSON.parse(localStorage.getItem('organization') || '{}');
   },
   saveOrganization(organization: OrganizationModel) {

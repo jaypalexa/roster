@@ -7,7 +7,7 @@ import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
@@ -26,28 +26,29 @@ const App: React.FC = () => {
       $target.classList.toggle('is-active');
     });
   });
+  
+  const [appContext, setAppContext] = useAppContext();
+  const [triggerRefresh, setTriggerRefresh] = useState(false);
 
   const closeMenu = () => {
     document.querySelector('.navbar-menu')?.classList.remove('is-active');
     document.querySelector('.navbar-burger')?.classList.remove('is-active');
   };
 
-  const [appContext, setAppContext] = useAppContext();
-
   const setRedirectPathOnAuthentication = (path: string) => {
     setAppContext({...appContext, redirectPathOnAuthentication: path});
   }
 
   const defaultProtectedRouteProps: ProtectedRouteProps = {
-    isAuthenticated: !!appContext.isAuthenticated,
+    isAuthenticated: true, // !!AuthenticationService.isAuthenticated, // !!appContext.isAuthenticated, //TODO:  WIRE IN REAL AUTHENTICATION !!!
     redirectPathOnAuthentication: appContext.redirectPathOnAuthentication || '',
     setRedirectPathOnAuthentication
   };
 
   const logOut = () => {
-    AuthenticationService.authenticate(() => {
-      setAppContext({...appContext, isAuthenticated: false});
+    AuthenticationService.signout(() => {
       closeMenu();
+      setTriggerRefresh(!triggerRefresh);
     })
   }
 
@@ -74,10 +75,10 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
             <div className='navbar-end'>
-              <Link className={`navbar-item ${!!appContext.isAuthenticated ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
-              <span className={`navbar-item ${!!appContext.isAuthenticated ? '' : 'hidden'}`} >{appContext.loggedInUserName}</span>
-              <span className={`navbar-item ${!!appContext.isAuthenticated ? '' : 'hidden'}`} >|</span>
-              <Link className={`navbar-item ${!!appContext.isAuthenticated ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
+              <Link className={`navbar-item ${AuthenticationService.isAuthenticated ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
+              <span className={`navbar-item ${AuthenticationService.isAuthenticated ? '' : 'hidden'}`} >{AuthenticationService.loggedInUserName}</span>
+              <span className={`navbar-item ${AuthenticationService.isAuthenticated ? '' : 'hidden'}`} >|</span>
+              <Link className={`navbar-item ${AuthenticationService.isAuthenticated ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
             </div>
           </div>
         </nav>
@@ -91,7 +92,7 @@ const App: React.FC = () => {
             <ProtectedRoute {...defaultProtectedRouteProps} path='/reports' component={Reports} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/organization' component={Organization} />
             <Route path='/login' component={Login} />
-            <Route path='*' component={NotFound} />
+            <Route component={NotFound} />
           </Switch>
           <div className='has-text-centered bottom-panel'>
             <p>

@@ -9,7 +9,7 @@ import './Organization.sass';
 
 const Organization: React.FC = () => {
 
-  // const appContext = useContext(AppContext);
+  // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
   const { errors, handleSubmit, formState, register, reset, watch } = useForm<OrganizationModel>();
@@ -18,32 +18,27 @@ const Organization: React.FC = () => {
   useEffect(() => {
     // make async server request
     const getOrganization = async () => {
-      const fetchedOrganization = await OrganizationService.getOrganization();
+      const fetchedOrganization = await OrganizationService.getOrganization(appContext.organizationId);
       reset(fetchedOrganization);
       setCurrentOrganization(fetchedOrganization);
     };
     getOrganization();
-  }, [reset]);
+  }, [reset, appContext.organizationId]);
 
-  useEffect(() => {
-    console.log('appContext.organizationId', appContext.organizationId);
-  }, [appContext.organizationId])
-
-  console.log(JSON.stringify(formState));
+  // console.log(JSON.stringify(formState));
 
   const onSubmit = handleSubmit((modifiedOrganization: OrganizationModel) => {
-    console.log('in handleSubmit(): modifiedOrganization', modifiedOrganization);
+    // console.log('in handleSubmit(): modifiedOrganization', modifiedOrganization);
     const patchedOrganization = {...currentOrganization, ...modifiedOrganization};
-    console.log('in handleSubmit(): patchedOrganization', patchedOrganization);
+    // console.log('in handleSubmit(): patchedOrganization', patchedOrganization);
     OrganizationService.saveOrganization(patchedOrganization);
     reset(patchedOrganization);
     setCurrentOrganization(patchedOrganization);
   });
 
   const onCancel = () => {
-    console.log('in onCancel()...');
+    // console.log('in onCancel()...');
     reset(currentOrganization);
-    setAppContext({...appContext, organizationId: '22222222-2222-2222-2222-222222222222'});
   };
 
   return (

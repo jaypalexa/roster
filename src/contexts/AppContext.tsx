@@ -5,10 +5,8 @@ interface Props {
 };
 
 interface AppContextStore {
-  isAuthenticated?: boolean;
   redirectPathOnAuthentication?: string;
   organizationId?: string;
-  loggedInUserName?: string;
 };
 
 const initialAppContextStore: AppContextStore = {};
