@@ -9,10 +9,13 @@ import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import React, { useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
+import { Slide, toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import AuthenticationService from '../../services/AuthenticationService';
 import './App.sass';
+
 // import logo from './logo.svg';
 
 const App: React.FC = () => {
@@ -106,6 +109,14 @@ const App: React.FC = () => {
         </div>
 
       </Router>
+      <ToastContainer 
+        autoClose={20000} 
+        position={toast.POSITION.BOTTOM_CENTER} 
+        transition={Slide}
+        pauseOnHover={true}
+        className='toast-container'
+        toastClassName='toast-custom'
+      />
     </div>
   );
 }

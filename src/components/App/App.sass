@@ -1,3 +1,6 @@
+@import '../../../node_modules/bulma/sass/utilities/initial-variables'
+@import '../../../node_modules/bulma/sass/utilities/derived-variables'
+
 #app
 	height: 100%
 
@@ -16,3 +19,13 @@
 	margin-top: 1.5rem
 	margin-right: 1.25rem
 	margin-left: 1rem
+
+.toast-custom
+	border-radius: 4px
+	font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif
+
+.Toastify__toast--success
+	background-color: $success
+
+.Toastify__toast--error
+	background-color: $danger
