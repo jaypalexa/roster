@@ -61,7 +61,12 @@ const App: React.FC = () => {
       <Router history={browserHistory}>
         <nav className='navbar is-dark' aria-label='main navigation'>
           <div className='navbar-brand'>
-            <Link className='navbar-item' to='/' onClick={closeMenu}>ROSTER</Link>
+            <Link className='navbar-item' to='/' onClick={closeMenu}>
+              <span className='icon'>
+                <i className='fa fa-home'></i>
+              </span>
+              &nbsp;ROSTER
+            </Link>
             <div role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navMenu'>
               <span aria-hidden='true'></span>
               <span aria-hidden='true'></span>
