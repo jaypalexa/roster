@@ -14,7 +14,7 @@ const Organization: React.FC = () => {
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
-  const { errors, handleSubmit, formState, register, reset, watch } = useForm<OrganizationModel>();
+  const { errors, handleSubmit, formState, register, reset, watch } = useForm<OrganizationModel>({mode: 'onChange'});
   const states = StatesService.getStates();
 
   useEffect(() => {
@@ -132,13 +132,13 @@ const Organization: React.FC = () => {
                     <div className='field'>
                       <label className='label'>Permit Number</label>
                       <div className='control is-expanded'>
-                        <input name='permitNumber' className='input' type='text' placeholder='Permit Number' ref={register({required: false})} />
+                        <input name='permitNumber' className='input' type='text' placeholder='Permit Number' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Contact Name</label>
                       <div className='control is-expanded'>
-                        <input name='contactName' className='input' type='text' placeholder='Contact Name' ref={register({required: false})} />
+                        <input name='contactName' className='input' type='text' placeholder='Contact Name' ref={register({})} />
                       </div>
                     </div>
                   </div>
@@ -149,13 +149,13 @@ const Organization: React.FC = () => {
                     <div className='field'>
                       <label className='label'>Address</label>
                       <div className='control is-expanded'>
-                        <input name='address1' className='input' type='text' placeholder='Address Line 1' ref={register({required: false})} />
+                        <input name='address1' className='input' type='text' placeholder='Address Line 1' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>&nbsp;</label>
                       <div className='control is-expanded'>
-                        <input name='address2' className='input' type='text' placeholder='Address Line 2' ref={register({required: false})} />
+                        <input name='address2' className='input' type='text' placeholder='Address Line 2' ref={register({})} />
                       </div>
                     </div>
                   </div>
@@ -165,13 +165,13 @@ const Organization: React.FC = () => {
                   <div className='field-body'>
                     <div className='field'>
                       <div className='control is-expanded'>
-                        <input name='city' className='input' type='text' placeholder='City' ref={register({required: false})} />
+                        <input name='city' className='input' type='text' placeholder='City' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <div className='control is-expanded'>
                         <div className='select is-fullwidth'>
-                          <select name='state' ref={register({required: false})}>
+                          <select name='state' ref={register({})}>
                               {states.map((e, key) => {
                                   return <option key={key} value={e.value}>{e.name}</option>;
                               })}
@@ -200,13 +200,13 @@ const Organization: React.FC = () => {
                     <div className='field'>
                       <label className='label'>Phone</label>
                       <div className='control is-expanded'>
-                        <input name='phone' className='input' type='text' placeholder='Phone' ref={register({required: false})} />
+                        <input name='phone' className='input' type='text' placeholder='Phone' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Fax</label>
                       <div className='control is-expanded'>
-                        <input name='fax' className='input' type='text' placeholder='Fax' ref={register({required: false})} />
+                        <input name='fax' className='input' type='text' placeholder='Fax' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
@@ -237,37 +237,37 @@ const Organization: React.FC = () => {
                     <div className='field'>
                       <label className='label'>Balance As Of</label>
                       <div className='control is-expanded'>
-                        <input name='hatchlingBalanceAsOfDate' className='input' type='date' ref={register({required: false})} />
+                        <input name='hatchlingBalanceAsOfDate' className='input' type='date' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Loggerhead (Cc)</label>
                       <div className='control is-expanded'>
-                        <input name='ccHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='ccHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Green (Cm)</label>
                       <div className='control is-expanded'>
-                        <input name='cmHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='cmHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Leatherback (Dc)</label>
                       <div className='control is-expanded'>
-                        <input name='dcHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='dcHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Other</label>
                       <div className='control is-expanded'>
-                        <input name='otherHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='otherHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Unknown</label>
                       <div className='control is-expanded'>
-                        <input name='unKnownHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='unKnownHatchlingStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                   </div>
@@ -276,37 +276,37 @@ const Organization: React.FC = () => {
                     <div className='field'>
                       <label className='label'>Balance As Of</label>
                       <div className='control is-expanded'>
-                        <input name='washbackBalanceAsOfDate' className='input' type='date' ref={register({required: false})} />
+                        <input name='washbackBalanceAsOfDate' className='input' type='date' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Loggerhead (Cc)</label>
                       <div className='control is-expanded'>
-                        <input name='ccWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='ccWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Green (Cm)</label>
                       <div className='control is-expanded'>
-                        <input name='cmWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='cmWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Leatherback (Dc)</label>
                       <div className='control is-expanded'>
-                        <input name='dcWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='dcWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Other</label>
                       <div className='control is-expanded'>
-                        <input name='otherWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='otherWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                     <div className='field'>
                       <label className='label'>Unknown</label>
                       <div className='control is-expanded'>
-                        <input name='unKnownWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({required: false})} />
+                        <input name='unKnownWashbackStartingBalance' className='input' type='number' min='0' pattern='\d+' ref={register({})} />
                       </div>
                     </div>
                   </div>
@@ -318,11 +318,11 @@ const Organization: React.FC = () => {
                   <label className='label'>Units Type</label>
                   <div className='control'>
                     <label className='radio'>
-                      <input type='radio' name='preferredUnitsType' value='M' ref={register({required: false})}/>
+                      <input type='radio' name='preferredUnitsType' value='M' ref={register({})}/>
                       Metric
                     </label>
                     <label className='radio'>
-                      <input type='radio' name='preferredUnitsType' value='I' ref={register({required: false})}/>
+                      <input type='radio' name='preferredUnitsType' value='I' ref={register({})}/>
                       Imperial
                     </label>
                   </div>
@@ -337,7 +337,7 @@ const Organization: React.FC = () => {
                   className='button is-danger is-fixed-width-medium' 
                   value='Cancel'
                   onClick={() => onCancel()}
-                  disabled={!formState.dirty}
+                  disabled={!formState.isValid}
                 />
               </p>
 
@@ -346,7 +346,7 @@ const Organization: React.FC = () => {
                   type='submit' 
                   className='button is-success is-fixed-width-medium has-background-success' 
                   value='Save'
-                  disabled={!formState.dirty}
+                  disabled={!formState.isValid}
                 />
               </p>
 

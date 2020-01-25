@@ -9,7 +9,7 @@ import './Login.sass';
 const Login: React.FC = () => {
   const [appContext, setAppContext] = useAppContext();
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
-  const { errors, handleSubmit, register, reset, watch } = useForm<LoginModel>();
+  const { errors, formState, handleSubmit, register, reset, watch } = useForm<LoginModel>({mode: 'onChange'});
   const userNameRef = useRef<HTMLInputElement>()
 
   useEffect(() => {
@@ -39,10 +39,13 @@ const Login: React.FC = () => {
     })
   });
 
-  const onCancel = () => {
-    // console.log('in onCancel()...');
-    reset(currentLogin);
-  };
+  // const onCancel = () => {
+  //   // console.log('in onCancel()...');
+  //   reset(currentLogin);
+  // };
+
+  console.log(JSON.stringify(formState));
+  //console.log(JSON.stringify(errors.userName.message));
 
   return (
     <div id='login'>
@@ -69,22 +72,28 @@ const Login: React.FC = () => {
             <div className='field'>
               <label className='label'>Password</label>
               <div className='control is-expanded'>
-                <input name='password' className='input' type='password' placeholder='Password' ref={register} />
+                <input name='password' className='input' type='password' placeholder='Password' ref={register({})} />
               </div>
             </div>
 
             <div className='field is-grouped is-grouped-right'>
-              <p className='control'>
+              {/* <p className='control'>
                 <input 
                   type='button' 
                   className='button is-danger is-fixed-width-medium' 
                   value='Cancel'
                   onClick={() => onCancel()}
+                  disabled={!formState.isValid}
                 />
-              </p>
+              </p> */}
 
               <p className='control'>
-                <input type='submit' className='button is-success is-fixed-width-medium' value='Save' />
+                <input 
+                  type='submit' 
+                  className='button is-success is-fixed-width-medium' 
+                  value='Log In' 
+                  disabled={!formState.isValid}
+                />
               </p>
             </div>
             
