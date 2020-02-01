@@ -1,13 +1,14 @@
-import NavigationPrompt from 'react-router-navigation-prompt';
 import OrganizationModel from '../../types/OrganizationModel';
 import OrganizationService from '../../services/OrganizationService';
 import React, { useEffect, useState } from 'react';
 import StatesService from '../../services/StatesService';
 import TabHelper from '../../helpers/TabHelper';
+import UnsavedChanges from '../UnsavedChanges/UnsavedChanges';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
 import { useForm } from 'react-hook-form';
 import './Organization.sass';
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 const Organization: React.FC = () => {
@@ -50,26 +51,7 @@ const Organization: React.FC = () => {
 
   return (
     <div id='organization'>
-      <NavigationPrompt when={formState.dirty}>
-        {({ onConfirm, onCancel }) => (
-          <div className='modal is-active'>
-            <div className='modal-background'></div>
-            <div className='modal-card'>
-              <header className='modal-card-head'>
-                <p className='modal-card-title'>Unsaved Changes</p>
-              </header>
-              <section className='modal-card-body'>
-                <p>You have unsaved changes. Are you sure you want to leave?</p>
-              </section>
-              <footer className='modal-card-foot'>
-                <button className='button is-success' onClick={onConfirm}>Yes</button>
-                <button className='button is-danger' onClick={onCancel}>No</button>
-              </footer>
-            </div>
-          </div>
-        )}
-      </NavigationPrompt>
-
+      <UnsavedChanges isDirty={formState.dirty}></UnsavedChanges>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Organization</h1>
