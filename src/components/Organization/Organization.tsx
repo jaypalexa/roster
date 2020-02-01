@@ -40,8 +40,8 @@ const Organization: React.FC = () => {
   });
 
   const onCancel = () => {
-    console.log('in onCancel()...');
-    console.log('currentOrganization', currentOrganization);
+    // console.log('in onCancel()...');
+    // console.log('currentOrganization', currentOrganization);
     reset(currentOrganization);
   };
 
@@ -345,7 +345,7 @@ const Organization: React.FC = () => {
               <p className='control'>
                 <input
                   type='submit'
-                  className='button is-success is-fixed-width-medium has-background-success'
+                  className='button is-success is-fixed-width-medium'
                   value='Save'
                   disabled={!formState.isValid}
                 />
