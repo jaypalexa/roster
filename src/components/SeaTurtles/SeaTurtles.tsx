@@ -2,10 +2,12 @@ import NavigationPrompt from 'react-router-navigation-prompt';
 import React, { useEffect, useState } from 'react';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
 import SeaTurtleService from '../../services/SeaTurtleService';
+import TabHelper from '../../helpers/TabHelper';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
 import { useForm } from 'react-hook-form';
 import './SeaTurtles.sass';
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 const SeaTurtles: React.FC = () => {
@@ -54,38 +56,7 @@ const SeaTurtles: React.FC = () => {
     reset(currentSeaTurtle);
   };
 
-  let tabs = document.querySelectorAll('.tabs li');
-  let tabsContent = document.querySelectorAll('.tab-content');
-
-  let deactvateAllTabs = function () {
-    tabs.forEach(function (tab) {
-      tab.classList.remove('is-active');
-    });
-  };
-
-  let hideTabsContent = function () {
-    tabsContent.forEach(function (tabContent) {
-      tabContent.classList.remove('is-active');
-    });
-  };
-
-  let activateTabsContent = function (tab: Element) {
-    tabsContent[getIndex(tab)].classList.add('is-active');
-  };
-
-  let getIndex = function (el: Element) {
-    const nodes = Array.prototype.slice.call(el?.parentElement?.children);
-    return nodes.indexOf(el);
-  };
-
-  tabs.forEach(function (tab: Element) {
-    tab.addEventListener('click', function () {
-      deactvateAllTabs();
-      hideTabsContent();
-      tab.classList.add('is-active');
-      activateTabsContent(tab);
-    });
-  })
+  new TabHelper().initialize();
 
   return (
     <div id='seaTurtle'>

@@ -3,6 +3,7 @@ import OrganizationModel from '../../types/OrganizationModel';
 import OrganizationService from '../../services/OrganizationService';
 import React, { useEffect, useState } from 'react';
 import StatesService from '../../services/StatesService';
+import TabHelper from '../../helpers/TabHelper';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
 import { useForm } from 'react-hook-form';
@@ -45,38 +46,7 @@ const Organization: React.FC = () => {
     reset(currentOrganization);
   };
 
-  let tabs = document.querySelectorAll('.tabs li');
-  let tabsContent = document.querySelectorAll('.tab-content');
-
-  let deactvateAllTabs = function () {
-    tabs.forEach(function (tab) {
-      tab.classList.remove('is-active');
-    });
-  };
-
-  let hideTabsContent = function () {
-    tabsContent.forEach(function (tabContent) {
-      tabContent.classList.remove('is-active');
-    });
-  };
-
-  let activateTabsContent = function (tab: Element) {
-    tabsContent[getIndex(tab)].classList.add('is-active');
-  };
-
-  let getIndex = function (el: Element) {
-    const nodes = Array.prototype.slice.call(el?.parentElement?.children);
-    return nodes.indexOf(el);
-  };
-
-  tabs.forEach(function (tab: Element) {
-    tab.addEventListener('click', function () {
-      deactvateAllTabs();
-      hideTabsContent();
-      tab.classList.add('is-active');
-      activateTabsContent(tab);
-    });
-  })
+  new TabHelper().initialize();
 
   return (
     <div id='organization'>
