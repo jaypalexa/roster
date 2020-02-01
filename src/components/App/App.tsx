@@ -115,7 +115,7 @@ const App: React.FC = () => {
 
       </Router>
       <ToastContainer
-        autoClose={20000}
+        autoClose={1500}
         position={toast.POSITION.BOTTOM_CENTER}
         transition={Slide}
         pauseOnHover={true}

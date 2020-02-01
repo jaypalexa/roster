@@ -13,6 +13,7 @@ const SeaTurtles: React.FC = () => {
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const [currentSeaTurtle, setCurrentSeaTurtle] = useState({} as SeaTurtleModel);
+  const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
   const { errors, handleSubmit, formState, register, reset, watch } = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const seaTurtleId = 'faceface-face-face-face-facefaceface';
 
@@ -25,6 +26,15 @@ const SeaTurtles: React.FC = () => {
     };
     getSeaTurtle();
   }, [reset]);
+
+  useEffect(() => {
+    // make async server request
+    const getSeaTurtles = async () => {
+      const fetchedSeaTurtles = await SeaTurtleService.getSeaTurtles(appContext.organizationId || '');
+      setCurrentSeaTurtles(fetchedSeaTurtles);
+    };
+    getSeaTurtles();
+  }, [appContext.organizationId]);
 
   // console.log(JSON.stringify(formState));
 
@@ -115,21 +125,15 @@ const SeaTurtles: React.FC = () => {
           <div className='sea-turtle-table-container'>
             <table className='table is-striped is-hoverable is-fullwidth is-bordered is-narrow'>
               <tbody>
-                <tr>
-                  <td className='column-width-small'>Turtle 01</td>
-                  <td className='column-width-medium'>01</td>
-                  <td>CM</td>
-                </tr>
-                <tr>
-                  <td>Turtle 02</td>
-                  <td>02</td>
-                  <td>EI</td>
-                </tr>
-                <tr>
-                  <td>Turtle 03</td>
-                  <td>03</td>
-                  <td>LO</td>
-                </tr>
+                {
+                  currentSeaTurtles.map((seaTurtle) => {
+                    return <tr key={seaTurtle.sidNumber}>
+                      <td className='column-width-small'>{seaTurtle.name}</td>
+                      <td className='column-width-medium'>{seaTurtle.sidNumber}</td>
+                      <td>{seaTurtle.species}</td>
+                    </tr>
+                  })
+                }
               </tbody>
             </table>
           </div>
