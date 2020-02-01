@@ -1,20 +1,20 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import NavigationPrompt from 'react-router-navigation-prompt';
+import OrganizationModel from '../../types/OrganizationModel';
+import OrganizationService from '../../services/OrganizationService';
+import React, { useEffect, useState } from 'react';
+import StatesService from '../../services/StatesService';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
-import OrganizationService from '../../services/OrganizationService';
-import StatesService from '../../services/StatesService';
-import OrganizationModel from '../../types/OrganizationModel';
+import { useForm } from 'react-hook-form';
 import './Organization.sass';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 const Organization: React.FC = () => {
 
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
-  const { errors, handleSubmit, formState, register, reset, watch } = useForm<OrganizationModel>({mode: 'onChange'});
+  const { errors, handleSubmit, formState, register, reset, watch } = useForm<OrganizationModel>({ mode: 'onChange' });
   const states = StatesService.getStates();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Organization: React.FC = () => {
 
   const onSubmit = handleSubmit((modifiedOrganization: OrganizationModel) => {
     // console.log('in handleSubmit(): modifiedOrganization', modifiedOrganization);
-    const patchedOrganization = {...currentOrganization, ...modifiedOrganization};
+    const patchedOrganization = { ...currentOrganization, ...modifiedOrganization };
     // console.log('in handleSubmit(): patchedOrganization', patchedOrganization);
     OrganizationService.saveOrganization(patchedOrganization);
     reset(patchedOrganization);
@@ -124,7 +124,7 @@ const Organization: React.FC = () => {
                           className={`input ${!watch('organizationName') ? 'is-danger' : ''}`}
                           type='text'
                           placeholder='Organization Name'
-                          ref={register({required: 'Organization Name is required'})}
+                          ref={register({ required: 'Organization Name is required' })}
                         />
                       </div>
                       <p className='help has-text-danger'>{errors.organizationName && errors.organizationName.message}</p>
@@ -172,22 +172,22 @@ const Organization: React.FC = () => {
                       <div className='control is-expanded'>
                         <div className='select is-fullwidth'>
                           <select name='state' ref={register({})}>
-                              {states.map((e, key) => {
-                                  return <option key={key} value={e.value}>{e.name}</option>;
-                              })}
+                            {states.map((e, key) => {
+                              return <option key={key} value={e.value}>{e.name}</option>;
+                            })}
                           </select>
                         </div>
                       </div>
                     </div>
                     <div className='field'>
                       <div className='control is-expanded'>
-                        <input 
-                          name='zipCode' 
-                          className='input' 
-                          type='text' 
-                          placeholder='ZIP Code' 
+                        <input
+                          name='zipCode'
+                          className='input'
+                          type='text'
+                          placeholder='ZIP Code'
                           maxLength={10}
-                          ref={register({maxLength: {value: 10, message:'ZIP Code cannot exceed 10 characters'}})} 
+                          ref={register({ maxLength: { value: 10, message: 'ZIP Code cannot exceed 10 characters' } })}
                         />
                       </div>
                       <p className='help has-text-danger'>{errors.zipCode && errors.zipCode.message}</p>
@@ -212,16 +212,17 @@ const Organization: React.FC = () => {
                     <div className='field'>
                       <label className='label'>Email Address</label>
                       <div className='control is-expanded'>
-                        <input 
-                          name='emailAddress' 
-                          className='input' 
-                          type='text' 
-                          placeholder='Email Address' 
-                          ref={register({ 
-                            pattern: { 
-                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 
-                              message: 'Invalid email address' 
-                            }})}
+                        <input
+                          name='emailAddress'
+                          className='input'
+                          type='text'
+                          placeholder='Email Address'
+                          ref={register({
+                            pattern: {
+                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                              message: 'Invalid email address'
+                            }
+                          })}
                         />
                       </div>
                       <p className='help has-text-danger'>{errors.emailAddress && errors.emailAddress.message}</p>
@@ -318,11 +319,11 @@ const Organization: React.FC = () => {
                   <label className='label'>Units Type</label>
                   <div className='control'>
                     <label className='radio'>
-                      <input type='radio' name='preferredUnitsType' value='M' ref={register({})}/>
+                      <input type='radio' name='preferredUnitsType' value='M' ref={register({})} />
                       Metric
                     </label>
                     <label className='radio'>
-                      <input type='radio' name='preferredUnitsType' value='I' ref={register({})}/>
+                      <input type='radio' name='preferredUnitsType' value='I' ref={register({})} />
                       Imperial
                     </label>
                   </div>
@@ -330,11 +331,11 @@ const Organization: React.FC = () => {
               </section>
             </div>
 
-            <div className='field is-grouped is-grouped-right'>
+            <div className='field is-grouped action-button-grouping'>
               <p className='control'>
-                <input 
-                  type='button' 
-                  className='button is-danger is-fixed-width-medium' 
+                <input
+                  type='button'
+                  className='button is-danger is-fixed-width-medium'
                   value='Cancel'
                   onClick={() => onCancel()}
                   disabled={!formState.isValid}
@@ -342,16 +343,16 @@ const Organization: React.FC = () => {
               </p>
 
               <p className='control'>
-                <input 
-                  type='submit' 
-                  className='button is-success is-fixed-width-medium has-background-success' 
+                <input
+                  type='submit'
+                  className='button is-success is-fixed-width-medium has-background-success'
                   value='Save'
                   disabled={!formState.isValid}
                 />
               </p>
 
             </div>
-            
+
           </form>
 
         </div>

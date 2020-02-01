@@ -1,22 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
 import AuthenticationService from '../../services/AuthenticationService';
+import browserHistory from '../../browserHistory';
 import LoginModel from '../../types/LoginModel';
+import React, { useEffect, useRef, useState } from 'react';
+import { useAppContext } from '../../contexts/AppContext';
+import { useForm } from 'react-hook-form';
 import './Login.sass';
 
 const Login: React.FC = () => {
   const [appContext, setAppContext] = useAppContext();
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
-  const { errors, formState, handleSubmit, register, reset, watch } = useForm<LoginModel>({mode: 'onChange'});
+  const { errors, formState, handleSubmit, register, reset, watch } = useForm<LoginModel>({ mode: 'onChange' });
   const userNameRef = useRef<HTMLInputElement>()
 
   useEffect(() => {
     userNameRef?.current?.focus();
   }, [])
 
-  const getPath = ():string  => {
+  const getPath = (): string => {
     if (!appContext.redirectPathOnAuthentication || appContext.redirectPathOnAuthentication === '/login') {
       return '/';
     } else {
@@ -26,15 +26,15 @@ const Login: React.FC = () => {
 
   const onSubmit = handleSubmit((modifiedLogin: LoginModel) => {
     // .log('in handleSubmit(): modifiedLogin', modifiedLogin);
-    const patchedLogin = {...currentLogin, ...modifiedLogin};
+    const patchedLogin = { ...currentLogin, ...modifiedLogin };
     // console.log('in handleSubmit(): patchedLogin', patchedLogin);
     // LoginService.saveLogin(patchedLogin);
     reset(patchedLogin);
     setCurrentLogin(patchedLogin);
-    
+
     AuthenticationService.authenticate(modifiedLogin.userName, () => {
-      setAppContext({...appContext, redirectPathOnAuthentication: ''});
-      setAppContext({...appContext, organizationId: '22222222-2222-2222-2222-222222222222'}); //TODO: REMOVE FAKE ORGANIZATION ID
+      setAppContext({ ...appContext, redirectPathOnAuthentication: '' });
+      setAppContext({ ...appContext, organizationId: '22222222-2222-2222-2222-222222222222' }); //TODO: REMOVE FAKE ORGANIZATION ID
       browserHistory.push(getPath());
     })
   });
@@ -62,7 +62,7 @@ const Login: React.FC = () => {
                   type='text'
                   placeholder='User Name'
                   ref={(e: HTMLInputElement) => {
-                    register(e, {required: 'User Name is required'})
+                    register(e, { required: 'User Name is required' })
                     userNameRef.current = e
                   }}
                 />
@@ -76,7 +76,7 @@ const Login: React.FC = () => {
               </div>
             </div>
 
-            <div className='field is-grouped is-grouped-right'>
+            <div className='field is-grouped action-button-grouping'>
               {/* <p className='control'>
                 <input 
                   type='button' 
@@ -88,15 +88,15 @@ const Login: React.FC = () => {
               </p> */}
 
               <p className='control'>
-                <input 
-                  type='submit' 
-                  className='button is-success is-fixed-width-medium' 
-                  value='Log In' 
+                <input
+                  type='submit'
+                  className='button is-success is-fixed-width-medium'
+                  value='Log In'
                   disabled={!formState.isValid}
                 />
               </p>
             </div>
-            
+
           </form>
 
         </div>
