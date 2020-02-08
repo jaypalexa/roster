@@ -1,5 +1,6 @@
+import ReactHookFormProps from 'components/FormFields/ReactHookFormProps';
 import React, { useEffect, useState } from 'react';
-import { ElementLike, useForm, ValidationOptions } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
 import TabHelper from '../../helpers/TabHelper';
@@ -7,45 +8,13 @@ import CodeListTableService, { CodeTableType } from '../../services/CodeTableLis
 import SeaTurtleService from '../../services/SeaTurtleService';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
+import FormFieldRow from '../FormFields/FormFieldRow';
+import ListFormField from '../FormFields/ListFormField';
+import TextFormField from '../FormFields/TextFormField';
 import UnsavedChanges from '../UnsavedChanges/UnsavedChanges';
 import './SeaTurtles.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
-type FieldProps = {
-  fieldName: string;
-  labelText?: string;
-  //register<Element extends ElementLike = ElementLike>(): (ref: Element | null) => void;
-  register<Element extends ElementLike = ElementLike>(validationOptions: ValidationOptions): (ref: Element | null) => void;
-  // register<Element extends ElementLike = ElementLike>(name: FieldName<any>, validationOptions?: ValidationOptions): void;
-  // register<Element extends ElementLike = ElementLike>(namesWithValidationOptions: Record<FieldName<any>, ValidationOptions>): void;
-  // register<Element extends ElementLike = ElementLike>(ref: Element, validationOptions?: ValidationOptions): void;
-  // register<Element extends ElementLike = ElementLike>(refOrValidationOptions: ValidationOptions | Element | null, validationOptions?: ValidationOptions): ((ref: Element | null) => void) | void;
-  validationOptions?: ValidationOptions;
-}
-
-interface ListFieldProps extends FieldProps {
-  listItems: NameValuePair[];
-}
-
-export const ListField: React.FC<ListFieldProps> = ({fieldName, labelText, listItems, register, validationOptions}) => {
-  return (
-    <div className='field'>
-      <label className={`label ${labelText ? '' : 'hidden'}`}>{labelText}</label>
-      <div className='control is-expanded'>
-        <div className='select is-fullwidth'>
-          <select name={fieldName} ref={register(validationOptions || {})}>
-            {listItems.map((e, key) => {
-              return <option key={key} value={e.value}>{e.name}</option>;
-            })}
-          </select>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-//export default ListField;
 
 const SeaTurtles: React.FC = () => {
 
@@ -57,6 +26,7 @@ const SeaTurtles: React.FC = () => {
   const [turtleSizes, setTurtleSizes] = useState([] as Array<NameValuePair>);
   const [turtleStatuses, setTurtleStatuses] = useState([] as Array<NameValuePair>);
   const { errors, handleSubmit, formState, register, reset, watch } = useForm<SeaTurtleModel>({ mode: 'onChange' });
+  const reactHookFormProps: ReactHookFormProps = { errors, register, watch };
   const seaTurtleId = 'faceface-face-face-face-facefaceface';
 
   useEffect(() => {
@@ -81,12 +51,8 @@ const SeaTurtles: React.FC = () => {
     getSeaTurtles();
   }, [appContext.organizationId]);
 
-  // console.log(JSON.stringify(formState));
-
   const onSubmit = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
-    // console.log('in handleSubmit(): modifiedSeaTurtle', modifiedSeaTurtle);
     const patchedSeaTurtle = { ...currentSeaTurtle, ...modifiedSeaTurtle };
-    // console.log('in handleSubmit(): patchedSeaTurtle', patchedSeaTurtle);
     SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
     reset(patchedSeaTurtle);
     setCurrentSeaTurtle(patchedSeaTurtle);
@@ -94,8 +60,6 @@ const SeaTurtles: React.FC = () => {
   });
 
   const onCancel = () => {
-    // console.log('in onCancel()...');
-    // console.log('currentSeaTurtle', currentSeaTurtle);
     reset(currentSeaTurtle);
   };
 
@@ -107,7 +71,6 @@ const SeaTurtles: React.FC = () => {
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Sea Turtles</h1>
-          {/*Name*/}{/*SID #*/}{/*Species*/}
           <table className='table is-fullwidth is-bordered is-narrow table-header'>
             <thead>
               <tr>
@@ -145,41 +108,16 @@ const SeaTurtles: React.FC = () => {
 
             <div>
               <section className='tab-content is-active'> {/* General Information */}
-                <div className='field is-horizontal'>
-                  <div className='field-body'>
-                    <div className='field'>
-                      <label className='label'>Name</label>
-                      <div className='control'>
-                        <input name='name'
-                          className={`input ${!watch('seaTurtleName') ? 'is-danger' : ''}`}
-                          type='text'
-                          placeholder='Name'
-                          ref={register({ required: 'Name is required' })}
-                        />
-                      </div>
-                      <p className='help has-text-danger'>{errors.turtleName && errors.turtleName.message}</p>
-                    </div>
-                    <div className='field'>
-                      <label className='label'>SID Number</label>
-                      <div className='control is-expanded'>
-                        <input name='sidNumber' className='input' type='text' placeholder='SID Number' ref={register({})} />
-                      </div>
-                    </div>
-                    <div className='field'>
-                      <label className='label'>Stranding ID Number</label>
-                      <div className='control is-expanded'>
-                        <input name='strandingIdNumber' className='input' type='text' placeholder='Stranding ID Number' ref={register({})} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className='field is-horizontal'>
-                  <div className='field-body'>
-                    <ListField fieldName='species' labelText='Species' listItems={species} register={register} />
-                    <ListField fieldName='turtleSize' labelText='Size' listItems={turtleSizes} register={register} />
-                    <ListField fieldName='status' labelText='Status' listItems={turtleStatuses} register={register} />
-                  </div>
-                </div>
+                <FormFieldRow>
+                  <TextFormField fieldName='turtleName' labelText='Name' reactHookFormProps={reactHookFormProps} validationOptions={{required: 'Name is required'}} />
+                  <TextFormField fieldName='sidNumber' labelText='SID Number' reactHookFormProps={reactHookFormProps} />
+                  <TextFormField fieldName='strandingIdNumber' labelText='Stranding ID Number' reactHookFormProps={reactHookFormProps} />
+                </FormFieldRow>
+                <FormFieldRow>
+                  <ListFormField fieldName='species' labelText='Species' listItems={species} reactHookFormProps={reactHookFormProps} />
+                  <ListFormField fieldName='turtleSize' labelText='Size' listItems={turtleSizes} reactHookFormProps={reactHookFormProps} />
+                  <ListFormField fieldName='status' labelText='Status' listItems={turtleStatuses} reactHookFormProps={reactHookFormProps} />
+                </FormFieldRow>
               </section>
 
               <section className='tab-content'> {/* Tags */}
@@ -196,7 +134,7 @@ const SeaTurtles: React.FC = () => {
                   className='button is-danger is-fixed-width-medium'
                   value='Cancel'
                   onClick={() => onCancel()}
-                  disabled={!formState.isValid}
+                  disabled={!formState.dirty}
                 />
               </p>
 
@@ -205,7 +143,7 @@ const SeaTurtles: React.FC = () => {
                   type='submit'
                   className='button is-success is-fixed-width-medium'
                   value='Save'
-                  disabled={!formState.isValid}
+                  disabled={!formState.dirty || !formState.isValid}
                 />
               </p>
 
