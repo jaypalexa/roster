@@ -8,6 +8,7 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
 | Database | [Amazon DynamoDB](https://aws.amazon.com/dynamodb) |
 | Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
+| Mapping | Mapbox? |
 | Prompt about leaving page if is-dirty | ??? |
 
 ## Available Scripts
