@@ -1,12 +1,13 @@
-import OrganizationModel from '../../types/OrganizationModel';
-import OrganizationService from '../../services/OrganizationService';
 import React, { useEffect, useState } from 'react';
-import StatesService from '../../services/StatesService';
-import TabHelper from '../../helpers/TabHelper';
-import UnsavedChanges from '../UnsavedChanges/UnsavedChanges';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
-import { useForm } from 'react-hook-form';
+import TabHelper from '../../helpers/TabHelper';
+import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
+import OrganizationService from '../../services/OrganizationService';
+import NameValuePair from '../../types/NameValuePair';
+import OrganizationModel from '../../types/OrganizationModel';
+import UnsavedChanges from '../UnsavedChanges/UnsavedChanges';
 import './Organization.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -16,10 +17,11 @@ const Organization: React.FC = () => {
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
+  const [states, setStates] = useState([] as Array<NameValuePair>);
   const { errors, handleSubmit, formState, register, reset, watch } = useForm<OrganizationModel>({ mode: 'onChange' });
-  const states = StatesService.getStates();
 
   useEffect(() => {
+    setStates(CodeListTableService.getList(CodeTableType.States, true));
     // make async server request
     const getOrganization = async () => {
       const fetchedOrganization = await OrganizationService.getOrganization(appContext.organizationId);

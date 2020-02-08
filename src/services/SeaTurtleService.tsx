@@ -9,12 +9,12 @@ const SeaTurtleService = {
   },
   getSeaTurtles(organizationId: string): SeaTurtleModel[] {
     return [
-      { name: 'Turtle 01', sidNumber: '01', species: 'CM' } as SeaTurtleModel,
-      { name: 'Turtle 02', sidNumber: '02', species: 'EI' } as SeaTurtleModel,
-      { name: 'Turtle 03', sidNumber: '03', species: 'LO' } as SeaTurtleModel,
-      { name: 'Turtle 04', sidNumber: '04', species: 'DC' } as SeaTurtleModel,
-      { name: 'Turtle 05', sidNumber: '05', species: 'HB' } as SeaTurtleModel,
-      { name: 'Turtle 06', sidNumber: '06', species: 'XX' } as SeaTurtleModel,
+      { turtleName: 'Turtle 01', sidNumber: '01', strandingIdNumber: '101', species: 'CM' } as SeaTurtleModel,
+      { turtleName: 'Turtle 02', sidNumber: '02', strandingIdNumber: '102', species: 'EI' } as SeaTurtleModel,
+      { turtleName: 'Turtle 03', sidNumber: '03', strandingIdNumber: '103', species: 'LO' } as SeaTurtleModel,
+      { turtleName: 'Turtle 04', sidNumber: '04', strandingIdNumber: '104', species: 'DC' } as SeaTurtleModel,
+      { turtleName: 'Turtle 05', sidNumber: '05', strandingIdNumber: '105', species: 'HB' } as SeaTurtleModel,
+      { turtleName: 'Turtle 06', sidNumber: '06', strandingIdNumber: '106', species: 'XX' } as SeaTurtleModel,
     ];
   }
 };

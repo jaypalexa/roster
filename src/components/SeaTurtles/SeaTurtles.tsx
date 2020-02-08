@@ -1,14 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import SeaTurtleModel from '../../types/SeaTurtleModel';
-import SeaTurtleService from '../../services/SeaTurtleService';
-import TabHelper from '../../helpers/TabHelper';
-import UnsavedChanges from '../UnsavedChanges/UnsavedChanges';
+import { ElementLike, useForm, ValidationOptions } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
-import { useForm } from 'react-hook-form';
+import TabHelper from '../../helpers/TabHelper';
+import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
+import SeaTurtleService from '../../services/SeaTurtleService';
+import NameValuePair from '../../types/NameValuePair';
+import SeaTurtleModel from '../../types/SeaTurtleModel';
+import UnsavedChanges from '../UnsavedChanges/UnsavedChanges';
 import './SeaTurtles.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
+
+type FieldProps = {
+  fieldName: string;
+  labelText?: string;
+  //register<Element extends ElementLike = ElementLike>(): (ref: Element | null) => void;
+  register<Element extends ElementLike = ElementLike>(validationOptions: ValidationOptions): (ref: Element | null) => void;
+  // register<Element extends ElementLike = ElementLike>(name: FieldName<any>, validationOptions?: ValidationOptions): void;
+  // register<Element extends ElementLike = ElementLike>(namesWithValidationOptions: Record<FieldName<any>, ValidationOptions>): void;
+  // register<Element extends ElementLike = ElementLike>(ref: Element, validationOptions?: ValidationOptions): void;
+  // register<Element extends ElementLike = ElementLike>(refOrValidationOptions: ValidationOptions | Element | null, validationOptions?: ValidationOptions): ((ref: Element | null) => void) | void;
+  validationOptions?: ValidationOptions;
+}
+
+interface ListFieldProps extends FieldProps {
+  listItems: NameValuePair[];
+}
+
+export const ListField: React.FC<ListFieldProps> = ({fieldName, labelText, listItems, register, validationOptions}) => {
+  return (
+    <div className='field'>
+      <label className={`label ${labelText ? '' : 'hidden'}`}>{labelText}</label>
+      <div className='control is-expanded'>
+        <div className='select is-fullwidth'>
+          <select name={fieldName} ref={register(validationOptions || {})}>
+            {listItems.map((e, key) => {
+              return <option key={key} value={e.value}>{e.name}</option>;
+            })}
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+//export default ListField;
 
 const SeaTurtles: React.FC = () => {
 
@@ -16,10 +53,16 @@ const SeaTurtles: React.FC = () => {
   const [appContext, setAppContext] = useAppContext();
   const [currentSeaTurtle, setCurrentSeaTurtle] = useState({} as SeaTurtleModel);
   const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
+  const [species, setSpecies] = useState([] as Array<NameValuePair>);
+  const [turtleSizes, setTurtleSizes] = useState([] as Array<NameValuePair>);
+  const [turtleStatuses, setTurtleStatuses] = useState([] as Array<NameValuePair>);
   const { errors, handleSubmit, formState, register, reset, watch } = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const seaTurtleId = 'faceface-face-face-face-facefaceface';
 
   useEffect(() => {
+    setSpecies(CodeListTableService.getList(CodeTableType.Species, true));
+    setTurtleSizes(CodeListTableService.getList(CodeTableType.TurtleSize, true));
+    setTurtleStatuses(CodeListTableService.getList(CodeTableType.TurtleStatus, true));
     // make async server request
     const getSeaTurtle = async () => {
       const fetchedSeaTurtle = await SeaTurtleService.getSeaTurtle(seaTurtleId);
@@ -80,7 +123,7 @@ const SeaTurtles: React.FC = () => {
                 {
                   currentSeaTurtles.map((seaTurtle) => {
                     return <tr key={seaTurtle.sidNumber}>
-                      <td className='column-width-small'>{seaTurtle.name}</td>
+                      <td className='column-width-small'>{seaTurtle.turtleName}</td>
                       <td className='column-width-medium'>{seaTurtle.sidNumber}</td>
                       <td>{seaTurtle.species}</td>
                     </tr>
@@ -114,7 +157,7 @@ const SeaTurtles: React.FC = () => {
                           ref={register({ required: 'Name is required' })}
                         />
                       </div>
-                      <p className='help has-text-danger'>{errors.name && errors.name.message}</p>
+                      <p className='help has-text-danger'>{errors.turtleName && errors.turtleName.message}</p>
                     </div>
                     <div className='field'>
                       <label className='label'>SID Number</label>
@@ -123,11 +166,18 @@ const SeaTurtles: React.FC = () => {
                       </div>
                     </div>
                     <div className='field'>
-                      <label className='label'>Species</label>
+                      <label className='label'>Stranding ID Number</label>
                       <div className='control is-expanded'>
-                        <input name='species' className='input' type='text' placeholder='Species' ref={register({})} />
+                        <input name='strandingIdNumber' className='input' type='text' placeholder='Stranding ID Number' ref={register({})} />
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div className='field is-horizontal'>
+                  <div className='field-body'>
+                    <ListField fieldName='species' labelText='Species' listItems={species} register={register} />
+                    <ListField fieldName='turtleSize' labelText='Size' listItems={turtleSizes} register={register} />
+                    <ListField fieldName='status' labelText='Status' listItems={turtleStatuses} register={register} />
                   </div>
                 </div>
               </section>

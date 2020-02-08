@@ -13,7 +13,7 @@ const MenuTile: React.FC<MenuTileProps> = ({color, title, linkTo}) => {
     <article className={'tile is-child notification ' + color}>
       <h1 className='title'>{title}</h1>
       <button className='button is-dark' onClick={() => browserHistory.push(linkTo)}>{title}</button>
-    </article >
+    </article>
   );
 };
 
