@@ -1,16 +1,16 @@
 import React from 'react';
+import { ErrorMessage, useFormContext } from 'react-hook-form';
 import FormFieldProps from './FormFieldProps';
 
-export const FormField: React.FC<FormFieldProps> = ({ fieldName, labelText, reactHookFormProps, children }) => {
+export const FormField: React.FC<FormFieldProps> = ({ fieldName, labelText, children }) => {
+  const { errors } = useFormContext();
   return (
     <div className='field'>
       <label className={`label ${labelText ? '' : 'hidden'}`}>{labelText}</label>
       <div className='control is-expanded'>
         {children}
       </div>
-      { reactHookFormProps.errors && 
-        <p className='help has-text-danger'>{reactHookFormProps.errors[fieldName] && reactHookFormProps.errors[fieldName]!.message}</p>
-      }
+      <ErrorMessage errors={errors} name={fieldName} as='p' className='help has-text-danger' />
     </div>
   );
 };

@@ -7,12 +7,11 @@ interface TextFormFieldProps extends FormFieldProps {
   maxLength?: number;
 }
 
-export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, reactHookFormProps, validationOptions}) => {
+export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, validationOptions}) => {
   return (
     <InputFormField 
       fieldName={fieldName} 
       labelText={labelText} 
-      reactHookFormProps={reactHookFormProps}
       validationOptions={validationOptions}
       type='text' 
       maxLength={maxLength}
