@@ -14,7 +14,7 @@ import NumericTextFormField from '../FormFields/NumericTextFormField';
 import RadioButtonFormField from '../FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from '../FormFields/RadioButtonGroupFormField';
 import TextFormField from '../FormFields/TextFormField';
-import UnsavedChanges from '../UnsavedChanges/UnsavedChanges';
+import UnsavedChangesWhenLeavingPrompt from '../UnsavedChanges/UnsavedChangesWhenLeavingPrompt';
 import './Organization.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -28,18 +28,18 @@ const Organization: React.FC = () => {
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
   const [states, setStates] = useState([] as Array<NameValuePair>);
 
+  // console.log(JSON.stringify(formState));
+
   useEffect(() => {
     setStates(CodeListTableService.getList(CodeTableType.States, true));
     // make async server request
     const getOrganization = async () => {
-      const fetchedOrganization = await OrganizationService.getOrganization(appContext.organizationId);
-      reset(fetchedOrganization);
-      setCurrentOrganization(fetchedOrganization);
+      const organization = await OrganizationService.getOrganization(appContext.organizationId);
+      reset(organization);
+      setCurrentOrganization(organization);
     };
     getOrganization();
   }, [reset, appContext.organizationId]);
-
-  // console.log(JSON.stringify(formState));
 
   const onSubmit = handleSubmit((modifiedOrganization: OrganizationModel) => {
     // console.log('in handleSubmit(): modifiedOrganization', modifiedOrganization);
@@ -61,7 +61,7 @@ const Organization: React.FC = () => {
 
   return (
     <div id='organization'>
-      <UnsavedChanges isDirty={formState.dirty}></UnsavedChanges>
+      <UnsavedChangesWhenLeavingPrompt isDirty={formState.dirty} />
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Organization</h1>

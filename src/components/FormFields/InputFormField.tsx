@@ -13,12 +13,12 @@ interface InputFormFieldProps extends FormFieldProps {
 }
 
 export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, type, placeholder, maxLength, min, max, pattern}) => {
-  const { register, watch } = useFormContext();
+  const { formState, register, watch } = useFormContext();
   return (
     <FormField fieldName={fieldName} labelText={labelText}>
       <input 
         name={fieldName} 
-        className={`input ${validationOptions && watch ? (!watch(fieldName) ? 'is-danger' : '') : ''}`}
+        className={`input ${validationOptions && watch ? (!watch(fieldName) && formState.dirty ? 'is-danger' : '') : ''}`}
         type={type}
         ref={register(validationOptions || {})}
         maxLength={maxLength}

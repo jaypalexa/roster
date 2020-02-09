@@ -9,7 +9,7 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | Database | [Amazon DynamoDB](https://aws.amazon.com/dynamodb) |
 | Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 | Mapping | Mapbox? |
-| Prompt about leaving page if is-dirty | ??? |
+| Sea Turtles: Prompt to save changes if form is dirty and user clicks table or Add New button | ??? |
 
 ## Available Scripts
 

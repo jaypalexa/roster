@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/uuid": "^3.4.7",
     "bulma": "^0.8.0",
     "font-awesome": "^4.7.0",
     "node-sass": "^4.13.1",
@@ -14,7 +15,8 @@
     "react-router-navigation-prompt": "^1.8.10",
     "react-scripts": "3.3.1",
     "react-toastify": "^5.5.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",

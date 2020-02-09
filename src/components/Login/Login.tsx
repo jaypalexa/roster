@@ -1,9 +1,9 @@
-import AuthenticationService from '../../services/AuthenticationService';
-import browserHistory from '../../browserHistory';
-import LoginModel from '../../types/LoginModel';
 import React, { useEffect, useRef, useState } from 'react';
-import { useAppContext } from '../../contexts/AppContext';
 import { useForm } from 'react-hook-form';
+import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import AuthenticationService from '../../services/AuthenticationService';
+import LoginModel from '../../types/LoginModel';
 import './Login.sass';
 
 const Login: React.FC = () => {
