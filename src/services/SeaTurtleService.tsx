@@ -20,6 +20,14 @@ const SeaTurtleService = {
     }
     localStorage.setItem('seaTurtles', JSON.stringify(seaTurtles));
   },
+  deleteSeaTurtle(turtleId: string) {
+    const seaTurtles = this.getSeaTurtles('');
+    const index = seaTurtles.findIndex(x => x.turtleId === turtleId);
+    if (~index) {
+      seaTurtles.splice(index, 1);
+    }
+    localStorage.setItem('seaTurtles', JSON.stringify(seaTurtles));
+  },
   getSeaTurtles(organizationId: string): SeaTurtleModel[] {
     return JSON.parse(localStorage.getItem('seaTurtles') || '[]');
     // return [

@@ -12,6 +12,7 @@ const UnsavedChangesWhenLeavingPrompt: React.FC<UnsavedChangesWhenLeavingPromptP
       {({ onConfirm, onCancel }) => (
         <UnsavedChangesDialog 
           isActive={true}
+          titleText='Unsaved Changes'
           bodyText='Leave this page?  Changes you made may not be saved.'
           onConfirm={onConfirm} 
           onCancel={onCancel} 

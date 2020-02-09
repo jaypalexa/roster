@@ -1,18 +1,18 @@
+import React, { useEffect, useState } from 'react';
+import { FormContext, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import uuidv4 from 'uuid/v4';
+import { useAppContext } from '../../contexts/AppContext';
+import TabHelper from '../../helpers/TabHelper';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
+import SeaTurtleService from '../../services/SeaTurtleService';
+import NameValuePair from '../../types/NameValuePair';
+import SeaTurtleModel from '../../types/SeaTurtleModel';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import ListFormField from '../FormFields/ListFormField';
-import NameValuePair from '../../types/NameValuePair';
-import React, { useEffect, useState } from 'react';
-import SeaTurtleModel from '../../types/SeaTurtleModel';
-import SeaTurtleService from '../../services/SeaTurtleService';
-import TabHelper from '../../helpers/TabHelper';
 import TextFormField from '../FormFields/TextFormField';
 import UnsavedChangesDialog from '../UnsavedChanges/UnsavedChangesDialog';
 import UnsavedChangesWhenLeavingPrompt from '../UnsavedChanges/UnsavedChangesWhenLeavingPrompt';
-import uuidv4 from 'uuid/v4';
-import { FormContext, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
 import './SeaTurtles.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -29,9 +29,11 @@ const SeaTurtles: React.FC = () => {
   const [turtleSizes, setTurtleSizes] = useState([] as Array<NameValuePair>);
   const [turtleStatuses, setTurtleStatuses] = useState([] as Array<NameValuePair>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
-  const [showUnsavedChangesDialog, setShowUnsavedChangesDialog] = useState(false);
-  const [onUnsavedChangesConfirm, setOnUnsavedChangesConfirm] = useState(() => { });
-  const [onUnsavedChangesCancel, setOnUnsavedChangesCancel] = useState(() => { });
+  const [showYesNoDialog, setShowYesNoDialog] = useState(false);
+  const [yesNoDialogTitleText, setYesNoDialogTitleText] = useState('');
+  const [yesNoDialogBodyText, setYesNoDialogBodyText] = useState('');
+  const [onYesNoDialogConfirm, setOnYesNoConfirm] = useState(() => { });
+  const [onYesNoDialogCancel, setOnYesNoCancel] = useState(() => { });
 
   // console.log(JSON.stringify(formState));
   // console.log(JSON.stringify(methods.errors));
@@ -53,13 +55,29 @@ const SeaTurtles: React.FC = () => {
 
   const fetchSeaTurtle = (turtleId: string) => {
     // make async server request
-    console.log('In fetchSeaTurtle()', turtleId);
     const getSeaTurtle = async () => {
       const seaTurtle = await SeaTurtleService.getSeaTurtle(turtleId);
       reset(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
     };
     getSeaTurtle();
+  };
+
+  const deleteSeaTurtle = (turtleId: string) => {
+    // make async server request
+    const deleteSeaTurtle = async () => {
+      await SeaTurtleService.deleteSeaTurtle(turtleId);
+      const seaTurtle = {} as SeaTurtleModel;
+      reset(seaTurtle);
+      setCurrentSeaTurtle(seaTurtle);
+      const index = currentSeaTurtles.findIndex(x => x.turtleId === turtleId);
+      if (~index) {
+        var updatedCurrentSeaTurtles = [...currentSeaTurtles];
+        updatedCurrentSeaTurtles.splice(index, 1)
+        setCurrentSeaTurtles(updatedCurrentSeaTurtles);
+      }
+    };
+    deleteSeaTurtle();
   };
 
   const onAddNewButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -72,42 +90,67 @@ const SeaTurtles: React.FC = () => {
     };
 
     if (formState.dirty) {
-      setOnUnsavedChangesConfirm(() => async () => {
+      setYesNoDialogTitleText('Unsaved Changes');
+      setYesNoDialogBodyText('Save changes?');
+      setOnYesNoConfirm(() => async () => {
         await onSubmit();
         handleEvent();
-        setShowUnsavedChangesDialog(false);
+        setShowYesNoDialog(false);
       });
-      setOnUnsavedChangesCancel(() => () => {
+      setOnYesNoCancel(() => () => {
         handleEvent();
-        setShowUnsavedChangesDialog(false);
+        setShowYesNoDialog(false);
       });
-      setShowUnsavedChangesDialog(true);
+      setShowYesNoDialog(true);
     } else {
       handleEvent();
     }
   };
 
-  const onTurtleRowClick = (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
-    const turtleId = event.currentTarget.getAttribute('data-item') || '';
+  const onEditTurtleClick = (event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>) => {
+    const turtleId = event.currentTarget.parentElement!.getAttribute('data-item') || '';
+    console.log('turtleId', turtleId);
     const handleEvent = () => {
       fetchSeaTurtle(turtleId);
       setIsFormEnabled(true);
     };
 
     if (formState.dirty) {
-      setOnUnsavedChangesConfirm(() => async () => {
+      setYesNoDialogTitleText('Unsaved Changes');
+      setYesNoDialogBodyText('Save changes?');
+      setOnYesNoConfirm(() => async () => {
         await onSubmit();
         handleEvent();
-        setShowUnsavedChangesDialog(false);
+        setShowYesNoDialog(false);
       });
-      setOnUnsavedChangesCancel(() => () => {
+      setOnYesNoCancel(() => () => {
         handleEvent();
-        setShowUnsavedChangesDialog(false);
+        setShowYesNoDialog(false);
       });
-      setShowUnsavedChangesDialog(true);
+      setShowYesNoDialog(true);
     } else {
       handleEvent();
     }
+  };
+
+  const onDeleteTurtleClick = (event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>) => {
+    const turtleId = event.currentTarget.parentElement!.getAttribute('data-item') || '';
+    console.log('turtleId', turtleId);
+    const handleEvent = () => {
+      deleteSeaTurtle(turtleId);
+      setIsFormEnabled(false);
+    };
+
+    setYesNoDialogTitleText('Confirm Deletion');
+    setYesNoDialogBodyText(`Delete turtle '${turtleId}' ?`);
+    setOnYesNoConfirm(() => async () => {
+        handleEvent();
+        setShowYesNoDialog(false);
+      });
+      setOnYesNoCancel(() => () => {
+        setShowYesNoDialog(false);
+      });
+      setShowYesNoDialog(true);
   };
 
   const onSubmit = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
@@ -134,7 +177,13 @@ const SeaTurtles: React.FC = () => {
   return (
     <div id='seaTurtle'>
       <UnsavedChangesWhenLeavingPrompt isDirty={formState.dirty} />
-      <UnsavedChangesDialog isActive={showUnsavedChangesDialog} onConfirm={onUnsavedChangesConfirm} onCancel={onUnsavedChangesCancel} />
+      <UnsavedChangesDialog 
+        isActive={showYesNoDialog} 
+        titleText={yesNoDialogTitleText}
+        bodyText={yesNoDialogBodyText}
+        onConfirm={onYesNoDialogConfirm}
+        onCancel={onYesNoDialogCancel}
+      />
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Sea Turtles</h1>
@@ -154,6 +203,16 @@ const SeaTurtles: React.FC = () => {
           <table className='table is-fullwidth is-bordered is-narrow table-header'>
             <thead>
               <tr>
+                <th className='column-width-x-small'>
+                  <span className='icon transparent'>
+                    <i className='fa fa-pencil'></i>
+                  </span>
+                </th>
+                <th className='column-width-x-small'>
+                  <span className='icon transparent'>
+                    <i className='fa fa-trash'></i>
+                  </span>
+                </th>
                 <th className='column-width-small'>Name</th>
                 <th className='column-width-medium'>SID #</th>
                 <th className='column-width-small'>Species</th>
@@ -167,7 +226,17 @@ const SeaTurtles: React.FC = () => {
               <tbody>
                 {
                   currentSeaTurtles.map((seaTurtle) => {
-                    return <tr key={seaTurtle.sidNumber} data-item={seaTurtle.turtleId} onClick={onTurtleRowClick}>
+                    return <tr key={seaTurtle.turtleId} data-item={seaTurtle.turtleId}>
+                      <td className='column-width-x-small cursor-pointer' onClick={onEditTurtleClick}>
+                        <span className='icon'>
+                          <i className='fa fa-pencil'></i>
+                        </span>
+                      </td>
+                      <td className='column-width-x-small cursor-pointer' onClick={onDeleteTurtleClick}>
+                        <span className='icon'>
+                          <i className='fa fa-trash'></i>
+                        </span>
+                      </td>
                       <td className='column-width-small'>{seaTurtle.turtleName}</td>
                       <td className='column-width-medium'>{seaTurtle.sidNumber}</td>
                       <td className='column-width-small'>{seaTurtle.species}</td>
