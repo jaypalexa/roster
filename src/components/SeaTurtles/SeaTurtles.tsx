@@ -8,6 +8,7 @@ import CodeListTableService, { CodeTableType } from '../../services/CodeTableLis
 import SeaTurtleService from '../../services/SeaTurtleService';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
+import DateFormField from '../FormFields/DateFormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import ListFormField from '../FormFields/ListFormField';
 import TextFormField from '../FormFields/TextFormField';
@@ -28,6 +29,7 @@ const SeaTurtles: React.FC = () => {
   const [species, setSpecies] = useState([] as Array<NameValuePair>);
   const [turtleSizes, setTurtleSizes] = useState([] as Array<NameValuePair>);
   const [turtleStatuses, setTurtleStatuses] = useState([] as Array<NameValuePair>);
+  const [counties, setCounties] = useState([] as Array<NameValuePair>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
   const [showYesNoDialog, setShowYesNoDialog] = useState(false);
   const [yesNoDialogTitleText, setYesNoDialogTitleText] = useState('');
@@ -39,6 +41,7 @@ const SeaTurtles: React.FC = () => {
   // console.log(JSON.stringify(methods.errors));
 
   useEffect(() => {
+    setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setSpecies(CodeListTableService.getList(CodeTableType.Species, true));
     setTurtleSizes(CodeListTableService.getList(CodeTableType.TurtleSize, true));
     setTurtleStatuses(CodeListTableService.getList(CodeTableType.TurtleStatus, true));
@@ -271,6 +274,11 @@ const SeaTurtles: React.FC = () => {
                       <ListFormField fieldName='species' labelText='Species' listItems={species} />
                       <ListFormField fieldName='turtleSize' labelText='Size' listItems={turtleSizes} />
                       <ListFormField fieldName='status' labelText='Status' listItems={turtleStatuses} />
+                    </FormFieldRow>
+                    <FormFieldRow>
+                      <DateFormField fieldName='dateAcquired' labelText='Date Acquired' />
+                      <TextFormField fieldName='acquiredFrom' labelText='Acquired From' />
+                      <ListFormField fieldName='acquiredCounty' labelText='County' listItems={counties} />
                     </FormFieldRow>
                   </section>
 

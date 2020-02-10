@@ -3,13 +3,10 @@ import { FormContext, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
 import TabHelper from '../../helpers/TabHelper';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import OrganizationService from '../../services/OrganizationService';
-import NameValuePair from '../../types/NameValuePair';
 import OrganizationModel from '../../types/OrganizationModel';
 import DateFormField from '../FormFields/DateFormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
-import ListFormField from '../FormFields/ListFormField';
 import NumericTextFormField from '../FormFields/NumericTextFormField';
 import RadioButtonFormField from '../FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from '../FormFields/RadioButtonGroupFormField';
@@ -26,12 +23,10 @@ const Organization: React.FC = () => {
   const methods = useForm<OrganizationModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
-  const [states, setStates] = useState([] as Array<NameValuePair>);
 
   // console.log(JSON.stringify(formState));
 
   useEffect(() => {
-    setStates(CodeListTableService.getList(CodeTableType.States, true));
     // make async server request
     const getOrganization = async () => {
       const organization = await OrganizationService.getOrganization(appContext.organizationId);
@@ -91,7 +86,7 @@ const Organization: React.FC = () => {
 
                   <FormFieldRow>
                     <TextFormField fieldName='city' labelText='City' />
-                    <ListFormField fieldName='state' labelText='State' listItems={states} />
+                    <TextFormField fieldName='state' labelText='State' value='Florida' disabled={true} />
                     <TextFormField fieldName='zipCode' labelText='ZIP Code' maxLength={10} validationOptions={{ maxLength: { value: 10, message: 'ZIP Code cannot exceed 10 characters' } }} />
                   </FormFieldRow>
 

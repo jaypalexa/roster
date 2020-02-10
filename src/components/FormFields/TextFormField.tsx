@@ -5,9 +5,11 @@ import InputFormField from './InputFormField';
 interface TextFormFieldProps extends FormFieldProps {
   placeholder?: string;
   maxLength?: number;
+  disabled?: boolean;
+  value?: string;
 }
 
-export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, validationOptions}) => {
+export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, disabled, value, validationOptions}) => {
   return (
     <InputFormField 
       fieldName={fieldName} 
@@ -16,6 +18,8 @@ export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelTex
       type='text' 
       maxLength={maxLength}
       placeholder={placeholder} 
+      disabled={disabled}
+      value={value}
     />
   );
 };
