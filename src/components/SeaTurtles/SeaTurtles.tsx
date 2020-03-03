@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../contexts/AppContext';
 import TabHelper from '../../helpers/TabHelper';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
@@ -111,7 +111,7 @@ const SeaTurtles: React.FC = () => {
   };
 
   const onEditTurtleClick = (event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>) => {
-    const turtleId = event.currentTarget.parentElement!.getAttribute('data-item') || '';
+    const turtleId = event.currentTarget.parentElement!.getAttribute('data-turtle-id') || '';
     console.log('turtleId', turtleId);
     const handleEvent = () => {
       fetchSeaTurtle(turtleId);
@@ -137,15 +137,17 @@ const SeaTurtles: React.FC = () => {
   };
 
   const onDeleteTurtleClick = (event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>) => {
-    const turtleId = event.currentTarget.parentElement!.getAttribute('data-item') || '';
+    const turtleId = event.currentTarget.parentElement!.getAttribute('data-turtle-id') || '';
+    const turtleName = event.currentTarget.parentElement!.getAttribute('data-turtle-name') || '';
     console.log('turtleId', turtleId);
+    console.log('turtleName', turtleName);
     const handleEvent = () => {
       deleteSeaTurtle(turtleId);
       setIsFormEnabled(false);
     };
 
     setYesNoDialogTitleText('Confirm Deletion');
-    setYesNoDialogBodyText(`Delete turtle '${turtleId}' ?`);
+    setYesNoDialogBodyText(`Delete turtle '${turtleName}' ?`);
     setOnYesNoConfirm(() => async () => {
         handleEvent();
         setShowYesNoDialog(false);
@@ -229,7 +231,7 @@ const SeaTurtles: React.FC = () => {
               <tbody>
                 {
                   currentSeaTurtles.map((seaTurtle) => {
-                    return <tr key={seaTurtle.turtleId} data-item={seaTurtle.turtleId}>
+                    return <tr key={seaTurtle.turtleId} data-turtle-id={seaTurtle.turtleId} data-turtle-name={seaTurtle.turtleName}>
                       <td className='column-width-x-small cursor-pointer' onClick={onEditTurtleClick}>
                         <span className='icon'>
                           <i className='fa fa-pencil'></i>
