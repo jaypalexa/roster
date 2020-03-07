@@ -92,7 +92,7 @@ const Login: React.FC = () => {
                   type='submit'
                   className='button is-success is-fixed-width-medium'
                   value='Log In'
-                  disabled={!formState.isValid}
+                  disabled={!(formState.isValid && formState.dirty)}
                 />
               </p>
             </div>

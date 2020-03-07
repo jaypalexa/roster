@@ -151,7 +151,7 @@ const Organization: React.FC = () => {
                     type='submit'
                     className='button is-success is-fixed-width-medium'
                     value='Save'
-                    disabled={!formState.dirty || !formState.isValid}
+                    disabled={!(formState.isValid && formState.dirty)}
                   />
                 </p>
 
