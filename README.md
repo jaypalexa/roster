@@ -5,13 +5,13 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 
 | Item | Notes |
 |------|-------|
+| Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button | Make Yes/No into Yes/No/Cancel |
+| Make app a basic PWA | figure out how to force update |
 | User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
 | Database | [Amazon DynamoDB](https://aws.amazon.com/dynamodb) |
 | Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 | Mapping | Mapbox? |
-| Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button | Make Yes/No into Yes/No/Cancel |
 | ~~Data Table~~ | https://www.npmjs.com/package/react-data-table-component |
-| ~~Make app a basic PWA~~ | done |
 
 ## Available Scripts
 
