@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
@@ -39,6 +40,52 @@ const SeaTurtles: React.FC = () => {
 
   // console.log(JSON.stringify(formState));
   // console.log(JSON.stringify(methods.errors));
+
+  const tableColumns = [
+      {
+        name: '',
+        ignoreRowClick: true,
+        maxWidth: '2rem',
+        minWidth: '2rem',
+        style: '{padding-left: 1rem}',
+        cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditTurtleClick(row.turtleId, event)}}><i className='fa fa-pencil'></i></span>,
+      },
+      {
+        name: '',
+        ignoreRowClick: true,
+        maxWidth: '2rem',
+        minWidth: '2rem',
+        cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteTurtleClick(row.turtleId, row.turtleName, event)}}><i className='fa fa-trash'></i></span>,
+      },
+      {
+      name: 'Name',
+      selector: 'turtleName',
+      sortable: true
+    },
+    {
+      name: 'SID #',
+      selector: 'sidNumber',
+      sortable: true
+    },
+    {
+      name: 'Species',
+      selector: 'species',
+      sortable: true,
+      hide: 599
+    },
+    {
+      name: 'Size',
+      selector: 'turtleSize',
+      sortable: true,
+      hide: 599
+    },
+    {
+      name: 'Status',
+      selector: 'status',
+      sortable: true,
+      hide: 599
+    },
+  ];
 
   useEffect(() => {
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
@@ -110,8 +157,7 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onEditTurtleClick = (event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>) => {
-    const turtleId = event.currentTarget.parentElement!.getAttribute('data-turtle-id') || '';
+  const onEditTurtleClick = (turtleId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     console.log('turtleId', turtleId);
     const handleEvent = () => {
       fetchSeaTurtle(turtleId);
@@ -136,9 +182,7 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onDeleteTurtleClick = (event: React.MouseEvent<HTMLTableDataCellElement, MouseEvent>) => {
-    const turtleId = event.currentTarget.parentElement!.getAttribute('data-turtle-id') || '';
-    const turtleName = event.currentTarget.parentElement!.getAttribute('data-turtle-name') || '';
+  const onDeleteTurtleClick = (turtleId: string, turtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     console.log('turtleId', turtleId);
     console.log('turtleName', turtleName);
     const handleEvent = () => {
@@ -170,6 +214,8 @@ const SeaTurtles: React.FC = () => {
     } else {
       currentSeaTurtles.push(patchedSeaTurtle);
     }
+    setCurrentSeaTurtles([...currentSeaTurtles]);
+
     toast.success('Record saved');
   });
 
@@ -205,54 +251,19 @@ const SeaTurtles: React.FC = () => {
               </p>
             </div>
           </div>
-          <table className='table is-fullwidth is-bordered is-narrow table-header'>
-            <thead>
-              <tr>
-                <th className='column-width-x-small'>
-                  <span className='icon transparent'>
-                    <i className='fa fa-pencil'></i>
-                  </span>
-                </th>
-                <th className='column-width-x-small'>
-                  <span className='icon transparent'>
-                    <i className='fa fa-trash'></i>
-                  </span>
-                </th>
-                <th className='column-width-small'>Name</th>
-                <th className='column-width-medium'>SID #</th>
-                <th className='column-width-small'>Species</th>
-                <th className='column-width-medium'>Size</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-          </table>
-          <div className='sea-turtle-table-container'>
-            <table className='table is-striped is-hoverable is-fullwidth is-bordered is-narrow'>
-              <tbody>
-                {
-                  currentSeaTurtles.map((seaTurtle) => {
-                    return <tr key={seaTurtle.turtleId} data-turtle-id={seaTurtle.turtleId} data-turtle-name={seaTurtle.turtleName}>
-                      <td className='column-width-x-small cursor-pointer' onClick={onEditTurtleClick}>
-                        <span className='icon'>
-                          <i className='fa fa-pencil'></i>
-                        </span>
-                      </td>
-                      <td className='column-width-x-small cursor-pointer' onClick={onDeleteTurtleClick}>
-                        <span className='icon'>
-                          <i className='fa fa-trash'></i>
-                        </span>
-                      </td>
-                      <td className='column-width-small'>{seaTurtle.turtleName}</td>
-                      <td className='column-width-medium'>{seaTurtle.sidNumber}</td>
-                      <td className='column-width-small'>{seaTurtle.species}</td>
-                      <td className='column-width-medium'>{seaTurtle.turtleSize}</td>
-                      <td>{seaTurtle.status}</td>
-                    </tr>
-                  })
-                }
-              </tbody>
-            </table>
-          </div>
+
+          <DataTable
+            title='Sea Turtles'
+            columns={tableColumns}
+            data={currentSeaTurtles}
+            keyField='turtleId'
+            defaultSortField='turtleName'
+            noHeader={true}
+            fixedHeader={true}
+            fixedHeaderScrollHeight='9rem'
+          />
+
+          <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
