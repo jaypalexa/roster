@@ -1,5 +1,3 @@
-import AuthenticationService from '../../services/AuthenticationService';
-import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
@@ -7,14 +5,16 @@ import Login from 'components/Login/Login';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
-import React, { useState } from 'react';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
+import React, { useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
-import './App.sass';
 import 'react-toastify/dist/ReactToastify.css';
+import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import AuthenticationService from '../../services/AuthenticationService';
+import './App.sass';
 
 // import logo from './logo.svg';
 
@@ -109,6 +109,8 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
                 GitHub
               </a>
+              &nbsp;|&nbsp;
+              v 0.20200312.1826
             </p>
           </div>
         </div>

@@ -11,7 +11,7 @@ import NumericTextFormField from '../FormFields/NumericTextFormField';
 import RadioButtonFormField from '../FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from '../FormFields/RadioButtonGroupFormField';
 import TextFormField from '../FormFields/TextFormField';
-import UnsavedChangesWhenLeavingPrompt from '../UnsavedChanges/UnsavedChangesWhenLeavingPrompt';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './Organization.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -56,7 +56,7 @@ const Organization: React.FC = () => {
 
   return (
     <div id='organization'>
-      <UnsavedChangesWhenLeavingPrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formState.dirty} />
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Organization</h1>

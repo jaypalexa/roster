@@ -1,14 +1,15 @@
 import React from 'react';
 
-interface UnsavedChangesDialogProps {
+interface YesNoCancelDialogProps {
   isActive: boolean,
   titleText?: string,
   bodyText?: string,
-  onConfirm: any,
+  onYes: any,
+  onNo: any,
   onCancel: any
 }
 
-const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({isActive, titleText, bodyText, onConfirm, onCancel}) => {
+const YesNoCancelDialog: React.FC<YesNoCancelDialogProps> = ({isActive, titleText, bodyText, onYes, onNo, onCancel}) => {
   return (
     <div className={`modal ${isActive ? 'is-active' : ''}`}>
       <div className='modal-background'></div>
@@ -20,12 +21,13 @@ const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({isActive, ti
           <p>{bodyText}</p>
         </section>
         <footer className='modal-card-foot'>
-          <button className='button is-success' onClick={onConfirm}>Yes</button>
-          <button className='button is-danger' onClick={onCancel}>No</button>
+          <button className='button is-success' onClick={onYes}>Yes</button>
+          <button className='button is-danger' onClick={onNo}>No</button>
+          <button className='button is-info' onClick={onCancel}>Cancel</button>
         </footer>
       </div>
     </div>
   );
 };
 
-export default UnsavedChangesDialog;
+export default YesNoCancelDialog;

@@ -9,12 +9,12 @@ import CodeListTableService, { CodeTableType } from '../../services/CodeTableLis
 import SeaTurtleService from '../../services/SeaTurtleService';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
+import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import DateFormField from '../FormFields/DateFormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import ListFormField from '../FormFields/ListFormField';
 import TextFormField from '../FormFields/TextFormField';
-import UnsavedChangesDialog from '../UnsavedChanges/UnsavedChangesDialog';
-import UnsavedChangesWhenLeavingPrompt from '../UnsavedChanges/UnsavedChangesWhenLeavingPrompt';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './SeaTurtles.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -32,11 +32,12 @@ const SeaTurtles: React.FC = () => {
   const [turtleStatuses, setTurtleStatuses] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
-  const [showYesNoDialog, setShowYesNoDialog] = useState(false);
-  const [yesNoDialogTitleText, setYesNoDialogTitleText] = useState('');
-  const [yesNoDialogBodyText, setYesNoDialogBodyText] = useState('');
-  const [onYesNoDialogConfirm, setOnYesNoConfirm] = useState(() => { });
-  const [onYesNoDialogCancel, setOnYesNoCancel] = useState(() => { });
+  const [showSaveChangesDialog, setShowSaveChangesDialog] = useState(false);
+  const [saveChangesDialogTitleText, setSaveChangesDialogTitleText] = useState('');
+  const [saveChangesDialogBodyText, setSaveChangesDialogBodyText] = useState('');
+  const [onSaveChangesYes, setOnSaveChangesYes] = useState(() => { });
+  const [onSaveChangesNo, setOnSaveChangesNo] = useState(() => { });
+  const [onSaveChangesCancel, setOnSaveChangesCancel] = useState(() => { });
 
   // console.log(JSON.stringify(formState));
   // console.log(JSON.stringify(methods.errors));
@@ -140,18 +141,21 @@ const SeaTurtles: React.FC = () => {
     };
 
     if (formState.dirty) {
-      setYesNoDialogTitleText('Unsaved Changes');
-      setYesNoDialogBodyText('Save changes?');
-      setOnYesNoConfirm(() => async () => {
+      setSaveChangesDialogTitleText('Unsaved Changes');
+      setSaveChangesDialogBodyText('Save changes?');
+      setOnSaveChangesYes(() => async () => {
         await onSubmit();
         handleEvent();
-        setShowYesNoDialog(false);
+        setShowSaveChangesDialog(false);
       });
-      setOnYesNoCancel(() => () => {
+      setOnSaveChangesNo(() => () => {
         handleEvent();
-        setShowYesNoDialog(false);
+        setShowSaveChangesDialog(false);
       });
-      setShowYesNoDialog(true);
+      setOnSaveChangesCancel(() => () => {
+        setShowSaveChangesDialog(false);
+      });
+      setShowSaveChangesDialog(true);
     } else {
       handleEvent();
     }
@@ -165,18 +169,21 @@ const SeaTurtles: React.FC = () => {
     };
 
     if (formState.dirty) {
-      setYesNoDialogTitleText('Unsaved Changes');
-      setYesNoDialogBodyText('Save changes?');
-      setOnYesNoConfirm(() => async () => {
+      setSaveChangesDialogTitleText('Unsaved Changes');
+      setSaveChangesDialogBodyText('Save changes?');
+      setOnSaveChangesYes(() => async () => {
         await onSubmit();
         handleEvent();
-        setShowYesNoDialog(false);
+        setShowSaveChangesDialog(false);
       });
-      setOnYesNoCancel(() => () => {
+      setOnSaveChangesNo(() => () => {
         handleEvent();
-        setShowYesNoDialog(false);
+        setShowSaveChangesDialog(false);
       });
-      setShowYesNoDialog(true);
+      setOnSaveChangesCancel(() => () => {
+        setShowSaveChangesDialog(false);
+      });
+      setShowSaveChangesDialog(true);
     } else {
       handleEvent();
     }
@@ -190,16 +197,19 @@ const SeaTurtles: React.FC = () => {
       setIsFormEnabled(false);
     };
 
-    setYesNoDialogTitleText('Confirm Deletion');
-    setYesNoDialogBodyText(`Delete turtle '${turtleName}' ?`);
-    setOnYesNoConfirm(() => async () => {
+    setSaveChangesDialogTitleText('Confirm Deletion');
+    setSaveChangesDialogBodyText(`Delete turtle '${turtleName}' ?`);
+    setOnSaveChangesYes(() => async () => {
         handleEvent();
-        setShowYesNoDialog(false);
+        setShowSaveChangesDialog(false);
       });
-      setOnYesNoCancel(() => () => {
-        setShowYesNoDialog(false);
+      setOnSaveChangesNo(() => () => {
+        setShowSaveChangesDialog(false);
       });
-      setShowYesNoDialog(true);
+      setOnSaveChangesCancel(() => () => {
+        setShowSaveChangesDialog(false);
+      });
+      setShowSaveChangesDialog(true);
   };
 
   const onSubmit = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
@@ -227,13 +237,14 @@ const SeaTurtles: React.FC = () => {
 
   return (
     <div id='seaTurtle'>
-      <UnsavedChangesWhenLeavingPrompt isDirty={formState.dirty} />
-      <UnsavedChangesDialog 
-        isActive={showYesNoDialog} 
-        titleText={yesNoDialogTitleText}
-        bodyText={yesNoDialogBodyText}
-        onConfirm={onYesNoDialogConfirm}
-        onCancel={onYesNoDialogCancel}
+      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <YesNoCancelDialog 
+        isActive={showSaveChangesDialog} 
+        titleText={saveChangesDialogTitleText}
+        bodyText={saveChangesDialogBodyText}
+        onYes={onSaveChangesYes}
+        onNo={onSaveChangesNo}
+        onCancel={onSaveChangesCancel}
       />
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
