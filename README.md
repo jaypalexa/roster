@@ -5,7 +5,7 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 
 | Item | Notes |
 |------|-------|
-| Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button | Make Yes/No into Yes/No/Cancel |
+| ~~Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button~~ | ~~Make Yes/No into Yes/No/Cancel~~ |
 | Make app a basic PWA | figure out how to force update |
 | User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
 | Database | [Amazon DynamoDB](https://aws.amazon.com/dynamodb) |

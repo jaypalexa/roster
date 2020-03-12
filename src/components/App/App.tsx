@@ -110,7 +110,7 @@ const App: React.FC = () => {
                 GitHub
               </a>
               &nbsp;|&nbsp;
-              v 0.20200312.1826
+              v0.20200312.1859
             </p>
           </div>
         </div>
