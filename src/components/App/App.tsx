@@ -1,3 +1,6 @@
+import * as serviceWorker from '../../serviceWorker';
+import AuthenticationService from '../../services/AuthenticationService';
+import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
@@ -5,20 +8,36 @@ import Login from 'components/Login/Login';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
+import React, { useEffect, useState } from 'react';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
-import React, { useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
-import AuthenticationService from '../../services/AuthenticationService';
 import './App.sass';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import logo from './logo.svg';
 
 const App: React.FC = () => {
+
+  const [showReload, setShowReload] = React.useState(false);
+  const [waitingWorker, setWaitingWorker] = React.useState<ServiceWorker | null>(null);
+
+  useEffect(() => {
+    serviceWorker.register({ onUpdate: onSWUpdate });
+  }, []);
+
+  const onSWUpdate = (registration: ServiceWorkerRegistration) => {
+    setShowReload(true);
+    setWaitingWorker(registration.waiting);
+  };
+
+  const reloadPage = () => {
+    waitingWorker?.postMessage({ type: 'SKIP_WAITING' });
+    setShowReload(false);
+    window.location.reload(true);
+  };
 
   document.addEventListener('DOMContentLoaded', () => {
     const $navbarBurger = document.querySelector('.navbar-burger') as HTMLDivElement;
@@ -109,8 +128,8 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
                 GitHub
               </a>
-              &nbsp;|&nbsp;
-              v0.20200312.1859
+              &nbsp;|&nbsp;v0.20200314.1408
+              {showReload ? <div><span>(</span><span className='update-available' onClick={reloadPage}>update available</span><span>)</span></div> : null}
             </p>
           </div>
         </div>
