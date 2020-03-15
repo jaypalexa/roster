@@ -90,5 +90,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 ### Service Workers
 
 [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers)
+
 [The Service Worker Lifecycle](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle)
+
 [Service Worker Registration](https://developers.google.com/web/fundamentals/primers/service-workers/registration)
