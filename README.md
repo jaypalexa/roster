@@ -10,7 +10,7 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
 | Database | [Amazon DynamoDB](https://aws.amazon.com/dynamodb) |
 | Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
-| Mapping | Mapbox? |
+| Mapping | [Mapbox](https://www.mapbox.com/)? or [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/)? [article](https://www.smashingmagazine.com/2020/02/javascript-maps-react-leaflet/) |
 | ~~Data Table~~ | https://www.npmjs.com/package/react-data-table-component |
 
 ## Available Scripts
@@ -94,3 +94,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 [The Service Worker Lifecycle](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle)
 
 [Service Worker Registration](https://developers.google.com/web/fundamentals/primers/service-workers/registration)
+
+### Notes
+
+[How to make react-hook-form work with multiple forms in one page?](https://stackoverflow.com/questions/60276510/how-to-make-react-hook-form-work-with-multiple-forms-in-one-page)
+
