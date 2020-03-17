@@ -304,6 +304,11 @@ const SeaTurtles: React.FC = () => {
                       <TextFormField fieldName='acquiredFrom' labelText='Acquired From' />
                       <ListFormField fieldName='acquiredCounty' labelText='County' listItems={counties} />
                     </FormFieldRow>
+                    <FormFieldRow>
+                      <DateFormField fieldName='dateRelinquished' labelText='Date Relinquished' />
+                      <TextFormField fieldName='relinquishedFrom' labelText='Relinquished From' />
+                      <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} />
+                    </FormFieldRow>
                   </section>
 
                   <section className='tab-content'> {/* Tags */}

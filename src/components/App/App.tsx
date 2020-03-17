@@ -126,16 +126,14 @@ const App: React.FC = () => {
             <Route component={NotFound} />
           </Switch>
           <div className='has-text-centered bottom-panel'>
-            <p>
               Copyright &copy; 2006-2020 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='GitHub'>TurtleGeek.com</a>
               &nbsp;|&nbsp;
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
                 GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200315.1146
-              {showReload ? <div><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></div> : null}
-              {!showReload ? <div><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></div> : null}
-            </p>
+              &nbsp;|&nbsp;v0.20200317.1922
+              {showReload ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
+              {!showReload ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
           </div>
         </div>
 
