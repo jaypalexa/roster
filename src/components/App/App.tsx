@@ -21,29 +21,10 @@ import './App.sass';
 
 const App: React.FC = () => {
 
-  const [showReload, setShowReload] = React.useState(false);
+  const [isShowReloadPage, setIsShowReloadPage] = React.useState(false);
   const [waitingWorker, setWaitingWorker] = React.useState<ServiceWorker | null>(null);
 
   useEffect(() => {
-    serviceWorker.register({ onUpdate: onSWUpdate });
-  }, []);
-
-  const onSWUpdate = (registration: ServiceWorkerRegistration) => {
-    setShowReload(true);
-    setWaitingWorker(registration.waiting);
-  };
-
-  const reloadPage = () => {
-    waitingWorker?.postMessage({ type: 'SKIP_WAITING' });
-    setShowReload(false);
-    window.location.reload(true);
-  };
-
-  const checkForUpdate = () => {
-    navigator.serviceWorker.ready.then(registration => { registration.update(); })
-  };
-
-  document.addEventListener('DOMContentLoaded', () => {
     const $navbarBurger = document.querySelector('.navbar-burger') as HTMLDivElement;
     $navbarBurger.addEventListener('click', () => {
       const target = $navbarBurger.dataset.target || '';
@@ -51,7 +32,41 @@ const App: React.FC = () => {
       $navbarBurger.classList.toggle('is-active');
       $target.classList.toggle('is-active');
     });
-  });
+
+    serviceWorker.register({ onUpdate: onSWUpdate });
+    checkForUpdate();
+  }, []);
+
+  const onSWUpdate = (registration: ServiceWorkerRegistration) => {
+    console.log('onSWUpdate');
+    updateAvailable(registration.waiting);
+  };
+
+  const updateAvailable = (registrationWaiting: ServiceWorker | null) => {
+    setIsShowReloadPage(true);
+    setWaitingWorker(registrationWaiting);
+  }
+
+  const reloadPage = () => {
+    waitingWorker?.postMessage({ type: 'SKIP_WAITING' });
+    setIsShowReloadPage(false);
+    window.location.reload(true);
+  };
+
+  const checkForUpdate = () => {
+    //console.log('serviceWorker', serviceWorker);
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(registration => { 
+        //console.log('registration', registration);
+        if (registration.waiting) {
+          //console.log('registration.waiting', registration.waiting);
+          updateAvailable(registration.waiting);
+        } else {
+          registration.update(); 
+        }
+      })
+    }
+  };
 
   const [appContext, setAppContext] = useAppContext();
   const [triggerRefresh, setTriggerRefresh] = useState(false);
@@ -131,9 +146,9 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
                 GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200317.1940
-              {showReload ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
-              {!showReload ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
+              &nbsp;|&nbsp;v0.20200322.1433
+              {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
+              {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
           </div>
         </div>
 

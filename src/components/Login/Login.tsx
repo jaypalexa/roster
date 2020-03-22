@@ -44,7 +44,7 @@ const Login: React.FC = () => {
   //   reset(currentLogin);
   // };
 
-  console.log(JSON.stringify(formState));
+  //console.log(JSON.stringify(formState));
   //console.log(JSON.stringify(errors.userName.message));
 
   return (
