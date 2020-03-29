@@ -90,7 +90,7 @@ const App: React.FC = () => {
 
     serviceWorker.register({ onUpdate: onSWUpdate });
     checkForUpdate();
-  }, [checkForUpdate]);
+  }, [checkForUpdate, onSWUpdate]);
 
   return (
     //<img src={logo} className='App-logo' alt='logo' />
@@ -145,7 +145,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
                 GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200329.1400
+              &nbsp;|&nbsp;v0.20200329.1402
               {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
               {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
           </div>
