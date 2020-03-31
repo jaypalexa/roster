@@ -303,12 +303,16 @@ const SeaTurtles: React.FC = () => {
                       <DateFormField fieldName='dateAcquired' labelText='Date Acquired' />
                       <TextFormField fieldName='acquiredFrom' labelText='Acquired From' />
                       <ListFormField fieldName='acquiredCounty' labelText='County' listItems={counties} />
+                      <TextFormField fieldName='acquiredLatitude' labelText='Latitude' />
+                      <TextFormField fieldName='acquiredLongitude' labelText='Longitude' />
                     </FormFieldRow>
                     <FormFieldRow>
                       <DateFormField fieldName='dateRelinquished' labelText='Date Relinquished' />
                       <TextFormField fieldName='relinquishedFrom' labelText='Relinquished From' />
                       <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} />
-                    </FormFieldRow>
+                      <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
+                      <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
+                     </FormFieldRow>
                   </section>
 
                   <section className='tab-content'> {/* Tags */}
