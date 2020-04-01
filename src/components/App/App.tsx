@@ -1,3 +1,6 @@
+import * as serviceWorker from '../../serviceWorker';
+import AuthenticationService from '../../services/AuthenticationService';
+import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
@@ -5,17 +8,14 @@ import Login from 'components/Login/Login';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
+import React, { useCallback, useEffect, useState } from 'react';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
-import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
-import AuthenticationService from '../../services/AuthenticationService';
-import * as serviceWorker from '../../serviceWorker';
 import './App.sass';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import logo from './logo.svg';
 
@@ -45,13 +45,13 @@ const App: React.FC = () => {
   const checkForUpdate = useCallback(() => {
     //console.log('serviceWorker', serviceWorker);
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then(registration => { 
+      navigator.serviceWorker.ready.then(registration => {
         //console.log('registration', registration);
         if (registration.waiting) {
           //console.log('registration.waiting', registration.waiting);
           updateAvailable(registration.waiting);
         } else {
-          registration.update(); 
+          registration.update();
         }
       })
     }
@@ -140,14 +140,14 @@ const App: React.FC = () => {
             <Route component={NotFound} />
           </Switch>
           <div className='has-text-centered bottom-panel'>
-              Copyright &copy; 2006-2020 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='GitHub'>TurtleGeek.com</a>
+            Copyright &copy; 2006-2020 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='GitHub'>TurtleGeek.com</a>
               &nbsp;|&nbsp;
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
-                GitHub
+              GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200331.2000
+              &nbsp;|&nbsp;v0.20200401.1600
               {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
-              {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
+            {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
           </div>
         </div>
 
