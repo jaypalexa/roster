@@ -1,6 +1,3 @@
-import * as serviceWorker from '../../serviceWorker';
-import AuthenticationService from '../../services/AuthenticationService';
-import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
@@ -8,14 +5,17 @@ import Login from 'components/Login/Login';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
-import React, { useCallback, useEffect, useState } from 'react';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
-import './App.sass';
 import 'react-toastify/dist/ReactToastify.css';
+import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import AuthenticationService from '../../services/AuthenticationService';
+import * as serviceWorker from '../../serviceWorker';
+import './App.sass';
 
 // import logo from './logo.svg';
 
@@ -34,6 +34,14 @@ const App: React.FC = () => {
 
   const reloadPage = () => {
     waitingWorker?.postMessage({ type: 'SKIP_WAITING' });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(registration => {
+        if (registration.waiting) {
+          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+      })
+    }
+
     setIsShowReloadPage(false);
     window.location.reload(true);
   };
@@ -43,12 +51,9 @@ const App: React.FC = () => {
   }, []);
 
   const checkForUpdate = useCallback(() => {
-    //console.log('serviceWorker', serviceWorker);
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready.then(registration => {
-        //console.log('registration', registration);
         if (registration.waiting) {
-          //console.log('registration.waiting', registration.waiting);
           updateAvailable(registration.waiting);
         } else {
           registration.update();
@@ -145,7 +150,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200401.1600
+              &nbsp;|&nbsp;v0.20200402.1143
               {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
             {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
           </div>

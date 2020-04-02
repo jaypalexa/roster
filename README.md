@@ -1,6 +1,12 @@
 # ROSTER
 ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
 
+## Live Sites
+
+[roster.turtlegeek.com](https://roster.turtlegeek.com/)
+
+[roster-turtlegeek.netlify.app](https://roster-turtlegeek.netlify.app/)
+
 ## TODO
 
 | Item | Notes |
@@ -95,7 +101,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 [Service Worker Registration](https://developers.google.com/web/fundamentals/primers/service-workers/registration)
 
-### Notes
+## Notes
 
 [How to make react-hook-form work with multiple forms in one page?](https://stackoverflow.com/questions/60276510/how-to-make-react-hook-form-work-with-multiple-forms-in-one-page)
 
