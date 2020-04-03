@@ -12,6 +12,7 @@ import SeaTurtleModel from '../../types/SeaTurtleModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import CheckboxFormField from '../FormFields/CheckboxFormField';
 import DateFormField from '../FormFields/DateFormField';
+import FormField from '../FormFields/FormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import ListFormField from '../FormFields/ListFormField';
 import TextareaFormField from '../FormFields/TextareaFormField';
@@ -316,7 +317,22 @@ const SeaTurtles: React.FC = () => {
                      </FormFieldRow>
                      <FormFieldRow>
                       <TextareaFormField fieldName='anomalies' labelText='Anomalies' />
-                      <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat Strike' />
+                      <FormField fieldName='' labelText='Injuries'>
+                        <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' />
+                        <CheckboxFormField fieldName='injuryIntestinalImpaction' labelText='Intestinal impaction' />
+                        <CheckboxFormField fieldName='injuryLineEntanglement' labelText='Line/net entanglement' />
+                        <CheckboxFormField fieldName='injuryFishHook' labelText='Fish hook' />
+                      </FormField>
+                      <FormField fieldName='' labelText='&nbsp;'>
+                        <CheckboxFormField fieldName='injuryUpperRespiratory' labelText='Upper respiratory' />
+                        <CheckboxFormField fieldName='injuryAnimalBite' labelText='Animal bite' />
+                        <CheckboxFormField fieldName='injuryFibropapilloma' labelText='Fibropapilloma' />
+                        <CheckboxFormField fieldName='injuryMiscEpidemic' labelText='Misc. epidemic' />
+                      </FormField>
+                      <FormField fieldName='' labelText='&nbsp;'>
+                        <CheckboxFormField fieldName='injuryDoa' labelText='DOA' />
+                        <CheckboxFormField fieldName='injuryOther' labelText='Other' />
+                      </FormField>
                      </FormFieldRow>
                   </section>
 
