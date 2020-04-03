@@ -13,6 +13,7 @@ export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, 
   return (
     <div className='field'>
       <input 
+        id={fieldName}
         name={fieldName} 
         className={`checkbox ${validationOptions ? (errors[fieldName] && formState.dirty ? 'is-danger' : '') : ''}`}
         type='checkbox'
@@ -20,7 +21,7 @@ export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, 
         disabled={disabled} 
         value={value}
       />
-      <label>{labelText}</label>
+      <label htmlFor={fieldName}>{labelText}</label>
       <ErrorMessage errors={errors} name={fieldName} as='p' className='help has-text-danger' />
     </div>
   );
