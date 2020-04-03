@@ -2,10 +2,10 @@ import React from 'react';
 import { ErrorMessage, useFormContext } from 'react-hook-form';
 import FormFieldProps from './FormFieldProps';
 
-export const FormField: React.FC<FormFieldProps> = ({ fieldName, labelText, children }) => {
+export const FormField: React.FC<FormFieldProps> = ({ fieldName, fieldClass, labelText, children }) => {
   const { errors } = useFormContext();
   return (
-    <div className='field'>
+    <div className={`field ${fieldClass || ''}`}>
       <label className={`label ${labelText ? '' : 'hidden'}`}>{labelText}</label>
       <div className='control is-expanded'>
         {children}
