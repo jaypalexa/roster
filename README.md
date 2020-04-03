@@ -11,13 +11,17 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 
 | Item | Notes |
 |------|-------|
-| ~~Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button~~ | ~~Make Yes/No into Yes/No/Cancel~~ |
-| Make app a basic PWA | figure out how to force update |
+| Make app a basic PWA | How to force update? |
 | User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
+| Session/Token Timeout | ??? auto-refresh |
+| Multi-tenancy | ??? |
 | Database | [Amazon DynamoDB](https://aws.amazon.com/dynamodb) |
+| Versioning / Database migrations | ??? |
 | Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 | Mapping | [Mapbox](https://www.mapbox.com/)? or [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/)? [article](https://www.smashingmagazine.com/2020/02/javascript-maps-react-leaflet/) |
+| Preventing Denial-of-Service attacks /excessive usage | ??? throttling |
 | ~~Data Table~~ | https://www.npmjs.com/package/react-data-table-component |
+| ~~Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button~~ | ~~Make Yes/No into Yes/No/Cancel~~ |
 
 ## Available Scripts
 
@@ -105,3 +109,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 [How to make react-hook-form work with multiple forms in one page?](https://stackoverflow.com/questions/60276510/how-to-make-react-hook-form-work-with-multiple-forms-in-one-page)
 
+[Serverless Stack is a completely free resource to help you build full-stack production ready Serverless applications](https://serverless-stack.com/)

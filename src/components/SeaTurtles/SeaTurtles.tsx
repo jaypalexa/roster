@@ -10,9 +10,11 @@ import SeaTurtleService from '../../services/SeaTurtleService';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import CheckboxFormField from '../FormFields/CheckboxFormField';
 import DateFormField from '../FormFields/DateFormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import ListFormField from '../FormFields/ListFormField';
+import TextareaFormField from '../FormFields/TextareaFormField';
 import TextFormField from '../FormFields/TextFormField';
 import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './SeaTurtles.sass';
@@ -162,7 +164,6 @@ const SeaTurtles: React.FC = () => {
   };
 
   const onEditTurtleClick = (turtleId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log('turtleId', turtleId);
     const handleEvent = () => {
       fetchSeaTurtle(turtleId);
       setIsFormEnabled(true);
@@ -312,6 +313,10 @@ const SeaTurtles: React.FC = () => {
                       <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} />
                       <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
                       <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
+                     </FormFieldRow>
+                     <FormFieldRow>
+                      <TextareaFormField fieldName='anomalies' labelText='Anomalies' />
+                      <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat Strike' />
                      </FormFieldRow>
                   </section>
 

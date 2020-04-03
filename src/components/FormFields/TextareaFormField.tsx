@@ -3,31 +3,27 @@ import { useFormContext } from 'react-hook-form';
 import FormField from './FormField';
 import FormFieldProps from './FormFieldProps';
 
-interface InputFormFieldProps extends FormFieldProps {
-  type: string;
+interface TextareaFormFieldProps extends FormFieldProps {
   placeholder?: string;
+  minLength?: number;
   maxLength?: number;
-  min?: number;
-  max?: number;
-  pattern?: string;
+  rows?: number;
   disabled?: boolean;
   value?: string;
 }
 
-export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, type, placeholder, maxLength, min, max, pattern, disabled, value}) => {
+export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({fieldName, labelText, validationOptions, placeholder, minLength, maxLength, rows, disabled, value}) => {
   const { errors, formState, register } = useFormContext();
   return (
     <FormField fieldName={fieldName} labelText={labelText}>
-      <input 
+      <textarea 
         name={fieldName} 
-        className={`input ${validationOptions ? (errors[fieldName] && formState.dirty ? 'is-danger' : '') : ''}`}
-        type={type}
+        className={`textarea ${validationOptions ? (errors[fieldName] && formState.dirty ? 'is-danger' : '') : ''}`}
         ref={register(validationOptions || {})}
+        minLength={minLength} 
         maxLength={maxLength || 255}
         placeholder={placeholder || labelText} 
-        min={min} 
-        max={max || 255} 
-        pattern={pattern} 
+        rows={rows || 3} 
         disabled={disabled} 
         value={value}
       />
@@ -35,4 +31,4 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
   );
 };
 
-export default InputFormField;
+export default TextareaFormField;

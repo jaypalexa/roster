@@ -1,0 +1,47 @@
+GitHub repo
+
+AWS
+	S3
+	DynamoDB (NoSQL) - Free Tier ALWAYS FREE: 25 GB of storage
+	Cognito (authentication) - Free Tier ALWAYS FREE: 50,000 MAUs each month
+
+	CodeCommit - Free Tier ALWAYS FREE: 5 active users per month
+
+	CircleCI > AWS
+
+Netlify
+	https://app.netlify.com/teams/jaypalexa/sites
+	Create an A record pointing your root domain to our load balancer’s IP address:  104.198.14.52.
+	https://www.netlify.com/docs/identity/
+	CNAME roster roster-turtlegeek.netlify.app.
+
+React v16.10.2
+	Node >= 8.10 and npm >= 5.6
+	
+npm pdf lib
+
+--------------------------------------------------------------------------
+
+// LOAD A LOCAL FILE ASSET INTO A BLOB
+
+// @ts-ignore // could not find module xxx TS2307
+import testPdf from '../../assets/pdfs/test.pdf';
+
+
+  var req = new XMLHttpRequest();    
+  req.open('get', '../../assets/pdfs/test.pdf' , true);
+  req.responseType = 'blob';
+  req.onload = () => {
+      var blob = req.response;
+      var reader = new FileReader();
+      reader.onload = (ev) => {
+        const buffer = ev.target?.result;
+        // const field_specs = pdfform().list_fields(buffer);
+      };
+      reader.readAsArrayBuffer(blob);
+  };
+  req.send();
+  
+--------------------------------------------------------------------------
+
+  
