@@ -26,7 +26,6 @@ const App: React.FC = () => {
   const [appContext, setAppContext] = useAppContext();
   const [triggerRefresh, setTriggerRefresh] = useState(false);
 
-
   const updateAvailable = (registrationWaiting: ServiceWorker | null) => {
     setIsShowReloadPage(true);
     setWaitingWorker(registrationWaiting);
@@ -97,6 +96,8 @@ const App: React.FC = () => {
     checkForUpdate();
   }, [checkForUpdate, onSWUpdate]);
 
+  checkForUpdate();
+
   return (
     //<img src={logo} className='App-logo' alt='logo' />
     <div id='app'>
@@ -150,7 +151,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200403.1700
+              &nbsp;|&nbsp;v0.20200403.1726
               {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
             {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
           </div>
