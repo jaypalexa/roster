@@ -5,6 +5,7 @@ interface FormFieldProps {
   fieldClass?: string;
   labelText?: string;
   validationOptions?: ValidationOptions;
+  refObject?: any;
 };
 
 export default FormFieldProps;

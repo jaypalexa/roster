@@ -9,12 +9,13 @@ interface TextFormFieldProps extends FormFieldProps {
   value?: string;
 }
 
-export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, disabled, value, validationOptions}) => {
+export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, disabled, value, validationOptions, refObject}) => {
   return (
     <InputFormField 
       fieldName={fieldName} 
       labelText={labelText} 
       validationOptions={validationOptions}
+      refObject={refObject}
       type='text' 
       maxLength={maxLength}
       placeholder={placeholder} 

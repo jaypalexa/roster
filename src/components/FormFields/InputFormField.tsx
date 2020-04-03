@@ -14,7 +14,7 @@ interface InputFormFieldProps extends FormFieldProps {
   value?: string;
 }
 
-export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, type, placeholder, maxLength, min, max, pattern, disabled, value}) => {
+export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, disabled, value}) => {
   const { errors, formState, register } = useFormContext();
   return (
     <FormField fieldName={fieldName} labelText={labelText}>
@@ -22,7 +22,12 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
         name={fieldName} 
         className={`input ${validationOptions ? (errors[fieldName] && formState.dirty ? 'is-danger' : '') : ''}`}
         type={type}
-        ref={register(validationOptions || {})}
+        ref={(e) => {
+          register(e, validationOptions || {});
+          if (refObject) {
+            refObject.current = e;
+          }
+        }}
         maxLength={maxLength || 255}
         placeholder={placeholder || labelText} 
         min={min} 

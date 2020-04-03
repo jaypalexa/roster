@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -41,6 +41,8 @@ const SeaTurtles: React.FC = () => {
   const [onSaveChangesYes, setOnSaveChangesYes] = useState(() => { });
   const [onSaveChangesNo, setOnSaveChangesNo] = useState(() => { });
   const [onSaveChangesCancel, setOnSaveChangesCancel] = useState(() => { });
+  const [editingStarted, setEditingStarted] = useState(false);
+  const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   // console.log(JSON.stringify(formState));
   // console.log(JSON.stringify(methods.errors));
@@ -107,12 +109,22 @@ const SeaTurtles: React.FC = () => {
     getSeaTurtles();
   }, [appContext.organizationId]);
 
+  useEffect(() => {
+    if (editingStarted && firstEditControlRef?.current !== null) {
+      firstEditControlRef.current.focus();
+    }
+    setEditingStarted(false);
+  }, [editingStarted]);
+
   const fetchSeaTurtle = (turtleId: string) => {
     // make async server request
     const getSeaTurtle = async () => {
       const seaTurtle = await SeaTurtleService.getSeaTurtle(turtleId);
       reset(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
+      // if (firstEditControlRef?.current !== null) {
+      //   firstEditControlRef.current.select();
+      // }
     };
     getSeaTurtle();
   };
@@ -141,6 +153,7 @@ const SeaTurtles: React.FC = () => {
       reset(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
       setIsFormEnabled(true);
+      setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -168,6 +181,7 @@ const SeaTurtles: React.FC = () => {
     const handleEvent = () => {
       fetchSeaTurtle(turtleId);
       setIsFormEnabled(true);
+      setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -292,7 +306,7 @@ const SeaTurtles: React.FC = () => {
                 <div>
                   <section className='tab-content is-active'> {/* General Information */}
                     <FormFieldRow>
-                      <TextFormField fieldName='turtleName' labelText='Name' validationOptions={{ required: 'Name is required' }} />
+                      <TextFormField fieldName='turtleName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
                       <TextFormField fieldName='sidNumber' labelText='SID Number' />
                       <TextFormField fieldName='strandingIdNumber' labelText='Stranding ID Number' />
                     </FormFieldRow>
@@ -315,7 +329,7 @@ const SeaTurtles: React.FC = () => {
                       <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
                       <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
                      </FormFieldRow>
-                     <FormFieldRow>
+                    <FormFieldRow>
                       <TextareaFormField fieldName='anomalies' labelText='Anomalies' />
                       <FormFieldGroup fieldClass='checkbox-group' labelText='Injuries'>
                         <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' />
@@ -329,7 +343,7 @@ const SeaTurtles: React.FC = () => {
                         <CheckboxFormField fieldName='injuryDoa' labelText='DOA' />
                         <CheckboxFormField fieldName='injuryOther' labelText='Other' />
                       </FormFieldGroup>
-                     </FormFieldRow>
+                    </FormFieldRow>
                   </section>
 
                   <section className='tab-content'> {/* Tags */}
