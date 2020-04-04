@@ -93,6 +93,14 @@ const SeaTurtles: React.FC = () => {
     },
   ];
 
+  const tableCustomStyles = {
+    headRow: {
+      style: {
+        paddingRight: '1.1rem'
+      }
+    }
+  };
+
   useEffect(() => {
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setSpecies(CodeListTableService.getList(CodeTableType.Species, true));
@@ -288,6 +296,7 @@ const SeaTurtles: React.FC = () => {
             noHeader={true}
             fixedHeader={true}
             fixedHeaderScrollHeight='9rem'
+            customStyles={tableCustomStyles}
           />
 
           <hr />

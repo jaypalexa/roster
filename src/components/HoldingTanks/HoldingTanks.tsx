@@ -59,6 +59,14 @@ const HoldingTanks: React.FC = () => {
     },
   ];
 
+  const tableCustomStyles = {
+    headRow: {
+      style: {
+        paddingRight: '1.1rem'
+      }
+    }
+  };
+
   useEffect(() => {
     // make async server request
     const getHoldingTanks = async () => {
@@ -244,6 +252,7 @@ const HoldingTanks: React.FC = () => {
             noHeader={true}
             fixedHeader={true}
             fixedHeaderScrollHeight='9rem'
+            customStyles={tableCustomStyles}
           />
 
           <hr />

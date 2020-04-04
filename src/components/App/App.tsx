@@ -151,7 +151,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200404.1246
+              &nbsp;|&nbsp;v0.20200404.1327
               {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
             {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
           </div>
