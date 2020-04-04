@@ -7,6 +7,7 @@ import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
+import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
@@ -21,6 +22,7 @@ import './App.sass';
 
 const App: React.FC = () => {
 
+  const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(null);
   const [isShowReloadPage, setIsShowReloadPage] = useState(false);
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
   const [appContext, setAppContext] = useAppContext();
@@ -52,6 +54,7 @@ const App: React.FC = () => {
   const checkForUpdate = useCallback(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready.then(registration => {
+        setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
         if (registration.waiting) {
           updateAvailable(registration.waiting);
         } else {
@@ -96,7 +99,7 @@ const App: React.FC = () => {
     checkForUpdate();
   }, [checkForUpdate, onSWUpdate]);
 
-  checkForUpdate();
+  //checkForUpdate();
 
   return (
     //<img src={logo} className='App-logo' alt='logo' />
@@ -151,9 +154,9 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200404.1327
+              &nbsp;|&nbsp;v0.20200404.1410
               {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
-            {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span>)</span></p> : null}
+            {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span> - last checked: {lastUpdateCheckDateTime})</span></p> : null}
           </div>
         </div>
 
