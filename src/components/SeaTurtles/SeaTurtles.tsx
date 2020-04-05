@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
@@ -9,6 +10,7 @@ import CodeListTableService, { CodeTableType } from '../../services/CodeTableLis
 import SeaTurtleService from '../../services/SeaTurtleService';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
+import SeaTurtleTagModel from '../../types/SeaTurtleTagModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import CheckboxFormField from '../FormFields/CheckboxFormField';
 import DateFormField from '../FormFields/DateFormField';
@@ -26,8 +28,8 @@ const SeaTurtles: React.FC = () => {
 
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
-  const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
-  const { handleSubmit, formState, reset } = methods;
+  const seaTurtleMethods = useForm<SeaTurtleModel>({ mode: 'onChange' });
+  const { handleSubmit: handleSubmitSeaTurtle, formState: formStateSeaTurtle, reset: resetSeaTurtle } = seaTurtleMethods;
   const [currentSeaTurtle, setCurrentSeaTurtle] = useState({} as SeaTurtleModel);
   const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
   const [species, setSpecies] = useState([] as Array<NameValuePair>);
@@ -47,21 +49,21 @@ const SeaTurtles: React.FC = () => {
   // console.log(JSON.stringify(formState));
   // console.log(JSON.stringify(methods.errors));
 
-  const tableColumns = [
+  const seaTurtleTableColumns = [
       {
         name: '',
         ignoreRowClick: true,
         maxWidth: '2rem',
         minWidth: '2rem',
         style: '{padding-left: 1rem}',
-        cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditTurtleClick(row.turtleId, event)}}><i className='fa fa-pencil'></i></span>,
+        cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditSeaTurtleClick(row.turtleId, event)}}><i className='fa fa-pencil'></i></span>,
       },
       {
         name: '',
         ignoreRowClick: true,
         maxWidth: '2rem',
         minWidth: '2rem',
-        cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteTurtleClick(row.turtleId, row.turtleName, event)}}><i className='fa fa-trash'></i></span>,
+        cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteSeaTurtleClick(row.turtleId, row.turtleName, event)}}><i className='fa fa-trash'></i></span>,
       },
       {
       name: 'Name',
@@ -80,6 +82,18 @@ const SeaTurtles: React.FC = () => {
       hide: 599
     },
     {
+      name: 'Date Acquired',
+      selector: (row: SeaTurtleModel) => row.dateAcquired ? moment(row.dateAcquired).format('YYYY-MM-DD') : '',
+      sortable: true,
+      hide: 599
+    },
+    {
+      name: 'County',
+      selector: 'acquiredCounty',
+      sortable: true,
+      hide: 599
+    },
+    {
       name: 'Size',
       selector: 'turtleSize',
       sortable: true,
@@ -91,6 +105,52 @@ const SeaTurtles: React.FC = () => {
       sortable: true,
       hide: 599
     },
+    {
+      name: 'Date Relinquished',
+      selector: (row: SeaTurtleModel) => row.dateRelinquished ? moment(row.dateRelinquished).format('YYYY-MM-DD') : '',
+      sortable: true,
+      hide: 599
+    }
+  ];
+
+  const seaTurtleTagTableColumns = [
+    {
+      name: '',
+      ignoreRowClick: true,
+      maxWidth: '2rem',
+      minWidth: '2rem',
+      style: '{padding-left: 1rem}',
+      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditSeaTurtleTagClick(row.turtleTagId, event)}}><i className='fa fa-pencil'></i></span>,
+    },
+    {
+      name: '',
+      ignoreRowClick: true,
+      maxWidth: '2rem',
+      minWidth: '2rem',
+      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteSeaTurtleTagClick(row.turtleTagId, row.tagNumber, event)}}><i className='fa fa-trash'></i></span>,
+    },
+    {
+      name: 'Tag Number',
+      selector: 'tagNumber',
+      sortable: true
+    },
+    {
+      name: 'Tag Type',
+      selector: 'tagType',
+      sortable: true
+    },
+    {
+      name: 'Location',
+      selector: 'location',
+      sortable: true,
+      hide: 599
+    },
+    {
+      name: 'Date Tagged',
+      selector: (row: SeaTurtleTagModel) => row.dateTagged ? moment(row.dateTagged).format('YYYY-MM-DD') : '',
+      sortable: true,
+      hide: 599
+    }
   ];
 
   const tableCustomStyles = {
@@ -106,7 +166,7 @@ const SeaTurtles: React.FC = () => {
     setSpecies(CodeListTableService.getList(CodeTableType.Species, true));
     setTurtleSizes(CodeListTableService.getList(CodeTableType.TurtleSize, true));
     setTurtleStatuses(CodeListTableService.getList(CodeTableType.TurtleStatus, true));
-  }, [reset]);
+  }, [resetSeaTurtle]);
 
   useEffect(() => {
     // make async server request
@@ -128,7 +188,7 @@ const SeaTurtles: React.FC = () => {
     // make async server request
     const getSeaTurtle = async () => {
       const seaTurtle = await SeaTurtleService.getSeaTurtle(turtleId);
-      reset(seaTurtle);
+      resetSeaTurtle(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
       // if (firstEditControlRef?.current !== null) {
       //   firstEditControlRef.current.select();
@@ -142,7 +202,7 @@ const SeaTurtles: React.FC = () => {
     const deleteSeaTurtle = async () => {
       await SeaTurtleService.deleteSeaTurtle(turtleId);
       const seaTurtle = {} as SeaTurtleModel;
-      reset(seaTurtle);
+      resetSeaTurtle(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
       const index = currentSeaTurtles.findIndex(x => x.turtleId === turtleId);
       if (~index) {
@@ -154,21 +214,21 @@ const SeaTurtles: React.FC = () => {
     deleteSeaTurtle();
   };
 
-  const onAddNewButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAddNewSeaTurtleButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const seaTurtle = {} as SeaTurtleModel;
       seaTurtle.turtleId = uuidv4();
-      reset(seaTurtle);
+      resetSeaTurtle(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
       setIsFormEnabled(true);
       setEditingStarted(true);
     };
 
-    if (formState.dirty) {
+    if (formStateSeaTurtle.dirty) {
       setSaveChangesDialogTitleText('Unsaved Changes');
       setSaveChangesDialogBodyText('Save changes?');
       setOnSaveChangesYes(() => async () => {
-        await onSubmit();
+        await onSubmitSeaTurtle();
         handleEvent();
         setShowSaveChangesDialog(false);
       });
@@ -185,18 +245,18 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onEditTurtleClick = (turtleId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditSeaTurtleClick = (turtleId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
       fetchSeaTurtle(turtleId);
       setIsFormEnabled(true);
       setEditingStarted(true);
     };
 
-    if (formState.dirty) {
+    if (formStateSeaTurtle.dirty) {
       setSaveChangesDialogTitleText('Unsaved Changes');
       setSaveChangesDialogBodyText('Save changes?');
       setOnSaveChangesYes(() => async () => {
-        await onSubmit();
+        await onSubmitSeaTurtle();
         handleEvent();
         setShowSaveChangesDialog(false);
       });
@@ -213,7 +273,7 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onDeleteTurtleClick = (turtleId: string, turtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteSeaTurtleClick = (turtleId: string, turtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     console.log('turtleId', turtleId);
     console.log('turtleName', turtleName);
     const handleEvent = () => {
@@ -236,11 +296,11 @@ const SeaTurtles: React.FC = () => {
       setShowSaveChangesDialog(true);
   };
 
-  const onSubmit = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
+  const onSubmitSeaTurtle = handleSubmitSeaTurtle((modifiedSeaTurtle: SeaTurtleModel) => {
     console.log('In onSubmit()', JSON.stringify(modifiedSeaTurtle));
     const patchedSeaTurtle = { ...currentSeaTurtle, ...modifiedSeaTurtle };
     SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
-    reset(patchedSeaTurtle);
+    resetSeaTurtle(patchedSeaTurtle);
     setCurrentSeaTurtle(patchedSeaTurtle);
     const index = currentSeaTurtles.findIndex(x => x.turtleId === patchedSeaTurtle.turtleId);
     if (~index) {
@@ -253,15 +313,21 @@ const SeaTurtles: React.FC = () => {
     toast.success('Record saved');
   });
 
-  const onCancel = () => {
-    reset(currentSeaTurtle);
+  const onCancelSeaTurtle = () => {
+    resetSeaTurtle(currentSeaTurtle);
+  };
+
+  const onEditSeaTurtleTagClick = (turtleTagId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  };
+
+  const onDeleteSeaTurtleTagClick = (turtleTagId: string, tagNumber: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
   };
 
   new TabHelper().initialize();
 
   return (
     <div id='seaTurtle'>
-      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formStateSeaTurtle.dirty} />
       <YesNoCancelDialog 
         isActive={showSaveChangesDialog} 
         titleText={saveChangesDialogTitleText}
@@ -277,7 +343,7 @@ const SeaTurtles: React.FC = () => {
             <div className='level-left'></div>
             <div className='level-right'>
               <p className='level-item'>
-                <button className='button is-link' onClick={onAddNewButtonClick}>
+                <button className='button is-link' onClick={onAddNewSeaTurtleButtonClick}>
                   <span className='icon'>
                     <i className='fa fa-plus'></i>
                   </span>
@@ -289,7 +355,7 @@ const SeaTurtles: React.FC = () => {
 
           <DataTable
             title='Sea Turtles'
-            columns={tableColumns}
+            columns={seaTurtleTableColumns}
             data={currentSeaTurtles}
             keyField='turtleId'
             defaultSortField='turtleName'
@@ -301,8 +367,8 @@ const SeaTurtles: React.FC = () => {
 
           <hr />
 
-          <FormContext {...methods} >
-            <form onSubmit={onSubmit}>
+          <FormContext {...seaTurtleMethods} >
+            <form onSubmit={onSubmitSeaTurtle}>
               <fieldset disabled={!isFormEnabled}>
                 <div className='tabs'>
                   <ul>
@@ -368,8 +434,8 @@ const SeaTurtles: React.FC = () => {
                       type='button'
                       className='button is-danger is-fixed-width-medium'
                       value='Cancel'
-                      onClick={() => onCancel()}
-                      disabled={!formState.dirty}
+                      onClick={() => onCancelSeaTurtle()}
+                      disabled={!formStateSeaTurtle.dirty}
                     />
                   </p>
 
@@ -378,7 +444,7 @@ const SeaTurtles: React.FC = () => {
                       type='submit'
                       className='button is-success is-fixed-width-medium'
                       value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
+                      disabled={!(formStateSeaTurtle.isValid && formStateSeaTurtle.dirty)}
                     />
                   </p>
 

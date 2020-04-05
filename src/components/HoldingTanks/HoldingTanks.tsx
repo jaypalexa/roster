@@ -43,14 +43,14 @@ const HoldingTanks: React.FC = () => {
         maxWidth: '2rem',
         minWidth: '2rem',
         style: '{padding-left: 1rem}',
-        cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditTurtleClick(row.tankId, event)}}><i className='fa fa-pencil'></i></span>,
+        cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditHoldingTankClick(row.tankId, event)}}><i className='fa fa-pencil'></i></span>,
       },
       {
         name: '',
         ignoreRowClick: true,
         maxWidth: '2rem',
         minWidth: '2rem',
-        cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteTurtleClick(row.tankId, row.tankName, event)}}><i className='fa fa-trash'></i></span>,
+        cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteHoldingTankClick(row.tankId, row.tankName, event)}}><i className='fa fa-trash'></i></span>,
       },
       {
       name: 'Name',
@@ -141,7 +141,7 @@ const HoldingTanks: React.FC = () => {
     }
   };
 
-  const onEditTurtleClick = (tankId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditHoldingTankClick = (tankId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
       fetchHoldingTank(tankId);
       setIsFormEnabled(true);
@@ -169,9 +169,7 @@ const HoldingTanks: React.FC = () => {
     }
   };
 
-  const onDeleteTurtleClick = (tankId: string, tankName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log('tankId', tankId);
-    console.log('tankName', tankName);
+  const onDeleteHoldingTankClick = (tankId: string, tankName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
       deleteHoldingTank(tankId);
       setIsFormEnabled(false);
