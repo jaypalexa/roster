@@ -9,6 +9,7 @@ import TabHelper from '../../helpers/TabHelper';
 import HoldingTankService from '../../services/HoldingTankService';
 import HoldingTankModel from '../../types/HoldingTankModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import YesNoDialog from '../Dialogs/YesNoDialog';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import TextFormField from '../FormFields/TextFormField';
 import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
@@ -25,12 +26,13 @@ const HoldingTanks: React.FC = () => {
   const [currentHoldingTank, setCurrentHoldingTank] = useState({} as HoldingTankModel);
   const [currentHoldingTanks, setCurrentHoldingTanks] = useState([] as Array<HoldingTankModel>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
-  const [showSaveChangesDialog, setShowSaveChangesDialog] = useState(false);
-  const [saveChangesDialogTitleText, setSaveChangesDialogTitleText] = useState('');
-  const [saveChangesDialogBodyText, setSaveChangesDialogBodyText] = useState('');
-  const [onSaveChangesYes, setOnSaveChangesYes] = useState(() => { });
-  const [onSaveChangesNo, setOnSaveChangesNo] = useState(() => { });
-  const [onSaveChangesCancel, setOnSaveChangesCancel] = useState(() => { });
+  const [showYesNoCancelDialog, setShowYesNoCancelDialog] = useState(false);
+  const [showYesNoDialog, setShowYesNoDialog] = useState(false);
+  const [dialogTitleText, setDialogTitleText] = useState('');
+  const [dialogBodyText, setDialogBodyText] = useState('');
+  const [onDialogYes, setOnDialogYes] = useState(() => { });
+  const [onDialogNo, setOnDialogNo] = useState(() => { });
+  const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
@@ -122,21 +124,21 @@ const HoldingTanks: React.FC = () => {
     };
 
     if (formState.dirty) {
-      setSaveChangesDialogTitleText('Unsaved Changes');
-      setSaveChangesDialogBodyText('Save changes?');
-      setOnSaveChangesYes(() => async () => {
+      setDialogTitleText('Unsaved Changes');
+      setDialogBodyText('Save changes?');
+      setOnDialogYes(() => async () => {
         await onSubmit();
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesNo(() => () => {
+      setOnDialogNo(() => () => {
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesCancel(() => () => {
-        setShowSaveChangesDialog(false);
+      setOnDialogCancel(() => () => {
+        setShowYesNoCancelDialog(false);
       });
-      setShowSaveChangesDialog(true);
+      setShowYesNoCancelDialog(true);
     } else {
       handleEvent();
     }
@@ -150,21 +152,21 @@ const HoldingTanks: React.FC = () => {
     };
 
     if (formState.dirty) {
-      setSaveChangesDialogTitleText('Unsaved Changes');
-      setSaveChangesDialogBodyText('Save changes?');
-      setOnSaveChangesYes(() => async () => {
+      setDialogTitleText('Unsaved Changes');
+      setDialogBodyText('Save changes?');
+      setOnDialogYes(() => async () => {
         await onSubmit();
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesNo(() => () => {
+      setOnDialogNo(() => () => {
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesCancel(() => () => {
-        setShowSaveChangesDialog(false);
+      setOnDialogCancel(() => () => {
+        setShowYesNoCancelDialog(false);
       });
-      setShowSaveChangesDialog(true);
+      setShowYesNoCancelDialog(true);
     } else {
       handleEvent();
     }
@@ -176,19 +178,19 @@ const HoldingTanks: React.FC = () => {
       setIsFormEnabled(false);
     };
 
-    setSaveChangesDialogTitleText('Confirm Deletion');
-    setSaveChangesDialogBodyText(`Delete tank '${tankName}' ?`);
-    setOnSaveChangesYes(() => async () => {
+    setDialogTitleText('Confirm Deletion');
+    setDialogBodyText(`Delete tank '${tankName}' ?`);
+    setOnDialogYes(() => async () => {
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesNo(() => () => {
-        setShowSaveChangesDialog(false);
+      setOnDialogNo(() => () => {
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesCancel(() => () => {
-        setShowSaveChangesDialog(false);
+      setOnDialogCancel(() => () => {
+        setShowYesNoCancelDialog(false);
       });
-      setShowSaveChangesDialog(true);
+      setShowYesNoCancelDialog(true);
   };
 
   const onSubmit = handleSubmit((modifiedHoldingTank: HoldingTankModel) => {
@@ -217,13 +219,20 @@ const HoldingTanks: React.FC = () => {
   return (
     <div id='holdingTank'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <YesNoDialog 
+        isActive={showYesNoDialog} 
+        titleText={dialogTitleText}
+        bodyText={dialogBodyText}
+        onYes={onDialogYes}
+        onNo={onDialogNo}
+      />
       <YesNoCancelDialog 
-        isActive={showSaveChangesDialog} 
-        titleText={saveChangesDialogTitleText}
-        bodyText={saveChangesDialogBodyText}
-        onYes={onSaveChangesYes}
-        onNo={onSaveChangesNo}
-        onCancel={onSaveChangesCancel}
+        isActive={showYesNoCancelDialog} 
+        titleText={dialogTitleText}
+        bodyText={dialogBodyText}
+        onYes={onDialogYes}
+        onNo={onDialogNo}
+        onCancel={onDialogCancel}
       />
       <nav className='breadcrumb' aria-label='breadcrumbs'>
         <ul>

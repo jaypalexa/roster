@@ -14,6 +14,7 @@ import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
 import SeaTurtleTagModel from '../../types/SeaTurtleTagModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import YesNoDialog from '../Dialogs/YesNoDialog';
 import CheckboxFormField from '../FormFields/CheckboxFormField';
 import DateFormField from '../FormFields/DateFormField';
 import FormFieldGroup from '../FormFields/FormFieldGroup';
@@ -41,12 +42,13 @@ const SeaTurtles: React.FC = () => {
   const [currentSeaTurtleTag, setCurrentSeaTurtleTag] = useState({} as SeaTurtleTagModel);
   const [currentSeaTurtleTags, setCurrentSeaTurtleTags] = useState([] as Array<SeaTurtleTagModel>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
-  const [showSaveChangesDialog, setShowSaveChangesDialog] = useState(false);
-  const [saveChangesDialogTitleText, setSaveChangesDialogTitleText] = useState('');
-  const [saveChangesDialogBodyText, setSaveChangesDialogBodyText] = useState('');
-  const [onSaveChangesYes, setOnSaveChangesYes] = useState(() => { });
-  const [onSaveChangesNo, setOnSaveChangesNo] = useState(() => { });
-  const [onSaveChangesCancel, setOnSaveChangesCancel] = useState(() => { });
+  const [showYesNoCancelDialog, setShowYesNoCancelDialog] = useState(false);
+  const [showYesNoDialog, setShowYesNoDialog] = useState(false);
+  const [dialogTitleText, setDialogTitleText] = useState('');
+  const [dialogBodyText, setDialogBodyText] = useState('');
+  const [onDialogYes, setOnDialogYes] = useState(() => { });
+  const [onDialogNo, setOnDialogNo] = useState(() => { });
+  const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
@@ -231,21 +233,21 @@ const SeaTurtles: React.FC = () => {
     };
 
     if (formStateSeaTurtle.dirty) {
-      setSaveChangesDialogTitleText('Unsaved Changes');
-      setSaveChangesDialogBodyText('Save changes?');
-      setOnSaveChangesYes(() => async () => {
+      setDialogTitleText('Unsaved Changes');
+      setDialogBodyText('Save changes?');
+      setOnDialogYes(() => async () => {
         await onSubmitSeaTurtle();
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesNo(() => () => {
+      setOnDialogNo(() => () => {
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesCancel(() => () => {
-        setShowSaveChangesDialog(false);
+      setOnDialogCancel(() => () => {
+        setShowYesNoCancelDialog(false);
       });
-      setShowSaveChangesDialog(true);
+      setShowYesNoCancelDialog(true);
     } else {
       handleEvent();
     }
@@ -259,47 +261,42 @@ const SeaTurtles: React.FC = () => {
     };
 
     if (formStateSeaTurtle.dirty) {
-      setSaveChangesDialogTitleText('Unsaved Changes');
-      setSaveChangesDialogBodyText('Save changes?');
-      setOnSaveChangesYes(() => async () => {
+      setDialogTitleText('Unsaved Changes');
+      setDialogBodyText('Save changes?');
+      setOnDialogYes(() => async () => {
         await onSubmitSeaTurtle();
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesNo(() => () => {
+      setOnDialogNo(() => () => {
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoCancelDialog(false);
       });
-      setOnSaveChangesCancel(() => () => {
-        setShowSaveChangesDialog(false);
+      setOnDialogCancel(() => () => {
+        setShowYesNoCancelDialog(false);
       });
-      setShowSaveChangesDialog(true);
+      setShowYesNoCancelDialog(true);
     } else {
       handleEvent();
     }
   };
 
   const onDeleteSeaTurtleClick = (turtleId: string, turtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log('turtleId', turtleId);
-    console.log('turtleName', turtleName);
     const handleEvent = () => {
       deleteSeaTurtle(turtleId);
       setIsFormEnabled(false);
     };
 
-    setSaveChangesDialogTitleText('Confirm Deletion');
-    setSaveChangesDialogBodyText(`Delete turtle '${turtleName}' ?`);
-    setOnSaveChangesYes(() => async () => {
+    setDialogTitleText('Confirm Deletion');
+    setDialogBodyText(`Delete turtle '${turtleName}' ?`);
+    setOnDialogYes(() => async () => {
         handleEvent();
-        setShowSaveChangesDialog(false);
+        setShowYesNoDialog(false);
       });
-      setOnSaveChangesNo(() => () => {
-        setShowSaveChangesDialog(false);
+      setOnDialogNo(() => () => {
+        setShowYesNoDialog(false);
       });
-      setOnSaveChangesCancel(() => () => {
-        setShowSaveChangesDialog(false);
-      });
-      setShowSaveChangesDialog(true);
+      setShowYesNoDialog(true);
   };
 
   const onSubmitSeaTurtle = handleSubmitSeaTurtle((modifiedSeaTurtle: SeaTurtleModel) => {
@@ -334,13 +331,20 @@ const SeaTurtles: React.FC = () => {
   return (
     <div id='seaTurtle'>
       <LeaveThisPagePrompt isDirty={formStateSeaTurtle.dirty} />
+      <YesNoDialog 
+        isActive={showYesNoDialog} 
+        titleText={dialogTitleText}
+        bodyText={dialogBodyText}
+        onYes={onDialogYes}
+        onNo={onDialogNo}
+      />
       <YesNoCancelDialog 
-        isActive={showSaveChangesDialog} 
-        titleText={saveChangesDialogTitleText}
-        bodyText={saveChangesDialogBodyText}
-        onYes={onSaveChangesYes}
-        onNo={onSaveChangesNo}
-        onCancel={onSaveChangesCancel}
+        isActive={showYesNoCancelDialog} 
+        titleText={dialogTitleText}
+        bodyText={dialogBodyText}
+        onYes={onDialogYes}
+        onNo={onDialogNo}
+        onCancel={onDialogCancel}
       />
       <nav className='breadcrumb' aria-label='breadcrumbs'>
         <ul>
