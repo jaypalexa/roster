@@ -22,6 +22,7 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | Offline Mode | ??? send updates if any made whilst offline...how to auth? |
 | Preventing Denial-of-Service attacks /excessive usage | ??? throttling |
 | Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
+| Filtering of tables | ??? |
 | ~~Data Table~~ | https://www.npmjs.com/package/react-data-table-component |
 | ~~Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button~~ | ~~Make Yes/No into Yes/No/Cancel~~ |
 
