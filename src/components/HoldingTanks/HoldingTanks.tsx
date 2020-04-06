@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../contexts/AppContext';
@@ -224,6 +225,12 @@ const HoldingTanks: React.FC = () => {
         onNo={onSaveChangesNo}
         onCancel={onSaveChangesCancel}
       />
+      <nav className='breadcrumb' aria-label='breadcrumbs'>
+        <ul>
+          <li><Link to='/'>Home</Link></li>
+          <li className='is-active'><a href='#' aria-current='page'>Holding Tanks</a></li>
+        </ul>
+      </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Holding Tanks</h1>
