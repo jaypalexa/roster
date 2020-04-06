@@ -8,7 +8,7 @@ import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/P
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,23 +22,24 @@ import './App.sass';
 
 const App: React.FC = () => {
 
-  const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(null);
+  const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isShowReloadPage, setIsShowReloadPage] = useState(false);
-  const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
+  const [waitingServiceWorker, setWaitingServiceWorker] = useState<ServiceWorker | null>(null);
   const [appContext, setAppContext] = useAppContext();
   const [triggerRefresh, setTriggerRefresh] = useState(false);
 
-  const updateAvailable = (registrationWaiting: ServiceWorker | null) => {
+  const updateAvailable = (serviceWorker: ServiceWorker | null) => {
     setIsShowReloadPage(true);
-    setWaitingWorker(registrationWaiting);
+    setWaitingServiceWorker(serviceWorker);
   }
 
   const reloadPage = () => {
-    waitingWorker?.postMessage({ type: 'SKIP_WAITING' });
+    waitingServiceWorker?.postMessage({ type: 'SKIP_WAITING' });
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready.then(registration => {
-        if (registration.waiting) {
-          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        const serviceWorker = (registration.installing || registration.waiting);
+        if (serviceWorker) {
+          serviceWorker.postMessage({ type: 'SKIP_WAITING' });
         }
       })
     }
@@ -47,22 +48,19 @@ const App: React.FC = () => {
     window.location.reload(true);
   };
 
-  const onSWUpdate = useCallback((registration: ServiceWorkerRegistration) => {
-    updateAvailable(registration.waiting);
-  }, []);
-
-  const checkForUpdate = useCallback(() => {
+  const checkForUpdate = () => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready.then(registration => {
         setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
-        if (registration.waiting) {
-          updateAvailable(registration.waiting);
+        const serviceWorker = (registration.installing || registration.waiting);
+        if (serviceWorker) {
+          updateAvailable(serviceWorker);
         } else {
           registration.update();
         }
       })
     }
-  }, []);
+  };
 
   const closeMenu = () => {
     document.querySelector('.navbar-menu')?.classList.remove('is-active');
@@ -87,19 +85,32 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    const $navbarBurger = document.querySelector('.navbar-burger') as HTMLDivElement;
-    $navbarBurger.addEventListener('click', () => {
-      const target = $navbarBurger.dataset.target || '';
-      const $target = document.getElementById(target) as HTMLDivElement;
-      // $navbarBurger.classList.toggle('is-active');
-      $target.classList.toggle('is-active');
-    });
+    const navbarBurgerDiv = document.querySelector('.navbar-burger') as HTMLDivElement;
+    const toggleOn = () => {
+      const target = navbarBurgerDiv.dataset.target || '';
+      const targetDiv = document.getElementById(target) as HTMLDivElement;
+      targetDiv.classList.toggle('is-active');
+    }
+    navbarBurgerDiv.addEventListener('click', toggleOn);
 
-    serviceWorker.register({ onUpdate: onSWUpdate });
+    return () => {
+      navbarBurgerDiv.removeEventListener('click', toggleOn);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
+      const serviceWorker = (registration.installing || registration.waiting);
+      updateAvailable(serviceWorker);
+    }
+    serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
+
+    return () => {serviceWorker.unregister()}
+  }, []);
+
+  useEffect(() => {
     checkForUpdate();
-  }, [checkForUpdate, onSWUpdate]);
-
-  //checkForUpdate();
+  });
 
   return (
     //<img src={logo} className='App-logo' alt='logo' />
@@ -154,7 +165,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200405.1840
+              &nbsp;|&nbsp;v0.20200406.1241
               {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
             {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span> - last checked: {lastUpdateCheckDateTime})</span></p> : null}
           </div>

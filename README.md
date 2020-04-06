@@ -19,8 +19,9 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | Versioning / Database migrations | ??? |
 | Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 | Mapping | [Mapbox](https://www.mapbox.com/)? or [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/)? [article](https://www.smashingmagazine.com/2020/02/javascript-maps-react-leaflet/) |
+| Offline Mode | ??? send updates if any made whilst offline...how to auth? |
 | Preventing Denial-of-Service attacks /excessive usage | ??? throttling |
-| Counters for items on home screen | |
+| Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
 | ~~Data Table~~ | https://www.npmjs.com/package/react-data-table-component |
 | ~~Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button~~ | ~~Make Yes/No into Yes/No/Cancel~~ |
 

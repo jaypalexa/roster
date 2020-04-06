@@ -8,6 +8,7 @@ import { useAppContext } from '../../contexts/AppContext';
 import TabHelper from '../../helpers/TabHelper';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import SeaTurtleService from '../../services/SeaTurtleService';
+import SeaTurtleTagService from '../../services/SeaTurtleTagService';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
 import SeaTurtleTagModel from '../../types/SeaTurtleTagModel';
@@ -36,6 +37,8 @@ const SeaTurtles: React.FC = () => {
   const [turtleSizes, setTurtleSizes] = useState([] as Array<NameValuePair>);
   const [turtleStatuses, setTurtleStatuses] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
+  const [currentSeaTurtleTag, setCurrentSeaTurtleTag] = useState({} as SeaTurtleTagModel);
+  const [currentSeaTurtleTags, setCurrentSeaTurtleTags] = useState([] as Array<SeaTurtleTagModel>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
   const [showSaveChangesDialog, setShowSaveChangesDialog] = useState(false);
   const [saveChangesDialogTitleText, setSaveChangesDialogTitleText] = useState('');
@@ -193,6 +196,8 @@ const SeaTurtles: React.FC = () => {
       // if (firstEditControlRef?.current !== null) {
       //   firstEditControlRef.current.select();
       // }
+      const tags = await SeaTurtleTagService.getSeaTurtleTags(turtleId);
+      setCurrentSeaTurtleTags(tags);
     };
     getSeaTurtle();
   };
@@ -422,6 +427,19 @@ const SeaTurtles: React.FC = () => {
                   </section>
 
                   <section className='tab-content'> {/* Tags */}
+                  <DataTable
+                    title='Tags'
+                    columns={seaTurtleTagTableColumns}
+                    data={currentSeaTurtleTags}
+                    keyField='turtleTagId'
+                    defaultSortField='tagNumber'
+                    noHeader={true}
+                    fixedHeader={true}
+                    fixedHeaderScrollHeight='9rem'
+                    customStyles={tableCustomStyles}
+                  />
+
+                  <hr />
                   </section>
 
                   <section className='tab-content'> {/* Measurements */}
