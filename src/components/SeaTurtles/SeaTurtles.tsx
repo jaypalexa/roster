@@ -55,25 +55,25 @@ const SeaTurtles: React.FC = () => {
   // console.log(JSON.stringify(methods.errors));
 
   const seaTurtleTableColumns = [
-      {
-        name: '',
-        ignoreRowClick: true,
-        maxWidth: '2rem',
-        minWidth: '2rem',
-        style: '{padding-left: 1rem}',
-        cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditSeaTurtleClick(row.turtleId, event)}}><i className='fa fa-pencil'></i></span>,
-      },
-      {
-        name: '',
-        ignoreRowClick: true,
-        maxWidth: '2rem',
-        minWidth: '2rem',
-        cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteSeaTurtleClick(row.turtleId, row.turtleName, event)}}><i className='fa fa-trash'></i></span>,
-      },
-      {
-      name: 'Name',
-      selector: 'turtleName',
-      sortable: true
+    {
+      name: '',
+      ignoreRowClick: true,
+      maxWidth: '2rem',
+      minWidth: '2rem',
+      style: '{padding-left: 1rem}',
+      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditSeaTurtleClick(row.turtleId, event)}}><i className='fa fa-pencil'></i></span>,
+    },
+    {
+      name: '',
+      ignoreRowClick: true,
+      maxWidth: '2rem',
+      minWidth: '2rem',
+      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteSeaTurtleClick(row.turtleId, row.turtleName, event)}}><i className='fa fa-trash'></i></span>,
+    },
+    {
+    name: 'Name',
+    selector: 'turtleName',
+    sortable: true
     },
     {
       name: 'SID #',
@@ -381,6 +381,8 @@ const SeaTurtles: React.FC = () => {
           />
 
           <hr />
+
+          <h1 className='title has-text-centered'>{currentSeaTurtle.turtleName}</h1>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtle}>

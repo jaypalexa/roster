@@ -24,13 +24,15 @@ import './App.sass';
 const App: React.FC = () => {
 
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
-  const [isShowReloadPage, setIsShowReloadPage] = useState(false);
+  const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
+  const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [waitingServiceWorker, setWaitingServiceWorker] = useState<ServiceWorker | null>(null);
   const [appContext, setAppContext] = useAppContext();
   const [triggerRefresh, setTriggerRefresh] = useState(false);
 
   const updateAvailable = (serviceWorker: ServiceWorker | null) => {
-    setIsShowReloadPage(true);
+    console.log('in updateAvailable()...');
+    setIsUpdateAvailable(true);
     setWaitingServiceWorker(serviceWorker);
   }
 
@@ -45,7 +47,7 @@ const App: React.FC = () => {
       })
     }
 
-    setIsShowReloadPage(false);
+    setIsUpdateAvailable(false);
     window.location.reload(true);
   };
 
@@ -110,6 +112,10 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    setIsShowUpdateAvailable(isUpdateAvailable);
+  }, [isUpdateAvailable]);
+
+  useEffect(() => {
     checkForUpdate();
   });
 
@@ -167,9 +173,9 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200407.1432
-              {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
-              {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span> - last checked: {lastUpdateCheckDateTime})</span></p> : null}
+              &nbsp;|&nbsp;v0.20200407.1920
+              {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
+              {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span> - last checked: {lastUpdateCheckDateTime})</span></p> : null}
           </div>
         </div>
 

@@ -307,6 +307,8 @@ const SeaTurtleTags: React.FC = () => {
             customStyles={tableCustomStyles}
           />
 
+          <hr />
+
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtleTag}>
               <fieldset disabled={!isFormEnabled}>
