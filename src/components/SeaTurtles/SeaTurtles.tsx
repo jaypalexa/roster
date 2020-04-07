@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../contexts/AppContext';
@@ -27,7 +27,7 @@ import './SeaTurtles.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-const SeaTurtles: React.FC<RouteComponentProps> = ({match}) => {
+const SeaTurtles: React.FC = () => {
 
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
@@ -437,19 +437,19 @@ const SeaTurtles: React.FC<RouteComponentProps> = ({match}) => {
                   </section>
 
                   <section className='tab-content'> {/* Tags */}
-                  <DataTable
-                    title='Tags'
-                    columns={seaTurtleTagTableColumns}
-                    data={currentSeaTurtleTags}
-                    keyField='turtleTagId'
-                    defaultSortField='tagNumber'
-                    noHeader={true}
-                    fixedHeader={true}
-                    fixedHeaderScrollHeight='9rem'
-                    customStyles={tableCustomStyles}
-                  />
+                    <DataTable
+                      title='Tags'
+                      columns={seaTurtleTagTableColumns}
+                      data={currentSeaTurtleTags}
+                      keyField='turtleTagId'
+                      defaultSortField='tagNumber'
+                      noHeader={true}
+                      fixedHeader={true}
+                      fixedHeaderScrollHeight='9rem'
+                      customStyles={tableCustomStyles}
+                    />
 
-                  <hr />
+                    <hr />
                   </section>
 
                   <section className='tab-content'> {/* Measurements */}
@@ -466,7 +466,6 @@ const SeaTurtles: React.FC<RouteComponentProps> = ({match}) => {
                       disabled={!formState.dirty}
                     />
                   </p>
-
                   <p className='control'>
                     <input
                       type='submit'
@@ -475,7 +474,6 @@ const SeaTurtles: React.FC<RouteComponentProps> = ({match}) => {
                       disabled={!(formState.isValid && formState.dirty)}
                     />
                   </p>
-
                 </div>
               </fieldset>
             </form>

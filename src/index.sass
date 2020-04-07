@@ -46,6 +46,9 @@ html
 #root
   height: 85%
 
+.breadcrumb:not(:last-child)
+  margin-bottom: 0
+
 .cursor-pointer
   cursor: pointer
 
@@ -65,7 +68,7 @@ html
 
 .tab-content
   display: none
-  min-height: 24rem
+  /* min-height: 24rem */
   padding: 1rem
 
 .tab-content.is-active
@@ -74,6 +77,9 @@ html
 .tabs:not(:last-child)
   font-size: 1.25rem
   margin-bottom: 0 !important
+
+.title:not(:last-child)
+  margin-bottom: .5rem
 
 .transparent
   opacity: 0
