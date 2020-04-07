@@ -182,15 +182,12 @@ const HoldingTanks: React.FC = () => {
     setDialogBodyText(`Delete tank '${tankName}' ?`);
     setOnDialogYes(() => async () => {
         handleEvent();
-        setShowYesNoCancelDialog(false);
+        setShowYesNoDialog(false);
       });
       setOnDialogNo(() => () => {
-        setShowYesNoCancelDialog(false);
+        setShowYesNoDialog(false);
       });
-      setOnDialogCancel(() => () => {
-        setShowYesNoCancelDialog(false);
-      });
-      setShowYesNoCancelDialog(true);
+      setShowYesNoDialog(true);
   };
 
   const onSubmit = handleSubmit((modifiedHoldingTank: HoldingTankModel) => {

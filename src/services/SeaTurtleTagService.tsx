@@ -4,13 +4,13 @@ const SeaTurtleTagService = {
   getSeaTurtleTag(turtleTagId?: string): SeaTurtleTagModel {
     let seaTurtleTag: SeaTurtleTagModel | undefined;
     if (turtleTagId) {
-      const seaTurtleTags = this.getSeaTurtleTags('');
+      const seaTurtleTags = this.getAllSeaTurtleTags();
       seaTurtleTag = seaTurtleTags.find(x => x.turtleTagId === turtleTagId);
     }
     return seaTurtleTag || {} as SeaTurtleTagModel;
   },
   saveSeaTurtleTag(seaTurtleTag: SeaTurtleTagModel) {
-    const seaTurtleTags = this.getSeaTurtleTags('');
+    const seaTurtleTags = this.getAllSeaTurtleTags();
     const index = seaTurtleTags.findIndex(x => x.turtleTagId === seaTurtleTag.turtleTagId);
     if (~index) {
       seaTurtleTags[index] = {...seaTurtleTag};
@@ -20,17 +20,20 @@ const SeaTurtleTagService = {
     localStorage.setItem('seaTurtleTags', JSON.stringify(seaTurtleTags));
   },
   deleteSeaTurtleTag(turtleTagId: string) {
-    const seaTurtleTags = this.getSeaTurtleTags('');
+    const seaTurtleTags = this.getAllSeaTurtleTags();
     const index = seaTurtleTags.findIndex(x => x.turtleTagId === turtleTagId);
     if (~index) {
       seaTurtleTags.splice(index, 1);
     }
     localStorage.setItem('seaTurtleTags', JSON.stringify(seaTurtleTags));
   },
-  getSeaTurtleTags(turtleId: string): SeaTurtleTagModel[] {
+  getSeaTurtleTagsForTurtle(turtleId?: string): SeaTurtleTagModel[] {
     const allSeaTurtleTags: SeaTurtleTagModel[] = JSON.parse(localStorage.getItem('seaTurtleTags') || '[]')
     const seaTurtleTags = allSeaTurtleTags.length > 0 ? allSeaTurtleTags.filter(tag => tag.turtleId === turtleId) : [];
     return seaTurtleTags;
+  },
+  getAllSeaTurtleTags(): SeaTurtleTagModel[] {
+    return JSON.parse(localStorage.getItem('seaTurtleTags') || '[]');
   }
 };
 

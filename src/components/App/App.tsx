@@ -7,6 +7,7 @@ import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
 import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
+import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
@@ -152,6 +153,7 @@ const App: React.FC = () => {
           <Switch>
             <ProtectedRoute {...defaultProtectedRouteProps} exact={true} path='/' component={Home} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtles' component={SeaTurtles} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-tags/:turtleId' component={SeaTurtleTags} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tanks' component={HoldingTanks} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/hatchling-events' component={HatchlingEvents} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/reports' component={Reports} />
@@ -165,7 +167,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200407.1032
+              &nbsp;|&nbsp;v0.20200407.1318
               {isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
             {!isShowReloadPage ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span> - last checked: {lastUpdateCheckDateTime})</span></p> : null}
           </div>
