@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import SeaTurtleModel from 'types/SeaTurtleModel';
 
 interface Props {
   children: React.ReactNode;
@@ -7,6 +8,7 @@ interface Props {
 interface AppContextStore {
   redirectPathOnAuthentication?: string;
   organizationId?: string;
+  seaTurtle?: SeaTurtleModel
 };
 
 const initialAppContextStore: AppContextStore = {};

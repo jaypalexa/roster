@@ -113,4 +113,22 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 [How to make react-hook-form work with multiple forms in one page?](https://stackoverflow.com/questions/60276510/how-to-make-react-hook-form-work-with-multiple-forms-in-one-page)
 
+----
+
 [Serverless Stack is a completely free resource to help you build full-stack production ready Serverless applications](https://serverless-stack.com/)
+
+----
+
+[How to Fix the Refresh Button When Using Service Workers](https://redfin.engineering/how-to-fix-the-refresh-button-when-using-service-workers-a8e27af6df68)
+
+[serviceworker.skipWaiting #1016](https://github.com/w3c/ServiceWorker/issues/1016)
+
+[Provide a one-line way to listen for a waiting Service Worker #1222](https://github.com/w3c/ServiceWorker/issues/1222)
+
+[Provide an easier way to listen for waiting/activated/redundant Service Workers #1247](https://github.com/w3c/ServiceWorker/issues/1247)
+
+[Offer a page reload for users](https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users)
+
+----
+
+[React Hooks: Why Do We Need useContext and How Does It Help?](https://medium.com/better-programming/react-hooks-usecontext-30eb560999f)

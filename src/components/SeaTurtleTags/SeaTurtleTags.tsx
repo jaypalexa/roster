@@ -254,6 +254,8 @@ const SeaTurtleTags: React.FC = () => {
     reset(currentSeaTurtleTag);
   };
 
+  console.log('SeaTurtleTags::appContext.seaTurtle', appContext.seaTurtle);
+
   return (
     <div id='seaTurtleTag'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
@@ -335,7 +337,6 @@ const SeaTurtleTags: React.FC = () => {
                       disabled={!formState.dirty}
                     />
                   </p>
-
                   <p className='control'>
                     <input
                       type='submit'
@@ -344,7 +345,6 @@ const SeaTurtleTags: React.FC = () => {
                       disabled={!(formState.isValid && formState.dirty)}
                     />
                   </p>
-
                 </div>
               </fieldset>
             </form>

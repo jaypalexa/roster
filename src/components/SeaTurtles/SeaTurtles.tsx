@@ -1,11 +1,11 @@
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
-import { useAppContext } from '../../contexts/AppContext';
+import { AppContext, useAppContext } from '../../contexts/AppContext';
 import TabHelper from '../../helpers/TabHelper';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import SeaTurtleService from '../../services/SeaTurtleService';
@@ -30,6 +30,7 @@ import './SeaTurtles.sass';
 const SeaTurtles: React.FC = () => {
 
   // eslint-disable-next-line
+  const context = useContext(AppContext);
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
@@ -170,7 +171,6 @@ const SeaTurtles: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('in UseEffect()[reset]...');
     setCaptureProjectTypes(CodeListTableService.getList(CodeTableType.CaptureProjectType, true));
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setRecaptureTypes(CodeListTableService.getList(CodeTableType.RecaptureType, true));
@@ -181,7 +181,6 @@ const SeaTurtles: React.FC = () => {
   }, [reset]);
 
   useEffect(() => {
-    console.log('in UseEffect()[appContext.organizationId]...');
     // make async server request
     const getSeaTurtles = async () => {
       const seaTurtles = await SeaTurtleService.getSeaTurtles(appContext.organizationId || '');
@@ -196,6 +195,17 @@ const SeaTurtles: React.FC = () => {
     }
     setEditingStarted(false);
   }, [editingStarted]);
+
+  const setAppContextSeaTurtle = useCallback((seaTurtle: SeaTurtleModel) => {
+    //context[0].seaTurtle = seaTurtle;
+    appContext.seaTurtle = seaTurtle;
+    //setAppContext({ ...appContext, seaTurtle: seaTurtle });
+    console.log('SeaTurtle::appContext.seaTurtle', appContext.seaTurtle);
+  }, [appContext, setAppContext]);
+
+  useEffect(() => {
+    setAppContextSeaTurtle(currentSeaTurtle);
+  }, [setAppContextSeaTurtle, currentSeaTurtle]);
 
   const fetchSeaTurtle = (turtleId: string) => {
     // make async server request
