@@ -9,35 +9,26 @@ import Reports from 'components/Reports/Reports';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import AuthenticationService from '../../services/AuthenticationService';
-import * as serviceWorker from '../../serviceWorker';
 import './App.sass';
 
 // import logo from './logo.svg';
 
 const App: React.FC = () => {
 
+  const [appContext, setAppContext] = useAppContext();
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
   const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
-  const [waitingServiceWorker, setWaitingServiceWorker] = useState<ServiceWorker | null>(null);
-  const [appContext, setAppContext] = useAppContext();
   const [triggerRefresh, setTriggerRefresh] = useState(false);
 
-  const updateAvailable = (serviceWorker: ServiceWorker | null) => {
-    console.log('in updateAvailable()...');
-    setIsUpdateAvailable(true);
-    setWaitingServiceWorker(serviceWorker);
-  }
-
   const reloadPage = () => {
-    waitingServiceWorker?.postMessage({ type: 'SKIP_WAITING' });
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready.then(registration => {
         const serviceWorker = (registration.installing || registration.waiting);
@@ -46,24 +37,23 @@ const App: React.FC = () => {
         }
       })
     }
-
     setIsUpdateAvailable(false);
     window.location.reload(true);
   };
 
-  const checkForUpdate = () => {
+  const checkForUpdate = useCallback(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready.then(registration => {
         setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
-        const serviceWorker = (registration.installing || registration.waiting);
-        if (serviceWorker) {
-          updateAvailable(serviceWorker);
-        } else {
-          registration.update();
-        }
+        registration.update().then(() => {
+          const serviceWorker = (registration.installing || registration.waiting);
+          if (serviceWorker) {
+            setIsUpdateAvailable(true);
+          }
+        });
       })
     }
-  };
+  }, []);
 
   const closeMenu = () => {
     document.querySelector('.navbar-menu')?.classList.remove('is-active');
@@ -102,22 +92,12 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
-      const serviceWorker = (registration.installing || registration.waiting);
-      updateAvailable(serviceWorker);
-    }
-    serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
-
-    return () => {serviceWorker.unregister()}
-  }, []);
-
-  useEffect(() => {
     setIsShowUpdateAvailable(isUpdateAvailable);
   }, [isUpdateAvailable]);
 
   useEffect(() => {
     checkForUpdate();
-  });
+  }, [checkForUpdate]);
 
   return (
     //<img src={logo} className='App-logo' alt='logo' />
@@ -173,9 +153,9 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200408.1052
+              &nbsp;|&nbsp;v0.20200408.1705
               {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
-              {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span><span> - last checked: {lastUpdateCheckDateTime})</span></p> : null}
+              {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span>{ lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
         </div>
 
