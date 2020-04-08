@@ -66,7 +66,7 @@ const Organization: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Organization</h1>
+          <h1 className='title has-text-centered form-header'>Organization</h1>
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
 
@@ -140,7 +140,15 @@ const Organization: React.FC = () => {
                 </section>
               </div>
 
-              <div className='field is-grouped action-button-grouping'>
+              <div className='field is-grouped form-action-buttons'>
+                <p className='control'>
+                  <input
+                    type='submit'
+                    className='button is-success is-fixed-width-medium'
+                    value='Save'
+                    disabled={!(formState.isValid && formState.dirty)}
+                  />
+                </p>
                 <p className='control'>
                   <input
                     type='button'
@@ -148,14 +156,6 @@ const Organization: React.FC = () => {
                     value='Cancel'
                     onClick={() => onCancel()}
                     disabled={!formState.dirty}
-                  />
-                </p>
-                <p className='control'>
-                  <input
-                    type='submit'
-                    className='button is-success is-fixed-width-medium'
-                    value='Save'
-                    disabled={!(formState.isValid && formState.dirty)}
                   />
                 </p>
               </div>

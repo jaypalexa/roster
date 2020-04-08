@@ -11,6 +11,7 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 
 | Item | Notes |
 |------|-------|
+| Prevent tabbing outside of modal | ??? switch to [react-modal](https://www.npmjs.com/package/react-modal) |
 | Make app a basic PWA | How to force update? |
 | User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
 | Session/Token Timeout | ??? auto-refresh |

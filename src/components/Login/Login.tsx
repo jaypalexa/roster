@@ -76,7 +76,7 @@ const Login: React.FC = () => {
               </div>
             </div>
 
-            <div className='field is-grouped action-button-grouping'>
+            <div className='field is-grouped form-action-buttons'>
               {/* <p className='control'>
                 <input 
                   type='button' 

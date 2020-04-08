@@ -52,6 +52,18 @@ html
 .cursor-pointer
   cursor: pointer
 
+.field
+  flex-basis: 0
+
+.field.is-grouped.form-action-buttons
+  justify-content: center
+  margin-bottom: 1rem
+  margin-top: 1rem
+
+@media (max-width: 768px)
+  .form-header
+    display: none
+  
 .hidden
   display: none
 
@@ -84,10 +96,10 @@ html
 .transparent
   opacity: 0
 
-@media (min-width: 769px)
-  .field.is-grouped.action-button-grouping
-    justify-content: flex-end
+//@media (min-width: 769px)
+//  .field.is-grouped.form-action-buttons
+//    justify-content: flex-end
 
-@media (max-width: 768px)
-  .field.is-grouped.action-button-grouping
-    justify-content: center
+//@media (max-width: 768px)
+//  .field.is-grouped.form-action-buttons
+//    justify-content: center

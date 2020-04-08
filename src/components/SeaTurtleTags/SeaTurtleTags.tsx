@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../contexts/AppContext';
@@ -45,6 +45,7 @@ const SeaTurtleTags: React.FC = () => {
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
+  const history = useHistory();
 
   // console.log(JSON.stringify(formState));
   // console.log(JSON.stringify(methods.errors));
@@ -275,6 +276,7 @@ const SeaTurtleTags: React.FC = () => {
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
+          <li><button onClick={history.goBack}>Go Back</button></li>
           <li className='is-active'><a href='#' aria-current='page'>Tags</a></li>
         </ul>
       </nav>
@@ -323,7 +325,7 @@ const SeaTurtleTags: React.FC = () => {
                   </section>
                 </div>
 
-                <div className='field is-grouped action-button-grouping'>
+                <div className='field is-grouped form-action-buttons'>
                   <p className='control'>
                     <input
                       type='button'
