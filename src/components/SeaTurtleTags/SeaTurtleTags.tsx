@@ -2,15 +2,13 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../contexts/AppContext';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import SeaTurtleService from '../../services/SeaTurtleService';
 import SeaTurtleTagService from '../../services/SeaTurtleTagService';
 import NameValuePair from '../../types/NameValuePair';
-import SeaTurtleModel from '../../types/SeaTurtleModel';
 import SeaTurtleTagModel from '../../types/SeaTurtleTagModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import YesNoDialog from '../Dialogs/YesNoDialog';
@@ -27,13 +25,11 @@ const SeaTurtleTags: React.FC = () => {
 
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
-  const { turtleId } = useParams();
   const methods = useForm<SeaTurtleTagModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
-  const [currentSeaTurtle, setCurrentSeaTurtle] = useState({} as SeaTurtleModel);
   const [currentSeaTurtleTag, setCurrentSeaTurtleTag] = useState({} as SeaTurtleTagModel);
   const [currentSeaTurtleTags, setCurrentSeaTurtleTags] = useState([] as Array<SeaTurtleTagModel>);
-  const [locations, setLocation] = useState([] as Array<NameValuePair>);
+  const [locations, setLocations] = useState([] as Array<NameValuePair>);
   const [tagTypes, setTagTypes] = useState([] as Array<NameValuePair>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
   const [showYesNoCancelDialog, setShowYesNoCancelDialog] = useState(false);
@@ -98,23 +94,22 @@ const SeaTurtleTags: React.FC = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
+  useEffect(() => {
     setTagTypes(CodeListTableService.getList(CodeTableType.TagType, true));
-    setLocation(CodeListTableService.getList(CodeTableType.TagLocation, true));
+    setLocations(CodeListTableService.getList(CodeTableType.TagLocation, true));
   }, [reset]);
 
   useEffect(() => {
     // make async server request
-    const getSeaTurtle = async () => {
-      const seaTurtle = await SeaTurtleService.getSeaTurtle(turtleId);
-      setCurrentSeaTurtle(seaTurtle);
-    };
-    getSeaTurtle();
     const getSeaTurtleTagsForTurtle = async () => {
-      const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTagsForTurtle(turtleId);
+      const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTagsForTurtle(appContext.seaTurtle?.turtleId);
       setCurrentSeaTurtleTags(seaTurtleTags);
     };
     getSeaTurtleTagsForTurtle();
-  }, [turtleId]);
+  }, [appContext.seaTurtle]);
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
@@ -157,7 +152,7 @@ const SeaTurtleTags: React.FC = () => {
     const handleEvent = () => {
       const seaTurtleTag = {} as SeaTurtleTagModel;
       seaTurtleTag.turtleTagId = uuidv4();
-      seaTurtleTag.turtleId = currentSeaTurtle.turtleId;
+      seaTurtleTag.turtleId = appContext.seaTurtle?.turtleId || '';
       reset(seaTurtleTag);
       setCurrentSeaTurtleTag(seaTurtleTag);
       setIsFormEnabled(true);
@@ -280,7 +275,7 @@ const SeaTurtleTags: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Tags for {currentSeaTurtle.turtleName}</h1>
+          <h1 className='title has-text-centered'>Tags for {appContext.seaTurtle?.turtleName}</h1>
           <div className='level'>
             <div className='level-left'></div>
             <div className='level-right'>

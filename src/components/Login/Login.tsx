@@ -13,6 +13,10 @@ const Login: React.FC = () => {
   const userNameRef = useRef<HTMLInputElement>()
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
+  useEffect(() => {
     userNameRef?.current?.focus();
   }, [])
 

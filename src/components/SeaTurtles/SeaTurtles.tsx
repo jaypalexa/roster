@@ -6,13 +6,10 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../contexts/AppContext';
-import TabHelper from '../../helpers/TabHelper';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import SeaTurtleService from '../../services/SeaTurtleService';
-import SeaTurtleTagService from '../../services/SeaTurtleTagService';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
-import SeaTurtleTagModel from '../../types/SeaTurtleTagModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import YesNoDialog from '../Dialogs/YesNoDialog';
 import CheckboxFormField from '../FormFields/CheckboxFormField';
@@ -33,7 +30,6 @@ const SeaTurtles: React.FC = () => {
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
-  //const [currentSeaTurtle, setCurrentSeaTurtle] = useState({} as SeaTurtleModel);
   const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
   const [captureProjectTypes, setCaptureProjectTypes] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
@@ -42,7 +38,6 @@ const SeaTurtles: React.FC = () => {
   const [turtleSizes, setTurtleSizes] = useState([] as Array<NameValuePair>);
   const [turtleStatuses, setTurtleStatuses] = useState([] as Array<NameValuePair>);
   const [yesNoUndetermineds, setYesNoUndetermineds] = useState([] as Array<NameValuePair>);
-  const [currentSeaTurtleTags, setCurrentSeaTurtleTags] = useState([] as Array<SeaTurtleTagModel>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
   const [showYesNoCancelDialog, setShowYesNoCancelDialog] = useState(false);
   const [showYesNoDialog, setShowYesNoDialog] = useState(false);
@@ -121,46 +116,6 @@ const SeaTurtles: React.FC = () => {
     }
   ];
 
-  const seaTurtleTagTableColumns = [
-    {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditSeaTurtleTagClick(row.turtleTagId, event)}}><i className='fa fa-pencil'></i></span>,
-    },
-    {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteSeaTurtleTagClick(row.turtleTagId, row.tagNumber, event)}}><i className='fa fa-trash'></i></span>,
-    },
-    {
-      name: 'Tag Number',
-      selector: 'tagNumber',
-      sortable: true
-    },
-    {
-      name: 'Tag Type',
-      selector: 'tagType',
-      sortable: true
-    },
-    {
-      name: 'Location',
-      selector: 'location',
-      sortable: true,
-      hide: 599
-    },
-    {
-      name: 'Date Tagged',
-      selector: (row: SeaTurtleTagModel) => row.dateTagged ? moment(row.dateTagged).format('YYYY-MM-DD') : '',
-      sortable: true,
-      hide: 599
-    }
-  ];
-
   const tableCustomStyles = {
     headRow: {
       style: {
@@ -168,6 +123,10 @@ const SeaTurtles: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   useEffect(() => {
     setCaptureProjectTypes(CodeListTableService.getList(CodeTableType.CaptureProjectType, true));
@@ -184,9 +143,16 @@ const SeaTurtles: React.FC = () => {
     const getSeaTurtles = async () => {
       const seaTurtles = await SeaTurtleService.getSeaTurtles(appContext.organizationId || '');
       setCurrentSeaTurtles(seaTurtles);
+      if (appContext.seaTurtle?.turtleId) {
+        reset(appContext.seaTurtle);
+        setCurrentSeaTurtle(appContext.seaTurtle);
+        setIsFormEnabled(true);
+        setEditingStarted(true);
+      }
     };
     getSeaTurtles();
-  }, [appContext.organizationId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
@@ -208,8 +174,6 @@ const SeaTurtles: React.FC = () => {
       // if (firstEditControlRef?.current !== null) {
       //   firstEditControlRef.current.select();
       // }
-      const tags = await SeaTurtleTagService.getSeaTurtleTagsForTurtle(turtleId);
-      setCurrentSeaTurtleTags(tags);
     };
     getSeaTurtle();
   };
@@ -329,14 +293,6 @@ const SeaTurtles: React.FC = () => {
     reset(appContext.seaTurtle);
   };
 
-  const onEditSeaTurtleTagClick = (turtleTagId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-  };
-
-  const onDeleteSeaTurtleTagClick = (turtleTagId: string, tagNumber: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-  };
-
-  new TabHelper().initialize();
-
   return (
     <div id='seaTurtle'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
@@ -397,96 +353,72 @@ const SeaTurtles: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtle}>
               <fieldset disabled={!isFormEnabled}>
-                <div className='tabs'>
-                  <ul>
-                    <li className='is-active'><a>General Information</a></li>
-                    <li><a>Tags</a></li>
-                    <li><a>Measurements</a></li>
-                  </ul>
-                </div>
+                <h2 className='subtitle'>General Information</h2>
+                  <FormFieldRow>
+                    <TextFormField fieldName='turtleName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
+                    <TextFormField fieldName='sidNumber' labelText='SID number' />
+                    <TextFormField fieldName='strandingIdNumber' labelText='Stranding ID number' />
+                  </FormFieldRow>
+                  <FormFieldRow>
+                    <ListFormField fieldName='species' labelText='Species' listItems={species} />
+                    <ListFormField fieldName='turtleSize' labelText='Size' listItems={turtleSizes} />
+                    <ListFormField fieldName='status' labelText='Status' listItems={turtleStatuses} />
+                  </FormFieldRow>
+                  <FormFieldRow>
+                    <DateFormField fieldName='dateAcquired' labelText='Date acquired' />
+                    <TextFormField fieldName='acquiredFrom' labelText='Acquired from' />
+                    <ListFormField fieldName='acquiredCounty' labelText='County' listItems={counties} />
+                    <TextFormField fieldName='acquiredLatitude' labelText='Latitude' />
+                    <TextFormField fieldName='acquiredLongitude' labelText='Longitude' />
+                  </FormFieldRow>
+                  <FormFieldRow>
+                    <DateFormField fieldName='dateRelinquished' labelText='Date relinquished' />
+                    <TextFormField fieldName='relinquishedFrom' labelText='Relinquished from' />
+                    <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} />
+                    <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
+                    <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
+                  </FormFieldRow>
+                  <FormFieldRow>
+                    <TextareaFormField fieldName='anomalies' labelText='Anomalies' />
+                    <FormFieldGroup fieldClass='checkbox-group checkboxes-4' labelText='Injuries'>
+                      <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' />
+                      <CheckboxFormField fieldName='injuryIntestinalImpaction' labelText='Intestinal impaction' />
+                      <CheckboxFormField fieldName='injuryLineEntanglement' labelText='Line/net entanglement' />
+                      <CheckboxFormField fieldName='injuryFishHook' labelText='Fish hook' />
+                      <CheckboxFormField fieldName='injuryUpperRespiratory' labelText='Upper respiratory' />
+                      <CheckboxFormField fieldName='injuryAnimalBite' labelText='Animal bite' />
+                      <CheckboxFormField fieldName='injuryFibropapilloma' labelText='Fibropapilloma' />
+                      <CheckboxFormField fieldName='injuryMiscEpidemic' labelText='Misc. epidemic' />
+                      <CheckboxFormField fieldName='injuryDoa' labelText='DOA' />
+                      <CheckboxFormField fieldName='injuryOther' labelText='Other' />
+                    </FormFieldGroup>
+                  </FormFieldRow>
+                <hr />
 
-                <div>
-                  <section className='tab-content is-active'> {/* General Information */}
-                    <h2 className='subtitle'>General Information</h2>
-                      <FormFieldRow>
-                        <TextFormField fieldName='turtleName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
-                        <TextFormField fieldName='sidNumber' labelText='SID number' />
-                        <TextFormField fieldName='strandingIdNumber' labelText='Stranding ID number' />
-                      </FormFieldRow>
-                      <FormFieldRow>
-                        <ListFormField fieldName='species' labelText='Species' listItems={species} />
-                        <ListFormField fieldName='turtleSize' labelText='Size' listItems={turtleSizes} />
-                        <ListFormField fieldName='status' labelText='Status' listItems={turtleStatuses} />
-                      </FormFieldRow>
-                      <FormFieldRow>
-                        <DateFormField fieldName='dateAcquired' labelText='Date acquired' />
-                        <TextFormField fieldName='acquiredFrom' labelText='Acquired from' />
-                        <ListFormField fieldName='acquiredCounty' labelText='County' listItems={counties} />
-                        <TextFormField fieldName='acquiredLatitude' labelText='Latitude' />
-                        <TextFormField fieldName='acquiredLongitude' labelText='Longitude' />
-                      </FormFieldRow>
-                      <FormFieldRow>
-                        <DateFormField fieldName='dateRelinquished' labelText='Date relinquished' />
-                        <TextFormField fieldName='relinquishedFrom' labelText='Relinquished from' />
-                        <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} />
-                        <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
-                        <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
-                      </FormFieldRow>
-                      <FormFieldRow>
-                        <TextareaFormField fieldName='anomalies' labelText='Anomalies' />
-                        <FormFieldGroup fieldClass='checkbox-group checkboxes-4' labelText='Injuries'>
-                          <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' />
-                          <CheckboxFormField fieldName='injuryIntestinalImpaction' labelText='Intestinal impaction' />
-                          <CheckboxFormField fieldName='injuryLineEntanglement' labelText='Line/net entanglement' />
-                          <CheckboxFormField fieldName='injuryFishHook' labelText='Fish hook' />
-                          <CheckboxFormField fieldName='injuryUpperRespiratory' labelText='Upper respiratory' />
-                          <CheckboxFormField fieldName='injuryAnimalBite' labelText='Animal bite' />
-                          <CheckboxFormField fieldName='injuryFibropapilloma' labelText='Fibropapilloma' />
-                          <CheckboxFormField fieldName='injuryMiscEpidemic' labelText='Misc. epidemic' />
-                          <CheckboxFormField fieldName='injuryDoa' labelText='DOA' />
-                          <CheckboxFormField fieldName='injuryOther' labelText='Other' />
-                        </FormFieldGroup>
-                      </FormFieldRow>
-                    <hr />
-                    <h2 className='subtitle'>Initial Encounter Information</h2>
-                      <FormFieldRow>
-                        <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Initial encounter'>
-                          <CheckboxFormField fieldName='wasCarryingTagsWhenEnc' labelText='Was turtle carrying tags when initially encountered?' />
-                        </FormFieldGroup>
-                        <ListFormField fieldName='recaptureType' labelText='If yes, recapture type' listItems={recaptureTypes} />
-                        <TextFormField fieldName='tagReturnAddress' labelText='Tag return address' />
-                      </FormFieldRow>
-                      <FormFieldRow>
-                        <ListFormField fieldName='captureProjectType' labelText='Project type' listItems={captureProjectTypes} />
-                        <ListFormField fieldName='didTurtleNest' labelText='If "Nesting Beach," did turtle nest?' listItems={yesNoUndetermineds} />
-                        <TextFormField fieldName='captureProjectOther' labelText='If "Other," describe' />
-                      </FormFieldRow>
-                    <hr />
-                    <h2 className='subtitle'><Link to={`/sea-turtle-tags/${appContext.seaTurtle?.turtleId}`}>Tags ></Link></h2>
-                    <hr />
-                    <h2 className='subtitle'><Link to={isFormEnabled ? `/sea-turtle-measurements/${appContext.seaTurtle?.turtleId}` : '#'}>Measurements ></Link></h2>
-                    <hr />
-                  </section>
+                <h2 className='subtitle'>Initial Encounter Information</h2>
+                  <FormFieldRow>
+                    <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Initial encounter'>
+                      <CheckboxFormField fieldName='wasCarryingTagsWhenEnc' labelText='Was turtle carrying tags when initially encountered?' />
+                    </FormFieldGroup>
+                    <ListFormField fieldName='recaptureType' labelText='If yes, recapture type' listItems={recaptureTypes} />
+                    <TextFormField fieldName='tagReturnAddress' labelText='Tag return address' />
+                  </FormFieldRow>
+                  <FormFieldRow>
+                    <ListFormField fieldName='captureProjectType' labelText='Project type' listItems={captureProjectTypes} />
+                    <ListFormField fieldName='didTurtleNest' labelText='If "Nesting Beach," did turtle nest?' listItems={yesNoUndetermineds} />
+                    <TextFormField fieldName='captureProjectOther' labelText='If "Other," describe' />
+                  </FormFieldRow>
+                <hr />
 
-                  <section className='tab-content'> {/* Tags */}
-                    <DataTable
-                      title='Tags'
-                      columns={seaTurtleTagTableColumns}
-                      data={currentSeaTurtleTags}
-                      keyField='turtleTagId'
-                      defaultSortField='tagNumber'
-                      noHeader={true}
-                      fixedHeader={true}
-                      fixedHeaderScrollHeight='9rem'
-                      customStyles={tableCustomStyles}
-                    />
+                <h2 className={'subtitle ' + (isFormEnabled ? '' : 'is-disabled')}>
+                  <Link to={`/sea-turtle-tags`}>Tags ></Link>
+                </h2>
+                <hr />
 
-                    <hr />
-                  </section>
-
-                  <section className='tab-content'> {/* Measurements */}
-                  </section>
-                </div>
+                <h2 className={'subtitle ' + (isFormEnabled ? '' : 'is-disabled')}>
+                  <Link to={`/sea-turtle-morphometrics`}>Morphometrics ></Link>
+                </h2>
+                <hr />
 
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>

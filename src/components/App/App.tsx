@@ -6,6 +6,7 @@ import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
 import Reports from 'components/Reports/Reports';
+import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
 import moment from 'moment';
@@ -157,7 +158,8 @@ const App: React.FC = () => {
           <Switch>
             <ProtectedRoute {...defaultProtectedRouteProps} exact={true} path='/' component={Home} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtles' component={SeaTurtles} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-tags/:turtleId' component={SeaTurtleTags} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-tags' component={SeaTurtleTags} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tanks' component={HoldingTanks} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/hatchling-events' component={HatchlingEvents} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/reports' component={Reports} />
@@ -171,7 +173,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200409.1335
+              &nbsp;|&nbsp;v0.20200409.1555
               {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
               {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span>{ lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

@@ -1,7 +1,7 @@
 export default interface SeaTurtleMorphometricModel {
-  turtleMorphometricId: string;
-  turtleId: string;
-  dateMeasured: Date;
+	turtleMorphometricId: string;
+	turtleId: string;
+	dateMeasured: Date;
 	sclNotchNotchValue: number;
 	sclNotchNotchUnits: string;
 	sclNotchTipValue: number;

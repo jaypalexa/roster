@@ -40,22 +40,22 @@ const HoldingTanks: React.FC = () => {
   // console.log(JSON.stringify(methods.errors));
 
   const tableColumns = [
-      {
-        name: '',
-        ignoreRowClick: true,
-        maxWidth: '2rem',
-        minWidth: '2rem',
-        style: '{padding-left: 1rem}',
-        cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditHoldingTankClick(row.tankId, event)}}><i className='fa fa-pencil'></i></span>,
-      },
-      {
-        name: '',
-        ignoreRowClick: true,
-        maxWidth: '2rem',
-        minWidth: '2rem',
-        cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteHoldingTankClick(row.tankId, row.tankName, event)}}><i className='fa fa-trash'></i></span>,
-      },
-      {
+    {
+      name: '',
+      ignoreRowClick: true,
+      maxWidth: '2rem',
+      minWidth: '2rem',
+      style: '{padding-left: 1rem}',
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditHoldingTankClick(row.tankId, event)}}><i className='fa fa-pencil'></i></span>,
+    },
+    {
+      name: '',
+      ignoreRowClick: true,
+      maxWidth: '2rem',
+      minWidth: '2rem',
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteHoldingTankClick(row.tankId, row.tankName, event)}}><i className='fa fa-trash'></i></span>,
+    },
+    {
       name: 'Name',
       selector: 'tankName',
       sortable: true
@@ -69,6 +69,10 @@ const HoldingTanks: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   useEffect(() => {
     // make async server request

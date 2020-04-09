@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MenuTile from '../MenuTile/MenuTile';
 import './Home.sass';
 
 const Home: React.FC = () => {
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
   return (
     <div id='home' className='home-component'>
       <div className='columns'>

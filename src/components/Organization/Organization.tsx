@@ -28,6 +28,10 @@ const Organization: React.FC = () => {
   // console.log(JSON.stringify(formState));
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
+  useEffect(() => {
     // make async server request
     const getOrganization = async () => {
       const organization = await OrganizationService.getOrganization(appContext.organizationId);
