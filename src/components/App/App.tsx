@@ -33,6 +33,7 @@ const App: React.FC = () => {
       navigator.serviceWorker.ready.then(registration => {
         const serviceWorker = (registration.installing || registration.waiting);
         if (serviceWorker) {
+          console.log('serviceWorker::sending SKIP_WAITING', serviceWorker);
           serviceWorker.postMessage({ type: 'SKIP_WAITING' });
         }
       })
@@ -153,7 +154,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200409.0954
+              &nbsp;|&nbsp;v0.20200409.1042
               {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
               {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span>{ lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
