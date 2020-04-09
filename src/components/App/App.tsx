@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import AuthenticationService from '../../services/AuthenticationService';
+import * as serviceWorker from '../../serviceWorker';
 import './App.sass';
 
 // import logo from './logo.svg';
@@ -27,16 +28,22 @@ const App: React.FC = () => {
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
   const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [triggerRefresh, setTriggerRefresh] = useState(false);
+  const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
 
   const reloadPage = () => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then(registration => {
-        const serviceWorker = (registration.installing || registration.waiting);
-        if (serviceWorker) {
-          console.log('serviceWorker::sending SKIP_WAITING', serviceWorker);
-          serviceWorker.postMessage({ type: 'SKIP_WAITING' });
-        }
-      })
+    if (newServiceWorker) {
+      console.log('newServiceWorker::sending SKIP_WAITING', newServiceWorker);
+      newServiceWorker.postMessage({ type: 'SKIP_WAITING' });
+    } else {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(registration => {
+          const serviceWorker = (registration.installing || registration.waiting);
+          if (serviceWorker) {
+            console.log('serviceWorker::sending SKIP_WAITING', serviceWorker);
+            serviceWorker.postMessage({ type: 'SKIP_WAITING' });
+          }
+        })
+      }
     }
     setIsUpdateAvailable(false);
     window.location.reload(true);
@@ -90,6 +97,16 @@ const App: React.FC = () => {
     return () => {
       navbarBurgerDiv.removeEventListener('click', toggleOn);
     }
+  }, []);
+
+  useEffect(() => {
+    const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
+      setNewServiceWorker(registration.installing || registration.waiting);
+      setIsUpdateAvailable(true);
+    }
+    serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
+
+    return () => {serviceWorker.unregister()}
   }, []);
 
   useEffect(() => {
@@ -154,7 +171,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200409.1042
+              &nbsp;|&nbsp;v0.20200409.1335
               {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
               {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span>{ lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

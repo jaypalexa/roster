@@ -1,11 +1,11 @@
 import moment from 'moment';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
-import { AppContext, useAppContext } from '../../contexts/AppContext';
+import { useAppContext } from '../../contexts/AppContext';
 import TabHelper from '../../helpers/TabHelper';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import SeaTurtleService from '../../services/SeaTurtleService';
@@ -30,11 +30,10 @@ import './SeaTurtles.sass';
 const SeaTurtles: React.FC = () => {
 
   // eslint-disable-next-line
-  const context = useContext(AppContext);
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
-  const [currentSeaTurtle, setCurrentSeaTurtle] = useState({} as SeaTurtleModel);
+  //const [currentSeaTurtle, setCurrentSeaTurtle] = useState({} as SeaTurtleModel);
   const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
   const [captureProjectTypes, setCaptureProjectTypes] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
@@ -196,16 +195,9 @@ const SeaTurtles: React.FC = () => {
     setEditingStarted(false);
   }, [editingStarted]);
 
-  const setAppContextSeaTurtle = useCallback((seaTurtle: SeaTurtleModel) => {
-    //context[0].seaTurtle = seaTurtle;
-    appContext.seaTurtle = seaTurtle;
-    //setAppContext({ ...appContext, seaTurtle: seaTurtle });
-    console.log('SeaTurtle::appContext.seaTurtle', appContext.seaTurtle);
-  }, [appContext, setAppContext]);
-
-  useEffect(() => {
-    setAppContextSeaTurtle(currentSeaTurtle);
-  }, [setAppContextSeaTurtle, currentSeaTurtle]);
+  const setCurrentSeaTurtle = (seaTurtle: SeaTurtleModel) => {
+    setAppContext({ ...appContext, seaTurtle: seaTurtle });
+  }
 
   const fetchSeaTurtle = (turtleId: string) => {
     // make async server request
@@ -318,7 +310,7 @@ const SeaTurtles: React.FC = () => {
 
   const onSubmitSeaTurtle = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
     console.log('In onSubmit()', JSON.stringify(modifiedSeaTurtle));
-    const patchedSeaTurtle = { ...currentSeaTurtle, ...modifiedSeaTurtle };
+    const patchedSeaTurtle = { ...appContext.seaTurtle, ...modifiedSeaTurtle };
     SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
     reset(patchedSeaTurtle);
     setCurrentSeaTurtle(patchedSeaTurtle);
@@ -334,7 +326,7 @@ const SeaTurtles: React.FC = () => {
   });
 
   const onCancelSeaTurtle = () => {
-    reset(currentSeaTurtle);
+    reset(appContext.seaTurtle);
   };
 
   const onEditSeaTurtleTagClick = (turtleTagId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -400,7 +392,7 @@ const SeaTurtles: React.FC = () => {
 
           <hr />
 
-          <h1 className='title has-text-centered'>{currentSeaTurtle.turtleName}</h1>
+          <h1 className='title has-text-centered'>{appContext.seaTurtle?.turtleName}</h1>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtle}>
@@ -470,9 +462,9 @@ const SeaTurtles: React.FC = () => {
                         <TextFormField fieldName='captureProjectOther' labelText='If "Other," describe' />
                       </FormFieldRow>
                     <hr />
-                    <h2 className='subtitle'><Link to={`/sea-turtle-tags/${currentSeaTurtle.turtleId}`}>Tags ></Link></h2>
+                    <h2 className='subtitle'><Link to={`/sea-turtle-tags/${appContext.seaTurtle?.turtleId}`}>Tags ></Link></h2>
                     <hr />
-                    <h2 className='subtitle'><Link to={isFormEnabled ? `/sea-turtle-measurements/${currentSeaTurtle.turtleId}` : '#'}>Measurements ></Link></h2>
+                    <h2 className='subtitle'><Link to={isFormEnabled ? `/sea-turtle-measurements/${appContext.seaTurtle?.turtleId}` : '#'}>Measurements ></Link></h2>
                     <hr />
                   </section>
 
