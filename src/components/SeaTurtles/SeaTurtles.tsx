@@ -311,15 +311,20 @@ const SeaTurtles: React.FC = () => {
         onNo={onDialogNo}
         onCancel={onDialogCancel}
       />
-      <nav className='breadcrumb' aria-label='breadcrumbs'>
+      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li className='is-active'><a href='#' aria-current='page'>Sea Turtles</a></li>
         </ul>
       </nav>
+      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+        <ul>
+          <li><Link to='/'>&lt; Home</Link></li>
+        </ul>
+      </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered form-header'>Sea Turtles</h1>
+          <h1 className='title has-text-centered hidden-when-mobile'>Sea Turtles</h1>
           <div className='level'>
             <div className='level-left'></div>
             <div className='level-right'>

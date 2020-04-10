@@ -62,15 +62,20 @@ const Organization: React.FC = () => {
   return (
     <div id='organization'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <nav className='breadcrumb' aria-label='breadcrumbs'>
+      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li className='is-active'><a href='#' aria-current='page'>Organization</a></li>
         </ul>
       </nav>
+      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+        <ul>
+          <li><Link to='/'>&lt; Home</Link></li>
+        </ul>
+      </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered form-header'>Organization</h1>
+          <h1 className='title has-text-centered hidden-when-mobile'>Organization</h1>
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
 

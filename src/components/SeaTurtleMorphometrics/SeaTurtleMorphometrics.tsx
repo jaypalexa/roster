@@ -315,11 +315,16 @@ const SeaTurtleMorphometrics: React.FC = () => {
         onNo={onDialogNo}
         onCancel={onDialogCancel}
       />
-      <nav className='breadcrumb' aria-label='breadcrumbs'>
+      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
           <li className='is-active'><a href='#' aria-current='page'>Morphometrics</a></li>
+        </ul>
+      </nav>
+      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+        <ul>
+          <li><Link to='/sea-turtles'>&lt; Sea Turtles</Link></li>
         </ul>
       </nav>
       <div className='columns is-centered'>

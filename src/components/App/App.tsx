@@ -1,24 +1,24 @@
-import * as serviceWorker from '../../serviceWorker';
-import AuthenticationService from '../../services/AuthenticationService';
-import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
 import Login from 'components/Login/Login';
-import moment from 'moment';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
-import React, { useCallback, useEffect, useState } from 'react';
 import Reports from 'components/Reports/Reports';
 import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
+import moment from 'moment';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
-import './App.sass';
 import 'react-toastify/dist/ReactToastify.css';
+import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import AuthenticationService from '../../services/AuthenticationService';
+import * as serviceWorker from '../../serviceWorker';
+import './App.sass';
 
 // import logo from './logo.svg';
 
@@ -74,9 +74,10 @@ const App: React.FC = () => {
           }
         });
       })
-    } else {
-      alert(`serviceWorker NOT in navigator`);
-    }
+    } 
+    // else {
+    //   alert(`serviceWorker NOT in navigator`);
+    // }
   }, []);
 
   const closeMenu = () => {
@@ -188,7 +189,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200410.1444
+              &nbsp;|&nbsp;v0.20200410.1850
               {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
