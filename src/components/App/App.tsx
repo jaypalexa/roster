@@ -63,6 +63,8 @@ const App: React.FC = () => {
             setIsUpdateAvailable(true);
           }
         });
+      }).finally(() => {
+        alert(`finally: ${now}`);
       })
     }
   }, []);
@@ -176,7 +178,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200410.1219
+              &nbsp;|&nbsp;v0.20200410.1231
               {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
