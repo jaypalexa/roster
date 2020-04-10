@@ -33,14 +33,14 @@ const App: React.FC = () => {
 
   const reloadPage = () => {
     if (newServiceWorker) {
-      console.log('newServiceWorker::sending SKIP_WAITING', newServiceWorker);
+      // console.log('NEW ServiceWorker::sending SKIP_WAITING', newServiceWorker);
       newServiceWorker.postMessage({ type: 'SKIP_WAITING' });
     } else {
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then(registration => {
           const serviceWorker = (registration.installing || registration.waiting);
           if (serviceWorker) {
-            console.log('serviceWorker::sending SKIP_WAITING', serviceWorker);
+            // console.log('OLD serviceWorker::sending SKIP_WAITING', serviceWorker);
             serviceWorker.postMessage({ type: 'SKIP_WAITING' });
           }
         })
@@ -50,27 +50,28 @@ const App: React.FC = () => {
     window.location.reload(true);
   };
 
+
   const checkForUpdate = useCallback(() => {
-    const now = moment().format('YYYY-MM-DD HH:mm:ss');
-    alert(`pre-serviceWorker-in-navigator: ${navigator.userAgent}`);
-    if ('serviceWorker' in navigator) {
-      alert(`pre-ready: ${now}`);
-      navigator.serviceWorker.ready.then(registration => {
-        alert(`post-ready: ${now}`);
-        setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
-        registration.update().then(() => {
-          const serviceWorker = (registration.installing || registration.waiting);
-          if (serviceWorker) {
-            setIsUpdateAvailable(true);
-          }
-        });
-      }).catch((err) => {
-        alert(`catch: ${JSON.stringify(err)}`);
-      }).finally(() => {
-        alert(`finally: ${now}`);
-      })
+    setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
+
+    const isIosDevice = /iphone|ipod|ipad/i.test(navigator.userAgent);
+    // const isChromeOnIosDevice = /CriOS/i.test(navigator.userAgent) && isIosDevice;
+
+    if (isIosDevice) {
+      alert(`You must close and re-open app or browser tab to check for update when running on an iOS device.  :-(`);
     } else {
-      alert(`serviceWorker NOT in navigator`);
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(registration => {
+          registration.update().then(() => {
+            const serviceWorker = (registration.installing || registration.waiting);
+            if (serviceWorker) {
+              setIsUpdateAvailable(true);
+            }
+          });
+        })
+      } else {
+        alert(`serviceWorker NOT in navigator`);
+      }
     }
   }, []);
 
@@ -183,7 +184,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200410.1309
+              &nbsp;|&nbsp;v0.20200410.1432
               {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

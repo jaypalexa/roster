@@ -101,6 +101,20 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
+### PWA
+
+[Progressive Web Applications (PWA) on iOS Provide a Rich Channel to Reach Customers Despite the Platform Limitations](https://love2dev.com/pwa/ios/)
+* Because Apple assumes space on its devices is cramped, they aggressively throw unused items overboard to free up disk space. If your PWA or any website for that matter, goes unused for a few days (we think it is roughly 14 days, it is not documented) the device will remove all cached assets associated with the origin. This includes IndexedDB, service worker cache, localStorage, etc.
+
+To be classified as a progressive web application:
+* Use HTTPS
+* Register a Service Worker with a fetch event handler
+* Valid web manifest file with a minimal homescreen icon set (not supported by iOS)
+
+[iOS Getting Into The PWA Space Faster Than Ever](https://aureatelabs.com/pwa/ios-getting-into-pwa-space-faster-than-ever/)
+* Apple imposes the caching limit to paltry **50 Mb**, which makes heavy formatted and high definition audios and videos reload— that’s terribly frustrating. 
+* Apple frees up the phone storage by removing PWAs if you are not using them for undefined time (**~14 days**). Though the web app icon will remain on the screen, clicking on it will result in re-downloading.
+
 ### Service Workers
 
 [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers)
@@ -108,6 +122,11 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 [The Service Worker Lifecycle](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle)
 
 [Service Worker Registration](https://developers.google.com/web/fundamentals/primers/service-workers/registration)
+
+#### Service Worker Support
+
+[](https://stackoverflow.com/questions/50607343/chrome-service-worker-ios-support)
+[developer.google.com - Service Workers - Overview - Prerequisites - Browser Support](https://developers.google.com/web/fundamentals/primers/service-workers/#browser_support)
 
 ## Notes
 
