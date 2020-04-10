@@ -1,3 +1,4 @@
+import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
@@ -138,7 +139,7 @@ const SeaTurtles: React.FC = () => {
     setYesNoUndetermineds(CodeListTableService.getList(CodeTableType.YesNoUndetermined, true));
   }, [reset]);
 
-  useEffect(() => {
+  useMount(() => {
     // make async server request
     const getSeaTurtles = async () => {
       const seaTurtles = await SeaTurtleService.getSeaTurtles(appContext.organizationId || '');
@@ -151,8 +152,7 @@ const SeaTurtles: React.FC = () => {
       }
     };
     getSeaTurtles();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
