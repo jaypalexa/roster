@@ -31,7 +31,7 @@ const App: React.FC = () => {
   const [triggerRefresh, setTriggerRefresh] = useState(false);
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
 
-  const reloadPage = () => {
+  const onReloadPageClick = () => {
     if (newServiceWorker) {
       // console.log('NEW ServiceWorker::sending SKIP_WAITING', newServiceWorker);
       newServiceWorker.postMessage({ type: 'SKIP_WAITING' });
@@ -50,28 +50,32 @@ const App: React.FC = () => {
     window.location.reload(true);
   };
 
-
-  const checkForUpdate = useCallback(() => {
+  const onCheckForUpdateClick = () => {
     setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
 
     const isIosDevice = /iphone|ipod|ipad/i.test(navigator.userAgent);
     // const isChromeOnIosDevice = /CriOS/i.test(navigator.userAgent) && isIosDevice;
 
     if (isIosDevice) {
-      alert(`You must close and re-open app or browser tab to check for update when running on an iOS device.  :-(`);
+      alert(`You must close and re-open app or browser tab to check for update when running on an iOS device.\n:-(`);
     } else {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(registration => {
-          registration.update().then(() => {
-            const serviceWorker = (registration.installing || registration.waiting);
-            if (serviceWorker) {
-              setIsUpdateAvailable(true);
-            }
-          });
-        })
-      } else {
-        alert(`serviceWorker NOT in navigator`);
-      }
+      checkForUpdate();
+    }
+  }
+
+  const checkForUpdate = useCallback(() => {
+    setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(registration => {
+        registration.update().then(() => {
+          const serviceWorker = (registration.installing || registration.waiting);
+          if (serviceWorker) {
+            setIsUpdateAvailable(true);
+          }
+        });
+      })
+    } else {
+      alert(`serviceWorker NOT in navigator`);
     }
   }, []);
 
@@ -184,9 +188,9 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200410.1432
-              {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
-            {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
+              &nbsp;|&nbsp;v0.20200410.1444
+              {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
+            {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
         </div>
 
