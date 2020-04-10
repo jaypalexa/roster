@@ -52,7 +52,7 @@ const App: React.FC = () => {
 
   const checkForUpdate = useCallback(() => {
     const now = moment().format('YYYY-MM-DD HH:mm:ss');
-    alert(`pre-serviceWorker-in-navigator: ${navigator}`);
+    alert(`pre-serviceWorker-in-navigator: ${JSON.stringify(navigator)}`);
     if ('serviceWorker' in navigator) {
       alert(`pre-ready: ${now}`);
       navigator.serviceWorker.ready.then(registration => {
@@ -179,7 +179,7 @@ const App: React.FC = () => {
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
               </a>
-              &nbsp;|&nbsp;v0.20200410.1245
+              &nbsp;|&nbsp;v0.20200410.1255
               {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={reloadPage}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={checkForUpdate}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
