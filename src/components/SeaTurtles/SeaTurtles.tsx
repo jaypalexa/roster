@@ -6,6 +6,7 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import SeaTurtleService from '../../services/SeaTurtleService';
@@ -30,7 +31,7 @@ const SeaTurtles: React.FC = () => {
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
-  const { handleSubmit, formState, reset } = methods;
+  const { handleSubmit, formState, getValues, reset } = methods;
   const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
   const [captureProjectTypes, setCaptureProjectTypes] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
@@ -230,7 +231,7 @@ const SeaTurtles: React.FC = () => {
     const handleEvent = () => {
       fetchSeaTurtle(turtleId);
       setIsFormEnabled(true);
-      setEditingStarted(true);
+      // setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -273,10 +274,21 @@ const SeaTurtles: React.FC = () => {
   };
 
   const onSubmitSeaTurtle = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
-    console.log('In onSubmit()', JSON.stringify(modifiedSeaTurtle));
+    saveSeaTurtle(modifiedSeaTurtle);
+    toast.success('Record saved');
+  });
+
+  const onCancelSeaTurtle = () => {
+    reset(appContext.seaTurtle);
+  };
+
+  const saveSeaTurtle = ((modifiedSeaTurtle: SeaTurtleModel) => {
+    console.log('In saveSeaTurtle()', JSON.stringify(modifiedSeaTurtle));
     const patchedSeaTurtle = { ...appContext.seaTurtle, ...modifiedSeaTurtle };
     SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
+    console.log('before', formState);
     reset(patchedSeaTurtle);
+    console.log('after', formState);
     setCurrentSeaTurtle(patchedSeaTurtle);
     const index = currentSeaTurtles.findIndex(x => x.turtleId === patchedSeaTurtle.turtleId);
     if (~index) {
@@ -285,13 +297,14 @@ const SeaTurtles: React.FC = () => {
       currentSeaTurtles.push(patchedSeaTurtle);
     }
     setCurrentSeaTurtles([...currentSeaTurtles]);
-
-    toast.success('Record saved');
   });
 
-  const onCancelSeaTurtle = () => {
-    reset(appContext.seaTurtle);
-  };
+  const saveAndNavigate = (linkTo: string) => {
+    const modifiedSeaTurtle: SeaTurtleModel = getValues();
+    // handleSubmit((modifiedSeaTurtle) => saveSeaTurtle(modifiedSeaTurtle))();
+    saveSeaTurtle(modifiedSeaTurtle);
+    browserHistory.push(linkTo);
+  }
 
   return (
     <div id='seaTurtle'>
@@ -416,12 +429,13 @@ const SeaTurtles: React.FC = () => {
                 <hr />
 
                 <h2 className={'subtitle ' + (isFormEnabled ? '' : 'is-disabled')}>
-                  <Link to={`/sea-turtle-tags`}>Tags ></Link>
+                  <Link to={'/sea-turtle-tags'}>Tags ></Link>
+                  <span className='span-link' onClick={() => saveAndNavigate('/sea-turtle-tags')}>Tags ></span>
                 </h2>
                 <hr />
 
                 <h2 className={'subtitle ' + (isFormEnabled ? '' : 'is-disabled')}>
-                  <Link to={`/sea-turtle-morphometrics`}>Morphometrics ></Link>
+                  <Link to={'/sea-turtle-morphometrics'}>Morphometrics ></Link>
                 </h2>
                 <hr />
 

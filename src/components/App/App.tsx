@@ -189,7 +189,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
             GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200411.1047
+            &nbsp;|&nbsp;v0.20200411.1104
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
