@@ -2,6 +2,7 @@ import * as serviceWorker from '../../serviceWorker';
 import AuthenticationService from '../../services/AuthenticationService';
 import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
+import HoldingTankMeasurements from 'components/HoldingTankMeasurements/HoldingTankMeasurements';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
 import Login from 'components/Login/Login';
@@ -177,6 +178,7 @@ const App: React.FC = () => {
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-tags' component={SeaTurtleTags} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tanks' component={HoldingTanks} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tank-measurements' component={HoldingTankMeasurements} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/hatchling-events' component={HatchlingEvents} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/reports' component={Reports} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/organization' component={Organization} />
@@ -189,7 +191,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200411.1424
+            &nbsp;|&nbsp;v0.20200411.1530
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

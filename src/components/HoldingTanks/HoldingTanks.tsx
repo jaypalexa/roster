@@ -1,11 +1,12 @@
+import browserHistory from '../../browserHistory';
 import DataTable from 'react-data-table-component';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import HoldingTankModel from '../../types/HoldingTankModel';
 import HoldingTankService from '../../services/HoldingTankService';
 import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import React, { useEffect, useRef, useState } from 'react';
-import TabHelper from '../../helpers/TabHelper';
 import TextFormField from '../FormFields/TextFormField';
+import useMount from 'hooks/UseMount';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import YesNoDialog from '../Dialogs/YesNoDialog';
 import { FormContext, useForm } from 'react-hook-form';
@@ -22,8 +23,7 @@ const HoldingTanks: React.FC = () => {
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<HoldingTankModel>({ mode: 'onChange' });
-  const { handleSubmit, formState, reset } = methods;
-  const [currentHoldingTank, setCurrentHoldingTank] = useState({} as HoldingTankModel);
+  const { handleSubmit, formState, getValues, reset } = methods;
   const [currentHoldingTanks, setCurrentHoldingTanks] = useState([] as Array<HoldingTankModel>);
   const [isFormEnabled, setIsFormEnabled] = useState(false);
   const [showYesNoCancelDialog, setShowYesNoCancelDialog] = useState(false);
@@ -70,18 +70,24 @@ const HoldingTanks: React.FC = () => {
     }
   };
 
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0)
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     // make async server request
     const getHoldingTanks = async () => {
       const holdingTanks = await HoldingTankService.getHoldingTanks(appContext.organizationId || '');
       setCurrentHoldingTanks(holdingTanks);
+      if (appContext.holdingTank?.tankId) {
+        reset(appContext.holdingTank);
+        setCurrentHoldingTank(appContext.holdingTank);
+        setIsFormEnabled(true);
+        // setEditingStarted(true);
+      }
     };
     getHoldingTanks();
-  }, [appContext.organizationId]);
+  });
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
@@ -89,6 +95,10 @@ const HoldingTanks: React.FC = () => {
     }
     setEditingStarted(false);
   }, [editingStarted]);
+
+  const setCurrentHoldingTank = (holdingTank: HoldingTankModel) => {
+    setAppContext({ ...appContext, holdingTank: holdingTank });
+  }
 
   const fetchHoldingTank = (tankId: string) => {
     // make async server request
@@ -152,7 +162,7 @@ const HoldingTanks: React.FC = () => {
     const handleEvent = () => {
       fetchHoldingTank(tankId);
       setIsFormEnabled(true);
-      setEditingStarted(true);
+      // setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -195,8 +205,15 @@ const HoldingTanks: React.FC = () => {
   };
 
   const onSubmit = handleSubmit((modifiedHoldingTank: HoldingTankModel) => {
-    console.log('In onSubmit()', JSON.stringify(modifiedHoldingTank));
-    const patchedHoldingTank = { ...currentHoldingTank, ...modifiedHoldingTank };
+    saveHoldingTank(modifiedHoldingTank);
+    toast.success('Record saved');
+  });
+
+  const saveHoldingTank = ((modifiedHoldingTank: HoldingTankModel) => {
+    if (!formState.dirty) return;
+
+    console.log('In saveHoldingTank()', JSON.stringify(modifiedHoldingTank));
+    const patchedHoldingTank = { ...appContext.holdingTank, ...modifiedHoldingTank };
     HoldingTankService.saveHoldingTank(patchedHoldingTank);
     reset(patchedHoldingTank);
     setCurrentHoldingTank(patchedHoldingTank);
@@ -207,15 +224,19 @@ const HoldingTanks: React.FC = () => {
       currentHoldingTanks.push(patchedHoldingTank);
     }
     setCurrentHoldingTanks([...currentHoldingTanks]);
-
-    toast.success('Record saved');
   });
 
-  const onCancel = () => {
-    reset(currentHoldingTank);
-  };
+  const saveAndNavigate = (linkTo: string) => {
+    const modifiedHoldingTank: HoldingTankModel = getValues();
+    saveHoldingTank(modifiedHoldingTank);
+    setTimeout(() => {
+      browserHistory.push(linkTo);
+    }, 0);
+  }
 
-  new TabHelper().initialize();
+  const onCancel = () => {
+    reset(appContext.holdingTank);
+  };
 
   return (
     <div id='holdingTank'>
@@ -277,42 +298,22 @@ const HoldingTanks: React.FC = () => {
 
           <hr />
 
+          <h1 className='title has-text-centered'>{appContext.holdingTank?.tankName}</h1>
+
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <div className='tabs'>
-                  <ul>
-                    <li className='is-active'><a>General Information</a></li>
-                    <li><a>Measurements</a></li>
-                    <li><a>Temperature Graph</a></li>
-                    <li><a>Salinity Graph</a></li>
-                    <li><a>pH Graph</a></li>
-                  </ul>
-                </div>
+                <h2 className='subtitle'>General Information</h2>
+                <FormFieldRow>
+                  <TextFormField fieldName='tankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
+                </FormFieldRow>
+                <hr />
 
-                <div>
-                  <section className='tab-content is-active'> {/* General Information */}
-                    <FormFieldRow>
-                      <TextFormField
-                        fieldName='tankName'
-                        labelText='Name'
-                        validationOptions={{ required: 'Name is required' }}
-                        refObject={firstEditControlRef}
-                      />
-                    </FormFieldRow>
-                  </section>
-
-                  <section className='tab-content'> {/* Measurements */}
-                  </section>
-
-                  <section className='tab-content'> {/* Temperature Graph */}
-                  </section>
-
-                  <section className='tab-content'> {/* Salinity Graph */}
-                  </section>
-
-                  <section className='tab-content'> {/* pH Graph */}
-                  </section>
+                <div
+                  className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
+                  onClick={() => saveAndNavigate('/holding-tank-measurements')}>
+                  <span className='child-navigation-item'>Water Measurements</span>
+                  <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
                 </div>
 
                 <div className='field is-grouped form-action-buttons'>

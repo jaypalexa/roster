@@ -11,6 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import SeaTurtleMorphometricModel from '../../types/SeaTurtleMorphometricModel';
 import SeaTurtleMorphometricService from '../../services/SeaTurtleMorphometricService';
 import TextFormField from '../FormFields/TextFormField';
+import useMount from 'hooks/UseMount';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import YesNoDialog from '../Dialogs/YesNoDialog';
 import { FormContext, useForm } from 'react-hook-form';
@@ -138,16 +139,16 @@ const SeaTurtleMorphometrics: React.FC = () => {
     }
   };
 
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0)
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     setCmIns(CodeListTableService.getList(CodeTableType.CmIn, true));
     setKgLbs(CodeListTableService.getList(CodeTableType.KgLb, true));
-  }, [reset]);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     // make async server request
     if (!appContext.seaTurtle?.turtleId) {
       browserHistory.push('/sea-turtles')
@@ -158,7 +159,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       };
       getSeaTurtleMorphometricsForTurtle();
     }
-  }, [appContext.seaTurtle]);
+  });
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
@@ -173,9 +174,6 @@ const SeaTurtleMorphometrics: React.FC = () => {
       const seaTurtleMorphometric = await SeaTurtleMorphometricService.getSeaTurtleMorphometric(turtleMorphometricId);
       reset(seaTurtleMorphometric);
       setCurrentSeaTurtleMorphometric(seaTurtleMorphometric);
-      // if (firstEditControlRef?.current !== null) {
-      //   firstEditControlRef.current.select();
-      // }
     };
     getSeaTurtleMorphometric();
   };
@@ -230,11 +228,10 @@ const SeaTurtleMorphometrics: React.FC = () => {
   };
 
   const onEditSeaTurtleMorphometricClick = (turtleMorphometricId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    console.log('turtleMorphometricId', turtleMorphometricId);
     const handleEvent = () => {
       fetchSeaTurtleMorphometric(turtleMorphometricId);
       setIsFormEnabled(true);
-      setEditingStarted(true);
+      // setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -361,37 +358,33 @@ const SeaTurtleMorphometrics: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtleMorphometric}>
               <fieldset disabled={!isFormEnabled}>
-                <div>
-                  <section className='tab-content is-active'> {/* General Information */}
-                    <FormFieldRow>
-                      <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
-                    </FormFieldRow>
-                    <FormFieldRow>
-                      <TextFormField fieldName='sclNotchNotchValue' labelText='SCL notch-notch' />
-                      <ListFormField fieldName='sclNotchNotchUnits' labelText='Units' listItems={cmIns} />
-                      <TextFormField fieldName='sclNotchTipValue' labelText='SCL notch-tip' />
-                      <ListFormField fieldName='sclNotchTipUnits' labelText='Units' listItems={cmIns} />
-                      <TextFormField fieldName='sclTipTipValue' labelText='SCL tip-tip' />
-                      <ListFormField fieldName='sclTipTipUnits' labelText='Units' listItems={cmIns} />
-                      <TextFormField fieldName='scwValue' labelText='SCW' />
-                      <ListFormField fieldName='scwUnits' labelText='Units' listItems={cmIns} />
-                    </FormFieldRow>
-                    <FormFieldRow>
-                      <TextFormField fieldName='cclNotchNotchValue' labelText='CCL notch-notch' />
-                      <ListFormField fieldName='cclNotchNotchUnits' labelText='Units' listItems={cmIns} />
-                      <TextFormField fieldName='cclNotchTipValue' labelText='CCL notch-tip' />
-                      <ListFormField fieldName='cclNotchTipUnits' labelText='Units' listItems={cmIns} />
-                      <TextFormField fieldName='cclTipTipValue' labelText='CCL tip-tip' />
-                      <ListFormField fieldName='cclTipTipUnits' labelText='Units' listItems={cmIns} />
-                      <TextFormField fieldName='ccwValue' labelText='CCW' />
-                      <ListFormField fieldName='ccwUnits' labelText='Units' listItems={cmIns} />
-                    </FormFieldRow>
-                    <FormFieldRow>
-                      <TextFormField fieldName='weightValue' labelText='Weight' />
-                      <ListFormField fieldName='weightUnits' labelText='Units' listItems={kgLbs} />
-                    </FormFieldRow>
-                  </section>
-                </div>
+                <FormFieldRow>
+                  <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
+                </FormFieldRow>
+                <FormFieldRow>
+                  <TextFormField fieldName='sclNotchNotchValue' labelText='SCL notch-notch' />
+                  <ListFormField fieldName='sclNotchNotchUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormField fieldName='sclNotchTipValue' labelText='SCL notch-tip' />
+                  <ListFormField fieldName='sclNotchTipUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormField fieldName='sclTipTipValue' labelText='SCL tip-tip' />
+                  <ListFormField fieldName='sclTipTipUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormField fieldName='scwValue' labelText='SCW' />
+                  <ListFormField fieldName='scwUnits' labelText='Units' listItems={cmIns} />
+                </FormFieldRow>
+                <FormFieldRow>
+                  <TextFormField fieldName='cclNotchNotchValue' labelText='CCL notch-notch' />
+                  <ListFormField fieldName='cclNotchNotchUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormField fieldName='cclNotchTipValue' labelText='CCL notch-tip' />
+                  <ListFormField fieldName='cclNotchTipUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormField fieldName='cclTipTipValue' labelText='CCL tip-tip' />
+                  <ListFormField fieldName='cclTipTipUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormField fieldName='ccwValue' labelText='CCW' />
+                  <ListFormField fieldName='ccwUnits' labelText='Units' listItems={cmIns} />
+                </FormFieldRow>
+                <FormFieldRow>
+                  <TextFormField fieldName='weightValue' labelText='Weight' />
+                  <ListFormField fieldName='weightUnits' labelText='Units' listItems={kgLbs} />
+                </FormFieldRow>
 
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>

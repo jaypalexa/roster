@@ -1,5 +1,5 @@
-export default interface HoldingTankWaterModel {
-  tankWaterId: string;
+export default interface HoldingTankMeasurementModel {
+  tankMeasurementId: string;
   tankId: string;
   dateMeasured: Date;
   temperature: string;

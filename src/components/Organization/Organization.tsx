@@ -6,9 +6,10 @@ import OrganizationModel from '../../types/OrganizationModel';
 import OrganizationService from '../../services/OrganizationService';
 import RadioButtonFormField from '../FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from '../FormFields/RadioButtonGroupFormField';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TabHelper from '../../helpers/TabHelper';
 import TextFormField from '../FormFields/TextFormField';
+import useMount from 'hooks/UseMount';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -27,11 +28,11 @@ const Organization: React.FC = () => {
 
   // console.log(JSON.stringify(formState));
 
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0)
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     // make async server request
     const getOrganization = async () => {
       const organization = await OrganizationService.getOrganization(appContext.organizationId);
@@ -39,12 +40,10 @@ const Organization: React.FC = () => {
       setCurrentOrganization(organization);
     };
     getOrganization();
-  }, [reset, appContext.organizationId]);
+  });
 
   const onSubmit = handleSubmit((modifiedOrganization: OrganizationModel) => {
-    // console.log('in handleSubmit(): modifiedOrganization', modifiedOrganization);
     const patchedOrganization = { ...currentOrganization, ...modifiedOrganization };
-    // console.log('in handleSubmit(): patchedOrganization', patchedOrganization);
     OrganizationService.saveOrganization(patchedOrganization);
     reset(patchedOrganization);
     setCurrentOrganization(patchedOrganization);
@@ -52,8 +51,6 @@ const Organization: React.FC = () => {
   });
 
   const onCancel = () => {
-    // console.log('in onCancel()...');
-    // console.log('currentOrganization', currentOrganization);
     reset(currentOrganization);
   };
 

@@ -149,7 +149,7 @@ const SeaTurtles: React.FC = () => {
         reset(appContext.seaTurtle);
         setCurrentSeaTurtle(appContext.seaTurtle);
         setIsFormEnabled(true);
-        setEditingStarted(true);
+        // setEditingStarted(true);
       }
     };
     getSeaTurtles();
@@ -172,9 +172,6 @@ const SeaTurtles: React.FC = () => {
       const seaTurtle = await SeaTurtleService.getSeaTurtle(turtleId);
       reset(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
-      // if (firstEditControlRef?.current !== null) {
-      //   firstEditControlRef.current.select();
-      // }
     };
     getSeaTurtle();
   };
@@ -210,7 +207,7 @@ const SeaTurtles: React.FC = () => {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
-        await onSubmitSeaTurtle();
+        await onSubmit();
         handleEvent();
         setShowYesNoCancelDialog(false);
       });
@@ -238,7 +235,7 @@ const SeaTurtles: React.FC = () => {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
-        await onSubmitSeaTurtle();
+        await onSubmit();
         handleEvent();
         setShowYesNoCancelDialog(false);
       });
@@ -273,14 +270,10 @@ const SeaTurtles: React.FC = () => {
     setShowYesNoDialog(true);
   };
 
-  const onSubmitSeaTurtle = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
+  const onSubmit = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
     saveSeaTurtle(modifiedSeaTurtle);
     toast.success('Record saved');
   });
-
-  const onCancelSeaTurtle = () => {
-    reset(appContext.seaTurtle);
-  };
 
   const saveSeaTurtle = ((modifiedSeaTurtle: SeaTurtleModel) => {
     if (!formState.dirty) return;
@@ -306,6 +299,10 @@ const SeaTurtles: React.FC = () => {
       browserHistory.push(linkTo);
     }, 0);
   }
+
+  const onCancel = () => {
+    reset(appContext.seaTurtle);
+  };
 
   return (
     <div id='seaTurtle'>
@@ -370,7 +367,7 @@ const SeaTurtles: React.FC = () => {
           <h1 className='title has-text-centered'>{appContext.seaTurtle?.turtleName}</h1>
 
           <FormContext {...methods} >
-            <form onSubmit={onSubmitSeaTurtle}>
+            <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <h2 className='subtitle'>General Information</h2>
                 <FormFieldRow>
@@ -457,7 +454,7 @@ const SeaTurtles: React.FC = () => {
                       type='button'
                       className='button is-danger is-fixed-width-medium'
                       value='Cancel'
-                      onClick={() => onCancelSeaTurtle()}
+                      onClick={() => onCancel()}
                       disabled={!formState.dirty}
                     />
                   </p>
