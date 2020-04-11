@@ -52,7 +52,6 @@ const SeaTurtles: React.FC = () => {
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   // console.log(JSON.stringify(formState));
-  // console.log(JSON.stringify(methods.errors));
 
   const seaTurtleTableColumns = [
     {
