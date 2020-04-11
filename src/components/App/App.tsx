@@ -15,6 +15,7 @@ import Reports from 'components/Reports/Reports';
 import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
+import useMount from 'hooks/UseMount';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
@@ -103,7 +104,7 @@ const App: React.FC = () => {
     })
   }
 
-  useEffect(() => {
+  useMount(() => {
     const navbarBurgerDiv = document.querySelector('.navbar-burger') as HTMLDivElement;
     const toggleOn = () => {
       const target = navbarBurgerDiv.dataset.target || '';
@@ -115,9 +116,9 @@ const App: React.FC = () => {
     return () => {
       navbarBurgerDiv.removeEventListener('click', toggleOn);
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
       setNewServiceWorker(registration.installing || registration.waiting);
       setIsUpdateAvailable(true);
@@ -125,15 +126,15 @@ const App: React.FC = () => {
     serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
 
     return () => { serviceWorker.unregister() }
-  }, []);
+  });
+
+  useMount(() => {
+    checkForUpdate();
+  });
 
   useEffect(() => {
     setIsShowUpdateAvailable(isUpdateAvailable);
   }, [isUpdateAvailable]);
-
-  useEffect(() => {
-    checkForUpdate();
-  }, [checkForUpdate]);
 
   return (
     //<img src={logo} className='App-logo' alt='logo' />
@@ -191,7 +192,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200411.1530
+            &nbsp;|&nbsp;v0.20200411.1536
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
