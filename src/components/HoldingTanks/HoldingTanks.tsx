@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import FormFieldRow from '../FormFields/FormFieldRow';
+import HoldingTankModel from '../../types/HoldingTankModel';
+import HoldingTankService from '../../services/HoldingTankService';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
+import React, { useEffect, useRef, useState } from 'react';
+import TabHelper from '../../helpers/TabHelper';
+import TextFormField from '../FormFields/TextFormField';
+import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import YesNoDialog from '../Dialogs/YesNoDialog';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../contexts/AppContext';
-import TabHelper from '../../helpers/TabHelper';
-import HoldingTankService from '../../services/HoldingTankService';
-import HoldingTankModel from '../../types/HoldingTankModel';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import TextFormField from '../FormFields/TextFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
+import { v4 as uuidv4 } from 'uuid';
 import './HoldingTanks.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -46,14 +46,14 @@ const HoldingTanks: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditHoldingTankClick(row.tankId, event)}}><i className='fa fa-pencil'></i></span>,
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankClick(row.tankId, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteHoldingTankClick(row.tankId, row.tankName, event)}}><i className='fa fa-trash'></i></span>,
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankClick(row.tankId, row.tankName, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Name',
@@ -185,13 +185,13 @@ const HoldingTanks: React.FC = () => {
     setDialogTitleText('Confirm Deletion');
     setDialogBodyText(`Delete tank '${tankName}' ?`);
     setOnDialogYes(() => async () => {
-        handleEvent();
-        setShowYesNoDialog(false);
-      });
-      setOnDialogNo(() => () => {
-        setShowYesNoDialog(false);
-      });
-      setShowYesNoDialog(true);
+      handleEvent();
+      setShowYesNoDialog(false);
+    });
+    setOnDialogNo(() => () => {
+      setShowYesNoDialog(false);
+    });
+    setShowYesNoDialog(true);
   };
 
   const onSubmit = handleSubmit((modifiedHoldingTank: HoldingTankModel) => {
@@ -220,15 +220,15 @@ const HoldingTanks: React.FC = () => {
   return (
     <div id='holdingTank'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog 
-        isActive={showYesNoDialog} 
+      <YesNoDialog
+        isActive={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
         onYes={onDialogYes}
         onNo={onDialogNo}
       />
-      <YesNoCancelDialog 
-        isActive={showYesNoCancelDialog} 
+      <YesNoCancelDialog
+        isActive={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
         onYes={onDialogYes}
@@ -243,7 +243,7 @@ const HoldingTanks: React.FC = () => {
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
         <ul>
-          <li><Link to='/'>&lt; Home</Link></li>
+          <li><Link to='/'>&#10094; Home</Link></li>
         </ul>
       </nav>
       <div className='columns is-centered'>
@@ -293,11 +293,11 @@ const HoldingTanks: React.FC = () => {
                 <div>
                   <section className='tab-content is-active'> {/* General Information */}
                     <FormFieldRow>
-                      <TextFormField 
-                        fieldName='tankName' 
-                        labelText='Name' 
-                        validationOptions={{ required: 'Name is required' }} 
-                        refObject={firstEditControlRef} 
+                      <TextFormField
+                        fieldName='tankName'
+                        labelText='Name'
+                        validationOptions={{ required: 'Name is required' }}
+                        refObject={firstEditControlRef}
                       />
                     </FormFieldRow>
                   </section>

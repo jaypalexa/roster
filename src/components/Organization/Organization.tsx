@@ -1,18 +1,18 @@
+import DateFormField from '../FormFields/DateFormField';
+import FormFieldRow from '../FormFields/FormFieldRow';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
+import NumericTextFormField from '../FormFields/NumericTextFormField';
+import OrganizationModel from '../../types/OrganizationModel';
+import OrganizationService from '../../services/OrganizationService';
+import RadioButtonFormField from '../FormFields/RadioButtonFormField';
+import RadioButtonGroupFormField from '../FormFields/RadioButtonGroupFormField';
 import React, { useEffect, useState } from 'react';
+import TabHelper from '../../helpers/TabHelper';
+import TextFormField from '../FormFields/TextFormField';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAppContext } from '../../contexts/AppContext';
-import TabHelper from '../../helpers/TabHelper';
-import OrganizationService from '../../services/OrganizationService';
-import OrganizationModel from '../../types/OrganizationModel';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import NumericTextFormField from '../FormFields/NumericTextFormField';
-import RadioButtonFormField from '../FormFields/RadioButtonFormField';
-import RadioButtonGroupFormField from '../FormFields/RadioButtonGroupFormField';
-import TextFormField from '../FormFields/TextFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './Organization.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -70,7 +70,7 @@ const Organization: React.FC = () => {
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
         <ul>
-          <li><Link to='/'>&lt; Home</Link></li>
+          <li><Link to='/'>&#10094; Home</Link></li>
         </ul>
       </nav>
       <div className='columns is-centered'>
@@ -90,7 +90,7 @@ const Organization: React.FC = () => {
               <div>
                 <section className='tab-content is-active'> {/* General Information */}
                   <FormFieldRow>
-                    <TextFormField fieldName='organizationName' labelText='Organization Name' validationOptions={{required: 'Organization Name is required'}} />
+                    <TextFormField fieldName='organizationName' labelText='Organization Name' validationOptions={{ required: 'Organization Name is required' }} />
                     <TextFormField fieldName='permitNumber' labelText='Permit Number' />
                     <TextFormField fieldName='contactName' labelText='Contact Name' />
                   </FormFieldRow>

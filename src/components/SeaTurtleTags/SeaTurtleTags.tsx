@@ -1,22 +1,22 @@
-import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import DataTable from 'react-data-table-component';
+import DateFormField from '../FormFields/DateFormField';
+import FormFieldRow from '../FormFields/FormFieldRow';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
+import ListFormField from '../FormFields/ListFormField';
+import moment from 'moment';
+import NameValuePair from '../../types/NameValuePair';
+import React, { useEffect, useRef, useState } from 'react';
+import SeaTurtleTagModel from '../../types/SeaTurtleTagModel';
+import SeaTurtleTagService from '../../services/SeaTurtleTagService';
+import TextFormField from '../FormFields/TextFormField';
+import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import YesNoDialog from '../Dialogs/YesNoDialog';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { v4 as uuidv4 } from 'uuid';
 import { useAppContext } from '../../contexts/AppContext';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import SeaTurtleTagService from '../../services/SeaTurtleTagService';
-import NameValuePair from '../../types/NameValuePair';
-import SeaTurtleTagModel from '../../types/SeaTurtleTagModel';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import ListFormField from '../FormFields/ListFormField';
-import TextFormField from '../FormFields/TextFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
+import { v4 as uuidv4 } from 'uuid';
 import './SeaTurtleTags.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -52,14 +52,14 @@ const SeaTurtleTags: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => {onEditSeaTurtleTagClick(row.turtleTagId, event)}}><i className='fa fa-pencil'></i></span>,
+      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleTagClick(row.turtleTagId, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => {onDeleteSeaTurtleTagClick(row.turtleTagId, row.tagNumber, event)}}><i className='fa fa-trash'></i></span>,
+      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleTagClick(row.turtleTagId, row.tagNumber, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Tag Number',
@@ -218,13 +218,13 @@ const SeaTurtleTags: React.FC = () => {
     setDialogTitleText('Confirm Deletion');
     setDialogBodyText(`Delete tag '${tagNumber}' ?`);
     setOnDialogYes(() => async () => {
-        handleEvent();
-        setShowYesNoDialog(false);
-      });
-      setOnDialogNo(() => () => {
-        setShowYesNoDialog(false);
-      });
-      setShowYesNoDialog(true);
+      handleEvent();
+      setShowYesNoDialog(false);
+    });
+    setOnDialogNo(() => () => {
+      setShowYesNoDialog(false);
+    });
+    setShowYesNoDialog(true);
   };
 
   const onSubmitSeaTurtleTag = handleSubmit((modifiedSeaTurtleTag: SeaTurtleTagModel) => {
@@ -251,15 +251,15 @@ const SeaTurtleTags: React.FC = () => {
   return (
     <div id='seaTurtleTag'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog 
-        isActive={showYesNoDialog} 
+      <YesNoDialog
+        isActive={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
         onYes={onDialogYes}
         onNo={onDialogNo}
       />
-      <YesNoCancelDialog 
-        isActive={showYesNoCancelDialog} 
+      <YesNoCancelDialog
+        isActive={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
         onYes={onDialogYes}
@@ -275,7 +275,7 @@ const SeaTurtleTags: React.FC = () => {
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
         <ul>
-          <li><Link to='/sea-turtles'>&lt; Sea Turtles</Link></li>
+          <li><Link to='/sea-turtles'>&#10094; Sea Turtles</Link></li>
         </ul>
       </nav>
       <div className='columns is-centered'>
@@ -326,19 +326,19 @@ const SeaTurtleTags: React.FC = () => {
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>
                     <input
+                      type='submit'
+                      className='button is-success is-fixed-width-medium'
+                      value='Save'
+                      disabled={!(formState.isValid && formState.dirty)}
+                    />
+                  </p>
+                  <p className='control'>
+                    <input
                       type='button'
                       className='button is-danger is-fixed-width-medium'
                       value='Cancel'
                       onClick={() => onCancelSeaTurtleTag()}
                       disabled={!formState.dirty}
-                    />
-                  </p>
-                  <p className='control'>
-                    <input
-                      type='submit'
-                      className='button is-success is-fixed-width-medium'
-                      value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
                     />
                   </p>
                 </div>

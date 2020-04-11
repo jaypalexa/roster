@@ -39,8 +39,8 @@ fieldset
   min-width: 100%
 
 html
-  background-color: #fff8dc
-  color: #191970
+  background-color: lightgoldenrodyellow
+  color: black
   height: 100%
 
 #root
@@ -48,6 +48,29 @@ html
 
 .breadcrumb:not(:last-child)
   margin-bottom: .5rem
+
+.child-navigation-container
+  background-color: lightyellow
+  cursor: pointer
+  display: flex
+  font-size: 1.25rem
+  margin-top: .5rem
+  padding: 1rem
+
+@media (max-width: 768px) // when mobile
+  .child-navigation-container
+    justify-content: space-between
+
+.child-navigation-container.is-disabled
+  cursor: not-allowed
+  a, span
+    color: gray
+    pointer-events: none
+
+.child-navigation-item
+	color: blue
+	cursor: pointer
+  display: inline-block
 
 .cursor-pointer
   cursor: pointer
@@ -77,6 +100,8 @@ html
 .span-link
 	cursor: pointer
 	color: mediumblue
+
+.span-link.show-underline
 	text-decoration: underline
 
 .tab-content
