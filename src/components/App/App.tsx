@@ -1,26 +1,26 @@
-import * as serviceWorker from '../../serviceWorker';
-import AuthenticationService from '../../services/AuthenticationService';
-import browserHistory from '../../browserHistory';
 import HatchlingEvents from 'components/HatchlingAndWashbackEvents/HatchlingAndWashbackEvents';
 import HoldingTankMeasurements from 'components/HoldingTankMeasurements/HoldingTankMeasurements';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
 import Login from 'components/Login/Login';
-import moment from 'moment';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
-import React, { useCallback, useEffect, useState } from 'react';
 import Reports from 'components/Reports/Reports';
 import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
 import useMount from 'hooks/UseMount';
+import moment from 'moment';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
-import './App.sass';
 import 'react-toastify/dist/ReactToastify.css';
+import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import AuthenticationService from '../../services/AuthenticationService';
+import * as serviceWorker from '../../serviceWorker';
+import './App.sass';
 
 // import logo from './logo.svg';
 
@@ -59,7 +59,7 @@ const App: React.FC = () => {
     // const isChromeOnIosDevice = /CriOS/i.test(navigator.userAgent) && isIosDevice;
 
     if (isIosDevice) {
-      alert(`You must close and re-open app or browser tab to check for update when running on an iOS device.\n:-(`);
+      alert(`You must close and re-open the app or browser tab to check for updates when running on an iOS device.\n\n:-(`);
     } else {
       checkForUpdate();
     }
@@ -192,7 +192,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200411.1835
+            &nbsp;|&nbsp;v0.20200413.1026
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
