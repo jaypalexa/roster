@@ -1,5 +1,5 @@
-import MenuTile from '../MenuTile/MenuTile';
 import React, { useEffect } from 'react';
+import MenuTile from '../MenuTile/MenuTile';
 import './Home.sass';
 
 const Home: React.FC = () => {
@@ -17,9 +17,18 @@ const Home: React.FC = () => {
               <MenuTile color='darkgreen' title='Sea Turtles' linkTo='/sea-turtles' />
               <MenuTile color='darkmagenta' title='Holding Tanks' linkTo='/holding-tanks' />
             </div>
-            <div className='tile is-parent is-vertical is-6'>
-              <MenuTile color='darkblue' title='Hatchling and Washback Events' linkTo='/hatchling-and-washback-events' />
-              <MenuTile color='darkred' title='Reports' linkTo='/reports' />
+            <div className='tile is-vertical is-6'>
+              <div className='tile'>
+                <div className='tile is-parent is-6'>
+                  <MenuTile color='hsl(245, 100%, 25%)' title='Hatchling Events' linkTo='/hatchling-events' />
+                </div>
+                <div className='tile is-parent is-6'>
+                  <MenuTile color='hsl(245, 100%, 40%)' title='Washback Events' linkTo='/washback-events' />
+                </div>
+              </div>
+              <div className='tile is-parent'>
+                <MenuTile color='darkred' title='Reports' linkTo='/reports' />
+              </div>
             </div>
           </div>
         </div>
