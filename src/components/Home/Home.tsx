@@ -20,10 +20,10 @@ const Home: React.FC = () => {
             <div className='tile is-vertical is-6'>
               <div className='tile'>
                 <div className='tile is-parent is-6'>
-                  <MenuTile color='hsl(245, 100%, 25%)' title='Hatchling Events' linkTo='/hatchling-events' />
+                  <MenuTile color='hsl(245, 100%, 25%)' title='Hatchlings Events' linkTo='/hatchlings-events' />
                 </div>
                 <div className='tile is-parent is-6'>
-                  <MenuTile color='hsl(245, 100%, 40%)' title='Washback Events' linkTo='/washback-events' />
+                  <MenuTile color='hsl(245, 100%, 40%)' title='Washbacks Events' linkTo='/washbacks-events' />
                 </div>
               </div>
               <div className='tile is-parent'>

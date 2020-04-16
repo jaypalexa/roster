@@ -1,4 +1,4 @@
-import HatchlingEvents from 'components/HatchlingEvents/HatchlingEvents';
+import HatchlingEvents from 'components/HatchlingsEvents/HatchlingsEvents';
 import HoldingTankMeasurements from 'components/HoldingTankMeasurements/HoldingTankMeasurements';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
@@ -10,7 +10,7 @@ import Reports from 'components/Reports/Reports';
 import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
-import WashbackEvents from 'components/WashbackEvents/WashbackEvents';
+import WashbackEvents from 'components/WashbacksEvents/WashbacksEvents';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -160,8 +160,8 @@ const App: React.FC = () => {
             <div className='navbar-start'>
               <Link className='navbar-item' to='/sea-turtles' onClick={closeMenu}>Sea Turtles</Link>
               <Link className='navbar-item' to='/holding-tanks' onClick={closeMenu}>Holding Tanks</Link>
-              <Link className='navbar-item' to='/hatchling-events' onClick={closeMenu}>Hatchling Events</Link>
-              <Link className='navbar-item' to='/washback-events' onClick={closeMenu}>Washback Events</Link>
+              <Link className='navbar-item' to='/hatchlings-events' onClick={closeMenu}>Hatchlings Events</Link>
+              <Link className='navbar-item' to='/washbacks-events' onClick={closeMenu}>Washbacks Events</Link>
               <Link className='navbar-item' to='/reports' onClick={closeMenu}>Reports</Link>
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
@@ -182,8 +182,8 @@ const App: React.FC = () => {
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tanks' component={HoldingTanks} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tank-measurements' component={HoldingTankMeasurements} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/hatchling-events' component={HatchlingEvents} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/washback-events' component={WashbackEvents} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/hatchlings-events' component={HatchlingEvents} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/washbacks-events' component={WashbackEvents} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/reports' component={Reports} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/organization' component={Organization} />
             <Route path='/login' component={Login} />
@@ -195,7 +195,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200415.1400
+            &nbsp;|&nbsp;v0.20200416.1824
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
