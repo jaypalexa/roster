@@ -117,10 +117,14 @@ html
   margin-bottom: 0 !important
 
 .title:not(:last-child)
-  margin-bottom: .5rem
+  margin-bottom: 1rem
 
 .transparent
   opacity: 0
+
+@media (max-width: 768px) // when mobile
+  .full-width-when-mobile
+    width: 100%
 
 @media (min-width: 769px) // when NOT mobile
   .shown-when-mobile

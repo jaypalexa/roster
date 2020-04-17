@@ -156,7 +156,7 @@ const HatchlingsEvents: React.FC = () => {
     deleteHatchlingsEvent();
   };
 
-  const onAddNewHatchlingsEventButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAddNewHatchlingsEventButtonClick = (eventType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const seaTurtle = {} as HatchlingsEventModel;
       seaTurtle.hatchlingsEventId = uuidv4();
@@ -166,7 +166,6 @@ const HatchlingsEvents: React.FC = () => {
       setEditingStarted(true);
     };
 
-    const eventType = event.currentTarget.value;
     console.log('eventType', eventType);
 
     if (formState.dirty) {
@@ -295,17 +294,38 @@ const HatchlingsEvents: React.FC = () => {
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered hidden-when-mobile'>Hatchlings Events</h1>
           <div className='level'>
-            <div className='level-left'></div>
-            <div className='level-right'>
-              <p className='level-item'>
-                <button className='button is-link' onClick={onAddNewHatchlingsEventButtonClick} value='Acquired'>
-                  <span className='icon'>
-                    <i className='fa fa-plus'></i>
-                  </span>
-                  &nbsp;&nbsp;&nbsp;Add New Hatchlings Event
-                </button>
-              </p>
-            </div>
+            <p className='level-item'>
+              <button className='button is-link full-width-when-mobile' onClick={onAddNewHatchlingsEventButtonClick('Acquired')}>
+                <span className='icon'>
+                  <i className='fa fa-plus'></i>
+                </span>
+                &nbsp;&nbsp;&nbsp;Add New Hatchlings Acquired Event
+              </button>
+            </p>
+            <p className='level-item'>
+              <button className='button is-link full-width-when-mobile' onClick={onAddNewHatchlingsEventButtonClick('Died')}>
+                <span className='icon'>
+                  <i className='fa fa-plus'></i>
+                </span>
+                &nbsp;&nbsp;&nbsp;Add New Hatchlings Died Event
+              </button>
+            </p>
+            <p className='level-item'>
+              <button className='button is-link full-width-when-mobile' onClick={onAddNewHatchlingsEventButtonClick('Released')}>
+                <span className='icon'>
+                  <i className='fa fa-plus'></i>
+                </span>
+                &nbsp;&nbsp;&nbsp;Add New Hatchlings Released Event
+              </button>
+            </p>
+            <p className='level-item'>
+              <button className='button is-link full-width-when-mobile' onClick={onAddNewHatchlingsEventButtonClick('DOA')}>
+                <span className='icon'>
+                  <i className='fa fa-plus'></i>
+                </span>
+                &nbsp;&nbsp;&nbsp;Add New Hatchlings DOA Event
+              </button>
+            </p>
           </div>
 
           <DataTable
@@ -322,7 +342,7 @@ const HatchlingsEvents: React.FC = () => {
 
           <hr />
 
-  <h1 className='title has-text-centered'>{currentHatchlingsEvent.eventType} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}</h1>
+          <h1 className='title has-text-centered'>{currentHatchlingsEvent.eventType} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}</h1>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
