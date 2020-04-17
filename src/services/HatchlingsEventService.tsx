@@ -10,6 +10,11 @@ const HatchlingsEventService = {
     return hatchlingsEvent || {} as HatchlingsEventModel;
   },
   saveHatchlingsEvent(hatchlingsEvent: HatchlingsEventModel) {
+    // TODO: HACK: fix in SQL - released total
+    if (hatchlingsEvent.eventType === 'Released') {
+      console.log('hatchlingsEvent.beachEventCount', hatchlingsEvent.beachEventCount);
+      hatchlingsEvent.eventCount = +(hatchlingsEvent.beachEventCount || 0) + +(hatchlingsEvent.offshoreEventCount || 0);
+    }
     const hatchlingsEvents = this.getHatchlingsEvents('');
     const index = hatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEvent.hatchlingsEventId);
     if (~index) {

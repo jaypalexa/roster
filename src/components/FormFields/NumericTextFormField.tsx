@@ -5,9 +5,10 @@ import InputFormField from './InputFormField';
 interface NumericTextFormFieldProps extends FormFieldProps {
   min?: number;
   max?: number;
+  pattern?: string;
 }
 
-export const NumericTextFormField: React.FC<NumericTextFormFieldProps> = ({fieldName, labelText, min, max, validationOptions, refObject}) => {
+export const NumericTextFormField: React.FC<NumericTextFormFieldProps> = ({fieldName, labelText, min, max, pattern, validationOptions, refObject}) => {
   return (
       <InputFormField 
         fieldName={fieldName} 
@@ -16,8 +17,8 @@ export const NumericTextFormField: React.FC<NumericTextFormFieldProps> = ({field
         refObject={refObject}
         type='number' 
         min={min || 0} 
-        max={max} 
-        pattern='\d+' 
+        max={max || 99999} 
+        pattern={pattern || '\\d+'} 
       />
   );
 };

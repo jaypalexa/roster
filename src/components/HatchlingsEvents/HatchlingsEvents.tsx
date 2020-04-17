@@ -16,7 +16,7 @@ import YesNoDialog from '../Dialogs/YesNoDialog';
 import DateFormField from '../FormFields/DateFormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import ListFormField from '../FormFields/ListFormField';
-import TextFormField from '../FormFields/TextFormField';
+import NumericTextFormField from '../FormFields/NumericTextFormField';
 import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './HatchlingsEvents.sass';
 
@@ -110,8 +110,8 @@ const HatchlingsEvents: React.FC = () => {
   useMount(() => {
     // make async server request
     const getHatchlingsEvents = async () => {
-      const seaTurtles = await HatchlingsEventService.getHatchlingsEvents(appContext.organizationId || '');
-      setCurrentHatchlingsEvents(seaTurtles);
+      const hatchlingsEvents = await HatchlingsEventService.getHatchlingsEvents(appContext.organizationId || '');
+      setCurrentHatchlingsEvents(hatchlingsEvents);
       if (currentHatchlingsEvent.hatchlingsEventId) {
         reset(currentHatchlingsEvent);
         setCurrentHatchlingsEvent(currentHatchlingsEvent);
@@ -132,9 +132,9 @@ const HatchlingsEvents: React.FC = () => {
   const fetchHatchlingsEvent = (hatchlingsEventId: string) => {
     // make async server request
     const getHatchlingsEvent = async () => {
-      const seaTurtle = await HatchlingsEventService.getHatchlingsEvent(hatchlingsEventId);
-      reset(seaTurtle);
-      setCurrentHatchlingsEvent(seaTurtle);
+      const hatchlingsEvent = await HatchlingsEventService.getHatchlingsEvent(hatchlingsEventId);
+      reset(hatchlingsEvent);
+      setCurrentHatchlingsEvent(hatchlingsEvent);
     };
     getHatchlingsEvent();
   };
@@ -143,9 +143,9 @@ const HatchlingsEvents: React.FC = () => {
     // make async server request
     const deleteHatchlingsEvent = async () => {
       await HatchlingsEventService.deleteHatchlingsEvent(hatchlingsEventId);
-      const seaTurtle = {} as HatchlingsEventModel;
-      reset(seaTurtle);
-      setCurrentHatchlingsEvent(seaTurtle);
+      const hatchlingsEvent = {} as HatchlingsEventModel;
+      reset(hatchlingsEvent);
+      setCurrentHatchlingsEvent(hatchlingsEvent);
       const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEventId);
       if (~index) {
         var updatedCurrentHatchlingsEvents = [...currentHatchlingsEvents];
@@ -158,15 +158,14 @@ const HatchlingsEvents: React.FC = () => {
 
   const onAddNewHatchlingsEventButtonClick = (eventType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
-      const seaTurtle = {} as HatchlingsEventModel;
-      seaTurtle.hatchlingsEventId = uuidv4();
-      reset(seaTurtle);
-      setCurrentHatchlingsEvent(seaTurtle);
+      const hatchlingsEvent = {} as HatchlingsEventModel;
+      hatchlingsEvent.hatchlingsEventId = uuidv4();
+      hatchlingsEvent.eventType = eventType;
+      reset(hatchlingsEvent);
+      setCurrentHatchlingsEvent(hatchlingsEvent);
       setIsFormEnabled(true);
       setEditingStarted(true);
     };
-
-    console.log('eventType', eventType);
 
     if (formState.dirty) {
       setDialogTitleText('Unsaved Changes');
@@ -243,7 +242,7 @@ const HatchlingsEvents: React.FC = () => {
   const saveHatchlingsEvent = ((modifiedHatchlingsEvent: HatchlingsEventModel) => {
     if (!formState.dirty) return;
 
-    console.log('In saveHatchlingsEvent()', JSON.stringify(modifiedHatchlingsEvent));
+    console.log('In saveHatchlingsEvent()', modifiedHatchlingsEvent);
     const patchedHatchlingsEvent = { ...currentHatchlingsEvent, ...modifiedHatchlingsEvent };
     HatchlingsEventService.saveHatchlingsEvent(patchedHatchlingsEvent);
     reset(patchedHatchlingsEvent);
@@ -261,8 +260,28 @@ const HatchlingsEvents: React.FC = () => {
     reset(currentHatchlingsEvent);
   };
 
+  const showField = (fieldName: string, eventType: string) => {
+    switch(eventType) { 
+      case 'Acquired':  { 
+        return ['species', 'eventDate', 'eventCount', 'eventCounty'].includes(fieldName); 
+      } 
+      case 'Died': { 
+        return ['species', 'eventDate', 'eventCount'].includes(fieldName); 
+      } 
+      case 'Released': { 
+        return ['species', 'eventDate', 'beachEventCount', 'offshoreEventCount'].includes(fieldName); 
+      } 
+      case 'DOA': { 
+        return ['species', 'eventDate', 'eventCount', 'eventCounty'].includes(fieldName); 
+      } 
+      default: { 
+         return false; 
+      } 
+   } 
+  }
+
   return (
-    <div id='seaTurtle'>
+    <div id='hatchlingsEvent'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}
@@ -348,12 +367,12 @@ const HatchlingsEvents: React.FC = () => {
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  <ListFormField fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} />
-                  <DateFormField fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} />
-                  <TextFormField fieldName='eventCount' labelText='Event count' />
-                  <TextFormField fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} />
-                  <TextFormField fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} />
-                  <ListFormField fieldName='eventCounty' labelText='County' listItems={counties} />
+                  {showField('species', currentHatchlingsEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
+                  {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
+                  {showField('eventCount', currentHatchlingsEvent.eventType) ? <NumericTextFormField fieldName='eventCount' labelText='Event count' /> : null}
+                  {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <NumericTextFormField fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} /> : null}
+                  {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <NumericTextFormField fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} /> : null}
+                  {showField('eventCounty', currentHatchlingsEvent.eventType) ? <ListFormField fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
                 </FormFieldRow>
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>
