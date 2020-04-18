@@ -16,7 +16,7 @@ import YesNoDialog from '../Dialogs/YesNoDialog';
 import DateFormField from '../FormFields/DateFormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import ListFormField from '../FormFields/ListFormField';
-import NumericTextFormField from '../FormFields/NumericTextFormField';
+import NumericFormField from '../FormFields/NumericFormField';
 import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './HatchlingsEvents.sass';
 
@@ -369,9 +369,9 @@ const HatchlingsEvents: React.FC = () => {
                 <FormFieldRow>
                   {showField('species', currentHatchlingsEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
                   {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
-                  {showField('eventCount', currentHatchlingsEvent.eventType) ? <NumericTextFormField fieldName='eventCount' labelText='Event count' /> : null}
-                  {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <NumericTextFormField fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} /> : null}
-                  {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <NumericTextFormField fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} /> : null}
+                  {showField('eventCount', currentHatchlingsEvent.eventType) ? <NumericFormField fieldName='eventCount' labelText='Event count' /> : null}
+                  {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <NumericFormField fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} /> : null}
+                  {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <NumericFormField fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} /> : null}
                   {showField('eventCounty', currentHatchlingsEvent.eventType) ? <ListFormField fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
                 </FormFieldRow>
                 <div className='field is-grouped form-action-buttons'>

@@ -6,6 +6,7 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import Constants from '../../constants';
 import { useAppContext } from '../../contexts/AppContext';
 import HoldingTankMeasurementService from '../../services/HoldingTankMeasurementService';
 import HoldingTankMeasurementModel from '../../types/HoldingTankMeasurementModel';
@@ -13,7 +14,7 @@ import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import YesNoDialog from '../Dialogs/YesNoDialog';
 import DateFormField from '../FormFields/DateFormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
-import TextFormField from '../FormFields/TextFormField';
+import NumericFormField from '../FormFields/NumericFormField';
 import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './HoldingTankMeasurements.sass';
 
@@ -299,9 +300,9 @@ const HoldingTankMeasurements: React.FC = () => {
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
                   <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
-                  <TextFormField fieldName='temperature' labelText='Temperature' />
-                  <TextFormField fieldName='salinity' labelText='Salinity' />
-                  <TextFormField fieldName='ph' labelText='pH' />
+                  <NumericFormField fieldName='temperature' labelText='Temperature' step='.01' pattern={Constants.INPUT_NUMBER_PATTERN.TWO_DECIMAL_PLACES} validationOptions={{ pattern: { value: new RegExp(Constants.INPUT_NUMBER_PATTERN.TWO_DECIMAL_PLACES), message: 'Value cannot exceed two decimal places' } }} />
+                  <NumericFormField fieldName='salinity' labelText='Salinity' step='.01' pattern={Constants.INPUT_NUMBER_PATTERN.TWO_DECIMAL_PLACES} validationOptions={{ pattern: { value: new RegExp(Constants.INPUT_NUMBER_PATTERN.TWO_DECIMAL_PLACES), message: 'Value cannot exceed two decimal places' } }} />
+                  <NumericFormField fieldName='ph' labelText='pH' step='.01' pattern={Constants.INPUT_NUMBER_PATTERN.TWO_DECIMAL_PLACES} validationOptions={{ pattern: { value: new RegExp(Constants.INPUT_NUMBER_PATTERN.TWO_DECIMAL_PLACES), message: 'Value cannot exceed two decimal places' } }} />
                 </FormFieldRow>
 
                 <div className='field is-grouped form-action-buttons'>

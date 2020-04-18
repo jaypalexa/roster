@@ -2,7 +2,7 @@ export default interface HoldingTankMeasurementModel {
   tankMeasurementId: string;
   tankId: string;
   dateMeasured: Date;
-  temperature: string;
-  salinity: string;
-  ph: string;
+  temperature: number;
+  salinity: number;
+  ph: number;
 };
