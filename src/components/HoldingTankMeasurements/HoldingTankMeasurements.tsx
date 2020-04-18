@@ -6,6 +6,7 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import HoldingTankMeasurementService from '../../services/HoldingTankMeasurementService';
 import HoldingTankMeasurementModel from '../../types/HoldingTankMeasurementModel';
@@ -93,11 +94,15 @@ const HoldingTankMeasurements: React.FC = () => {
 
   useMount(() => {
     // make async server request
-    const getHoldingTankMeasurementsForTurtle = async () => {
-      const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurementsForTank(appContext.holdingTank?.tankId);
-      setCurrentHoldingTankMeasurements(holdingTankMeasurements);
-    };
-    getHoldingTankMeasurementsForTurtle();
+    if (!appContext.holdingTank?.tankId) {
+      browserHistory.push('/holding-tanks')
+    } else {
+      const getHoldingTankMeasurementsForTurtle = async () => {
+        const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurementsForTank(appContext.holdingTank?.tankId);
+        setCurrentHoldingTankMeasurements(holdingTankMeasurements);
+      };
+      getHoldingTankMeasurementsForTurtle();
+    }
   });
 
   useEffect(() => {
