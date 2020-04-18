@@ -1,24 +1,24 @@
-import browserHistory from '../../browserHistory';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import DataTable from 'react-data-table-component';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
-import ListFormField from '../FormFields/ListFormField';
-import moment from 'moment';
-import NameValuePair from '../../types/NameValuePair';
-import React, { useEffect, useRef, useState } from 'react';
-import SeaTurtleMorphometricModel from '../../types/SeaTurtleMorphometricModel';
-import SeaTurtleMorphometricService from '../../services/SeaTurtleMorphometricService';
-import TextFormField from '../FormFields/TextFormField';
 import useMount from 'hooks/UseMount';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
+import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
+import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
 import { v4 as uuidv4 } from 'uuid';
+import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
+import SeaTurtleMorphometricService from '../../services/SeaTurtleMorphometricService';
+import NameValuePair from '../../types/NameValuePair';
+import SeaTurtleMorphometricModel from '../../types/SeaTurtleMorphometricModel';
+import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import YesNoDialog from '../Dialogs/YesNoDialog';
+import DateFormField from '../FormFields/DateFormField';
+import FormFieldRow from '../FormFields/FormFieldRow';
+import ListFormField from '../FormFields/ListFormField';
+import TextFormField from '../FormFields/TextFormField';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './SeaTurtleMorphometrics.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -274,7 +274,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   };
 
   const onSubmitSeaTurtleMorphometric = handleSubmit((modifiedSeaTurtleMorphometric: SeaTurtleMorphometricModel) => {
-    console.log('In onSubmit()', JSON.stringify(modifiedSeaTurtleMorphometric));
+    console.log('In onSubmit()', modifiedSeaTurtleMorphometric);
     const patchedSeaTurtleMorphometric = { ...currentSeaTurtleMorphometric, ...modifiedSeaTurtleMorphometric };
     SeaTurtleMorphometricService.saveSeaTurtleMorphometric(patchedSeaTurtleMorphometric);
     reset(patchedSeaTurtleMorphometric);

@@ -1,27 +1,27 @@
-import browserHistory from '../../browserHistory';
-import CheckboxFormField from '../FormFields/CheckboxFormField';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import DataTable from 'react-data-table-component';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldGroup from '../FormFields/FormFieldGroup';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
-import ListFormField from '../FormFields/ListFormField';
-import moment from 'moment';
-import NameValuePair from '../../types/NameValuePair';
-import React, { useEffect, useRef, useState } from 'react';
-import SeaTurtleModel from '../../types/SeaTurtleModel';
-import SeaTurtleService from '../../services/SeaTurtleService';
-import TextareaFormField from '../FormFields/TextareaFormField';
-import TextFormField from '../FormFields/TextFormField';
 import useMount from 'hooks/UseMount';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
+import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
+import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
 import { v4 as uuidv4 } from 'uuid';
+import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
+import SeaTurtleService from '../../services/SeaTurtleService';
+import NameValuePair from '../../types/NameValuePair';
+import SeaTurtleModel from '../../types/SeaTurtleModel';
+import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import YesNoDialog from '../Dialogs/YesNoDialog';
+import CheckboxFormField from '../FormFields/CheckboxFormField';
+import DateFormField from '../FormFields/DateFormField';
+import FormFieldGroup from '../FormFields/FormFieldGroup';
+import FormFieldRow from '../FormFields/FormFieldRow';
+import ListFormField from '../FormFields/ListFormField';
+import TextareaFormField from '../FormFields/TextareaFormField';
+import TextFormField from '../FormFields/TextFormField';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './SeaTurtles.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -277,7 +277,7 @@ const SeaTurtles: React.FC = () => {
   const saveSeaTurtle = ((modifiedSeaTurtle: SeaTurtleModel) => {
     if (!formState.dirty) return;
 
-    console.log('In saveSeaTurtle()', JSON.stringify(modifiedSeaTurtle));
+    console.log('In saveSeaTurtle()', modifiedSeaTurtle);
     const patchedSeaTurtle = { ...appContext.seaTurtle, ...modifiedSeaTurtle };
     SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
     reset(patchedSeaTurtle);

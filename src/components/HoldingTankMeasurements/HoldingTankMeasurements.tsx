@@ -1,20 +1,20 @@
-import DataTable from 'react-data-table-component';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import HoldingTankMeasurementModel from '../../types/HoldingTankMeasurementModel';
-import HoldingTankMeasurementService from '../../services/HoldingTankMeasurementService';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
+import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import TextFormField from '../FormFields/TextFormField';
-import useMount from 'hooks/UseMount';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
+import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
 import { v4 as uuidv4 } from 'uuid';
+import { useAppContext } from '../../contexts/AppContext';
+import HoldingTankMeasurementService from '../../services/HoldingTankMeasurementService';
+import HoldingTankMeasurementModel from '../../types/HoldingTankMeasurementModel';
+import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import YesNoDialog from '../Dialogs/YesNoDialog';
+import DateFormField from '../FormFields/DateFormField';
+import FormFieldRow from '../FormFields/FormFieldRow';
+import TextFormField from '../FormFields/TextFormField';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './HoldingTankMeasurements.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -213,7 +213,7 @@ const HoldingTankMeasurements: React.FC = () => {
   };
 
   const onSubmitHoldingTankMeasurement = handleSubmit((modifiedHoldingTankMeasurement: HoldingTankMeasurementModel) => {
-    console.log('In onSubmit()', JSON.stringify(modifiedHoldingTankMeasurement));
+    console.log('In onSubmit()', modifiedHoldingTankMeasurement);
     const patchedHoldingTankMeasurement = { ...currentHoldingTankMeasurement, ...modifiedHoldingTankMeasurement };
     HoldingTankMeasurementService.saveHoldingTankMeasurement(patchedHoldingTankMeasurement);
     reset(patchedHoldingTankMeasurement);

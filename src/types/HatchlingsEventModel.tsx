@@ -4,8 +4,8 @@ export default interface HatchlingsEventModel {
   eventType: string;
   speciesCode: string;
   eventDate: Date;
-  eventCount?: number;
-  beachEventCount?: number;
-  offshoreEventCount?: number;
-  eventCounty?: string;
+  eventCount: number;
+  beachEventCount: number;
+  offshoreEventCount: number;
+  eventCounty: string;
 };

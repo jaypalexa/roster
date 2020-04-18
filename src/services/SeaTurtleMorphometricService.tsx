@@ -1,3 +1,4 @@
+import TypeHelper from '../helpers/TypeHelper';
 import SeaTurtleMorphometricModel from '../types/SeaTurtleMorphometricModel';
 
 const SeaTurtleMorphometricService = {
@@ -10,6 +11,16 @@ const SeaTurtleMorphometricService = {
     return seaTurtleMorphometric || {} as SeaTurtleMorphometricModel;
   },
   saveSeaTurtleMorphometric(seaTurtleMorphometric: SeaTurtleMorphometricModel) {
+    seaTurtleMorphometric.sclNotchNotchValue = TypeHelper.toNumber(seaTurtleMorphometric.sclNotchNotchValue);
+    seaTurtleMorphometric.sclNotchTipValue = TypeHelper.toNumber(seaTurtleMorphometric.sclNotchTipValue);
+    seaTurtleMorphometric.sclTipTipValue = TypeHelper.toNumber(seaTurtleMorphometric.sclTipTipValue);
+    seaTurtleMorphometric.scwValue = TypeHelper.toNumber(seaTurtleMorphometric.scwValue);
+    seaTurtleMorphometric.cclNotchNotchValue = TypeHelper.toNumber(seaTurtleMorphometric.cclNotchNotchValue);
+    seaTurtleMorphometric.cclNotchTipValue = TypeHelper.toNumber(seaTurtleMorphometric.cclNotchTipValue);
+    seaTurtleMorphometric.cclTipTipValue = TypeHelper.toNumber(seaTurtleMorphometric.cclTipTipValue);
+    seaTurtleMorphometric.ccwValue = TypeHelper.toNumber(seaTurtleMorphometric.ccwValue);
+    seaTurtleMorphometric.weightValue = TypeHelper.toNumber(seaTurtleMorphometric.weightValue);
+
     const seaTurtleMorphometrics = this.getAllSeaTurtleMorphometrics();
     const index = seaTurtleMorphometrics.findIndex(x => x.turtleMorphometricId === seaTurtleMorphometric.turtleMorphometricId);
     if (~index) {

@@ -1,19 +1,19 @@
-import browserHistory from '../../browserHistory';
-import DataTable from 'react-data-table-component';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import HoldingTankModel from '../../types/HoldingTankModel';
-import HoldingTankService from '../../services/HoldingTankService';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
-import React, { useEffect, useRef, useState } from 'react';
-import TextFormField from '../FormFields/TextFormField';
 import useMount from 'hooks/UseMount';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
+import React, { useEffect, useRef, useState } from 'react';
+import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
 import { v4 as uuidv4 } from 'uuid';
+import browserHistory from '../../browserHistory';
+import { useAppContext } from '../../contexts/AppContext';
+import HoldingTankService from '../../services/HoldingTankService';
+import HoldingTankModel from '../../types/HoldingTankModel';
+import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
+import YesNoDialog from '../Dialogs/YesNoDialog';
+import FormFieldRow from '../FormFields/FormFieldRow';
+import TextFormField from '../FormFields/TextFormField';
+import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './HoldingTanks.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -212,7 +212,7 @@ const HoldingTanks: React.FC = () => {
   const saveHoldingTank = ((modifiedHoldingTank: HoldingTankModel) => {
     if (!formState.dirty) return;
 
-    console.log('In saveHoldingTank()', JSON.stringify(modifiedHoldingTank));
+    console.log('In saveHoldingTank()', modifiedHoldingTank);
     const patchedHoldingTank = { ...appContext.holdingTank, ...modifiedHoldingTank };
     HoldingTankService.saveHoldingTank(patchedHoldingTank);
     reset(patchedHoldingTank);

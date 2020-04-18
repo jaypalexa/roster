@@ -72,7 +72,7 @@ const HatchlingsEvents: React.FC = () => {
       sortable: true
     },
     {
-      name: 'Event Dat',
+      name: 'Event Date',
       selector: (row: HatchlingsEventModel) => row.eventDate ? moment(row.eventDate).format('YYYY-MM-DD') : '',
       sortable: true,
     },
