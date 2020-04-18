@@ -9,7 +9,7 @@ import OrganizationService from '../../services/OrganizationService';
 import OrganizationModel from '../../types/OrganizationModel';
 import DateFormField from '../FormFields/DateFormField';
 import FormFieldRow from '../FormFields/FormFieldRow';
-import NumericFormField from '../FormFields/NumericFormField';
+import IntegerFormField from '../FormFields/IntegerFormField';
 import RadioButtonFormField from '../FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from '../FormFields/RadioButtonGroupFormField';
 import TextFormField from '../FormFields/TextFormField';
@@ -121,20 +121,20 @@ const Organization: React.FC = () => {
                     <div className='column is-half'>
                       <h2 className='is-size-5 has-text-centered'>Hatchlings</h2>
                       <DateFormField fieldName='hatchlingBalanceAsOfDate' labelText='Balance As Of' />
-                      <NumericFormField fieldName='ccHatchlingStartingBalance' labelText='Loggerhead (Cc)' />
-                      <NumericFormField fieldName='cmHatchlingStartingBalance' labelText='Green (Cm)' />
-                      <NumericFormField fieldName='dcHatchlingStartingBalance' labelText='Leatherback (Dc)' />
-                      <NumericFormField fieldName='otherHatchlingStartingBalance' labelText='Other' />
-                      <NumericFormField fieldName='unknownHatchlingStartingBalance' labelText='Unknown' />
+                      <IntegerFormField fieldName='ccHatchlingStartingBalance' labelText='Loggerhead (Cc)' />
+                      <IntegerFormField fieldName='cmHatchlingStartingBalance' labelText='Green (Cm)' />
+                      <IntegerFormField fieldName='dcHatchlingStartingBalance' labelText='Leatherback (Dc)' />
+                      <IntegerFormField fieldName='otherHatchlingStartingBalance' labelText='Other' />
+                      <IntegerFormField fieldName='unknownHatchlingStartingBalance' labelText='Unknown' />
                     </div>
                     <div className='column is-half'>
                       <h2 className='is-size-5 has-text-centered'>Washbacks</h2>
                       <DateFormField fieldName='washbackBalanceAsOfDate' labelText='Balance As Of' />
-                      <NumericFormField fieldName='ccWashbackStartingBalance' labelText='Loggerhead (Cc)' />
-                      <NumericFormField fieldName='cmWashbackStartingBalance' labelText='Green (Cm)' />
-                      <NumericFormField fieldName='dcWashbackStartingBalance' labelText='Leatherback (Dc)' />
-                      <NumericFormField fieldName='otherWashbackStartingBalance' labelText='Other' />
-                      <NumericFormField fieldName='unknownWashbackStartingBalance' labelText='Unknown' />
+                      <IntegerFormField fieldName='ccWashbackStartingBalance' labelText='Loggerhead (Cc)' />
+                      <IntegerFormField fieldName='cmWashbackStartingBalance' labelText='Green (Cm)' />
+                      <IntegerFormField fieldName='dcWashbackStartingBalance' labelText='Leatherback (Dc)' />
+                      <IntegerFormField fieldName='otherWashbackStartingBalance' labelText='Other' />
+                      <IntegerFormField fieldName='unknownWashbackStartingBalance' labelText='Unknown' />
                     </div>
                   </div>
                 </section>
