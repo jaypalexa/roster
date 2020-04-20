@@ -11,7 +11,7 @@
     "react": "^16.13.1",
     "react-data-table-component": "^6.7.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^5.4.2",
+    "react-hook-form": "^5.5.1",
     "react-router-dom": "^5.1.2",
     "react-router-navigation-prompt": "^1.8.11",
     "react-scripts": "^3.4.1",

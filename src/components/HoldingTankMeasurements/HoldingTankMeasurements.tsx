@@ -139,7 +139,7 @@ const HoldingTankMeasurements: React.FC = () => {
     deleteHoldingTankMeasurement();
   };
 
-  const onAddNewHoldingTankMeasurementButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAddHoldingTankMeasurementButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const holdingTankMeasurement = {} as HoldingTankMeasurementModel;
       holdingTankMeasurement.tankMeasurementId = uuidv4();
@@ -275,11 +275,11 @@ const HoldingTankMeasurements: React.FC = () => {
             <div className='level-left'></div>
             <div className='level-right'>
               <p className='level-item'>
-                <button className='button is-link' onClick={onAddNewHoldingTankMeasurementButtonClick}>
+                <button className='button is-link' onClick={onAddHoldingTankMeasurementButtonClick}>
                   <span className='icon'>
                     <i className='fa fa-plus'></i>
                   </span>
-                  &nbsp;&nbsp;&nbsp;Add New Water Measurement
+                  &nbsp;&nbsp;&nbsp;Add Water Measurement
                 </button>
               </p>
             </div>

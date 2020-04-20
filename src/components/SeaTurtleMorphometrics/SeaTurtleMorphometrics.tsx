@@ -195,7 +195,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     deleteSeaTurtleMorphometric();
   };
 
-  const onAddNewSeaTurtleMorphometricButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAddSeaTurtleMorphometricButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const seaTurtleMorphometric = {} as SeaTurtleMorphometricModel;
       seaTurtleMorphometric.turtleMorphometricId = uuidv4();
@@ -331,11 +331,11 @@ const SeaTurtleMorphometrics: React.FC = () => {
             <div className='level-left'></div>
             <div className='level-right'>
               <p className='level-item'>
-                <button className='button is-link' onClick={onAddNewSeaTurtleMorphometricButtonClick}>
+                <button className='button is-link' onClick={onAddSeaTurtleMorphometricButtonClick}>
                   <span className='icon'>
                     <i className='fa fa-plus'></i>
                   </span>
-                  &nbsp;&nbsp;&nbsp;Add New Morphometric
+                  &nbsp;&nbsp;&nbsp;Add Morphometric
                 </button>
               </p>
             </div>

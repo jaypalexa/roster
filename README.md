@@ -26,7 +26,7 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
 | Filtering of tables | ??? |
 | ~~Data Table~~ | https://www.npmjs.com/package/react-data-table-component |
-| ~~Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add New button~~ | ~~Make Yes/No into Yes/No/Cancel~~ |
+| ~~Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add button~~ | ~~Make Yes/No into Yes/No/Cancel~~ |
 
 ## Available Scripts
 

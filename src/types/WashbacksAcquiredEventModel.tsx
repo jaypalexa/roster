@@ -5,5 +5,5 @@ export default interface WashbacksAcquiredEventModel {
   eventDate: Date;
   eventCount: number;
   acquiredFromCounty: string;
-  under5cmClsl: string;
+  under5cmClsl: boolean;
 };

@@ -127,7 +127,7 @@ const HoldingTanks: React.FC = () => {
     deleteHoldingTank();
   };
 
-  const onAddNewButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAddButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const holdingTank = {} as HoldingTankModel;
       holdingTank.tankId = uuidv4();
@@ -274,11 +274,11 @@ const HoldingTanks: React.FC = () => {
             <div className='level-left'></div>
             <div className='level-right'>
               <p className='level-item'>
-                <button className='button is-link' onClick={onAddNewButtonClick}>
+                <button className='button is-link' onClick={onAddButtonClick}>
                   <span className='icon'>
                     <i className='fa fa-plus'></i>
                   </span>
-                  &nbsp;&nbsp;&nbsp;Add New Holding Tank
+                  &nbsp;&nbsp;&nbsp;Add Holding Tank
                 </button>
               </p>
             </div>

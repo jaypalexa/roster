@@ -146,7 +146,7 @@ const SeaTurtleTags: React.FC = () => {
     deleteSeaTurtleTag();
   };
 
-  const onAddNewSeaTurtleTagButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAddSeaTurtleTagButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const seaTurtleTag = {} as SeaTurtleTagModel;
       seaTurtleTag.turtleTagId = uuidv4();
@@ -282,11 +282,11 @@ const SeaTurtleTags: React.FC = () => {
             <div className='level-left'></div>
             <div className='level-right'>
               <p className='level-item'>
-                <button className='button is-link' onClick={onAddNewSeaTurtleTagButtonClick}>
+                <button className='button is-link' onClick={onAddSeaTurtleTagButtonClick}>
                   <span className='icon'>
                     <i className='fa fa-plus'></i>
                   </span>
-                  &nbsp;&nbsp;&nbsp;Add New Tag
+                  &nbsp;&nbsp;&nbsp;Add Tag
                 </button>
               </p>
             </div>

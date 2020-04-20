@@ -156,7 +156,7 @@ const HatchlingsEvents: React.FC = () => {
     deleteHatchlingsEvent();
   };
 
-  const onAddNewHatchlingsEventButtonClick = (eventType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAddHatchlingsEventButtonClick = (eventType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const hatchlingsEvent = {} as HatchlingsEventModel;
       hatchlingsEvent.hatchlingsEventId = uuidv4();
@@ -275,7 +275,7 @@ const HatchlingsEvents: React.FC = () => {
         return ['species', 'eventDate', 'eventCount', 'eventCounty'].includes(fieldName); 
       } 
       default: { 
-         return false; 
+        return ['species', 'eventDate', 'eventCount', 'eventCounty'].includes(fieldName); 
       } 
    } 
   }
@@ -312,37 +312,37 @@ const HatchlingsEvents: React.FC = () => {
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered hidden-when-mobile'>Hatchlings Events</h1>
-          <div className='level'>
+          <div className='level add-hatchlings-event-buttons-container'>
             <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddNewHatchlingsEventButtonClick('Acquired')}>
+              <button className='button is-link full-width-when-mobile' onClick={onAddHatchlingsEventButtonClick('Acquired')}>
                 <span className='icon'>
                   <i className='fa fa-plus'></i>
                 </span>
-                &nbsp;&nbsp;&nbsp;Add New Hatchlings Acquired Event
+                &nbsp;&nbsp;&nbsp;Add Hatchlings Acquired Event
               </button>
             </p>
             <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddNewHatchlingsEventButtonClick('Died')}>
+              <button className='button is-link full-width-when-mobile' onClick={onAddHatchlingsEventButtonClick('Died')}>
                 <span className='icon'>
                   <i className='fa fa-plus'></i>
                 </span>
-                &nbsp;&nbsp;&nbsp;Add New Hatchlings Died Event
+                &nbsp;&nbsp;&nbsp;Add Hatchlings Died Event
               </button>
             </p>
             <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddNewHatchlingsEventButtonClick('Released')}>
+              <button className='button is-link full-width-when-mobile' onClick={onAddHatchlingsEventButtonClick('Released')}>
                 <span className='icon'>
                   <i className='fa fa-plus'></i>
                 </span>
-                &nbsp;&nbsp;&nbsp;Add New Hatchlings Released Event
+                &nbsp;&nbsp;&nbsp;Add Hatchlings Released Event
               </button>
             </p>
             <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddNewHatchlingsEventButtonClick('DOA')}>
+              <button className='button is-link full-width-when-mobile' onClick={onAddHatchlingsEventButtonClick('DOA')}>
                 <span className='icon'>
                   <i className='fa fa-plus'></i>
                 </span>
-                &nbsp;&nbsp;&nbsp;Add New Hatchlings DOA Event
+                &nbsp;&nbsp;&nbsp;Add Hatchlings DOA Event
               </button>
             </p>
           </div>
@@ -361,7 +361,7 @@ const HatchlingsEvents: React.FC = () => {
 
           <hr />
 
-          <h1 className='title has-text-centered'>{currentHatchlingsEvent.eventType} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}</h1>
+          <h1 className='title has-text-centered'>{currentHatchlingsEvent.eventType ? `Hatchlings ${currentHatchlingsEvent.eventType} Event` : ''} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}</h1>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
