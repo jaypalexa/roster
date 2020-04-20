@@ -1,5 +1,6 @@
 import useMount from 'hooks/UseMount';
 import React, { useEffect, useRef, useState } from 'react';
+import { Line } from 'react-chartjs-2';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -35,6 +36,33 @@ const HoldingTanks: React.FC = () => {
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
+
+  const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'My First dataset',
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: 'rgba(75,192,192,0.4)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'rgba(75,192,192,1)',
+        pointBackgroundColor: '#fff',
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+        pointHoverBorderColor: 'rgba(220,220,220,1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [65, 59, 80, 81, 56, 55, 40]
+      }
+    ]
+  };
 
   // console.log(JSON.stringify(formState));
   // console.log(JSON.stringify(methods.errors));
@@ -339,6 +367,8 @@ const HoldingTanks: React.FC = () => {
             </form>
           </FormContext>
 
+          <Line data={data} />
+          
         </div>
       </div>
     </div>

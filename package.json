@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "bulma": "^0.8.2",
+    "chart.js": "^2.9.3",
     "font-awesome": "^4.7.0",
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-chartjs-2": "^2.9.0",
     "react-data-table-component": "^6.7.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.5.1",
