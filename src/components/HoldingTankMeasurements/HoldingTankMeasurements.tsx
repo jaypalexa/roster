@@ -97,11 +97,11 @@ const HoldingTankMeasurements: React.FC = () => {
     if (!appContext.holdingTank?.tankId) {
       browserHistory.push('/holding-tanks')
     } else {
-      const getHoldingTankMeasurementsForTurtle = async () => {
+      const getHoldingTankMeasurementsForTank = async () => {
         const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurementsForTank(appContext.holdingTank?.tankId);
         setCurrentHoldingTankMeasurements(holdingTankMeasurements);
       };
-      getHoldingTankMeasurementsForTurtle();
+      getHoldingTankMeasurementsForTank();
     }
   });
 

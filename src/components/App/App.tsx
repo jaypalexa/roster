@@ -1,4 +1,5 @@
 import HatchlingEvents from 'components/HatchlingsEvents/HatchlingsEvents';
+import HoldingTankGraphs from 'components/HoldingTankGraphs/HoldingTankGraphs';
 import HoldingTankMeasurements from 'components/HoldingTankMeasurements/HoldingTankMeasurements';
 import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
 import Home from 'components/Home/Home';
@@ -182,6 +183,7 @@ const App: React.FC = () => {
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tanks' component={HoldingTanks} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tank-measurements' component={HoldingTankMeasurements} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tank-graphs' component={HoldingTankGraphs} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/hatchlings-events' component={HatchlingEvents} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/washbacks-events' component={WashbackEvents} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/reports' component={Reports} />
@@ -195,7 +197,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200420.1920
+            &nbsp;|&nbsp;v0.20200421.1000
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
