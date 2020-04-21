@@ -49,43 +49,75 @@ const HoldingTankGraphs: React.FC = () => {
 
   interface GraphTypeSettings {
     displayName: string;
+    dataset: GraphDataset;
   }
 
   useMount(() => {
+    const defaultGraphDataset: GraphDataset = {
+      label: '',
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: 'rgba(75,192,192,0.4)',
+      borderColor: 'rgba(75,192,192,1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'rgba(75,192,192,1)',
+      pointBackgroundColor: '#fff',
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+      pointHoverBorderColor: 'rgba(220,220,220,1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+      data: []
+    }
+
+    const defaultGraphData: GraphData = {
+      labels: [],
+      datasets: [defaultGraphDataset]
+    }
+
+    const darkBlue = '0,0,139';
+
+    const temperatureGraphDataset = {
+      label: 'Temperature',
+      backgroundColor: `rgba(${darkBlue},0.4)`,
+      borderColor: `rgba(${darkBlue},1)`,
+      pointBorderColor: `rgba(${darkBlue},1)`,
+      pointHoverBackgroundColor: `rgba(${darkBlue},1)`,
+    }
+
+    const darkRed = '139,0,0';
+
+    const salinityGraphDataset = {
+      label: 'Salinity',
+      backgroundColor: `rgba(${darkRed},0.4)`,
+      borderColor: `rgba(${darkRed},1)`,
+      pointBorderColor: `rgba(${darkRed},1)`,
+      pointHoverBackgroundColor: `rgba(${darkRed},1)`,
+    }
+
+    const darkGreen = '0,100,0';
+
+    const phGraphDataset = {
+      label: 'pH',
+      backgroundColor: `rgba(${darkGreen},0.4)`,
+      borderColor: `rgba(${darkGreen},1)`,
+      pointBorderColor: `rgba(${darkGreen},1)`,
+      pointHoverBackgroundColor: `rgba(${darkGreen},1)`,
+    }
+
+    setData(defaultGraphData);
+
     const settings = new Map<string, GraphTypeSettings>();
-    settings.set('temperature', { displayName: 'Temperature'});
-    settings.set('salinity', { displayName: 'Salinity'});
-    settings.set('ph', { displayName: 'pH'});
+    settings.set('temperature', { displayName: 'Temperature', dataset: Object.assign({} ,defaultGraphDataset, temperatureGraphDataset) });
+    settings.set('salinity', { displayName: 'Salinity', dataset: Object.assign({} ,defaultGraphDataset, salinityGraphDataset) });
+    settings.set('ph', { displayName: 'pH', dataset: Object.assign({} ,defaultGraphDataset, phGraphDataset)  });
     setGraphTypeSettings(settings);
 
-    setData({
-      //labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      labels: ['January', 'February', 'March', 'April'],
-      datasets: [
-        {
-          label: 'My First dataset',
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: 'rgba(75,192,192,0.4)',
-          borderColor: 'rgba(75,192,192,1)',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: 'rgba(75,192,192,1)',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          //data: [65, 59, 80, 81, 56, 55, 40]
-          data: [65, 59, 80, 81]
-        }
-      ]
-    });
     setCurrentGraphType('temperature');
   });
 
@@ -108,6 +140,9 @@ const HoldingTankGraphs: React.FC = () => {
           display: true,
           labelString: 'Value',
           fontSize: 20
+        },
+        ticks: {
+          autoSkip: true
         }
       }]
     }
@@ -131,7 +166,9 @@ const HoldingTankGraphs: React.FC = () => {
 
     const buildNewDatasets = (currentDataset: GraphDataset, newData: number[]) => {
       const datasets = new Array<GraphDataset>();
-      datasets.push(Object.assign({}, currentDataset, { label: graphTypeSettings?.get(currentGraphType)?.displayName, data: newData }) )
+      const newDataset = Object.assign({}, graphTypeSettings?.get(currentGraphType)?.dataset, { data: newData });
+      console.log('newDataset', newDataset);
+      datasets.push(Object.assign({}, currentDataset, newDataset))
       return datasets;
     }
 
@@ -201,7 +238,7 @@ const HoldingTankGraphs: React.FC = () => {
           </label>
 
           <div className='three-quarters'>
-            <Line data={data} options={options} redraw={true} />
+            <Line data={data} options={options} />
           </div>
         </div>
       </div>
