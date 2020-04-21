@@ -5,4 +5,6 @@ export default interface HoldingTankMeasurementModel {
   temperature: number;
   salinity: number;
   ph: number;
+  //[key: string]: string | Date | number; // indexable; not a new property
+  [key: string]: any;
 };
