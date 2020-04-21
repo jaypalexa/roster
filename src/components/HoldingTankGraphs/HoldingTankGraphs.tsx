@@ -167,18 +167,12 @@ const HoldingTankGraphs: React.FC = () => {
     const buildNewDatasets = (currentDataset: GraphDataset, newData: number[]) => {
       const datasets = new Array<GraphDataset>();
       const newDataset = Object.assign({}, graphTypeSettings?.get(currentGraphType)?.dataset, { data: newData });
-      console.log('newDataset', newDataset);
       datasets.push(Object.assign({}, currentDataset, newDataset))
       return datasets;
     }
 
-    console.log('Graph type selection changed to ' + currentGraphType);
-
     const newLabels = currentHoldingTankMeasurements.map(x => x.dateMeasured ? moment(x.dateMeasured).format('YYYY-MM-DD') : '');
-    console.log('newLabels', newLabels);
     const newData = currentHoldingTankMeasurements.map(x => x[currentGraphType] as number);
-    console.log('newData', newData);
-
     setData(data => Object.assign({}, data, { labels: newLabels }, { datasets: buildNewDatasets(data?.datasets[0], newData) }));
   }, [currentHoldingTankMeasurements, currentGraphType, graphTypeSettings]);
 
@@ -204,38 +198,14 @@ const HoldingTankGraphs: React.FC = () => {
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>Graphs for {appContext.holdingTank?.tankName}</h1>
 
-          <label>
-            <input
-              type='radio'
-              value='temperature'
-              name='graphTypeGroup'
-              checked={currentGraphType === 'temperature'}
-              onChange={onGraphTypeChange}
-            />
-            Temperature
-          </label>
-
-          <label>
-            <input
-              type='radio'
-              value='salinity'
-              name='graphTypeGroup'
-              checked={currentGraphType === 'salinity'}
-              onChange={onGraphTypeChange}
-            />
-            Salinity
-          </label>
-
-          <label>
-            <input
-              type='radio'
-              value='ph'
-              name='graphTypeGroup'
-              checked={currentGraphType === 'ph'}
-              onChange={onGraphTypeChange}
-            />
-            pH
-          </label>
+          <div className='field has-text-centered'>
+            <input className='is-checkradio is-medium' id='temperature' type='radio' name='graphTypeGroup' value='temperature' checked={currentGraphType === 'temperature'} onChange={onGraphTypeChange} />
+            <label htmlFor="temperature">Temperature</label>
+            <input className='is-checkradio is-medium' id='salinity' type='radio' name='graphTypeGroup' value='salinity' checked={currentGraphType === 'salinity'} onChange={onGraphTypeChange} />
+            <label htmlFor="salinity">Salinity</label>
+            <input className='is-checkradio is-medium' id='ph' type='radio' name='graphTypeGroup' value='ph' checked={currentGraphType === 'ph'} onChange={onGraphTypeChange} />
+            <label htmlFor="ph">pH</label>
+          </div>
 
           <div className='three-quarters'>
             <Line data={data} options={options} />
