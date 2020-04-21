@@ -15,12 +15,12 @@ const HoldingTankGraphs: React.FC = () => {
 
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
-  const [graphTypeOptions, setGraphTypeOptions] = useState<any>();
+  const [graphTypeSettings, setGraphTypeSettings] = useState<Map<string, GraphTypeSettings>>();
   const [currentGraphType, setCurrentGraphType] = useState<string>();
   const [currentHoldingTankMeasurements, setCurrentHoldingTankMeasurements] = useState([] as Array<HoldingTankMeasurementModel>);
-  const [data, setData] = useState<ChartData>({} as ChartData);
+  const [data, setData] = useState<GraphData>({} as GraphData);
 
-  interface ChartDataset {
+  interface GraphDataset {
     label: string;
     fill: boolean;
     lineTension: number;
@@ -42,23 +42,22 @@ const HoldingTankGraphs: React.FC = () => {
     data: Array<number>;
   }
 
-  interface ChartData {
+  interface GraphData {
     labels: Array<string>;
-    datasets: Array<ChartDataset>;
+    datasets: Array<GraphDataset>;
+  }
+
+  interface GraphTypeSettings {
+    displayName: string;
   }
 
   useMount(() => {
-    setGraphTypeOptions({
-      temperature: {
-        displayName: 'Temperature',
-      },
-      salinity: {
-        displayName: 'Salinity',
-      },
-      ph: {
-        displayName: 'pH',
-      },
-    });
+    const settings = new Map<string, GraphTypeSettings>();
+    settings.set('temperature', { displayName: 'Temperature'});
+    settings.set('salinity', { displayName: 'Salinity'});
+    settings.set('ph', { displayName: 'pH'});
+    setGraphTypeSettings(settings);
+
     setData({
       //labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       labels: ['January', 'February', 'March', 'April'],
@@ -129,21 +128,22 @@ const HoldingTankGraphs: React.FC = () => {
 
   useEffect(() => {
     if (!currentGraphType || !currentHoldingTankMeasurements || currentHoldingTankMeasurements.length === 0) return;
-    console.log('Graph type selection changed to ' + currentGraphType);
-    const getKeyValue = (key: string) => (obj: Record<string, any>) => obj[key];
 
-    const labels = currentHoldingTankMeasurements.map(x => x.dateMeasured ? moment(x.dateMeasured).format('YYYY-MM-DD') : '');
-    const values = currentHoldingTankMeasurements.map(x => x[currentGraphType] as number);
-    const datasets = new Array<ChartDataset>();
-    const buildDatasets = (datasets: Array<ChartDataset>, currentDataset: ChartDataset, values: number[]) => {
-      datasets.push(Object.assign({}, currentDataset, { label: getKeyValue(currentGraphType)(graphTypeOptions).displayName, data: values }) )
+    const buildNewDatasets = (currentDataset: GraphDataset, newData: number[]) => {
+      const datasets = new Array<GraphDataset>();
+      datasets.push(Object.assign({}, currentDataset, { label: graphTypeSettings?.get(currentGraphType)?.displayName, data: newData }) )
       return datasets;
     }
 
-    console.log('labels', labels);
-    console.log('values', values);
-    setData(data => Object.assign({}, data, { labels: labels }, { datasets: buildDatasets(datasets, data?.datasets[0], values)  }));
-  }, [currentHoldingTankMeasurements, currentGraphType, graphTypeOptions]);
+    console.log('Graph type selection changed to ' + currentGraphType);
+
+    const newLabels = currentHoldingTankMeasurements.map(x => x.dateMeasured ? moment(x.dateMeasured).format('YYYY-MM-DD') : '');
+    console.log('newLabels', newLabels);
+    const newData = currentHoldingTankMeasurements.map(x => x[currentGraphType] as number);
+    console.log('newData', newData);
+
+    setData(data => Object.assign({}, data, { labels: newLabels }, { datasets: buildNewDatasets(data?.datasets[0], newData) }));
+  }, [currentHoldingTankMeasurements, currentGraphType, graphTypeSettings]);
 
   const onGraphTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCurrentGraphType(event.target.value);
