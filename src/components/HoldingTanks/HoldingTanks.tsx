@@ -36,9 +36,6 @@ const HoldingTanks: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  // console.log(JSON.stringify(formState));
-  // console.log(JSON.stringify(methods.errors));
-
   const tableColumns = [
     {
       name: '',
@@ -210,7 +207,6 @@ const HoldingTanks: React.FC = () => {
   const saveHoldingTank = ((modifiedHoldingTank: HoldingTankModel) => {
     if (!formState.dirty) return;
 
-    console.log('In saveHoldingTank()', modifiedHoldingTank);
     const patchedHoldingTank = { ...appContext.holdingTank, ...modifiedHoldingTank };
     HoldingTankService.saveHoldingTank(patchedHoldingTank);
     reset(patchedHoldingTank);

@@ -45,8 +45,6 @@ const WashbacksEvents: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  // console.log(JSON.stringify(formState));
-
   const hatchingsEventTableColumns = [
     {
       name: '',
@@ -248,7 +246,6 @@ const WashbacksEvents: React.FC = () => {
   const saveWashbacksEvent = ((modifiedWashbacksEvent: WashbacksEventModel) => {
     if (!formState.dirty) return;
 
-    console.log('In saveWashbacksEvent()', modifiedWashbacksEvent);
     const patchedWashbacksEvent = { ...currentWashbacksEvent, ...modifiedWashbacksEvent };
     WashbacksEventService.saveWashbacksEvent(patchedWashbacksEvent);
     reset(patchedWashbacksEvent);

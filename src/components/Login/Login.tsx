@@ -29,9 +29,7 @@ const Login: React.FC = () => {
   }
 
   const onSubmit = handleSubmit((modifiedLogin: LoginModel) => {
-    // .log('in handleSubmit(): modifiedLogin', modifiedLogin);
     const patchedLogin = { ...currentLogin, ...modifiedLogin };
-    // console.log('in handleSubmit(): patchedLogin', patchedLogin);
     // LoginService.saveLogin(patchedLogin);
     reset(patchedLogin);
     setCurrentLogin(patchedLogin);
@@ -42,14 +40,6 @@ const Login: React.FC = () => {
       browserHistory.push(getPath());
     })
   });
-
-  // const onCancel = () => {
-  //   // console.log('in onCancel()...');
-  //   reset(currentLogin);
-  // };
-
-  //console.log(JSON.stringify(formState));
-  //console.log(JSON.stringify(errors.userName.message));
 
   return (
     <div id='login'>

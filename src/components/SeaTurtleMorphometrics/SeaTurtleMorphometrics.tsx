@@ -47,9 +47,6 @@ const SeaTurtleMorphometrics: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  // console.log(JSON.stringify(formState));
-  // console.log(JSON.stringify(methods.errors));
-
   const seaTurtleMorphometricTableColumns = [
     {
       name: '',
@@ -296,7 +293,6 @@ const SeaTurtleMorphometrics: React.FC = () => {
   };
 
   const onSubmitSeaTurtleMorphometric = handleSubmit((modifiedSeaTurtleMorphometric: SeaTurtleMorphometricModel) => {
-    console.log('In onSubmit()', modifiedSeaTurtleMorphometric);
     const patchedSeaTurtleMorphometric = { ...currentSeaTurtleMorphometric, ...modifiedSeaTurtleMorphometric };
     SeaTurtleMorphometricService.saveSeaTurtleMorphometric(patchedSeaTurtleMorphometric);
     reset(patchedSeaTurtleMorphometric);

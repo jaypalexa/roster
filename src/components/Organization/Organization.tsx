@@ -26,8 +26,6 @@ const Organization: React.FC = () => {
   const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
 
-  // console.log(JSON.stringify(formState));
-
   useMount(() => {
     window.scrollTo(0, 0)
   });

@@ -51,8 +51,6 @@ const SeaTurtles: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  // console.log(JSON.stringify(formState));
-
   const seaTurtleTableColumns = [
     {
       name: '',
@@ -275,7 +273,6 @@ const SeaTurtles: React.FC = () => {
   const saveSeaTurtle = ((modifiedSeaTurtle: SeaTurtleModel) => {
     if (!formState.dirty) return;
 
-    console.log('In saveSeaTurtle()', modifiedSeaTurtle);
     const patchedSeaTurtle = { ...appContext.seaTurtle, ...modifiedSeaTurtle };
     SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
     reset(patchedSeaTurtle);

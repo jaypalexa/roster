@@ -43,8 +43,6 @@ const HatchlingsEvents: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  // console.log(JSON.stringify(formState));
-
   const hatchingsEventTableColumns = [
     {
       name: '',
@@ -240,7 +238,6 @@ const HatchlingsEvents: React.FC = () => {
   const saveHatchlingsEvent = ((modifiedHatchlingsEvent: HatchlingsEventModel) => {
     if (!formState.dirty) return;
 
-    console.log('In saveHatchlingsEvent()', modifiedHatchlingsEvent);
     const patchedHatchlingsEvent = { ...currentHatchlingsEvent, ...modifiedHatchlingsEvent };
     HatchlingsEventService.saveHatchlingsEvent(patchedHatchlingsEvent);
     reset(patchedHatchlingsEvent);

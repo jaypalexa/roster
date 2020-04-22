@@ -44,9 +44,6 @@ const SeaTurtleTags: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  // console.log(JSON.stringify(formState));
-  // console.log(JSON.stringify(methods.errors));
-
   const seaTurtleTagTableColumns = [
     {
       name: '',
@@ -229,7 +226,6 @@ const SeaTurtleTags: React.FC = () => {
   };
 
   const onSubmitSeaTurtleTag = handleSubmit((modifiedSeaTurtleTag: SeaTurtleTagModel) => {
-    console.log('In onSubmit()', modifiedSeaTurtleTag);
     const patchedSeaTurtleTag = { ...currentSeaTurtleTag, ...modifiedSeaTurtleTag };
     SeaTurtleTagService.saveSeaTurtleTag(patchedSeaTurtleTag);
     reset(patchedSeaTurtleTag);

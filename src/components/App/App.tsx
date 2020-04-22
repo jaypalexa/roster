@@ -38,14 +38,12 @@ const App: React.FC = () => {
 
   const onReloadPageClick = () => {
     if (newServiceWorker) {
-      // console.log('NEW ServiceWorker::sending SKIP_WAITING', newServiceWorker);
       newServiceWorker.postMessage({ type: 'SKIP_WAITING' });
     } else {
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.ready.then(registration => {
           const serviceWorker = (registration.installing || registration.waiting);
           if (serviceWorker) {
-            // console.log('OLD serviceWorker::sending SKIP_WAITING', serviceWorker);
             serviceWorker.postMessage({ type: 'SKIP_WAITING' });
           }
         })
@@ -199,7 +197,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200422.1516
+            &nbsp;|&nbsp;v0.20200422.1535
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

@@ -39,9 +39,6 @@ const HoldingTankMeasurements: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  // console.log(JSON.stringify(formState));
-  // console.log(JSON.stringify(methods.errors));
-
   const holdingTankMeasurementTableColumns = [
     {
       name: '',
@@ -217,7 +214,6 @@ const HoldingTankMeasurements: React.FC = () => {
   };
 
   const onSubmitHoldingTankMeasurement = handleSubmit((modifiedHoldingTankMeasurement: HoldingTankMeasurementModel) => {
-    console.log('In onSubmit()', modifiedHoldingTankMeasurement);
     const patchedHoldingTankMeasurement = { ...currentHoldingTankMeasurement, ...modifiedHoldingTankMeasurement };
     HoldingTankMeasurementService.saveHoldingTankMeasurement(patchedHoldingTankMeasurement);
     reset(patchedHoldingTankMeasurement);
