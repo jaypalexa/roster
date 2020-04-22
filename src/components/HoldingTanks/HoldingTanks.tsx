@@ -313,7 +313,7 @@ const HoldingTanks: React.FC = () => {
                 <div
                   className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
                   onClick={() => saveAndNavigate('/holding-tank-graphs')}>
-                  <span className='child-navigation-item'>Graphs</span>
+                  <span className='child-navigation-item'>Water Graphs</span>
                   <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
                 </div>
 
