@@ -120,12 +120,11 @@ const WashbacksEvents: React.FC = () => {
     const getWashbacksEvents = async () => {
       const washbacksEvents = await WashbacksEventService.getWashbacksEvents(appContext.organizationId || '');
       setCurrentWashbacksEvents(washbacksEvents);
-      if (currentWashbacksEvent.washbacksEventId) {
-        reset(currentWashbacksEvent);
-        setCurrentWashbacksEvent(currentWashbacksEvent);
-        setIsFormEnabled(true);
-        // setEditingStarted(true);
-      }
+      // if (currentWashbacksEvent.washbacksEventId) {
+      //   reset(currentWashbacksEvent);
+      //   setCurrentWashbacksEvent(currentWashbacksEvent);
+      //   setIsFormEnabled(true);
+      // }
     };
     getWashbacksEvents();
   });
@@ -200,7 +199,6 @@ const WashbacksEvents: React.FC = () => {
     const handleEvent = () => {
       fetchWashbacksEvent(washbacksEventId);
       setIsFormEnabled(true);
-      // setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -289,7 +287,7 @@ const WashbacksEvents: React.FC = () => {
   }
 
   return (
-    <div id='washbacksEvent'>
+    <div id='washbacksEvents'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}

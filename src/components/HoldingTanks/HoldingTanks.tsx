@@ -83,7 +83,6 @@ const HoldingTanks: React.FC = () => {
         reset(appContext.holdingTank);
         setCurrentHoldingTank(appContext.holdingTank);
         setIsFormEnabled(true);
-        // setEditingStarted(true);
       }
     };
     getHoldingTanks();
@@ -162,7 +161,6 @@ const HoldingTanks: React.FC = () => {
     const handleEvent = () => {
       fetchHoldingTank(tankId);
       setIsFormEnabled(true);
-      // setEditingStarted(true);
     };
 
     if (formState.dirty) {

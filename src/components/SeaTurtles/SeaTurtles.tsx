@@ -148,7 +148,6 @@ const SeaTurtles: React.FC = () => {
         reset(appContext.seaTurtle);
         setCurrentSeaTurtle(appContext.seaTurtle);
         setIsFormEnabled(true);
-        // setEditingStarted(true);
       }
     };
     getSeaTurtles();
@@ -227,7 +226,6 @@ const SeaTurtles: React.FC = () => {
     const handleEvent = () => {
       fetchSeaTurtle(turtleId);
       setIsFormEnabled(true);
-      // setEditingStarted(true);
     };
 
     if (formState.dirty) {

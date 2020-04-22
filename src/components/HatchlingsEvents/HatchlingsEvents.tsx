@@ -116,7 +116,6 @@ const HatchlingsEvents: React.FC = () => {
         reset(currentHatchlingsEvent);
         setCurrentHatchlingsEvent(currentHatchlingsEvent);
         setIsFormEnabled(true);
-        // setEditingStarted(true);
       }
     };
     getHatchlingsEvents();
@@ -192,7 +191,6 @@ const HatchlingsEvents: React.FC = () => {
     const handleEvent = () => {
       fetchHatchlingsEvent(hatchlingsEventId);
       setIsFormEnabled(true);
-      // setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -281,7 +279,7 @@ const HatchlingsEvents: React.FC = () => {
   }
 
   return (
-    <div id='hatchlingsEvent'>
+    <div id='hatchlingsEvents'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}

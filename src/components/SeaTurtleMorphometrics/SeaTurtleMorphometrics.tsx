@@ -231,7 +231,6 @@ const SeaTurtleMorphometrics: React.FC = () => {
     const handleEvent = () => {
       fetchSeaTurtleMorphometric(turtleMorphometricId);
       setIsFormEnabled(true);
-      // setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -295,7 +294,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   };
 
   return (
-    <div id='seaTurtleMorphometric'>
+    <div id='seaTurtleMorphometrics'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}

@@ -6,6 +6,7 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import SeaTurtleTagService from '../../services/SeaTurtleTagService';
@@ -105,11 +106,15 @@ const SeaTurtleTags: React.FC = () => {
 
   useMount(() => {
     // make async server request
-    const getSeaTurtleTagsForTurtle = async () => {
-      const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTagsForTurtle(appContext.seaTurtle?.turtleId);
-      setCurrentSeaTurtleTags(seaTurtleTags);
-    };
-    getSeaTurtleTagsForTurtle();
+    if (!appContext.seaTurtle?.turtleId) {
+      browserHistory.push('/sea-turtles')
+    } else {
+      const getSeaTurtleTagsForTurtle = async () => {
+        const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTagsForTurtle(appContext.seaTurtle?.turtleId);
+        setCurrentSeaTurtleTags(seaTurtleTags);
+      };
+      getSeaTurtleTagsForTurtle();
+    }
   });
 
   useEffect(() => {
@@ -182,7 +187,6 @@ const SeaTurtleTags: React.FC = () => {
     const handleEvent = () => {
       fetchSeaTurtleTag(turtleTagId);
       setIsFormEnabled(true);
-      // setEditingStarted(true);
     };
 
     if (formState.dirty) {
@@ -246,7 +250,7 @@ const SeaTurtleTags: React.FC = () => {
   };
 
   return (
-    <div id='seaTurtleTag'>
+    <div id='seaTurtleTags'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}

@@ -175,7 +175,6 @@ const HoldingTankMeasurements: React.FC = () => {
     const handleEvent = () => {
       fetchHoldingTankMeasurement(holdingTankMeasurementId);
       setIsFormEnabled(true);
-      // setEditingStarted(true);
     };
 
     if (formState.dirty) {
