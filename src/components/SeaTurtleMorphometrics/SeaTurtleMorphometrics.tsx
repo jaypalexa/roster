@@ -9,8 +9,10 @@ import { v4 as uuidv4 } from 'uuid';
 import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
+import OrganizationService from '../../services/OrganizationService';
 import SeaTurtleMorphometricService from '../../services/SeaTurtleMorphometricService';
 import NameValuePair from '../../types/NameValuePair';
+import OrganizationModel from '../../types/OrganizationModel';
 import SeaTurtleMorphometricModel from '../../types/SeaTurtleMorphometricModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import YesNoDialog from '../Dialogs/YesNoDialog';
@@ -29,6 +31,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleMorphometricModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
+  const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
   const [currentSeaTurtleMorphometric, setCurrentSeaTurtleMorphometric] = useState({} as SeaTurtleMorphometricModel);
   const [currentSeaTurtleMorphometrics, setCurrentSeaTurtleMorphometrics] = useState([] as Array<SeaTurtleMorphometricModel>);
   const [cmIns, setCmIns] = useState([] as Array<NameValuePair>);
@@ -161,6 +164,15 @@ const SeaTurtleMorphometrics: React.FC = () => {
     }
   });
 
+  useMount(() => {
+    // make async server request
+    const getOrganization = async () => {
+      const organization = await OrganizationService.getOrganization(appContext.organizationId);
+      setCurrentOrganization(organization);
+    };
+    getOrganization();
+  });
+
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
       firstEditControlRef.current.focus();
@@ -197,9 +209,20 @@ const SeaTurtleMorphometrics: React.FC = () => {
 
   const onAddSeaTurtleMorphometricButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
+      const defaultLengthUnits = () => currentOrganization.preferredUnitsType === 'I' ? 'in' : 'cm';
+      const defaultWeightUnits = () => currentOrganization.preferredUnitsType === 'I' ? 'lb' : 'kg';
       const seaTurtleMorphometric = {} as SeaTurtleMorphometricModel;
       seaTurtleMorphometric.turtleMorphometricId = uuidv4();
       seaTurtleMorphometric.turtleId = appContext.seaTurtle?.turtleId || '';
+      seaTurtleMorphometric.sclNotchNotchUnits = defaultLengthUnits();
+      seaTurtleMorphometric.sclNotchTipUnits = defaultLengthUnits();
+      seaTurtleMorphometric.sclTipTipUnits = defaultLengthUnits();
+      seaTurtleMorphometric.scwUnits = defaultLengthUnits();
+      seaTurtleMorphometric.cclNotchNotchUnits = defaultLengthUnits();
+      seaTurtleMorphometric.cclNotchTipUnits = defaultLengthUnits();
+      seaTurtleMorphometric.cclTipTipUnits = defaultLengthUnits();
+      seaTurtleMorphometric.ccwUnits = defaultLengthUnits();
+      seaTurtleMorphometric.weightUnits = defaultWeightUnits();
       reset(seaTurtleMorphometric);
       setCurrentSeaTurtleMorphometric(seaTurtleMorphometric);
       setIsFormEnabled(true);
