@@ -9,6 +9,7 @@ import Organization from 'components/Organization/Organization';
 import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
 import Reports from 'components/Reports/Reports';
 import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics';
+import SeaTurtleMorphometricsGraphs from 'components/SeaTurtleMorphometricsGraphs/SeaTurtleMorphometricsGraphs';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
 import WashbackEvents from 'components/WashbacksEvents/WashbacksEvents';
@@ -181,6 +182,7 @@ const App: React.FC = () => {
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtles' component={SeaTurtles} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-tags' component={SeaTurtleTags} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
+            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tanks' component={HoldingTanks} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tank-measurements' component={HoldingTankMeasurements} />
             <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tank-graphs' component={HoldingTankGraphs} />
@@ -197,7 +199,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200422.0920
+            &nbsp;|&nbsp;v0.20200422.1246
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

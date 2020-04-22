@@ -1,4 +1,5 @@
 export default interface SeaTurtleMorphometricModel {
+  [key: string]: any;
 	turtleMorphometricId: string;
 	turtleId: string;
 	dateMeasured: Date;

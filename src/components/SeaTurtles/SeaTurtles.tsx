@@ -433,7 +433,14 @@ const SeaTurtles: React.FC = () => {
                 <div
                   className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
                   onClick={() => saveAndNavigate('/sea-turtle-morphometrics')}>
-                  <span className='child-navigation-item'>Morphometrics</span>
+                  <span className='child-navigation-item'>Morphometrics Measurements</span>
+                  <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
+                </div>
+
+                <div
+                  className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
+                  onClick={() => saveAndNavigate('/sea-turtle-morphometrics-graphs')}>
+                  <span className='child-navigation-item'>Morphometrics Graphs</span>
                   <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
                 </div>
 

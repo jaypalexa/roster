@@ -1,0 +1,36 @@
+@media (min-width: 769px) // when NOT mobile
+  .three-quarters
+    height: 75%
+    width: 75%
+    margin-left: auto
+    margin-right: auto
+
+.is-checkradio[type="radio"]#temperature + label
+  color: darkblue !important
+
+.is-checkradio[type="radio"]:checked#temperature + label::after
+  border-color: darkblue !important
+  background-color: darkblue !important
+
+.is-checkradio[type="radio"]:hover:not([disabled])#temperature + label::before
+  border-color: darkblue !important
+
+.is-checkradio[type="radio"]#salinity + label
+  color: darkred !important
+
+.is-checkradio[type="radio"]:checked#salinity + label::after
+  border-color: darkred !important
+  background-color: darkred !important
+
+.is-checkradio[type="radio"]:hover:not([disabled])#salinity + label::before
+  border-color: darkred !important
+
+.is-checkradio[type="radio"]#ph + label
+  color: darkgreen !important
+
+.is-checkradio[type="radio"]:checked#ph + label::after
+  border-color: darkgreen !important
+  background-color: darkgreen !important
+
+.is-checkradio[type="radio"]:hover:not([disabled])#ph + label::before
+  border-color: darkgreen !important

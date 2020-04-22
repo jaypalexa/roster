@@ -315,7 +315,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Morphometrics</a></li>
+          <li className='is-active'><a href='#' aria-current='page'>Morphometrics Measurements</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
