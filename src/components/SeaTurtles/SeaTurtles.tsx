@@ -3,6 +3,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
+import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,12 +11,14 @@ import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import SeaTurtleService from '../../services/SeaTurtleService';
+import MapModalDataModel from '../../types/MapModalDataModel';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import YesNoDialog from '../Dialogs/YesNoDialog';
 import CheckboxFormField from '../FormFields/CheckboxFormField';
 import DateFormField from '../FormFields/DateFormField';
+import FormField from '../FormFields/FormField';
 import FormFieldGroup from '../FormFields/FormFieldGroup';
 import FormFieldRow from '../FormFields/FormFieldRow';
 import ListFormField from '../FormFields/ListFormField';
@@ -33,6 +36,7 @@ const SeaTurtles: React.FC = () => {
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, getValues, reset } = methods;
   const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
+  const [mapModalData, setMapModalData] = useState({} as MapModalDataModel);
   const [captureProjectTypes, setCaptureProjectTypes] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
   const [species, setSpecies] = useState([] as Array<NameValuePair>);
@@ -49,7 +53,19 @@ const SeaTurtles: React.FC = () => {
   const [onDialogNo, setOnDialogNo] = useState(() => { });
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
+
+  const mapModalCustomStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)'
+    }
+  };
 
   const seaTurtleTableColumns = [
     {
@@ -298,6 +314,22 @@ const SeaTurtles: React.FC = () => {
     reset(appContext.seaTurtle);
   };
 
+  const onShowMapDialogClick = (dataType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log('dataType', dataType);
+    const modifiedSeaTurtle: SeaTurtleModel = getValues();
+    console.log('modifiedSeaTurtle.acquiredLatitude', modifiedSeaTurtle.acquiredLatitude);
+    console.log('modifiedSeaTurtle.acquiredLongitude', modifiedSeaTurtle.acquiredLongitude);
+    console.log('modifiedSeaTurtle.relinquishedLatitude', modifiedSeaTurtle.relinquishedLatitude);
+    console.log('modifiedSeaTurtle.relinquishedLongitude', modifiedSeaTurtle.relinquishedLongitude);
+    const data = {} as MapModalDataModel;
+    data.latitude = modifiedSeaTurtle[`${dataType}Latitude`] as number;
+    data.longitude = modifiedSeaTurtle[`${dataType}Longitude`] as number;
+    setMapModalData(data);
+    setIsMapModalOpen(true);
+  };
+
+  const onRequestCloseMapModal = () => setIsMapModalOpen(false);
+
   return (
     <div id='seaTurtle'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
@@ -316,6 +348,18 @@ const SeaTurtles: React.FC = () => {
         onNo={onDialogNo}
         onCancel={onDialogCancel}
       />
+      <Modal
+        isOpen={isMapModalOpen}
+        onRequestClose={onRequestCloseMapModal}
+        style={mapModalCustomStyles}
+        contentLabel="Example Modal"
+      >
+        <h2>Hello</h2>
+        <button onClick={onRequestCloseMapModal}>close</button>
+        <div>I am a modal</div>
+        <div>Latitude: {mapModalData.latitude}</div>
+        <div>Longitude: {mapModalData.longitude}</div>
+      </Modal>
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
@@ -380,6 +424,14 @@ const SeaTurtles: React.FC = () => {
                   <ListFormField fieldName='acquiredCounty' labelText='County' listItems={counties} />
                   <TextFormField fieldName='acquiredLatitude' labelText='Latitude' />
                   <TextFormField fieldName='acquiredLongitude' labelText='Longitude' />
+                  <FormField fieldName='dummy'>
+                    <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('acquired')}>
+                      <span className='icon'>
+                        <i className='fa fa-globe'></i>
+                      </span>
+                      &nbsp;&nbsp;&nbsp;View on map
+                    </button>
+                  </FormField>
                 </FormFieldRow>
                 <FormFieldRow>
                   <DateFormField fieldName='dateRelinquished' labelText='Date relinquished' />
@@ -387,6 +439,14 @@ const SeaTurtles: React.FC = () => {
                   <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} />
                   <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
                   <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
+                  <FormField fieldName='dummy'>
+                    <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('relinquished')}>
+                      <span className='icon'>
+                        <i className='fa fa-globe'></i>
+                      </span>
+                      &nbsp;&nbsp;&nbsp;View on map
+                    </button>
+                  </FormField>
                 </FormFieldRow>
                 <FormFieldRow>
                   <TextareaFormField fieldName='anomalies' labelText='Anomalies' />
