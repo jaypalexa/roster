@@ -1,4 +1,4 @@
-export default interface MapModalDataModel {
+export default interface MapDataModel {
   latitude: number;
   longitude: number;
 };

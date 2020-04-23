@@ -3,6 +3,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
+import { Map, TileLayer } from 'react-leaflet';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -11,7 +12,7 @@ import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import SeaTurtleService from '../../services/SeaTurtleService';
-import MapModalDataModel from '../../types/MapModalDataModel';
+import MapDataModel from '../../types/MapDataModel';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
@@ -36,7 +37,7 @@ const SeaTurtles: React.FC = () => {
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, getValues, reset } = methods;
   const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
-  const [mapModalData, setMapModalData] = useState({} as MapModalDataModel);
+  const [mapData, setMapData] = useState({} as MapDataModel);
   const [captureProjectTypes, setCaptureProjectTypes] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
   const [species, setSpecies] = useState([] as Array<NameValuePair>);
@@ -53,10 +54,10 @@ const SeaTurtles: React.FC = () => {
   const [onDialogNo, setOnDialogNo] = useState(() => { });
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
-  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
+  const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const mapModalCustomStyles = {
+  const mapDialogCustomStyles = {
     content: {
       top: '50%',
       left: '50%',
@@ -321,14 +322,14 @@ const SeaTurtles: React.FC = () => {
     console.log('modifiedSeaTurtle.acquiredLongitude', modifiedSeaTurtle.acquiredLongitude);
     console.log('modifiedSeaTurtle.relinquishedLatitude', modifiedSeaTurtle.relinquishedLatitude);
     console.log('modifiedSeaTurtle.relinquishedLongitude', modifiedSeaTurtle.relinquishedLongitude);
-    const data = {} as MapModalDataModel;
+    const data = {} as MapDataModel;
     data.latitude = modifiedSeaTurtle[`${dataType}Latitude`] as number;
     data.longitude = modifiedSeaTurtle[`${dataType}Longitude`] as number;
-    setMapModalData(data);
-    setIsMapModalOpen(true);
+    setMapData(data);
+    setIsMapDialogOpen(true);
   };
 
-  const onRequestCloseMapModal = () => setIsMapModalOpen(false);
+  const onRequestCloseMapDialog = () => setIsMapDialogOpen(false);
 
   return (
     <div id='seaTurtle'>
@@ -349,16 +350,23 @@ const SeaTurtles: React.FC = () => {
         onCancel={onDialogCancel}
       />
       <Modal
-        isOpen={isMapModalOpen}
-        onRequestClose={onRequestCloseMapModal}
-        style={mapModalCustomStyles}
+        isOpen={isMapDialogOpen}
+        onRequestClose={onRequestCloseMapDialog}
+        style={mapDialogCustomStyles}
         contentLabel="Example Modal"
       >
         <h2>Hello</h2>
-        <button onClick={onRequestCloseMapModal}>close</button>
+        <button onClick={onRequestCloseMapDialog}>close</button>
         <div>I am a modal</div>
-        <div>Latitude: {mapModalData.latitude}</div>
-        <div>Longitude: {mapModalData.longitude}</div>
+        <div>Latitude: {mapData.latitude}</div>
+        <div>Longitude: {mapData.longitude}</div>
+        <button className='button is-danger' onClick={onRequestCloseMapDialog}>Close</button>
+        <Map center={[45.4, -75.7]} zoom={12}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+        </Map>
       </Modal>
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
