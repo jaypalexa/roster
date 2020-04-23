@@ -180,7 +180,7 @@ const HoldingTankGraphs: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Graphs for {appContext.holdingTank?.tankName}</h1>
+          <h1 className='title has-text-centered'>Water Graphs for {appContext.holdingTank?.tankName}</h1>
 
           <div className='field has-text-centered'>
             <input className='is-checkradio is-medium' id='temperature' type='radio' name='graphTypeGroup' value='temperature' checked={currentGraphType === 'temperature'} onChange={onGraphTypeChange} />

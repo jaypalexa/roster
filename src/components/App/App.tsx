@@ -37,16 +37,22 @@ const App: React.FC = () => {
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
 
   const onReloadPageClick = () => {
+    console.log('onReloadPageClick::newServiceWorker', newServiceWorker);
     if (newServiceWorker) {
       newServiceWorker.postMessage({ type: 'SKIP_WAITING' });
     } else {
       if ('serviceWorker' in navigator) {
+        console.log('onReloadPageClick::\'serviceWorker\' in navigator', newServiceWorker);
         navigator.serviceWorker.ready.then(registration => {
+          console.log('onReloadPageClick::navigator.serviceWorker.ready', newServiceWorker);
           const serviceWorker = (registration.installing || registration.waiting);
+          console.log('onReloadPageClick::serviceWorker', serviceWorker);
           if (serviceWorker) {
             serviceWorker.postMessage({ type: 'SKIP_WAITING' });
           }
         })
+      } else {
+        console.log('onReloadPageClick::\'serviceWorker\' NOT in navigator', newServiceWorker);
       }
     }
     setIsUpdateAvailable(false);
@@ -70,17 +76,20 @@ const App: React.FC = () => {
     setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready.then(registration => {
+        console.log('checkForUpdate::navigator.serviceWorker.ready', newServiceWorker);
         registration.update().then(() => {
           const serviceWorker = (registration.installing || registration.waiting);
+          console.log('checkForUpdate::registration.update::serviceWorker', serviceWorker);
           if (serviceWorker) {
+            setNewServiceWorker(serviceWorker);
             setIsUpdateAvailable(true);
           }
         });
       })
     }
-    // else {
-    //   alert(`serviceWorker NOT in navigator`);
-    // }
+    else {
+      console.log('checkForUpdate::\'serviceWorker\' NOT in navigator', newServiceWorker);
+    }
   }, []);
 
   const closeMenu = () => {
@@ -197,7 +206,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200422.1818
+            &nbsp;|&nbsp;v0.20200423.1130
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
