@@ -20,7 +20,7 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | Versioning / Database migrations | ??? |
 | Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 | Graphs for Sea Turtle > Morphometrics (temperature, salinity, pH) | ??? holding-tank-temperature-graph, etc. |
-| Mapping | [Mapbox](https://www.mapbox.com/)? or [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/)? [article](https://www.smashingmagazine.com/2020/02/javascript-maps-react-leaflet/) |
+| Mapping | [Mapbox](https://www.mapbox.com/)? or [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/)? [article](https://blog.logrocket.com/how-to-use-react-leaflet/) |
 | Offline Mode | ??? send updates if any made whilst offline...how to auth? |
 | Preventing Denial-of-Service attacks /excessive usage | ??? throttling |
 | Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |

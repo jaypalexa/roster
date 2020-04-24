@@ -306,9 +306,15 @@ const SeaTurtles: React.FC = () => {
   const onShowMapDialogClick = (dataType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const modifiedSeaTurtle: SeaTurtleModel = getValues();
     const data = {} as MapDataModel;
-    data.latitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Latitude`] as number;
-    data.longitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Longitude`] as number;
-    data.title = `${dataType}: ${data.latitude || '(not set)'}/${data.longitude || '(not set)'}`
+    data.center = { latitude: 28.681389, longitude: -82.46, description: 'Geographic center of Florida' };
+    data.initialZoom = 6;
+    const latitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Latitude`] as number;
+    const longitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Longitude`] as number;
+    if (latitude && longitude) {
+      data.markers = [{ latitude, longitude, description: modifiedSeaTurtle.turtleName }];
+    }
+    // data.title = `${dataType}: ${data.markers ? `${latitude}/${longitude}` : '(not set)'}`
+    data.title = dataType;
     setMapData(data);
     setIsMapDialogOpen(true);
   };
@@ -411,7 +417,7 @@ const SeaTurtles: React.FC = () => {
                 </FormFieldRow>
                 <FormFieldRow>
                   <DateFormField fieldName='dateRelinquished' labelText='Date relinquished' />
-                  <TextFormField fieldName='relinquishedFrom' labelText='Relinquished from' />
+                  <TextFormField fieldName='relinquishedTo' labelText='Relinquished to' />
                   <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} />
                   <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
                   <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
