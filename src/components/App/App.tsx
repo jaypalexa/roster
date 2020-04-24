@@ -211,7 +211,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200423.1750
+            &nbsp;|&nbsp;v0.20200424.1242
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
@@ -219,7 +219,7 @@ const App: React.FC = () => {
 
       </Router>
       <ToastContainer
-        autoClose={1500}
+        autoClose={1200}
         position={toast.POSITION.BOTTOM_CENTER}
         transition={Slide}
         pauseOnHover={true}

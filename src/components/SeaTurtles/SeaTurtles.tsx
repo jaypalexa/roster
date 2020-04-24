@@ -1,9 +1,10 @@
 import useMount from 'hooks/UseMount';
+import { Icon } from 'leaflet';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
-import { Map, TileLayer } from 'react-leaflet';
+import { Map, Marker, TileLayer } from 'react-leaflet';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -32,6 +33,7 @@ import './SeaTurtles.sass';
 
 const SeaTurtles: React.FC = () => {
 
+//#region Hooks
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
@@ -56,17 +58,12 @@ const SeaTurtles: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
+//#endregion
 
-  const mapDialogCustomStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)'
-    }
-  };
+  const mapIcon = new Icon({
+    iconUrl: "/favicon-32x32.png",
+    iconSize: [32, 32]
+  });
 
   const seaTurtleTableColumns = [
     {
@@ -316,15 +313,11 @@ const SeaTurtles: React.FC = () => {
   };
 
   const onShowMapDialogClick = (dataType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log('dataType', dataType);
     const modifiedSeaTurtle: SeaTurtleModel = getValues();
-    console.log('modifiedSeaTurtle.acquiredLatitude', modifiedSeaTurtle.acquiredLatitude);
-    console.log('modifiedSeaTurtle.acquiredLongitude', modifiedSeaTurtle.acquiredLongitude);
-    console.log('modifiedSeaTurtle.relinquishedLatitude', modifiedSeaTurtle.relinquishedLatitude);
-    console.log('modifiedSeaTurtle.relinquishedLongitude', modifiedSeaTurtle.relinquishedLongitude);
     const data = {} as MapDataModel;
-    data.latitude = modifiedSeaTurtle[`${dataType}Latitude`] as number;
-    data.longitude = modifiedSeaTurtle[`${dataType}Longitude`] as number;
+    data.latitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Latitude`] as number;
+    data.longitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Longitude`] as number;
+    data.title = `${dataType}: ${data.latitude || '(not set)'}/${data.longitude || '(not set)'}`
     setMapData(data);
     setIsMapDialogOpen(true);
   };
@@ -352,21 +345,30 @@ const SeaTurtles: React.FC = () => {
       <Modal
         isOpen={isMapDialogOpen}
         onRequestClose={onRequestCloseMapDialog}
-        style={mapDialogCustomStyles}
-        contentLabel="Example Modal"
       >
-        <h2>Hello</h2>
-        <button onClick={onRequestCloseMapDialog}>close</button>
-        <div>I am a modal</div>
-        <div>Latitude: {mapData.latitude}</div>
-        <div>Longitude: {mapData.longitude}</div>
-        <button className='button is-danger' onClick={onRequestCloseMapDialog}>Close</button>
-        <Map center={[45.4, -75.7]} zoom={12}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
-        </Map>
+        <div className='map-header'>
+          <h2 className='subtitle has-text-centered'>{mapData.title}</h2>
+          {/* <h2 className='subtitle has-text-centered'>Lat: {mapData.latitude || '(not set)'} | Lon: {mapData.longitude || '(not set)'}</h2> */}
+        </div>
+        <div className='map-content'>
+          <Map center={[28.681389, -82.46]} zoom={5}>
+            {mapData.latitude && mapData.longitude ? 
+              <Marker
+                key={`${mapData.latitude}${mapData.longitude}`}
+                position={[ mapData.latitude, mapData.longitude ]}
+                onClick={() => {}}
+                icon={mapIcon}
+              /> 
+            : null}
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+          </Map>
+        </div>
+        <div className='map-footer'>
+          <button className='button is-danger is-centered-both' onClick={onRequestCloseMapDialog}>Close</button>
+        </div>
       </Modal>
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
@@ -433,7 +435,7 @@ const SeaTurtles: React.FC = () => {
                   <TextFormField fieldName='acquiredLatitude' labelText='Latitude' />
                   <TextFormField fieldName='acquiredLongitude' labelText='Longitude' />
                   <FormField fieldName='dummy'>
-                    <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('acquired')}>
+                    <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('Acquired')}>
                       <span className='icon'>
                         <i className='fa fa-globe'></i>
                       </span>
@@ -448,7 +450,7 @@ const SeaTurtles: React.FC = () => {
                   <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
                   <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
                   <FormField fieldName='dummy'>
-                    <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('relinquished')}>
+                    <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('Relinquished')}>
                       <span className='icon'>
                         <i className='fa fa-globe'></i>
                       </span>
