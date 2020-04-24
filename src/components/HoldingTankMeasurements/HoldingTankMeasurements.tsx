@@ -39,7 +39,7 @@ const HoldingTankMeasurements: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const holdingTankMeasurementTableColumns = [
+  const tableColumns = [
     {
       name: '',
       ignoreRowClick: true,
@@ -282,7 +282,7 @@ const HoldingTankMeasurements: React.FC = () => {
 
           <DataTable
             title='Water Measurements'
-            columns={holdingTankMeasurementTableColumns}
+            columns={tableColumns}
             data={currentHoldingTankMeasurements}
             keyField='holdingTankMeasurementId'
             defaultSortField='dateMeasured'

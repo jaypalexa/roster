@@ -1,11 +1,8 @@
 import useMount from 'hooks/UseMount';
-import { Icon } from 'leaflet';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
-import { Map, Marker, TileLayer } from 'react-leaflet';
-import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +13,7 @@ import SeaTurtleService from '../../services/SeaTurtleService';
 import MapDataModel from '../../types/MapDataModel';
 import NameValuePair from '../../types/NameValuePair';
 import SeaTurtleModel from '../../types/SeaTurtleModel';
+import MapDialog from '../Dialogs/MapDialog';
 import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
 import YesNoDialog from '../Dialogs/YesNoDialog';
 import CheckboxFormField from '../FormFields/CheckboxFormField';
@@ -33,7 +31,6 @@ import './SeaTurtles.sass';
 
 const SeaTurtles: React.FC = () => {
 
-//#region Hooks
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
@@ -58,14 +55,8 @@ const SeaTurtles: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
-//#endregion
 
-  const mapIcon = new Icon({
-    iconUrl: "/favicon-32x32.png",
-    iconSize: [32, 32]
-  });
-
-  const seaTurtleTableColumns = [
+  const tableColumns = [
     {
       name: '',
       ignoreRowClick: true,
@@ -322,8 +313,6 @@ const SeaTurtles: React.FC = () => {
     setIsMapDialogOpen(true);
   };
 
-  const onRequestCloseMapDialog = () => setIsMapDialogOpen(false);
-
   return (
     <div id='seaTurtle'>
       <LeaveThisPagePrompt isDirty={formState.dirty} />
@@ -342,34 +331,11 @@ const SeaTurtles: React.FC = () => {
         onNo={onDialogNo}
         onCancel={onDialogCancel}
       />
-      <Modal
-        isOpen={isMapDialogOpen}
-        onRequestClose={onRequestCloseMapDialog}
-      >
-        <div className='map-header'>
-          <h2 className='subtitle has-text-centered'>{mapData.title}</h2>
-          {/* <h2 className='subtitle has-text-centered'>Lat: {mapData.latitude || '(not set)'} | Lon: {mapData.longitude || '(not set)'}</h2> */}
-        </div>
-        <div className='map-content'>
-          <Map center={[28.681389, -82.46]} zoom={5}>
-            {mapData.latitude && mapData.longitude ? 
-              <Marker
-                key={`${mapData.latitude}${mapData.longitude}`}
-                position={[ mapData.latitude, mapData.longitude ]}
-                onClick={() => {}}
-                icon={mapIcon}
-              /> 
-            : null}
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            />
-          </Map>
-        </div>
-        <div className='map-footer'>
-          <button className='button is-danger is-centered-both' onClick={onRequestCloseMapDialog}>Close</button>
-        </div>
-      </Modal>
+      <MapDialog 
+        isActive={isMapDialogOpen} 
+        mapData={mapData} 
+        onCloseClick={() => setIsMapDialogOpen(false)} 
+      />
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
@@ -400,7 +366,7 @@ const SeaTurtles: React.FC = () => {
 
           <DataTable
             title='Sea Turtles'
-            columns={seaTurtleTableColumns}
+            columns={tableColumns}
             data={currentSeaTurtles}
             keyField='turtleId'
             defaultSortField='turtleName'

@@ -47,7 +47,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const seaTurtleMorphometricTableColumns = [
+  const tableColumns = [
     {
       name: '',
       ignoreRowClick: true,
@@ -361,7 +361,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
 
           <DataTable
             title='Morphometrics'
-            columns={seaTurtleMorphometricTableColumns}
+            columns={tableColumns}
             data={currentSeaTurtleMorphometrics}
             keyField='turtleMorphometricId'
             defaultSortField='dateMeasured'

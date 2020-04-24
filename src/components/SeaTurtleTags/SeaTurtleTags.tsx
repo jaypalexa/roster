@@ -44,7 +44,7 @@ const SeaTurtleTags: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const seaTurtleTagTableColumns = [
+  const tableColumns = [
     {
       name: '',
       ignoreRowClick: true,
@@ -294,7 +294,7 @@ const SeaTurtleTags: React.FC = () => {
 
           <DataTable
             title='Tags'
-            columns={seaTurtleTagTableColumns}
+            columns={tableColumns}
             data={currentSeaTurtleTags}
             keyField='turtleTagId'
             defaultSortField='tagNumber'

@@ -43,7 +43,7 @@ const HatchlingsEvents: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const hatchingsEventTableColumns = [
+  const tableColumns = [
     {
       name: '',
       ignoreRowClick: true,
@@ -344,7 +344,7 @@ const HatchlingsEvents: React.FC = () => {
 
           <DataTable
             title='Hatchlings Events'
-            columns={hatchingsEventTableColumns}
+            columns={tableColumns}
             data={currentHatchlingsEvents}
             keyField='hatchlingsEventId'
             defaultSortField='turtleName'

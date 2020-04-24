@@ -45,7 +45,7 @@ const WashbacksEvents: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const hatchingsEventTableColumns = [
+  const tableColumns = [
     {
       name: '',
       ignoreRowClick: true,
@@ -352,7 +352,7 @@ const WashbacksEvents: React.FC = () => {
 
           <DataTable
             title='Washbacks Events'
-            columns={hatchingsEventTableColumns}
+            columns={tableColumns}
             data={currentWashbacksEvents}
             keyField='washbacksEventId'
             defaultSortField='turtleName'
