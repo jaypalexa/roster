@@ -44,9 +44,9 @@ const App: React.FC = () => {
       if ('serviceWorker' in navigator) {
         console.log('onReloadPageClick::\'serviceWorker\' in navigator...');
         navigator.serviceWorker.ready.then(registration => {
-          console.log('onReloadPageClick::navigator.serviceWorker.ready...');
+          console.log('onReloadPageClick::registration.update().then()::registration = ', registration);
           const serviceWorker = (registration.installing || registration.waiting);
-          console.log('onReloadPageClick::serviceWorker = ', serviceWorker);
+          console.log('onReloadPageClick::registration.update().then()::serviceWorker = ', serviceWorker);
           if (serviceWorker) {
             serviceWorker.postMessage({ type: 'SKIP_WAITING' });
           }
@@ -78,8 +78,9 @@ const App: React.FC = () => {
       navigator.serviceWorker.ready.then(registration => {
         console.log('checkForUpdate::navigator.serviceWorker.ready...');
         registration.update().then(() => {
+          console.log('checkForUpdate::registration.update().then()::registration = ', registration);
           const serviceWorker = (registration.installing || registration.waiting);
-          console.log('checkForUpdate::registration.update::serviceWorker = ', serviceWorker);
+          console.log('checkForUpdate::registration.update().then()::serviceWorker = ', serviceWorker);
           if (serviceWorker) {
             setNewServiceWorker(serviceWorker);
             setIsUpdateAvailable(true);
@@ -113,6 +114,7 @@ const App: React.FC = () => {
       setTriggerRefresh(!triggerRefresh);
     })
   }
+
   useMount(() => {
     const navbarBurgerDiv = document.querySelector('.navbar-burger') as HTMLDivElement;
     const toggleOn = () => {
@@ -144,6 +146,8 @@ const App: React.FC = () => {
   useEffect(() => {
     setIsShowUpdateAvailable(isUpdateAvailable);
   }, [isUpdateAvailable]);
+
+  console.log('process.env.REACT_APP_KITTEN', process.env.REACT_APP_KITTEN);
 
   return (
     //<img src={logo} className='App-logo' alt='logo' />
@@ -205,7 +209,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200424.1510
+            &nbsp;|&nbsp;v0.20200426.1030
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

@@ -102,7 +102,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-### PWA
+## PWA
 
 [Progressive Web Applications (PWA) on iOS Provide a Rich Channel to Reach Customers Despite the Platform Limitations](https://love2dev.com/pwa/ios/)
 * Because Apple assumes space on its devices is cramped, they aggressively throw unused items overboard to free up disk space. If your PWA or any website for that matter, goes unused for a few days (we think it is roughly 14 days, it is not documented) the device will remove all cached assets associated with the origin. This includes IndexedDB, service worker cache, localStorage, etc.
@@ -116,7 +116,7 @@ To be classified as a progressive web application:
 * Apple imposes the caching limit to paltry **50 Mb**, which makes heavy formatted and high definition audios and videos reload— that’s terribly frustrating. 
 * Apple frees up the phone storage by removing PWAs if you are not using them for undefined time (**~14 days**). Though the web app icon will remain on the screen, clicking on it will result in re-downloading.
 
-### Service Workers
+## Service Workers
 
 [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers)
 
@@ -124,10 +124,33 @@ To be classified as a progressive web application:
 
 [Service Worker Registration](https://developers.google.com/web/fundamentals/primers/service-workers/registration)
 
-#### Service Worker Support
+### Service Worker Support
 
-[](https://stackoverflow.com/questions/50607343/chrome-service-worker-ios-support)
+[Chrome Service Worker iOS Support](https://stackoverflow.com/questions/50607343/chrome-service-worker-ios-support)
 [developer.google.com - Service Workers - Overview - Prerequisites - Browser Support](https://developers.google.com/web/fundamentals/primers/service-workers/#browser_support)
+
+## AWS
+
+The application architecture uses [AWS Lambda](https://aws.amazon.com/lambda/), [Amazon API Gateway](https://aws.amazon.com/apigateway/), [Amazon S3](https://aws.amazon.com/s3/), [Amazon DynamoDB](https://aws.amazon.com/dynamodb/), and [Amazon Cognito](https://aws.amazon.com/cognito/):
+
+![AWS application architecture diagram](
+https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_LP_assets-16.7cbed9781201a79b9efa761807c4312e68b23485.png)
+
+[Build a Serverless Web Application with AWS Lambda, Amazon API Gateway, Amazon S3, Amazon DynamoDB, and Amazon Cognito](https://aws.amazon.com/getting-started/hands-on/build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito/)
+
+[Integrate the AWS SDK for JavaScript into a React App](https://aws.amazon.com/blogs/mobile/integrate-the-aws-sdk-for-javascript-into-a-react-app/)
+1. Add the src/aws-exports.js file to your .gitignore (or similar) file. Do not check this file into your source code repository.
+1. Copy the aws-exports.js file from your AWS Mobile Hub project during the build phase of your app.
+
+[React - Adding Custom Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/)
+
+[Keeping env variables private in React App](https://medium.com/swlh/keeping-env-variables-private-in-react-app-fa44a9b33c31)
+
+[Netlify - Build environment variables](https://docs.netlify.com/configure-builds/environment-variables/#declare-variables)
+
+[Identity Management with AWS Cognito in React](https://levelup.gitconnected.com/identity-management-with-aws-cognito-in-react-dc166bd799dc)
+
+[Authentication for React apps using AWS Amplify and Cognito](https://blog.logrocket.com/authentication-react-apps-aws-amplify-cognito/)
 
 ## Notes
 
