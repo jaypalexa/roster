@@ -1,5 +1,5 @@
-import HoldingTankModel from 'types/HoldingTankModel';
 import React, { createContext, useContext, useState } from 'react';
+import HoldingTankModel from 'types/HoldingTankModel';
 import SeaTurtleModel from 'types/SeaTurtleModel';
 
 interface Props {
@@ -7,7 +7,6 @@ interface Props {
 };
 
 interface AppContextStore {
-  redirectPathOnAuthentication?: string;
   organizationId?: string;
   seaTurtle?: SeaTurtleModel;
   holdingTank?: HoldingTankModel;

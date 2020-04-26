@@ -175,3 +175,7 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 ----
 
 [React Hooks: Why Do We Need useContext and How Does It Help?](https://medium.com/better-programming/react-hooks-usecontext-30eb560999f)
+
+----
+
+[Redirecting a user to the page they requested after successful authentication with react-router-dom](https://stackoverflow.com/questions/59422159/redirecting-a-user-to-the-page-they-requested-after-successful-authentication-wi/59423442#59423442)

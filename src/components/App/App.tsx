@@ -1,3 +1,4 @@
+import browserHistory from 'browserHistory';
 import HatchlingEvents from 'components/HatchlingsEvents/HatchlingsEvents';
 import HoldingTankGraphs from 'components/HoldingTankGraphs/HoldingTankGraphs';
 import HoldingTankMeasurements from 'components/HoldingTankMeasurements/HoldingTankMeasurements';
@@ -6,29 +7,27 @@ import Home from 'components/Home/Home';
 import Login from 'components/Login/Login';
 import NotFound from 'components/NotFound/NotFound';
 import Organization from 'components/Organization/Organization';
-import ProtectedRoute, { ProtectedRouteProps } from 'components/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
 import Reports from 'components/Reports/Reports';
 import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics';
 import SeaTurtleMorphometricsGraphs from 'components/SeaTurtleMorphometricsGraphs/SeaTurtleMorphometricsGraphs';
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
 import WashbackEvents from 'components/WashbacksEvents/WashbacksEvents';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
-import AuthenticationService from '../../services/AuthenticationService';
-import * as serviceWorker from '../../serviceWorker';
+import AuthenticationService from 'services/AuthenticationService';
+import * as serviceWorker from 'serviceWorker';
 import './App.sass';
-
-// import logo from './logo.svg';
 
 const App: React.FC = () => {
 
+  // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
@@ -98,18 +97,9 @@ const App: React.FC = () => {
     document.querySelector('.navbar-burger')?.classList.remove('is-active');
   };
 
-  const setRedirectPathOnAuthentication = (path: string) => {
-    setAppContext({ ...appContext, redirectPathOnAuthentication: path });
-  }
-
-  const defaultProtectedRouteProps: ProtectedRouteProps = {
-    isAuthenticated: true, // !!AuthenticationService.isAuthenticated, // !!appContext.isAuthenticated, //TODO:  WIRE IN REAL AUTHENTICATION !!!
-    redirectPathOnAuthentication: appContext.redirectPathOnAuthentication || '',
-    setRedirectPathOnAuthentication
-  };
-
   const logOut = () => {
     AuthenticationService.signout(() => {
+      setAppContext({ ...appContext, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
       closeMenu();
       setTriggerRefresh(!triggerRefresh);
     })
@@ -150,7 +140,6 @@ const App: React.FC = () => {
   console.log('process.env.REACT_APP_KITTEN', process.env.REACT_APP_KITTEN);
 
   return (
-    //<img src={logo} className='App-logo' alt='logo' />
     <div id='app'>
       <Router history={browserHistory}>
         <nav className='navbar is-dark' aria-label='main navigation'>
@@ -178,28 +167,28 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
             <div className='navbar-end'>
-              <Link className={`navbar-item ${AuthenticationService.isAuthenticated ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
-              <span className={`navbar-item ${AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >{AuthenticationService.loggedInUserName}</span>
-              <span className={`navbar-item ${AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >|</span>
-              <Link className={`navbar-item ${AuthenticationService.isAuthenticated ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
+              <Link className={`navbar-item ${!!AuthenticationService.isAuthenticated ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
+              <span className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >{AuthenticationService.loggedInUserName}</span>
+              <span className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >|</span>
+              <Link className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
             </div>
           </div>
         </nav>
 
         <div className='content-container'>
           <Switch>
-            <ProtectedRoute {...defaultProtectedRouteProps} exact={true} path='/' component={Home} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtles' component={SeaTurtles} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-tags' component={SeaTurtleTags} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tanks' component={HoldingTanks} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tank-measurements' component={HoldingTankMeasurements} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/holding-tank-graphs' component={HoldingTankGraphs} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/hatchlings-events' component={HatchlingEvents} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/washbacks-events' component={WashbackEvents} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/reports' component={Reports} />
-            <ProtectedRoute {...defaultProtectedRouteProps} path='/organization' component={Organization} />
+            <ProtectedRoute exact={true} path='/' component={Home} />
+            <ProtectedRoute path='/sea-turtles' component={SeaTurtles} />
+            <ProtectedRoute path='/sea-turtle-tags' component={SeaTurtleTags} />
+            <ProtectedRoute path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
+            <ProtectedRoute path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
+            <ProtectedRoute path='/holding-tanks' component={HoldingTanks} />
+            <ProtectedRoute path='/holding-tank-measurements' component={HoldingTankMeasurements} />
+            <ProtectedRoute path='/holding-tank-graphs' component={HoldingTankGraphs} />
+            <ProtectedRoute path='/hatchlings-events' component={HatchlingEvents} />
+            <ProtectedRoute path='/washbacks-events' component={WashbackEvents} />
+            <ProtectedRoute path='/reports' component={Reports} />
+            <ProtectedRoute path='/organization' component={Organization} />
             <Route path='/login' component={Login} />
             <Route component={NotFound} />
           </Switch>
@@ -209,7 +198,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200426.1030
+            &nbsp;|&nbsp;v0.20200426.1555
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

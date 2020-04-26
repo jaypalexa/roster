@@ -1,12 +1,19 @@
+import browserHistory from 'browserHistory';
+import { useAppContext } from 'contexts/AppContext';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
-import AuthenticationService from '../../services/AuthenticationService';
-import LoginModel from '../../types/LoginModel';
+import { toast } from 'react-toastify';
+import AuthenticationService from 'services/AuthenticationService';
+import LoginModel from 'types/LoginModel';
 import './Login.sass';
 
-const Login: React.FC = () => {
+//redirectPathOnAuthentication
+
+interface LoginProps {
+  redirectPathOnAuthentication?: string;
+}
+
+const Login: React.FC<LoginProps> = ({redirectPathOnAuthentication}) => {
   const [appContext, setAppContext] = useAppContext();
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
   const { errors, formState, handleSubmit, register, reset, watch } = useForm<LoginModel>({ mode: 'onChange' });
@@ -21,22 +28,25 @@ const Login: React.FC = () => {
   }, [])
 
   const getPath = (): string => {
-    if (!appContext.redirectPathOnAuthentication || appContext.redirectPathOnAuthentication === '/login') {
+    if (!redirectPathOnAuthentication || redirectPathOnAuthentication === '/login') {
       return '/';
     } else {
-      return appContext.redirectPathOnAuthentication;
+      return redirectPathOnAuthentication;
     }
   }
 
   const onSubmit = handleSubmit((modifiedLogin: LoginModel) => {
     const patchedLogin = { ...currentLogin, ...modifiedLogin };
-    // LoginService.saveLogin(patchedLogin);
     reset(patchedLogin);
     setCurrentLogin(patchedLogin);
 
-    AuthenticationService.authenticate(modifiedLogin.userName, () => {
-      setAppContext({ ...appContext, redirectPathOnAuthentication: '' });
-      setAppContext({ ...appContext, organizationId: '22222222-2222-2222-2222-222222222222' }); //TODO: REMOVE FAKE ORGANIZATION ID
+    AuthenticationService.authenticate(modifiedLogin, () => {
+      if (!AuthenticationService.isAuthenticated) {
+        toast.error('Incorrect login');
+        setAppContext({ ...appContext, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
+      } else {
+        setAppContext({ ...appContext, organizationId: '22222222-2222-2222-2222-222222222222' }); //TODO: REMOVE FAKE ORGANIZATION ID
+      }
       browserHistory.push(getPath());
     })
   });
@@ -71,16 +81,6 @@ const Login: React.FC = () => {
             </div>
 
             <div className='field is-grouped form-action-buttons'>
-              {/* <p className='control'>
-                <input 
-                  type='button' 
-                  className='button is-danger is-fixed-width-medium' 
-                  value='Cancel'
-                  onClick={() => onCancel()}
-                  disabled={!formState.isValid}
-                />
-              </p> */}
-
               <p className='control'>
                 <input
                   type='submit'
