@@ -16,11 +16,11 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
 | Session/Token Timeout | ??? auto-refresh |
 | Multi-tenancy | ??? |
-| Database | [Amazon DynamoDB](https://aws.amazon.com/dynamodb) |
+| Database | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
 | Versioning / Database migrations | ??? |
 | Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 | Graphs for Sea Turtle > Morphometrics (temperature, salinity, pH) | ??? holding-tank-temperature-graph, etc. |
-| Mapping | [Mapbox](https://www.mapbox.com/)? or [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/)? [article](https://blog.logrocket.com/how-to-use-react-leaflet/) |
+| Mapping | &bull; [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/) ([article](https://blog.logrocket.com/how-to-use-react-leaflet/))<br /> ~~&bull; [Mapbox](https://www.mapbox.com/)~~ |
 | Offline Mode | ??? send updates if any made whilst offline...how to auth? |
 | Preventing Denial-of-Service attacks /excessive usage | ??? throttling |
 | Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
@@ -78,29 +78,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+----
 
 ## PWA
 
@@ -131,6 +109,20 @@ To be classified as a progressive web application:
 
 ## AWS
 
+### AWS CLI
+
+[Download and install the AWS CLI MSI installer for Windows (64-bit)(.msi)](https://awscli.amazonaws.com/AWSCLIV2.msi)
+
+#### To change a user's password and update status using:
+
+    aws cognito-idp admin-set-user-password --user-pool-id <USER_POOL_ID> --region <REGION> --username <USER_NAME> --password <PASSWORD> --permanent
+
+#### To update user attributes
+
+    aws cognito-idp admin-update-user-attributes --user-pool-id <USER_POOL_ID> --region <REGION> --username <USER_NAME> --user-attributes Name="custom:CustomAttr1",Value="Purple"
+
+### Application Architecture
+
 The application architecture uses [AWS Lambda](https://aws.amazon.com/lambda/), [Amazon API Gateway](https://aws.amazon.com/apigateway/), [Amazon S3](https://aws.amazon.com/s3/), [Amazon DynamoDB](https://aws.amazon.com/dynamodb/), and [Amazon Cognito](https://aws.amazon.com/cognito/):
 
 ![AWS application architecture diagram](
@@ -151,6 +143,28 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 [Identity Management with AWS Cognito in React](https://levelup.gitconnected.com/identity-management-with-aws-cognito-in-react-dc166bd799dc)
 
 [Authentication for React apps using AWS Amplify and Cognito](https://blog.logrocket.com/authentication-react-apps-aws-amplify-cognito/)
+
+### Cognito
+
+[Using Tokens with User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html)
+
+### DynamoDB
+
+[Allow a User to Perform Any DynamoDB Actions on a Table](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/using-identity-based-policies.html)
+
+The following permissions policy grants permissions for all DynamoDB actions on a table. The ARN value specified in the Resource identifies a table in a specific Region; the wildcard means _all_ tables.
+
+    {
+        "Version": "2020-04-27",
+        "Statement": [
+            {
+                "Sid": "AllAPIActionsInDatabase",
+                "Effect": "Allow",
+                "Action": "dynamodb:*",
+                "Resource": "arn:aws:dynamodb:us-west-2:123456789012:table/*"
+            }
+        ]
+    }
 
 ## Notes
 

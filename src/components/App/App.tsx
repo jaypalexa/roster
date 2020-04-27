@@ -98,11 +98,10 @@ const App: React.FC = () => {
   };
 
   const logOut = () => {
-    AuthenticationService.signout(() => {
-      setAppContext({ ...appContext, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
-      closeMenu();
-      setTriggerRefresh(!triggerRefresh);
-    })
+    AuthenticationService.isAuthenticated = false;
+    setAppContext({ ...appContext, loggedInUserName: undefined, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
+    closeMenu();
+    setTriggerRefresh(!triggerRefresh);
   }
 
   useMount(() => {
@@ -137,8 +136,6 @@ const App: React.FC = () => {
     setIsShowUpdateAvailable(isUpdateAvailable);
   }, [isUpdateAvailable]);
 
-  console.log('process.env.REACT_APP_KITTEN', process.env.REACT_APP_KITTEN);
-
   return (
     <div id='app'>
       <Router history={browserHistory}>
@@ -168,7 +165,7 @@ const App: React.FC = () => {
             </div>
             <div className='navbar-end'>
               <Link className={`navbar-item ${!!AuthenticationService.isAuthenticated ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
-              <span className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >{AuthenticationService.loggedInUserName}</span>
+              <span className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >{appContext.loggedInUserName}</span>
               <span className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >|</span>
               <Link className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
             </div>
@@ -198,7 +195,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200426.1555
+            &nbsp;|&nbsp;v0.20200427.1353
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

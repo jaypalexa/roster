@@ -7,8 +7,6 @@ import AuthenticationService from 'services/AuthenticationService';
 import LoginModel from 'types/LoginModel';
 import './Login.sass';
 
-//redirectPathOnAuthentication
-
 interface LoginProps {
   redirectPathOnAuthentication?: string;
 }
@@ -35,20 +33,34 @@ const Login: React.FC<LoginProps> = ({redirectPathOnAuthentication}) => {
     }
   }
 
-  const onSubmit = handleSubmit((modifiedLogin: LoginModel) => {
+  const onSubmit = handleSubmit(async (modifiedLogin: LoginModel) => {
     const patchedLogin = { ...currentLogin, ...modifiedLogin };
     reset(patchedLogin);
     setCurrentLogin(patchedLogin);
 
-    AuthenticationService.authenticate(modifiedLogin, () => {
-      if (!AuthenticationService.isAuthenticated) {
-        toast.error('Incorrect login');
-        setAppContext({ ...appContext, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
-      } else {
-        setAppContext({ ...appContext, organizationId: '22222222-2222-2222-2222-222222222222' }); //TODO: REMOVE FAKE ORGANIZATION ID
-      }
-      browserHistory.push(getPath());
-    })
+    try {
+      var result = await AuthenticationService.authenticate(modifiedLogin);
+      console.log('result', result);
+      AuthenticationService.isAuthenticated = true;
+      const organizationId = result.idToken.payload['custom:organizationId'];
+      setAppContext({ ...appContext, loggedInUserName: modifiedLogin.userName, organizationId: organizationId }); //TODO: REMOVE FAKE ORGANIZATION ID
+    } catch(err) {
+      console.log(err);
+      AuthenticationService.isAuthenticated = false;
+      setAppContext({ ...appContext, loggedInUserName: undefined, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
+      toast.error('Invalid login');
+    }
+    browserHistory.push(getPath());
+
+    // AuthenticationService.authenticate(modifiedLogin, () => {
+    //   if (!AuthenticationService.isAuthenticated) {
+    //     toast.error('Invalid login');
+    //     setAppContext({ ...appContext, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
+    //   } else {
+    //     setAppContext({ ...appContext, organizationId: '22222222-2222-2222-2222-222222222222' }); //TODO: REMOVE FAKE ORGANIZATION ID
+    //   }
+    //   browserHistory.push(getPath());
+    // })
   });
 
   return (
