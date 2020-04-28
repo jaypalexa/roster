@@ -39,7 +39,7 @@ const Login: React.FC<LoginProps> = ({redirectPathOnAuthentication}) => {
     setCurrentLogin(patchedLogin);
 
     try {
-      var result = await AuthenticationService.authenticate(modifiedLogin);
+      var result = await AuthenticationService.authenticateUser(modifiedLogin);
       console.log('result', result);
       AuthenticationService.isAuthenticated = true;
       AuthenticationService.idToken = result.idToken;

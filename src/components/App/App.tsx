@@ -98,7 +98,7 @@ const App: React.FC = () => {
   };
 
   const logOut = () => {
-    AuthenticationService.isAuthenticated = false;
+    AuthenticationService.signOut(appContext.loggedInUserName);
     setAppContext({ ...appContext, loggedInUserName: undefined, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
     closeMenu();
     setTriggerRefresh(!triggerRefresh);
