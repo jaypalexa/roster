@@ -351,3 +351,6 @@ ASALocalRun/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# DO NOT CHECK IN
+/_private

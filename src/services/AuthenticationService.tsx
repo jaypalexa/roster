@@ -1,4 +1,4 @@
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoIdToken, CognitoUser, CognitoUserPool, CognitoUserSession } from 'amazon-cognito-identity-js';
 import LoginModel from 'types/LoginModel';
 
 const POOL_DATA = {
@@ -10,6 +10,7 @@ const cognitoUserPool = new CognitoUserPool(POOL_DATA);
 
 const AuthenticationService = {
   isAuthenticated: false,
+  idToken: {} as CognitoIdToken,
   authenticate(login: LoginModel) {
     
     const cognitoUserData = {

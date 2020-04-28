@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "amazon-cognito-identity-js": "^4.2.2",
+    "aws-sdk": "^2.664.0",
     "bulma": "^0.8.2",
     "bulma-checkradio": "^1.1.1",
     "chart.js": "^2.9.3",

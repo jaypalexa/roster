@@ -166,6 +166,8 @@ The following permissions policy grants permissions for all DynamoDB actions on 
         ]
     }
 
+[(Answer #2 in "3 fields composite primary key (unique item) in Dynamodb")](https://stackoverflow.com/questions/32620215/3-fields-composite-primary-key-unique-item-in-dynamodb)
+
 ## Notes
 
 [How to make react-hook-form work with multiple forms in one page?](https://stackoverflow.com/questions/60276510/how-to-make-react-hook-form-work-with-multiple-forms-in-one-page)

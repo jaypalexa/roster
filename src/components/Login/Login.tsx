@@ -42,6 +42,7 @@ const Login: React.FC<LoginProps> = ({redirectPathOnAuthentication}) => {
       var result = await AuthenticationService.authenticate(modifiedLogin);
       console.log('result', result);
       AuthenticationService.isAuthenticated = true;
+      AuthenticationService.idToken = result.idToken;
       const organizationId = result.idToken.payload['custom:organizationId'];
       setAppContext({ ...appContext, loggedInUserName: modifiedLogin.userName, organizationId: organizationId }); //TODO: REMOVE FAKE ORGANIZATION ID
     } catch(err) {
