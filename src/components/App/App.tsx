@@ -15,13 +15,13 @@ import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
 import WashbackEvents from 'components/WashbacksEvents/WashbacksEvents';
 import { useAppContext } from 'contexts/AppContext';
+import useAuthentication from 'hooks/UseAuthentication';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthenticationService from 'services/AuthenticationService';
 import * as serviceWorker from 'serviceWorker';
 import './App.sass';
 
@@ -34,6 +34,7 @@ const App: React.FC = () => {
   const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [triggerRefresh, setTriggerRefresh] = useState(false);
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
+  const { getTokenOrganizationId, getTokenUserName, isUserAuthenticated, signOut } = useAuthentication();
 
   const onReloadPageClick = () => {
     console.log('onReloadPageClick::newServiceWorker = ', newServiceWorker);
@@ -98,8 +99,7 @@ const App: React.FC = () => {
   };
 
   const logOut = () => {
-    AuthenticationService.signOut(appContext.loggedInUserName);
-    setAppContext({ ...appContext, loggedInUserName: undefined, organizationId: undefined }); //TODO: REMOVE FAKE ORGANIZATION ID
+    signOut();
     closeMenu();
     setTriggerRefresh(!triggerRefresh);
   }
@@ -130,6 +130,17 @@ const App: React.FC = () => {
 
   useMount(() => {
     checkForUpdate();
+  });
+
+  useMount(() => {
+    if (isUserAuthenticated()) {
+      setAppContext({ ...appContext, 
+        loggedInUserName: getTokenUserName(), 
+        organizationId: getTokenOrganizationId() 
+      });
+    } else {
+      setAppContext({});
+    }
   });
 
   useEffect(() => {
@@ -164,10 +175,10 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
             <div className='navbar-end'>
-              <Link className={`navbar-item ${!!AuthenticationService.isAuthenticated ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
-              <span className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >{appContext.loggedInUserName}</span>
-              <span className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'} is-hidden-mobile`} >|</span>
-              <Link className={`navbar-item ${!!AuthenticationService.isAuthenticated ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
+              <Link className={`navbar-item ${appContext.loggedInUserName ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
+              <span className={`navbar-item ${appContext.loggedInUserName ? '' : 'hidden'} is-hidden-mobile`} >{appContext.loggedInUserName}</span>
+              <span className={`navbar-item ${appContext.loggedInUserName ? '' : 'hidden'} is-hidden-mobile`} >|</span>
+              <Link className={`navbar-item ${appContext.loggedInUserName ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
             </div>
           </div>
         </nav>
@@ -195,7 +206,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200428.1410
+            &nbsp;|&nbsp;v0.20200428.1748
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

@@ -1,19 +1,19 @@
+import DateFormField from 'components/FormFields/DateFormField';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
+import IntegerFormField from 'components/FormFields/IntegerFormField';
+import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
+import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
+import TextFormField from 'components/FormFields/TextFormField';
+import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
+import { useAppContext } from 'contexts/AppContext';
+import TabHelper from 'helpers/TabHelper';
 import useMount from 'hooks/UseMount';
 import React, { useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAppContext } from '../../contexts/AppContext';
-import TabHelper from '../../helpers/TabHelper';
-import OrganizationService from '../../services/OrganizationService';
-import OrganizationModel from '../../types/OrganizationModel';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import IntegerFormField from '../FormFields/IntegerFormField';
-import RadioButtonFormField from '../FormFields/RadioButtonFormField';
-import RadioButtonGroupFormField from '../FormFields/RadioButtonGroupFormField';
-import TextFormField from '../FormFields/TextFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
+import OrganizationService from 'services/OrganizationService';
+import OrganizationModel from 'types/OrganizationModel';
 import './Organization.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */

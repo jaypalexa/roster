@@ -1,3 +1,17 @@
+import browserHistory from 'browserHistory';
+import MapDialog from 'components/Dialogs/MapDialog';
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import DateFormField from 'components/FormFields/DateFormField';
+import FormField from 'components/FormFields/FormField';
+import FormFieldGroup from 'components/FormFields/FormFieldGroup';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
+import ListFormField from 'components/FormFields/ListFormField';
+import TextareaFormField from 'components/FormFields/TextareaFormField';
+import TextFormField from 'components/FormFields/TextFormField';
+import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -5,26 +19,12 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
+import SeaTurtleService from 'services/SeaTurtleService';
+import MapDataModel from 'types/MapDataModel';
+import NameValuePair from 'types/NameValuePair';
+import SeaTurtleModel from 'types/SeaTurtleModel';
 import { v4 as uuidv4 } from 'uuid';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import SeaTurtleService from '../../services/SeaTurtleService';
-import MapDataModel from '../../types/MapDataModel';
-import NameValuePair from '../../types/NameValuePair';
-import SeaTurtleModel from '../../types/SeaTurtleModel';
-import MapDialog from '../Dialogs/MapDialog';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
-import CheckboxFormField from '../FormFields/CheckboxFormField';
-import DateFormField from '../FormFields/DateFormField';
-import FormField from '../FormFields/FormField';
-import FormFieldGroup from '../FormFields/FormFieldGroup';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import ListFormField from '../FormFields/ListFormField';
-import TextareaFormField from '../FormFields/TextareaFormField';
-import TextFormField from '../FormFields/TextFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './SeaTurtles.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -386,7 +386,7 @@ const SeaTurtles: React.FC = () => {
 
           <h1 className='title has-text-centered'>{appContext.seaTurtle?.turtleName}</h1>
 
-          <FormContext {...methods} >
+          <FormContext {...methods}>
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <h2 className='subtitle'>General Information</h2>

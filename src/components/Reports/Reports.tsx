@@ -1,17 +1,19 @@
 import AWS from 'aws-sdk';
 import browserHistory from 'browserHistory';
+import useAuthentication from 'hooks/UseAuthentication';
 import useMount from 'hooks/UseMount';
 import React from 'react';
-import AuthenticationService from 'services/AuthenticationService';
 import './Reports.sass';
 
 const Reports: React.FC = () => {
   
+  const { getJwtToken } = useAuthentication();
+
   useMount(() => {
     const credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '',
       Logins: {
-        [`cognito-idp.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID}`]: AuthenticationService.idToken.getJwtToken()
+        [`cognito-idp.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID}`]: getJwtToken()
       }
     });
     
@@ -24,10 +26,11 @@ const Reports: React.FC = () => {
   })
 
   const invokeLambda = async () => {
+
     try {
       const params: AWS.Lambda.InvocationRequest = {
         FunctionName: 'RosterDbAccessLambda', 
-        Payload: JSON.stringify(AuthenticationService.idToken.getJwtToken()),
+        Payload: JSON.stringify(getJwtToken()),
         // Payload: JSON.stringify({
         //   'x': 1, 
         //   'y': 2,
