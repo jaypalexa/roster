@@ -12,25 +12,27 @@ const Reports: React.FC = () => {
   const { getJwtToken } = useAuthentication();
 
   useMount(() => {
-    const credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '',
+    const identityPoolId = process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '';
+    const userPoolId = process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID || '';
+    const region = process.env.REACT_APP_AWS_REGION || '';
+
+    const currentCredentials = new AWS.CognitoIdentityCredentials({IdentityPoolId: identityPoolId});
+    currentCredentials.clearCachedId();
+
+    const updatedCredentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: identityPoolId,
       Logins: {
-        [`cognito-idp.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID}`]: getJwtToken()
+        [`cognito-idp.${region}.amazonaws.com/${userPoolId}`]: getJwtToken()
       }
     });
     
-    AWS.config.update({
-      region: process.env.REACT_APP_AWS_REGION,
-      credentials: credentials
-    });
+    AWS.config.credentials = updatedCredentials;
+    AWS.config.region = region;
     
     console.log('AWS.config', AWS.config);
   })
 
   const invokeLambda = async () => {
-
-    // Content-Type: application/json
-    // Accept: application/json
 
     interface RequestPayload {
       resource: string;             // ??? /root/child
