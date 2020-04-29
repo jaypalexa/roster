@@ -80,6 +80,12 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ----
 
+### Netlify
+
+[Build & deploy > Environment > Environment variables](https://app.netlify.com/sites/roster-turtlegeek/settings/deploys#environment)
+
+----
+
 ## PWA
 
 [Progressive Web Applications (PWA) on iOS Provide a Rich Channel to Reach Customers Despite the Platform Limitations](https://love2dev.com/pwa/ios/)
