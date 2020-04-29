@@ -195,3 +195,8 @@ The following permissions policy grants permissions for all DynamoDB actions on 
 ----
 
 [Redirecting a user to the page they requested after successful authentication with react-router-dom](https://stackoverflow.com/questions/59422159/redirecting-a-user-to-the-page-they-requested-after-successful-authentication-wi/59423442#59423442)
+
+
+## See also
+
+[roster-db-access-lambda on GitHub](https://github.com/jaypalexa/roster-db-access-lambda)

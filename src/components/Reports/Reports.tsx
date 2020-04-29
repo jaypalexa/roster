@@ -29,7 +29,7 @@ const Reports: React.FC = () => {
 
     try {
       const params: AWS.Lambda.InvocationRequest = {
-        FunctionName: 'RosterDbAccessLambda', 
+        FunctionName: 'roster-db-access-lambda', 
         Payload: JSON.stringify(getJwtToken()),
         // Payload: JSON.stringify({
         //   'x': 1, 
