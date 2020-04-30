@@ -15,8 +15,8 @@ export default interface OrganizationModel {
   hatchlingsBalanceAsOfDate: Date;
   ccHatchlingsStartingBalance: number;
   cmHatchlingsStartingBalance: number;
-  dcHatchlingStartingBalance: number;
-  otherHatchlingStartingBalance: number;
+  dcHatchlingsStartingBalance: number;
+  otherHatchlingsStartingBalance: number;
   unknownHatchlingsStartingBalance: number;
   washbacksBalanceAsOfDate: Date;
   ccWashbacksStartingBalance: number;

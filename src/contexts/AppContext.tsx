@@ -7,8 +7,6 @@ interface Props {
 };
 
 interface AppContextStore {
-  loggedInUserName?: string;
-  organizationId?: string;
   seaTurtle?: SeaTurtleModel;
   holdingTank?: HoldingTankModel;
 };

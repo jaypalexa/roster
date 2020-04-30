@@ -32,12 +32,12 @@ const Organization: React.FC = () => {
 
   useMount(() => {
     // make async server request
-    const getOrganization = async () => {
-      const organization = await OrganizationService.getOrganization(appContext.organizationId);
+    const fetchOrganization = async () => {
+      const organization = await OrganizationService.getOrganization();
       reset(organization);
       setCurrentOrganization(organization);
     };
-    getOrganization();
+    fetchOrganization();
   });
 
   const onSubmit = handleSubmit((modifiedOrganization: OrganizationModel) => {
@@ -118,21 +118,21 @@ const Organization: React.FC = () => {
                   <div className='columns is-centered'>
                     <div className='column is-half'>
                       <h2 className='is-size-5 has-text-centered'>Hatchlings</h2>
-                      <DateFormField fieldName='hatchlingBalanceAsOfDate' labelText='Balance As Of' />
-                      <IntegerFormField fieldName='ccHatchlingStartingBalance' labelText='Loggerhead (Cc)' />
-                      <IntegerFormField fieldName='cmHatchlingStartingBalance' labelText='Green (Cm)' />
-                      <IntegerFormField fieldName='dcHatchlingStartingBalance' labelText='Leatherback (Dc)' />
-                      <IntegerFormField fieldName='otherHatchlingStartingBalance' labelText='Other' />
-                      <IntegerFormField fieldName='unknownHatchlingStartingBalance' labelText='Unknown' />
+                      <DateFormField fieldName='hatchlingsBalanceAsOfDate' labelText='Balance As Of' />
+                      <IntegerFormField fieldName='ccHatchlingsStartingBalance' labelText='Loggerhead (Cc)' />
+                      <IntegerFormField fieldName='cmHatchlingsStartingBalance' labelText='Green (Cm)' />
+                      <IntegerFormField fieldName='dcHatchlingsStartingBalance' labelText='Leatherback (Dc)' />
+                      <IntegerFormField fieldName='otherHatchlingsStartingBalance' labelText='Other' />
+                      <IntegerFormField fieldName='unknownHatchlingsStartingBalance' labelText='Unknown' />
                     </div>
                     <div className='column is-half'>
                       <h2 className='is-size-5 has-text-centered'>Washbacks</h2>
-                      <DateFormField fieldName='washbackBalanceAsOfDate' labelText='Balance As Of' />
-                      <IntegerFormField fieldName='ccWashbackStartingBalance' labelText='Loggerhead (Cc)' />
-                      <IntegerFormField fieldName='cmWashbackStartingBalance' labelText='Green (Cm)' />
-                      <IntegerFormField fieldName='dcWashbackStartingBalance' labelText='Leatherback (Dc)' />
-                      <IntegerFormField fieldName='otherWashbackStartingBalance' labelText='Other' />
-                      <IntegerFormField fieldName='unknownWashbackStartingBalance' labelText='Unknown' />
+                      <DateFormField fieldName='washbacksBalanceAsOfDate' labelText='Balance As Of' />
+                      <IntegerFormField fieldName='ccWashbacksStartingBalance' labelText='Loggerhead (Cc)' />
+                      <IntegerFormField fieldName='cmWashbacksStartingBalance' labelText='Green (Cm)' />
+                      <IntegerFormField fieldName='dcWashbacksStartingBalance' labelText='Leatherback (Dc)' />
+                      <IntegerFormField fieldName='otherWashbacksStartingBalance' labelText='Other' />
+                      <IntegerFormField fieldName='unknownWashbacksStartingBalance' labelText='Unknown' />
                     </div>
                   </div>
                 </section>

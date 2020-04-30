@@ -4,13 +4,13 @@ const HoldingTankService = {
   getHoldingTank(tankId?: string): HoldingTankModel {
     let holdingTank: HoldingTankModel | undefined;
     if (tankId) {
-      const holdingTanks = this.getHoldingTanks('');
+      const holdingTanks = this.getHoldingTanks();
       holdingTank = holdingTanks.find(x => x.tankId === tankId);
     }
     return holdingTank || {} as HoldingTankModel;
   },
   saveHoldingTank(holdingTank: HoldingTankModel) {
-    const holdingTanks = this.getHoldingTanks('');
+    const holdingTanks = this.getHoldingTanks();
     const index = holdingTanks.findIndex(x => x.tankId === holdingTank.tankId);
     if (~index) {
       holdingTanks[index] = {...holdingTank};
@@ -20,14 +20,14 @@ const HoldingTankService = {
     localStorage.setItem('holdingTanks', JSON.stringify(holdingTanks));
   },
   deleteHoldingTank(tankId: string) {
-    const holdingTanks = this.getHoldingTanks('');
+    const holdingTanks = this.getHoldingTanks();
     const index = holdingTanks.findIndex(x => x.tankId === tankId);
     if (~index) {
       holdingTanks.splice(index, 1);
     }
     localStorage.setItem('holdingTanks', JSON.stringify(holdingTanks));
   },
-  getHoldingTanks(organizationId: string): HoldingTankModel[] {
+  getHoldingTanks(): HoldingTankModel[] {
     return JSON.parse(localStorage.getItem('holdingTanks') || '[]');
   }
 };

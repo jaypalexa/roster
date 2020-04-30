@@ -11,10 +11,11 @@ import LoginModel from 'types/LoginModel';
 import './Login.sass';
 
 interface LoginProps {
+  setLoggedInUserName: React.Dispatch<React.SetStateAction<string>>;
   redirectPathOnAuthentication?: string;
 }
 
-const Login: React.FC<LoginProps> = ({redirectPathOnAuthentication}) => {
+const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthentication }) => {
 
   // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
@@ -22,7 +23,7 @@ const Login: React.FC<LoginProps> = ({redirectPathOnAuthentication}) => {
   const methods = useForm<LoginModel>({ mode: 'onChange' });
   const { formState, handleSubmit, reset } = methods;
   const firstEditControlRef = useRef<HTMLInputElement>()
-  const { authenticateUser } = useAuthentication();
+  const { authenticateUser, getTokenUserName } = useAuthentication();
 
   useMount(() => {
     window.scrollTo(0, 0)
@@ -56,8 +57,10 @@ const Login: React.FC<LoginProps> = ({redirectPathOnAuthentication}) => {
 
     const isSuccess = await authenticateUser(modifiedLogin);
     if (isSuccess) {
+      setLoggedInUserName(getTokenUserName());
       browserHistory.push(getPath());
     } else {
+      setLoggedInUserName('');
       toast.error('Invalid login');
     }
   });

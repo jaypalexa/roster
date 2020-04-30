@@ -1,15 +1,27 @@
-import TypeHelper from '../helpers/TypeHelper';
-import OrganizationModel from '../types/OrganizationModel';
+import TypeHelper from 'helpers/TypeHelper';
+import auth from 'hooks/UseAuthentication';
+import ApiService, { ApiRequestPayload } from 'services/ApiService';
+import OrganizationModel from 'types/OrganizationModel';
 
 const OrganizationService = {
-  getOrganization(organizationId?: string): OrganizationModel {
-    return JSON.parse(localStorage.getItem('organization') || '{}');
+  
+  async getOrganization(): Promise<OrganizationModel> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.httpMethod = 'GET';
+    apiRequestPayload.resource = '/organizations/{organizationId}';
+    apiRequestPayload.pathParameters = { organizationId: auth().getTokenOrganizationId };
+
+    const response = await ApiService.execute(apiRequestPayload);
+    console.log('getOrganization::response', response);
+    
+    return response as OrganizationModel;
   },
-  saveOrganization(organization: OrganizationModel) {
+
+  async saveOrganization(organization: OrganizationModel) {
     organization.ccHatchlingsStartingBalance = TypeHelper.toNumber(organization.ccHatchlingsStartingBalance);
     organization.cmHatchlingsStartingBalance = TypeHelper.toNumber(organization.cmHatchlingsStartingBalance);
-    organization.dcHatchlingStartingBalance = TypeHelper.toNumber(organization.dcHatchlingStartingBalance);
-    organization.otherHatchlingStartingBalance = TypeHelper.toNumber(organization.otherHatchlingStartingBalance);
+    organization.dcHatchlingsStartingBalance = TypeHelper.toNumber(organization.dcHatchlingsStartingBalance);
+    organization.otherHatchlingsStartingBalance = TypeHelper.toNumber(organization.otherHatchlingsStartingBalance);
     organization.unknownHatchlingsStartingBalance = TypeHelper.toNumber(organization.unknownHatchlingsStartingBalance);
     organization.ccWashbacksStartingBalance = TypeHelper.toNumber(organization.ccWashbacksStartingBalance);
     organization.cmWashbacksStartingBalance = TypeHelper.toNumber(organization.cmWashbacksStartingBalance);
@@ -17,8 +29,15 @@ const OrganizationService = {
     organization.otherWashbacksStartingBalance = TypeHelper.toNumber(organization.otherWashbacksStartingBalance);
     organization.unknownWashbacksStartingBalance = TypeHelper.toNumber(organization.unknownWashbacksStartingBalance);
 
-    localStorage.setItem('organization', JSON.stringify(organization));
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.httpMethod = 'PUT';
+    apiRequestPayload.resource = '/organizations/{organizationId}';
+    apiRequestPayload.pathParameters = { organizationId: auth().getTokenOrganizationId };
+    apiRequestPayload.body = JSON.stringify(organization);
+
+    const response = await ApiService.execute(apiRequestPayload);
+    console.log('saveOrganization::response', response);
   }
-};
+}
 
 export default OrganizationService;

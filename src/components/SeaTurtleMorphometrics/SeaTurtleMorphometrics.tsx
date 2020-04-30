@@ -1,3 +1,12 @@
+import browserHistory from 'browserHistory';
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import DateFormField from 'components/FormFields/DateFormField';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
+import ListFormField from 'components/FormFields/ListFormField';
+import TextFormField from 'components/FormFields/TextFormField';
+import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -5,22 +14,13 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
+import OrganizationService from 'services/OrganizationService';
+import SeaTurtleMorphometricService from 'services/SeaTurtleMorphometricService';
+import NameValuePair from 'types/NameValuePair';
+import OrganizationModel from 'types/OrganizationModel';
+import SeaTurtleMorphometricModel from 'types/SeaTurtleMorphometricModel';
 import { v4 as uuidv4 } from 'uuid';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import OrganizationService from '../../services/OrganizationService';
-import SeaTurtleMorphometricService from '../../services/SeaTurtleMorphometricService';
-import NameValuePair from '../../types/NameValuePair';
-import OrganizationModel from '../../types/OrganizationModel';
-import SeaTurtleMorphometricModel from '../../types/SeaTurtleMorphometricModel';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import ListFormField from '../FormFields/ListFormField';
-import TextFormField from '../FormFields/TextFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './SeaTurtleMorphometrics.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -163,11 +163,11 @@ const SeaTurtleMorphometrics: React.FC = () => {
 
   useMount(() => {
     // make async server request
-    const getOrganization = async () => {
-      const organization = await OrganizationService.getOrganization(appContext.organizationId);
+    const fetchOrganization = async () => {
+      const organization = await OrganizationService.getOrganization();
       setCurrentOrganization(organization);
     };
-    getOrganization();
+    fetchOrganization();
   });
 
   useEffect(() => {
@@ -209,7 +209,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       const defaultLengthUnits = () => currentOrganization.preferredUnitsType === 'I' ? 'in' : 'cm';
       const defaultWeightUnits = () => currentOrganization.preferredUnitsType === 'I' ? 'lb' : 'kg';
       const seaTurtleMorphometric = {} as SeaTurtleMorphometricModel;
-      seaTurtleMorphometric.turtleMorphometricId = uuidv4();
+      seaTurtleMorphometric.turtleMorphometricId = uuidv4().toLowerCase();
       seaTurtleMorphometric.turtleId = appContext.seaTurtle?.turtleId || '';
       seaTurtleMorphometric.sclNotchNotchUnits = defaultLengthUnits();
       seaTurtleMorphometric.sclNotchTipUnits = defaultLengthUnits();

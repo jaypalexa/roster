@@ -1,56 +1,55 @@
 import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession } from 'amazon-cognito-identity-js';
-import { useAppContext } from 'contexts/AppContext';
+import AWS from 'aws-sdk';
 import jwt_decode from 'jwt-decode';
 import LoginModel from 'types/LoginModel';
 
-const useAuthentication = () => {
+const POOL_DATA = {
+  UserPoolId: process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID || '',
+  ClientId: process.env.REACT_APP_AWS_COGNITO_CLIENT_ID || ''
+};
 
-  const [appContext, setAppContext] = useAppContext();
+const cognitoUserPool = new CognitoUserPool(POOL_DATA);
 
-  const POOL_DATA = {
-    UserPoolId: process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID || '',
-    ClientId: process.env.REACT_APP_AWS_COGNITO_CLIENT_ID || ''
+const getCognitoUser = (userName: string): CognitoUser => {
+  const cognitoUserData = { Username: userName, Pool: cognitoUserPool };
+  return new CognitoUser(cognitoUserData);
+}
+
+const doAuthenticateUser = (login: LoginModel) => {
+  const authenticationDetailsData = {
+    Username: login.userName,
+    Password: login.password
   };
-  
-  const cognitoUserPool = new CognitoUserPool(POOL_DATA);
+  const authenticationDetails = new AuthenticationDetails(authenticationDetailsData);
+  const cognitoUser = getCognitoUser(login.userName);
 
-  const doAuthenticateUser = (login: LoginModel) => {
-    const authenticationDetailsData = {
-      Username: login.userName,
-      Password: login.password
-    };
-    const authenticationDetails = new AuthenticationDetails(authenticationDetailsData);
-    const cognitoUser = getCognitoUser(login.userName);
-
-    return new Promise<CognitoUserSession | any>((resolve, reject) => {
-      cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: resolve,
-        onFailure: reject,
-        newPasswordRequired: resolve
-      });
+  return new Promise<CognitoUserSession | any>((resolve, reject) => {
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: resolve,
+      onFailure: reject,
+      newPasswordRequired: resolve
     });
-  }
+  });
+}
+
+const useAuthentication = () => {
 
   const authenticateUser = async (login: LoginModel): Promise<boolean> => {
     try {
       var result = await doAuthenticateUser(login);
       console.log('UseAuthentication::authenticateUser()::result', result);
-      setAppContext({ ...appContext, 
-        loggedInUserName: login.userName, 
-        organizationId: result.idToken.payload['custom:organizationId'] 
-      });
       return true;
     }
     catch(err) {
       console.log('ERROR in UseAuthentication::authenticateUser()', err);
-      setAppContext({});
+      clearCurrentCredentials();
       return false;
     }
   }
 
-  const getCognitoUser = (userName: string): CognitoUser => {
-    const cognitoUserData = { Username: userName, Pool: cognitoUserPool };
-    return new CognitoUser(cognitoUserData);
+  const clearCurrentCredentials = () => {
+    const currentCredentials = new AWS.CognitoIdentityCredentials({IdentityPoolId: process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || ''});
+    currentCredentials.clearCachedId();
   }
 
   const getJwtToken = (): string => {
@@ -99,11 +98,12 @@ const useAuthentication = () => {
   }
 
   const signOut = () => {
+    clearCurrentCredentials();
     const lastAuthUser = getLastAuthUser();
-    if (!lastAuthUser) return;
-  
-    const cognitoUser = getCognitoUser(lastAuthUser);
-    cognitoUser.signOut();
+    if (lastAuthUser) {
+      const cognitoUser = getCognitoUser(lastAuthUser);
+      cognitoUser.signOut();
+    }
   }
 
   return { authenticateUser, getJwtToken, getTokenOrganizationId, getTokenUserName, isUserAuthenticated, signOut };

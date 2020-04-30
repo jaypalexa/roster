@@ -108,7 +108,7 @@ const HatchlingsEvents: React.FC = () => {
   useMount(() => {
     // make async server request
     const getHatchlingsEvents = async () => {
-      const hatchlingsEvents = await HatchlingsEventService.getHatchlingsEvents(appContext.organizationId || '');
+      const hatchlingsEvents = await HatchlingsEventService.getHatchlingsEvents();
       setCurrentHatchlingsEvents(hatchlingsEvents);
       if (currentHatchlingsEvent.hatchlingsEventId) {
         reset(currentHatchlingsEvent);
@@ -156,7 +156,7 @@ const HatchlingsEvents: React.FC = () => {
   const onAddHatchlingsEventButtonClick = (eventType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const hatchlingsEvent = {} as HatchlingsEventModel;
-      hatchlingsEvent.hatchlingsEventId = uuidv4();
+      hatchlingsEvent.hatchlingsEventId = uuidv4().toLowerCase();
       hatchlingsEvent.eventType = eventType;
       reset(hatchlingsEvent);
       setCurrentHatchlingsEvent(hatchlingsEvent);

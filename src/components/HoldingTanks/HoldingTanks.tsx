@@ -74,7 +74,7 @@ const HoldingTanks: React.FC = () => {
   useMount(() => {
     // make async server request
     const getHoldingTanks = async () => {
-      const holdingTanks = await HoldingTankService.getHoldingTanks(appContext.organizationId || '');
+      const holdingTanks = await HoldingTankService.getHoldingTanks();
       setCurrentHoldingTanks(holdingTanks);
       if (appContext.holdingTank?.tankId) {
         reset(appContext.holdingTank);
@@ -126,7 +126,7 @@ const HoldingTanks: React.FC = () => {
   const onAddButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const holdingTank = {} as HoldingTankModel;
-      holdingTank.tankId = uuidv4();
+      holdingTank.tankId = uuidv4().toLowerCase();
       reset(holdingTank);
       setCurrentHoldingTank(holdingTank);
       setIsFormEnabled(true);

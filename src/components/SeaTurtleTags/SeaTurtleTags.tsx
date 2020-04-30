@@ -151,7 +151,7 @@ const SeaTurtleTags: React.FC = () => {
   const onAddSeaTurtleTagButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const seaTurtleTag = {} as SeaTurtleTagModel;
-      seaTurtleTag.turtleTagId = uuidv4();
+      seaTurtleTag.turtleTagId = uuidv4().toLowerCase();
       seaTurtleTag.turtleId = appContext.seaTurtle?.turtleId || '';
       reset(seaTurtleTag);
       setCurrentSeaTurtleTag(seaTurtleTag);

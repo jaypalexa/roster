@@ -33,8 +33,9 @@ const App: React.FC = () => {
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
   const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [triggerRefresh, setTriggerRefresh] = useState(false);
+  const [loggedInUserName, setLoggedInUserName] = useState('');
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
-  const { getTokenOrganizationId, getTokenUserName, isUserAuthenticated, signOut } = useAuthentication();
+  const { getTokenUserName, signOut } = useAuthentication();
 
   const onReloadPageClick = () => {
     console.log('onReloadPageClick::newServiceWorker = ', newServiceWorker);
@@ -99,6 +100,7 @@ const App: React.FC = () => {
   };
 
   const logOut = () => {
+    setLoggedInUserName('');
     signOut();
     closeMenu();
     setTriggerRefresh(!triggerRefresh);
@@ -133,14 +135,7 @@ const App: React.FC = () => {
   });
 
   useMount(() => {
-    if (isUserAuthenticated()) {
-      setAppContext({ ...appContext, 
-        loggedInUserName: getTokenUserName(), 
-        organizationId: getTokenOrganizationId() 
-      });
-    } else {
-      setAppContext({});
-    }
+    setLoggedInUserName(getTokenUserName());
   });
 
   useEffect(() => {
@@ -175,29 +170,29 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
             <div className='navbar-end'>
-              <Link className={`navbar-item ${appContext.loggedInUserName ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
-              <span className={`navbar-item ${appContext.loggedInUserName ? '' : 'hidden'} is-hidden-mobile`} >{appContext.loggedInUserName}</span>
-              <span className={`navbar-item ${appContext.loggedInUserName ? '' : 'hidden'} is-hidden-mobile`} >|</span>
-              <Link className={`navbar-item ${appContext.loggedInUserName ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
+              <Link className={`navbar-item ${loggedInUserName ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
+              <span className={`navbar-item ${loggedInUserName ? '' : 'hidden'} is-hidden-mobile`} >{loggedInUserName}</span>
+              <span className={`navbar-item ${loggedInUserName ? '' : 'hidden'} is-hidden-mobile`} >|</span>
+              <Link className={`navbar-item ${loggedInUserName ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
             </div>
           </div>
         </nav>
 
         <div className='content-container'>
           <Switch>
-            <ProtectedRoute exact={true} path='/' component={Home} />
-            <ProtectedRoute path='/sea-turtles' component={SeaTurtles} />
-            <ProtectedRoute path='/sea-turtle-tags' component={SeaTurtleTags} />
-            <ProtectedRoute path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
-            <ProtectedRoute path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
-            <ProtectedRoute path='/holding-tanks' component={HoldingTanks} />
-            <ProtectedRoute path='/holding-tank-measurements' component={HoldingTankMeasurements} />
-            <ProtectedRoute path='/holding-tank-graphs' component={HoldingTankGraphs} />
-            <ProtectedRoute path='/hatchlings-events' component={HatchlingEvents} />
-            <ProtectedRoute path='/washbacks-events' component={WashbackEvents} />
-            <ProtectedRoute path='/reports' component={Reports} />
-            <ProtectedRoute path='/organization' component={Organization} />
-            <Route path='/login' component={Login} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact={true} path='/' component={Home} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/sea-turtles' component={SeaTurtles} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/sea-turtle-tags' component={SeaTurtleTags} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/holding-tanks' component={HoldingTanks} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/holding-tank-measurements' component={HoldingTankMeasurements} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/holding-tank-graphs' component={HoldingTankGraphs} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/hatchlings-events' component={HatchlingEvents} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/washbacks-events' component={WashbackEvents} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/reports' component={Reports} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/organization' component={Organization} />
+            <Route path='/login' render={ (routeProps) => <Login {...{setLoggedInUserName, ...routeProps}} /> } />
             <Route component={NotFound} />
           </Switch>
           <div className='bottom-panel has-text-centered'>
@@ -206,7 +201,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200429.1700
+            &nbsp;|&nbsp;v0.20200430.1600
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

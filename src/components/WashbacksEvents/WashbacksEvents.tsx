@@ -116,7 +116,7 @@ const WashbacksEvents: React.FC = () => {
   useMount(() => {
     // make async server request
     const getWashbacksEvents = async () => {
-      const washbacksEvents = await WashbacksEventService.getWashbacksEvents(appContext.organizationId || '');
+      const washbacksEvents = await WashbacksEventService.getWashbacksEvents();
       setCurrentWashbacksEvents(washbacksEvents);
       // if (currentWashbacksEvent.washbacksEventId) {
       //   reset(currentWashbacksEvent);
@@ -164,7 +164,7 @@ const WashbacksEvents: React.FC = () => {
   const onAddWashbacksEventButtonClick = (eventType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const washbacksEvent = {} as WashbacksEventModel;
-      washbacksEvent.washbacksEventId = uuidv4();
+      washbacksEvent.washbacksEventId = uuidv4().toLowerCase();
       washbacksEvent.eventType = eventType;
       reset(washbacksEvent);
       setCurrentWashbacksEvent(washbacksEvent);

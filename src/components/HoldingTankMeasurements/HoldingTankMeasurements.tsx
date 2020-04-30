@@ -139,7 +139,7 @@ const HoldingTankMeasurements: React.FC = () => {
   const onAddHoldingTankMeasurementButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const holdingTankMeasurement = {} as HoldingTankMeasurementModel;
-      holdingTankMeasurement.tankMeasurementId = uuidv4();
+      holdingTankMeasurement.tankMeasurementId = uuidv4().toLowerCase();
       holdingTankMeasurement.tankId = appContext.holdingTank?.tankId || '';
       reset(holdingTankMeasurement);
       setCurrentHoldingTankMeasurement(holdingTankMeasurement);

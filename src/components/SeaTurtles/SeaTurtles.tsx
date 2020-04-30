@@ -145,7 +145,7 @@ const SeaTurtles: React.FC = () => {
   useMount(() => {
     // make async server request
     const getSeaTurtles = async () => {
-      const seaTurtles = await SeaTurtleService.getSeaTurtles(appContext.organizationId || '');
+      const seaTurtles = await SeaTurtleService.getSeaTurtles();
       setCurrentSeaTurtles(seaTurtles);
       if (appContext.seaTurtle?.turtleId) {
         reset(appContext.seaTurtle);
@@ -197,7 +197,7 @@ const SeaTurtles: React.FC = () => {
   const onAddSeaTurtleButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const seaTurtle = {} as SeaTurtleModel;
-      seaTurtle.turtleId = uuidv4();
+      seaTurtle.turtleId = uuidv4().toLowerCase();
       reset(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
       setIsFormEnabled(true);

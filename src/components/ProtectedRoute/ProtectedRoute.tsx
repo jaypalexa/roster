@@ -3,12 +3,16 @@ import useAuthentication from 'hooks/UseAuthentication';
 import React from 'react';
 import { Route, RouteProps, useLocation } from 'react-router';
 
-export const ProtectedRoute: React.FC<RouteProps> = (props) => {
+interface ProtectedRouteProps extends RouteProps {
+  setLoggedInUserName: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
   const { isUserAuthenticated } = useAuthentication();
   const currentLocation = useLocation();
 
   if (!isUserAuthenticated()) {
-    const renderComponent = () => <Login redirectPathOnAuthentication={currentLocation.pathname} />;
+    const renderComponent = () => <Login setLoggedInUserName={props.setLoggedInUserName} redirectPathOnAuthentication={currentLocation.pathname} />;
     return <Route {...props} component={renderComponent} render={undefined} />;
   } else {
     return <Route {...props} />;

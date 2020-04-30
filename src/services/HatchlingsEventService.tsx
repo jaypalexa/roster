@@ -5,7 +5,7 @@ const HatchlingsEventService = {
   getHatchlingsEvent(hatchlingsEventId?: string): HatchlingsEventModel {
     let hatchlingsEvent: HatchlingsEventModel | undefined;
     if (hatchlingsEventId) {
-      const hatchlingsEvents = this.getHatchlingsEvents('');
+      const hatchlingsEvents = this.getHatchlingsEvents();
       hatchlingsEvent = hatchlingsEvents.find(x => x.hatchlingsEventId === hatchlingsEventId);
     }
     return hatchlingsEvent || {} as HatchlingsEventModel;
@@ -19,7 +19,7 @@ const HatchlingsEventService = {
     } else {
       hatchlingsEvent.eventCount = TypeHelper.toNumber(hatchlingsEvent.eventCount);
     }
-    const hatchlingsEvents = this.getHatchlingsEvents('');
+    const hatchlingsEvents = this.getHatchlingsEvents();
     const index = hatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEvent.hatchlingsEventId);
     if (~index) {
       hatchlingsEvents[index] = {...hatchlingsEvent};
@@ -29,14 +29,14 @@ const HatchlingsEventService = {
     localStorage.setItem('hatchlingsEvents', JSON.stringify(hatchlingsEvents));
   },
   deleteHatchlingsEvent(hatchlingsEventId: string) {
-    const hatchlingsEvents = this.getHatchlingsEvents('');
+    const hatchlingsEvents = this.getHatchlingsEvents();
     const index = hatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEventId);
     if (~index) {
       hatchlingsEvents.splice(index, 1);
     }
     localStorage.setItem('hatchlingsEvents', JSON.stringify(hatchlingsEvents));
   },
-  getHatchlingsEvents(organizationId: string): HatchlingsEventModel[] {
+  getHatchlingsEvents(): HatchlingsEventModel[] {
     return JSON.parse(localStorage.getItem('hatchlingsEvents') || '[]');
   }
 };
