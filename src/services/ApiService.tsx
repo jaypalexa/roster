@@ -38,7 +38,7 @@ const initialize = () =>{
   AWS.config.credentials = updatedCredentials;
   AWS.config.region = region;
   
-  console.log('AWS.config', AWS.config);
+  // console.log('AWS.config', AWS.config);
 }
 
 // TODO: CACHING ???
@@ -73,10 +73,11 @@ export const ApiService = {
       Payload: JSON.stringify(apiRequestPayload),
     };
 
-    console.log('params', params);
-    //new AWS.Lambda().invoke(params);
-    const result = await (new AWS.Lambda().invoke(params).promise());
-    console.log('result', result);
+    // console.log('params', params);
+    // const result = await (new AWS.Lambda().invoke(params).promise());
+    // console.log('result', result);
+
+    new AWS.Lambda().invoke(params)
   },
 
   async execute(apiRequestPayload: ApiRequestPayload): Promise<any> {
@@ -98,15 +99,15 @@ export const ApiService = {
         Payload: JSON.stringify(apiRequestPayload),
       };
 
-      console.log('params', params);
+      // console.log('params', params);
       const result = await (new AWS.Lambda().invoke(params).promise());
-      console.log('result', result);
-      console.log('result.StatusCode', result.StatusCode);
-      console.log('result.Payload', result.Payload);
+      // console.log('result', result);
+      // console.log('result.StatusCode', result.StatusCode);
+      // console.log('result.Payload', result.Payload);
       const payload = JSON.parse(result.Payload?.toString() || '') as ApiResponsePayload;
-      console.log('payload', payload);
-      console.log('payload.body', payload.body);
-      console.log('payload.body.data', payload.body?.data);
+      // console.log('payload', payload);
+      // console.log('payload.body', payload.body);
+      // console.log('payload.body.data', payload.body?.data);
 
       let response = {};
       if (apiRequestPayload.httpMethod === 'GET') {

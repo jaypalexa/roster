@@ -36,8 +36,9 @@ export const AuthenticationService = {
 
   async authenticateUser(login: LoginModel): Promise<boolean> {
     try {
-      var result = await doAuthenticateUser(login);
-      console.log('UseAuthentication::authenticateUser()::result', result);
+      await doAuthenticateUser(login);
+      // var result = await doAuthenticateUser(login);
+      // console.log('UseAuthentication::authenticateUser()::result', result);
       return true;
     }
     catch(err) {
@@ -85,7 +86,7 @@ export const AuthenticationService = {
     const decodedToken: any = jwt_decode(token);
     if (!decodedToken) return false;
 
-    console.log('decodedToken', decodedToken);
+    // console.log('decodedToken', decodedToken);
 
     const userName = decodedToken['cognito:username'];
 

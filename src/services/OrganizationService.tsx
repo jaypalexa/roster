@@ -14,7 +14,7 @@ const OrganizationService = {
     apiRequestPayload.pathParameters = { organizationId: organizationId };
 
     const response = await ApiService.execute(apiRequestPayload);
-    console.log('getOrganization::response', response);
+    // console.log('getOrganization::response', response);
     
     const organization = response as OrganizationModel
     // TODO: CACHING ???
@@ -44,8 +44,10 @@ const OrganizationService = {
     // TODO: CACHING ???
     // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
 
-    const response = await ApiService.execute(apiRequestPayload);
-    console.log('saveOrganization::response', response);
+    await ApiService.execute(apiRequestPayload);
+
+    // const response = await ApiService.execute(apiRequestPayload);
+    // console.log('saveOrganization::response', response);
   }
 }
 
