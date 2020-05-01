@@ -22,7 +22,7 @@ const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) 
   });
 
   const mapIcon = new Icon({
-    iconUrl: "/favicon-32x32.png",
+    iconUrl: '/favicon-32x32.png',
     iconSize: [32, 32]
   });
 

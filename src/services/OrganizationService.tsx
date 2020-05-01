@@ -6,15 +6,21 @@ import OrganizationModel from 'types/OrganizationModel';
 const OrganizationService = {
   
   async getOrganization(): Promise<OrganizationModel> {
+    const organizationId = auth().getTokenOrganizationId;
+
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.httpMethod = 'GET';
     apiRequestPayload.resource = '/organizations/{organizationId}';
-    apiRequestPayload.pathParameters = { organizationId: auth().getTokenOrganizationId };
+    apiRequestPayload.pathParameters = { organizationId: organizationId };
 
     const response = await ApiService.execute(apiRequestPayload);
     console.log('getOrganization::response', response);
     
-    return response as OrganizationModel;
+    const organization = response as OrganizationModel
+    // TODO: CACHING ???
+    // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
+    
+    return organization;
   },
 
   async saveOrganization(organization: OrganizationModel) {
@@ -34,6 +40,9 @@ const OrganizationService = {
     apiRequestPayload.resource = '/organizations/{organizationId}';
     apiRequestPayload.pathParameters = { organizationId: auth().getTokenOrganizationId };
     apiRequestPayload.body = JSON.stringify(organization);
+
+    // TODO: CACHING ???
+    // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
 
     const response = await ApiService.execute(apiRequestPayload);
     console.log('saveOrganization::response', response);

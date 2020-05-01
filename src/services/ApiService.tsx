@@ -43,7 +43,43 @@ const initialize = () =>{
   console.log('AWS.config', AWS.config);
 }
 
+// TODO: CACHING ???
+// interface CACHE_MODEL {
+//   [key: string]: any;
+// }
+
 export const ApiService = {
+
+  // TODO: CACHING ???
+  // CACHE: {} as CACHE_MODEL,
+  // getCacheValue(key: string) {
+  //   return this.CACHE[key];
+  // },
+  // setCacheValue(key: string, value: any) {
+  //   return this.CACHE[key] = value;
+  // },
+  
+  async wakeup() {
+    AWS.config.region = process.env.REACT_APP_AWS_REGION || '';
+
+    const accessKeyId = process.env.REACT_APP_AWS_USER_ACCESS_KEY_ID_FOR_ROSTER_WAKEUP_USER || '';
+    const secretAccessKey = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY_FOR_ROSTER_WAKEUP_USER || '';
+    AWS.config.credentials = new AWS.Credentials(accessKeyId, secretAccessKey);
+
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = '/wakeup';
+
+    const params: AWS.Lambda.InvocationRequest = {
+      FunctionName: 'roster-db-access-lambda', 
+      InvocationType: 'RequestResponse',
+      Payload: JSON.stringify(apiRequestPayload),
+    };
+
+    console.log('params', params);
+    //new AWS.Lambda().invoke(params);
+    const result = await (new AWS.Lambda().invoke(params).promise());
+    console.log('result', result);
+  },
 
   async execute(apiRequestPayload: ApiRequestPayload): Promise<any> {
 

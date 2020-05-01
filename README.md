@@ -14,20 +14,21 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 
 | Item | Notes |
 |------|-------|
-| &#9744; Prevent tabbing outside of modal | ??? switch to [react-modal](https://www.npmjs.com/package/react-modal) |
-| &#9744; Make app a basic PWA | How to force update? |
+| &#10065; Add a loading spinner | ??? |
+| &#10065; Prevent tabbing outside of modal | ??? switch to [react-modal](https://www.npmjs.com/package/react-modal) |
+| &#10065; Make app a basic PWA | How to force update? |
 | &#9745; User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
-| &#9744; Session/Token Timeout | ??? auto-refresh |
-| &#9744; Multi-tenancy | ??? |
-| &#9744; Database | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
-| &#9744; Versioning / Database migrations | ??? |
-| &#9744; Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
+| &#10065; Session/Token Timeout | ??? auto-refresh |
+| &#10065; Multi-tenancy | ??? |
+| &#10065; Database | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
+| &#10065; Versioning / Database migrations | ??? |
+| &#10065; Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 | &#9745; Graphs for Sea Turtle > Morphometrics (temperature, salinity, pH) | ??? holding-tank-temperature-graph, etc. |
 | &#9745; Mapping | &bull; [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/) ([article](https://blog.logrocket.com/how-to-use-react-leaflet/))<br /> ~~&bull; [Mapbox](https://www.mapbox.com/)~~ |
-| &#9744; Offline Mode | ??? send updates if any made whilst offline...how to auth? |
-| &#9744; Preventing Denial-of-Service attacks /excessive usage | ??? throttling |
-| &#9744; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
-| &#9744; Filtering of tables | ??? |
+| &#10065; Offline Mode | ??? send updates if any made whilst offline...how to auth? |
+| &#10065; Preventing Denial-of-Service attacks /excessive usage | ??? throttling |
+| &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
+| &#10065; Filtering of tables | ??? |
 | &#9745; Data Table | https://www.npmjs.com/package/react-data-table-component |
 | &#9745; Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add button | ~~Make Yes/No into Yes/No/Cancel~~ |
 

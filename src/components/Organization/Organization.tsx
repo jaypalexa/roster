@@ -5,7 +5,7 @@ import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
 import TextFormField from 'components/FormFields/TextFormField';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
-import { useAppContext } from 'contexts/AppContext';
+import Spinner from 'components/Spinner/Spinner';
 import TabHelper from 'helpers/TabHelper';
 import useMount from 'hooks/UseMount';
 import React, { useState } from 'react';
@@ -20,22 +20,28 @@ import './Organization.sass';
 
 const Organization: React.FC = () => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
   const methods = useForm<OrganizationModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
+  const [showSpinner, setShowSpinner] = useState(true);
 
   useMount(() => {
     window.scrollTo(0, 0)
   });
 
   useMount(() => {
+    // TODO: CACHING ???
+    // const organizationId = auth().getTokenOrganizationId;
+    // const organization = ApiService.getCacheValue(`ORGANIZATION#${organizationId}`);
+    // reset(organization);
+    // setCurrentOrganization(organization);
+
     // make async server request
     const fetchOrganization = async () => {
       const organization = await OrganizationService.getOrganization();
       reset(organization);
       setCurrentOrganization(organization);
+      setShowSpinner(false)
     };
     fetchOrganization();
   });
@@ -56,6 +62,7 @@ const Organization: React.FC = () => {
 
   return (
     <div id='organization'>
+      <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
