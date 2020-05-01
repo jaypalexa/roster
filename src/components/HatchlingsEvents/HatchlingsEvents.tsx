@@ -6,7 +6,6 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
-import { useAppContext } from '../../contexts/AppContext';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import HatchlingsEventService from '../../services/HatchlingsEventService';
 import HatchlingsEventModel from '../../types/HatchlingsEventModel';
@@ -24,8 +23,6 @@ import './HatchlingsEvents.sass';
 
 const HatchlingsEvents: React.FC = () => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
   const methods = useForm<HatchlingsEventModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentHatchlingsEvent, setCurrentHatchlingsEvent] = useState({} as HatchlingsEventModel);

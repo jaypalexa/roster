@@ -1,12 +1,11 @@
 import browserHistory from 'browserHistory';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextFormField from 'components/FormFields/TextFormField';
-import { useAppContext } from 'contexts/AppContext';
-import useAuthentication from 'hooks/UseAuthentication';
 import useMount from 'hooks/UseMount';
 import React, { useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import AuthenticationService from 'services/AuthenticationService';
 import LoginModel from 'types/LoginModel';
 import './Login.sass';
 
@@ -17,13 +16,10 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthentication }) => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
   const methods = useForm<LoginModel>({ mode: 'onChange' });
   const { formState, handleSubmit, reset } = methods;
   const firstEditControlRef = useRef<HTMLInputElement>()
-  const { authenticateUser, getTokenUserName } = useAuthentication();
 
   useMount(() => {
     window.scrollTo(0, 0)
@@ -55,9 +51,9 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
 
     localStorage.setItem('lastUserName', modifiedLogin.userName);
 
-    const isSuccess = await authenticateUser(modifiedLogin);
+    const isSuccess = await AuthenticationService.authenticateUser(modifiedLogin);
     if (isSuccess) {
-      setLoggedInUserName(getTokenUserName());
+      setLoggedInUserName(AuthenticationService.getTokenUserName());
       browserHistory.push(getPath());
     } else {
       setLoggedInUserName('');

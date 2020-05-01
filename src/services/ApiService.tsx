@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk';
-import useAuthentication from 'hooks/UseAuthentication';
+import AuthenticationService from 'services/AuthenticationService';
 
 export interface ApiRequestPayload {
   resource: string;             // ??? /root/child
@@ -20,8 +20,6 @@ export interface ApiResponsePayloadBody {
   data: any;
 };
 
-const { getJwtToken } = useAuthentication();
-
 const initialize = () =>{
   const identityPoolId = process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '';
   const userPoolId = process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID || '';
@@ -33,7 +31,7 @@ const initialize = () =>{
   const updatedCredentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: identityPoolId,
     Logins: {
-      [`cognito-idp.${region}.amazonaws.com/${userPoolId}`]: getJwtToken()
+      [`cognito-idp.${region}.amazonaws.com/${userPoolId}`]: AuthenticationService.getJwtToken()
     }
   });
   
@@ -86,7 +84,7 @@ export const ApiService = {
     initialize();
 
     const headers = {
-      'jwt': getJwtToken(), // AWS Lambda will parse jwt to get 'custom:organizationId' attribute
+      'jwt': AuthenticationService.getJwtToken(), // AWS Lambda will parse jwt to get 'custom:organizationId' attribute
       'Content-Type': 'application/json', 
       'Accept': 'application/json' 
     }

@@ -14,8 +14,6 @@ import SeaTurtleMorphometricsGraphs from 'components/SeaTurtleMorphometricsGraph
 import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
 import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
 import WashbackEvents from 'components/WashbacksEvents/WashbacksEvents';
-import { useAppContext } from 'contexts/AppContext';
-import useAuthentication from 'hooks/UseAuthentication';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -23,20 +21,18 @@ import { Link, Route, Router, Switch } from 'react-router-dom';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ApiService from 'services/ApiService';
+import AuthenticationService from 'services/AuthenticationService';
 import * as serviceWorker from 'serviceWorker';
 import './App.sass';
 
 const App: React.FC = () => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
   const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [triggerRefresh, setTriggerRefresh] = useState(false);
   const [loggedInUserName, setLoggedInUserName] = useState('');
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
-  const { getTokenUserName, signOut } = useAuthentication();
 
   const onReloadPageClick = () => {
     console.log('onReloadPageClick::newServiceWorker = ', newServiceWorker);
@@ -102,7 +98,7 @@ const App: React.FC = () => {
 
   const logOut = () => {
     setLoggedInUserName('');
-    signOut();
+    AuthenticationService.signOut();
     closeMenu();
     setTriggerRefresh(!triggerRefresh);
   }
@@ -136,7 +132,7 @@ const App: React.FC = () => {
   });
 
   useMount(() => {
-    setLoggedInUserName(getTokenUserName());
+    setLoggedInUserName(AuthenticationService.getTokenUserName());
   });
 
   useMount(() => {
@@ -206,7 +202,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200501.1600
+            &nbsp;|&nbsp;v0.20200501.1620
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

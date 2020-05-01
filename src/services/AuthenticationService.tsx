@@ -32,9 +32,9 @@ const doAuthenticateUser = (login: LoginModel) => {
   });
 }
 
-const useAuthentication = () => {
+export const AuthenticationService = {
 
-  const authenticateUser = async (login: LoginModel): Promise<boolean> => {
+  async authenticateUser(login: LoginModel): Promise<boolean> {
     try {
       var result = await doAuthenticateUser(login);
       console.log('UseAuthentication::authenticateUser()::result', result);
@@ -42,45 +42,45 @@ const useAuthentication = () => {
     }
     catch(err) {
       console.log('ERROR in UseAuthentication::authenticateUser()', err);
-      clearCurrentCredentials();
+      this.clearCurrentCredentials();
       return false;
     }
-  }
+  },
 
-  const clearCurrentCredentials = () => {
+  clearCurrentCredentials() {
     const currentCredentials = new AWS.CognitoIdentityCredentials({IdentityPoolId: process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || ''});
     currentCredentials.clearCachedId();
-  }
+  },
 
-  const getJwtToken = (): string => {
-    const lastAuthUser = getLastAuthUser();
+  getJwtToken(): string {
+    const lastAuthUser = this.getLastAuthUser();
     return localStorage.getItem(`CognitoIdentityServiceProvider.${process.env.REACT_APP_AWS_COGNITO_CLIENT_ID}.${lastAuthUser}.idToken`) || '';
-  }
+  },
 
-  const getLastAuthUser = (): string => {
+  getLastAuthUser(): string {
     return localStorage.getItem(`CognitoIdentityServiceProvider.${process.env.REACT_APP_AWS_COGNITO_CLIENT_ID}.LastAuthUser`) || '';
-  }
+  },
 
-  const getTokenOrganizationId = (): string => {
-    const token = getJwtToken();
+  getTokenOrganizationId(): string {
+    const token = this.getJwtToken();
     if (!token) return '';
     const decodedToken: any = jwt_decode(token);
     if (!decodedToken) return '';
 
     return decodedToken['custom:organizationId'];
-  }
+  },
 
-  const getTokenUserName = (): string => {
-    const token = getJwtToken();
+  getTokenUserName(): string {
+    const token = this.getJwtToken();
     if (!token) return '';
     const decodedToken: any = jwt_decode(token);
     if (!decodedToken) return '';
     
     return decodedToken['cognito:username'];
-  }
+  },
 
-  const isUserAuthenticated = (): boolean => {
-    const token = getJwtToken();
+  isUserAuthenticated(): boolean {
+    const token = this.getJwtToken();
     if (!token) return false;
     const decodedToken: any = jwt_decode(token);
     if (!decodedToken) return false;
@@ -89,24 +89,22 @@ const useAuthentication = () => {
 
     const userName = decodedToken['cognito:username'];
 
-    if ((decodedToken.exp >= Date.now() / 1000) && (userName === getLastAuthUser())) {
+    if ((decodedToken.exp >= Date.now() / 1000) && (userName === this.getLastAuthUser())) {
       return true;
     } else {
-      signOut();
+      this.signOut();
       return false;
     }
-  }
+  },
 
-  const signOut = () => {
-    clearCurrentCredentials();
-    const lastAuthUser = getLastAuthUser();
+  signOut() {
+    this.clearCurrentCredentials();
+    const lastAuthUser = this.getLastAuthUser();
     if (lastAuthUser) {
       const cognitoUser = getCognitoUser(lastAuthUser);
       cognitoUser.signOut();
     }
   }
-
-  return { authenticateUser, getJwtToken, getTokenOrganizationId, getTokenUserName, isUserAuthenticated, signOut };
 }
 
-export default useAuthentication;
+export default AuthenticationService;

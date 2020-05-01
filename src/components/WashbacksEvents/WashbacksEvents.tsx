@@ -6,7 +6,6 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
-import { useAppContext } from '../../contexts/AppContext';
 import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
 import WashbacksEventService from '../../services/WashbacksEventService';
 import NameValuePair from '../../types/NameValuePair';
@@ -26,8 +25,6 @@ import './WashbacksEvents.sass';
 
 const WashbacksEvents: React.FC = () => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
   const methods = useForm<WashbacksEventModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentWashbacksEvent, setCurrentWashbacksEvent] = useState({} as WashbacksEventModel);

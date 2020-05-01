@@ -1,12 +1,12 @@
 import TypeHelper from 'helpers/TypeHelper';
-import auth from 'hooks/UseAuthentication';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
+import AuthenticationService from 'services/AuthenticationService';
 import OrganizationModel from 'types/OrganizationModel';
 
 const OrganizationService = {
   
   async getOrganization(): Promise<OrganizationModel> {
-    const organizationId = auth().getTokenOrganizationId;
+    const organizationId = AuthenticationService.getTokenOrganizationId();
 
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.httpMethod = 'GET';
@@ -38,7 +38,7 @@ const OrganizationService = {
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.httpMethod = 'PUT';
     apiRequestPayload.resource = '/organizations/{organizationId}';
-    apiRequestPayload.pathParameters = { organizationId: auth().getTokenOrganizationId };
+    apiRequestPayload.pathParameters = { organizationId: AuthenticationService.getTokenOrganizationId };
     apiRequestPayload.body = JSON.stringify(organization);
 
     // TODO: CACHING ???
