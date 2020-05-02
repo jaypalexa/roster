@@ -24,9 +24,11 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
         className={`input ${validationOptions ? (errors[fieldName] && formState.dirty ? 'is-danger' : '') : ''}`}
         type={type}
         ref={(e) => {
-          register(e, validationOptions || {});
-          if (refObject) {
-            refObject.current = e;
+          if (e) {
+            register(e, validationOptions || {});
+            if (refObject) {
+              refObject.current = e;
+            }
           }
         }}
         maxLength={maxLength || 255}
