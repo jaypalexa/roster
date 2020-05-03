@@ -132,6 +132,7 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 
 ### Amazon Cognito
 
+* [Amazon Cognito Identity SDK for JavaScript](https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js)
 * [Using Tokens with User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html)
 * [Identity Management with AWS Cognito in React](https://levelup.gitconnected.com/identity-management-with-aws-cognito-in-react-dc166bd799dc)
 * [Authentication for React apps using AWS Amplify and Cognito](https://blog.logrocket.com/authentication-react-apps-aws-amplify-cognito/)

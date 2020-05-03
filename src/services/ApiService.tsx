@@ -99,18 +99,22 @@ export const ApiService = {
         Payload: JSON.stringify(apiRequestPayload),
       };
 
-      // console.log('params', params);
+      console.log('params', params);
       const result = await (new AWS.Lambda().invoke(params).promise());
-      // console.log('result', result);
+      console.log('result', result);
       // console.log('result.StatusCode', result.StatusCode);
       // console.log('result.Payload', result.Payload);
       const payload = JSON.parse(result.Payload?.toString() || '') as ApiResponsePayload;
       // console.log('payload', payload);
       // console.log('payload.body', payload.body);
-      // console.log('payload.body.data', payload.body?.data);
+      const data = payload.body?.data;
+      // console.log('data', data);
 
       let response = {};
-      if (apiRequestPayload.httpMethod === 'GET') {
+      if (apiRequestPayload.resource.startsWith('/fetch-pdf-form')) {
+        response = data;
+      }
+      else if (apiRequestPayload.httpMethod === 'GET') {
         response = JSON.parse(payload.body?.data);
       }
       return response;

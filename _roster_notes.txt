@@ -44,4 +44,13 @@ import testPdf from '../../assets/pdfs/test.pdf';
   
 --------------------------------------------------------------------------
 
-  
+     // 5. Return PDf as base64 string
+    const response = {
+      headers: {
+        'Content-type': 'application/pdf',
+        'content-disposition': 'attachment; filename=test.pdf'
+      },
+      statusCode: 200,
+      body: pdf.toString('base64'),
+      isBase64Encoded: true
+    }
