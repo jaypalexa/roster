@@ -1,0 +1,107 @@
+// https://github.com/phihag/pdfform.js
+
+// index.html
+
+  <script src="%PUBLIC_URL%/pdfform.pdf_js.dist.js"></script>
+  <script>
+    window.pdfform = pdfform;
+  </script> 
+
+// globals.d.ts
+
+export { };
+declare global {
+  interface Window {
+    /** documentation on foo */
+    pdfform: any;
+  }
+}
+
+// Reports.tsx
+
+import browserHistory from 'browserHistory';
+import React, { useState } from 'react';
+/* eslint-disable-next-line */
+// import cat = require("./pdfform.pdf_js.dist");
+//import cat from './pdfform.pdf_js.dist';
+// import { pdfform } from './pdfform';
+import './Reports.sass';
+
+const Reports: React.FC = () => {
+
+  const [pdfBlob, setPdfBlob] = useState<Blob>();
+  const [pdfUrl, setPdfUrl] = useState('');
+
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = '/pdfform.pdf_js.dist';
+  //   script.async = true;
+  //   document.body.appendChild(script);
+  // });
+
+  const fetchPdfForm = async () => {
+
+    var req = new XMLHttpRequest();    
+    req.open('get', '/pdf/test.pdf' , true);
+    req.responseType = 'blob';
+    req.onload = () => {
+        var blob = req.response;
+        var reader = new FileReader();
+        reader.onload = (ev) => {
+          const buffer = ev.target?.result;
+          console.log('buffer', buffer);
+
+          const field_specs = window.pdfform().list_fields(buffer);
+          console.log('field_specs', field_specs);
+
+          var fields = {
+            'txtTurtlePermitNumber': ['JPA PERMIT NUMBER'],
+          };
+          var out_buf = window.pdfform().transform(buffer, fields);
+          console.log('out_buf', out_buf);
+
+          const blob = new Blob([out_buf], { type: 'application/pdf' });
+          console.log('fetchPdfForm blob = ', blob);
+          setPdfBlob(blob);
+
+          const url = URL.createObjectURL(blob);
+          console.log('fetchPdfForm url = ', url);
+          setPdfUrl(url);
+
+          // window.open(url);
+        };
+        reader.readAsArrayBuffer(blob);
+
+    };
+    req.send();
+  };
+
+  return (
+    <div id='reports'>
+      <div className='columns'>
+        <div className='column has-text-centered'>
+          <h1 className='title has-text-centered'>Reports</h1>
+          <button className='button is-dark' onClick={() => browserHistory.push('/')}>Home</button>
+          <hr />
+          <h2 className='subtitle has-text-centered'>TEST</h2>
+          <button className='button' onClick={fetchPdfForm}>TEST</button>
+          <div>
+            <p>PDF</p>
+            <object 
+              style={{height: '85vh'}} 
+              data={'/pdf/test.pdf'} 
+              // data={pdfUrl} 
+              type="application/pdf" 
+              width='100%' 
+              height='100%'>
+                <a href={pdfUrl}>alt</a>
+            </object>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Reports;
+
