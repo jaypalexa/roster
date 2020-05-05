@@ -14,9 +14,10 @@ const OrganizationService = {
     apiRequestPayload.pathParameters = { organizationId: organizationId };
 
     const response = await ApiService.execute(apiRequestPayload);
-    // console.log('getOrganization::response', response);
+    console.log('getOrganization::response', response);
     
-    const organization = response as OrganizationModel
+    const organization = JSON.parse(response) as OrganizationModel
+    console.log('getOrganization::organization', organization);
     // TODO: CACHING ???
     // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
     

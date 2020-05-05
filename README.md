@@ -145,6 +145,17 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 
     aws cognito-idp admin-update-user-attributes --profile roster-admin-user --user-pool-id <USER_POOL_ID> --region <REGION> --username <USER_NAME> --user-attributes Name="custom:CustomAttr1",Value="Purple"
 
+### AWS Lambda (.NET Core)
+* [AWS Toolkit for Visual Studio 2017 and 2019](https://marketplace.visualstudio.com/items?itemName=AmazonWebServices.AWSToolkitforVisualStudio2017)
+
+#### To package a .NET Core AWS Lambda function and supporting files
+
+    dotnet lambda package
+
+#### To update .NET Core AWS Lambda function
+
+    dotnet lambda deploy-function --profile roster-admin-user --function-name roster-pdf-form-filler-lambda --package C:\JPFiles\src\roster-pdf-form-filler-lambda\bin\Debug\netcoreapp3.1\roster-pdf-form-filler-lambda.zip
+
 ### Amazon DynamoDB
 
 * [Class: AWS.DynamoDB.DocumentClient](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html)
@@ -163,6 +174,9 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 * [Offer a page reload for users](https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users)
 * [Redirecting a user to the page they requested after successful authentication with react-router-dom](https://stackoverflow.com/questions/59422159/redirecting-a-user-to-the-page-they-requested-after-successful-authentication-wi/59423442#59423442)
 
+## PDF
+
+* [Why do I get an error saying that "use of extended features is no longer available"?](https://itextpdf.com/en/resources/faq/technical-support/itext-5-legacy/why-do-i-get-error-saying-use-extended-features-no)
 ---
 
 ## See also

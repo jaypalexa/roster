@@ -65,7 +65,7 @@ export const ApiService = {
     AWS.config.credentials = new AWS.Credentials(accessKeyId, secretAccessKey);
 
     const apiRequestPayload = {} as ApiRequestPayload;
-    apiRequestPayload.resource = '/wakeup';
+    apiRequestPayload.resource = '/wake-up';
 
     const params: AWS.Lambda.InvocationRequest = {
       FunctionName: 'roster-db-access-lambda', 
@@ -94,7 +94,7 @@ export const ApiService = {
 
     try {
       const params: AWS.Lambda.InvocationRequest = {
-        FunctionName: 'roster-db-access-lambda', 
+        FunctionName: 'roster-api-lambda', 
         InvocationType: 'RequestResponse',
         Payload: JSON.stringify(apiRequestPayload),
       };
@@ -102,20 +102,17 @@ export const ApiService = {
       console.log('params', params);
       const result = await (new AWS.Lambda().invoke(params).promise());
       console.log('result', result);
-      // console.log('result.StatusCode', result.StatusCode);
+      // console.log('result.StatusCode', result.StatusCode); // TODO: check result.Status 200 <= x <= 299
       // console.log('result.Payload', result.Payload);
       const payload = JSON.parse(result.Payload?.toString() || '') as ApiResponsePayload;
       // console.log('payload', payload);
       // console.log('payload.body', payload.body);
       const data = payload.body?.data;
-      // console.log('data', data);
+      console.log('data', data);
 
       let response = {};
-      if (apiRequestPayload.resource.startsWith('/fetch-pdf-form')) {
+      if (apiRequestPayload.httpMethod === 'GET') {
         response = data;
-      }
-      else if (apiRequestPayload.httpMethod === 'GET') {
-        response = JSON.parse(payload.body?.data);
       }
       return response;
     }
@@ -123,7 +120,7 @@ export const ApiService = {
       console.log(err, err.stack);
       return null;
     }
-  }
+  },
 
 }
 
