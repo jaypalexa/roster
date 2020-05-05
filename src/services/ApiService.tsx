@@ -20,27 +20,6 @@ export interface ApiResponsePayloadBody {
   data: any;
 };
 
-const initialize = () =>{
-  const identityPoolId = process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '';
-  const userPoolId = process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID || '';
-  const region = process.env.REACT_APP_AWS_REGION || '';
-
-  const currentCredentials = new AWS.CognitoIdentityCredentials({IdentityPoolId: identityPoolId});
-  currentCredentials.clearCachedId();
-
-  const updatedCredentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: identityPoolId,
-    Logins: {
-      [`cognito-idp.${region}.amazonaws.com/${userPoolId}`]: AuthenticationService.getJwtToken()
-    }
-  });
-  
-  AWS.config.credentials = updatedCredentials;
-  AWS.config.region = region;
-  
-  // console.log('AWS.config', AWS.config);
-}
-
 // TODO: CACHING ???
 // interface CACHE_MODEL {
 //   [key: string]: any;
@@ -82,26 +61,29 @@ export const ApiService = {
 
   async execute(apiRequestPayload: ApiRequestPayload): Promise<any> {
 
-    initialize();
-
-    const headers = {
-      'jwt': AuthenticationService.getJwtToken(), // AWS Lambda will parse jwt to get 'custom:organizationId' attribute
-      'Content-Type': 'application/json', 
-      'Accept': 'application/json' 
-    }
-
-    apiRequestPayload.headers = { ...apiRequestPayload.headers, ...headers };
-
     try {
+      const isUserAuthenticated = AuthenticationService.isUserAuthenticated();
+      if (!isUserAuthenticated) {
+        throw new Error('ApiService::execute::User not authenticated');
+      }
+      
+      const headers = {
+        'jwt': AuthenticationService.getJwtIdToken(), // AWS Lambda will parse jwt to get 'custom:organizationId' attribute
+        'Content-Type': 'application/json', 
+        'Accept': 'application/json' 
+      }
+
+      apiRequestPayload.headers = { ...apiRequestPayload.headers, ...headers };
+
       const params: AWS.Lambda.InvocationRequest = {
         FunctionName: 'roster-api-lambda', 
         InvocationType: 'RequestResponse',
         Payload: JSON.stringify(apiRequestPayload),
       };
 
-      console.log('params', params);
+      // console.log('params', params);
       const result = await (new AWS.Lambda().invoke(params).promise());
-      console.log('result', result);
+      // console.log('result', result);
 
       const statusCode = result.StatusCode || 0;
       if (statusCode < 200 || 299 < statusCode) {
@@ -111,7 +93,7 @@ export const ApiService = {
       // console.log('result.Payload', result.Payload);
       const payload = JSON.parse(result.Payload?.toString() || '') as ApiResponsePayload;
       const data = payload.body?.data;
-      console.log('data', data);
+      // console.log('data', data);
 
       let response = {};
       if (apiRequestPayload.httpMethod === 'GET') {
