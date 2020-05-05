@@ -102,11 +102,14 @@ export const ApiService = {
       console.log('params', params);
       const result = await (new AWS.Lambda().invoke(params).promise());
       console.log('result', result);
-      // console.log('result.StatusCode', result.StatusCode); // TODO: check result.Status 200 <= x <= 299
+
+      const statusCode = result.StatusCode || 0;
+      if (statusCode < 200 || 299 < statusCode) {
+        throw new Error(`HTTP status code of ${statusCode} indicates an unsuccessful request`);
+      }
+      
       // console.log('result.Payload', result.Payload);
       const payload = JSON.parse(result.Payload?.toString() || '') as ApiResponsePayload;
-      // console.log('payload', payload);
-      // console.log('payload.body', payload.body);
       const data = payload.body?.data;
       console.log('data', data);
 
@@ -114,11 +117,12 @@ export const ApiService = {
       if (apiRequestPayload.httpMethod === 'GET') {
         response = data;
       }
+      
       return response;
     }
     catch (err) {
       console.log(err, err.stack);
-      return null;
+      throw err;
     }
   },
 

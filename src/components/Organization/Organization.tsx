@@ -38,10 +38,18 @@ const Organization: React.FC = () => {
 
     // make async server request
     const fetchOrganization = async () => {
-      const organization = await OrganizationService.getOrganization();
-      reset(organization);
-      setCurrentOrganization(organization);
-      setShowSpinner(false)
+      try {
+        const organization = await OrganizationService.getOrganization();
+        reset(organization);
+        setCurrentOrganization(organization);
+      } 
+      catch (err) {
+        console.log(err);
+        toast.error('ERROR (see browser console for details)');
+      }
+      finally {
+        setShowSpinner(false);
+      }
     };
     fetchOrganization();
   });
