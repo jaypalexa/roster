@@ -133,7 +133,6 @@ const HoldingTankGraphs: React.FC = () => {
   }
 
   useMount(() => {
-    // make async server request
     if (!appContext.holdingTank?.tankId) {
       browserHistory.push('/holding-tanks')
     } else {

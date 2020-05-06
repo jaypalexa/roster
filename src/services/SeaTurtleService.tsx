@@ -1,35 +1,44 @@
+import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import SeaTurtleModel from '../types/SeaTurtleModel';
 
+const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}';
+const RESOURCE_MANY = '/sea-turtles';
+
 const SeaTurtleService = {
-  getSeaTurtle(turtleId?: string): SeaTurtleModel {
-    let seaTurtle: SeaTurtleModel | undefined;
-    if (turtleId) {
-      const seaTurtles = this.getSeaTurtles();
-      seaTurtle = seaTurtles.find(x => x.turtleId === turtleId);
-    }
-    return seaTurtle || {} as SeaTurtleModel;
+
+  async getSeaTurtles(): Promise<SeaTurtleModel[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_MANY;
+
+    const seaTurtles = await ApiService.getMany<SeaTurtleModel>(apiRequestPayload);
+    return seaTurtles;
   },
-  saveSeaTurtle(seaTurtle: SeaTurtleModel) {
-    const seaTurtles = this.getSeaTurtles();
-    const index = seaTurtles.findIndex(x => x.turtleId === seaTurtle.turtleId);
-    if (~index) {
-      seaTurtles[index] = {...seaTurtle};
-    } else {
-      seaTurtles.push(seaTurtle);
-    }
-    localStorage.setItem('seaTurtles', JSON.stringify(seaTurtles));
+
+  async getSeaTurtle(seaTurtleId: string): Promise<SeaTurtleModel> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId };
+
+    const seaTurtle = await ApiService.get<SeaTurtleModel>(apiRequestPayload);
+    return seaTurtle;
   },
-  deleteSeaTurtle(turtleId: string) {
-    const seaTurtles = this.getSeaTurtles();
-    const index = seaTurtles.findIndex(x => x.turtleId === turtleId);
-    if (~index) {
-      seaTurtles.splice(index, 1);
-    }
-    localStorage.setItem('seaTurtles', JSON.stringify(seaTurtles));
+
+  async saveSeaTurtle(seaTurtle: SeaTurtleModel) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtle.seaTurtleId };
+
+    await ApiService.save<SeaTurtleModel>(apiRequestPayload, seaTurtle);
   },
-  getSeaTurtles(): SeaTurtleModel[] {
-    return JSON.parse(localStorage.getItem('seaTurtles') || '[]');
-  }
+
+  async deleteSeaTurtle(seaTurtleId: string) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId };
+
+    const seaTurtle = await ApiService.delete(apiRequestPayload);
+    return seaTurtle;
+  },
 };
 
 export default SeaTurtleService;

@@ -143,12 +143,11 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
   }
 
   useMount(() => {
-    // make async server request
-    if (!appContext.seaTurtle?.turtleId) {
+    if (!appContext.seaTurtle?.seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
       const getSeaTurtleMorphometricsForTurtle = async () => {
-        const seaTurtleMeasurements = await SeaTurtleMorphometricService.getSeaTurtleMorphometricsForTurtle(appContext.seaTurtle?.turtleId);
+        const seaTurtleMeasurements = await SeaTurtleMorphometricService.getSeaTurtleMorphometricsForTurtle(appContext.seaTurtle?.seaTurtleId);
         setCurrentSeaTurtleMorphometrics(seaTurtleMeasurements);
       };
       getSeaTurtleMorphometricsForTurtle();
@@ -196,7 +195,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Morphometrics Graphs for {appContext.seaTurtle?.turtleName}</h1>
+          <h1 className='title has-text-centered'>Morphometrics Graphs for {appContext.seaTurtle?.seaTurtleName}</h1>
 
           <div className='field has-text-centered'>
             <input className='is-checkradio is-black' id='sclNotchNotchValue' type='checkbox' name='sclNotchNotchValue' value='sclNotchNotchValue' onChange={onGraphTypeChange} />

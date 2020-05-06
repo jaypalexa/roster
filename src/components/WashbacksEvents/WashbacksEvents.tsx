@@ -111,7 +111,6 @@ const WashbacksEvents: React.FC = () => {
   });
 
   useMount(() => {
-    // make async server request
     const getWashbacksEvents = async () => {
       const washbacksEvents = await WashbacksEventService.getWashbacksEvents();
       setCurrentWashbacksEvents(washbacksEvents);
@@ -132,7 +131,6 @@ const WashbacksEvents: React.FC = () => {
   }, [editingStarted]);
 
   const fetchWashbacksEvent = (washbacksEventId: string) => {
-    // make async server request
     const getWashbacksEvent = async () => {
       const washbacksEvent = await WashbacksEventService.getWashbacksEvent(washbacksEventId);
       reset(washbacksEvent);
@@ -142,7 +140,6 @@ const WashbacksEvents: React.FC = () => {
   };
 
   const deleteWashbacksEvent = (washbacksEventId: string) => {
-    // make async server request
     const deleteWashbacksEvent = async () => {
       await WashbacksEventService.deleteWashbacksEvent(washbacksEventId);
       const washbacksEvent = {} as WashbacksEventModel;

@@ -149,12 +149,11 @@ const SeaTurtleMorphometrics: React.FC = () => {
   });
 
   useMount(() => {
-    // make async server request
-    if (!appContext.seaTurtle?.turtleId) {
+    if (!appContext.seaTurtle?.seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
       const getSeaTurtleMorphometricsForTurtle = async () => {
-        const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometricsForTurtle(appContext.seaTurtle?.turtleId);
+        const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometricsForTurtle(appContext.seaTurtle?.seaTurtleId);
         setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
       };
       getSeaTurtleMorphometricsForTurtle();
@@ -162,7 +161,6 @@ const SeaTurtleMorphometrics: React.FC = () => {
   });
 
   useMount(() => {
-    // make async server request
     const fetchOrganization = async () => {
       const organization = await OrganizationService.getOrganization();
       setCurrentOrganization(organization);
@@ -178,7 +176,6 @@ const SeaTurtleMorphometrics: React.FC = () => {
   }, [editingStarted]);
 
   const fetchSeaTurtleMorphometric = (turtleMorphometricId: string) => {
-    // make async server request
     const getSeaTurtleMorphometric = async () => {
       const seaTurtleMorphometric = await SeaTurtleMorphometricService.getSeaTurtleMorphometric(turtleMorphometricId);
       reset(seaTurtleMorphometric);
@@ -188,7 +185,6 @@ const SeaTurtleMorphometrics: React.FC = () => {
   };
 
   const deleteSeaTurtleMorphometric = (turtleMorphometricId: string) => {
-    // make async server request
     const deleteSeaTurtleMorphometric = async () => {
       await SeaTurtleMorphometricService.deleteSeaTurtleMorphometric(turtleMorphometricId);
       const seaTurtleMorphometric = {} as SeaTurtleMorphometricModel;
@@ -210,7 +206,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       const defaultWeightUnits = () => currentOrganization.preferredUnitsType === 'I' ? 'lb' : 'kg';
       const seaTurtleMorphometric = {} as SeaTurtleMorphometricModel;
       seaTurtleMorphometric.turtleMorphometricId = uuidv4().toLowerCase();
-      seaTurtleMorphometric.turtleId = appContext.seaTurtle?.turtleId || '';
+      seaTurtleMorphometric.turtleId = appContext.seaTurtle?.seaTurtleId || '';
       seaTurtleMorphometric.sclNotchNotchUnits = defaultLengthUnits();
       seaTurtleMorphometric.sclNotchTipUnits = defaultLengthUnits();
       seaTurtleMorphometric.sclTipTipUnits = defaultLengthUnits();
@@ -344,7 +340,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Morphometrics for {appContext.seaTurtle?.turtleName}</h1>
+          <h1 className='title has-text-centered'>Morphometrics for {appContext.seaTurtle?.seaTurtleName}</h1>
           <div className='level'>
             <div className='level-left'></div>
             <div className='level-right'>

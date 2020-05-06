@@ -102,12 +102,11 @@ const SeaTurtleTags: React.FC = () => {
   });
 
   useMount(() => {
-    // make async server request
-    if (!appContext.seaTurtle?.turtleId) {
+    if (!appContext.seaTurtle?.seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
       const getSeaTurtleTagsForTurtle = async () => {
-        const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTagsForTurtle(appContext.seaTurtle?.turtleId);
+        const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTagsForTurtle(appContext.seaTurtle?.seaTurtleId);
         setCurrentSeaTurtleTags(seaTurtleTags);
       };
       getSeaTurtleTagsForTurtle();
@@ -122,7 +121,6 @@ const SeaTurtleTags: React.FC = () => {
   }, [editingStarted]);
 
   const fetchSeaTurtleTag = (turtleTagId: string) => {
-    // make async server request
     const getSeaTurtleTag = async () => {
       const seaTurtleTag = await SeaTurtleTagService.getSeaTurtleTag(turtleTagId);
       reset(seaTurtleTag);
@@ -132,7 +130,6 @@ const SeaTurtleTags: React.FC = () => {
   };
 
   const deleteSeaTurtleTag = (turtleTagId: string) => {
-    // make async server request
     const deleteSeaTurtleTag = async () => {
       await SeaTurtleTagService.deleteSeaTurtleTag(turtleTagId);
       const seaTurtleTag = {} as SeaTurtleTagModel;
@@ -152,7 +149,7 @@ const SeaTurtleTags: React.FC = () => {
     const handleEvent = () => {
       const seaTurtleTag = {} as SeaTurtleTagModel;
       seaTurtleTag.turtleTagId = uuidv4().toLowerCase();
-      seaTurtleTag.turtleId = appContext.seaTurtle?.turtleId || '';
+      seaTurtleTag.turtleId = appContext.seaTurtle?.seaTurtleId || '';
       reset(seaTurtleTag);
       setCurrentSeaTurtleTag(seaTurtleTag);
       setIsFormEnabled(true);
@@ -277,7 +274,7 @@ const SeaTurtleTags: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Tags for {appContext.seaTurtle?.turtleName}</h1>
+          <h1 className='title has-text-centered'>Tags for {appContext.seaTurtle?.seaTurtleName}</h1>
           <div className='level'>
             <div className='level-left'></div>
             <div className='level-right'>

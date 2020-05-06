@@ -1,5 +1,5 @@
 import React from 'react';
-import Constants from '../../constants';
+import RosterConstants from 'rosterConstants';
 import FormFieldProps from './FormFieldProps';
 import InputFormField from './InputFormField';
 
@@ -20,7 +20,7 @@ export const NumericFormField: React.FC<NumericFormFieldProps> = ({fieldName, la
         type='number' 
         min={min || 0} 
         max={max || 99999} 
-        pattern={pattern || Constants.INPUT_NUMBER_PATTERN.ZERO_DECIMAL_PLACES}
+        pattern={pattern || RosterConstants.INPUT_NUMBER_PATTERN.ZERO_DECIMAL_PLACES}
         step={step || '1'}
       />
   );

@@ -11,6 +11,7 @@ import ListFormField from 'components/FormFields/ListFormField';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import TextFormField from 'components/FormFields/TextFormField';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
+import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
@@ -19,6 +20,7 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import RosterConstants from 'rosterConstants';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import SeaTurtleService from 'services/SeaTurtleService';
 import MapDataModel from 'types/MapDataModel';
@@ -54,6 +56,7 @@ const SeaTurtles: React.FC = () => {
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(true);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   const tableColumns = [
@@ -63,18 +66,18 @@ const SeaTurtles: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row.turtleId, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row.seaTurtleId, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row.turtleId, row.turtleName, event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row.seaTurtleId, row.seaTurtleName, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Name',
-      selector: 'turtleName',
+      selector: 'seaTurtleName',
       sortable: true
     },
     {
@@ -143,14 +146,22 @@ const SeaTurtles: React.FC = () => {
   });
 
   useMount(() => {
-    // make async server request
     const getSeaTurtles = async () => {
-      const seaTurtles = await SeaTurtleService.getSeaTurtles();
-      setCurrentSeaTurtles(seaTurtles);
-      if (appContext.seaTurtle?.turtleId) {
-        reset(appContext.seaTurtle);
-        setCurrentSeaTurtle(appContext.seaTurtle);
-        setIsFormEnabled(true);
+      try {
+        const seaTurtles = await SeaTurtleService.getSeaTurtles();
+        setCurrentSeaTurtles(seaTurtles);
+        if (appContext.seaTurtle?.seaTurtleId) {
+          reset(appContext.seaTurtle);
+          setCurrentSeaTurtle(appContext.seaTurtle);
+          setIsFormEnabled(true);
+        }
+      } 
+      catch (err) {
+        console.log(err);
+        toast.error(RosterConstants.ERROR.GENERIC);
+      }
+      finally {
+        setShowSpinner(false);
       }
     };
     getSeaTurtles();
@@ -167,37 +178,52 @@ const SeaTurtles: React.FC = () => {
     setAppContext({ ...appContext, seaTurtle: seaTurtle });
   }
 
-  const fetchSeaTurtle = (turtleId: string) => {
-    // make async server request
-    const getSeaTurtle = async () => {
-      const seaTurtle = await SeaTurtleService.getSeaTurtle(turtleId);
+  const fetchSeaTurtle = async (seaTurtleId: string) => {
+    try {
+      setShowSpinner(true);
+      const seaTurtle = await SeaTurtleService.getSeaTurtle(seaTurtleId);
       reset(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
-    };
-    getSeaTurtle();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
-  const deleteSeaTurtle = (turtleId: string) => {
-    // make async server request
-    const deleteSeaTurtle = async () => {
-      await SeaTurtleService.deleteSeaTurtle(turtleId);
-      const seaTurtle = {} as SeaTurtleModel;
-      reset(seaTurtle);
-      setCurrentSeaTurtle(seaTurtle);
-      const index = currentSeaTurtles.findIndex(x => x.turtleId === turtleId);
-      if (~index) {
-        var updatedCurrentSeaTurtles = [...currentSeaTurtles];
-        updatedCurrentSeaTurtles.splice(index, 1)
-        setCurrentSeaTurtles(updatedCurrentSeaTurtles);
-      }
-    };
-    deleteSeaTurtle();
+  const deleteSeaTurtle = (seaTurtleId: string) => {
+    try {
+      setShowSpinner(true);
+      const deleteSeaTurtle = async () => {
+        await SeaTurtleService.deleteSeaTurtle(seaTurtleId);
+        const seaTurtle = {} as SeaTurtleModel;
+        reset(seaTurtle);
+        setCurrentSeaTurtle(seaTurtle);
+        const index = currentSeaTurtles.findIndex(x => x.seaTurtleId === seaTurtleId);
+        if (~index) {
+          var updatedCurrentSeaTurtles = [...currentSeaTurtles];
+          updatedCurrentSeaTurtles.splice(index, 1)
+          setCurrentSeaTurtles(updatedCurrentSeaTurtles);
+        }
+      };
+      deleteSeaTurtle();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
   const onAddSeaTurtleButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const seaTurtle = {} as SeaTurtleModel;
-      seaTurtle.turtleId = uuidv4().toLowerCase();
+      seaTurtle.seaTurtleId = uuidv4().toLowerCase();
       reset(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
       setIsFormEnabled(true);
@@ -225,9 +251,9 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onEditSeaTurtleClick = (turtleId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditSeaTurtleClick = (seaTurtleId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      fetchSeaTurtle(turtleId);
+      fetchSeaTurtle(seaTurtleId);
       setIsFormEnabled(true);
     };
 
@@ -252,14 +278,14 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onDeleteSeaTurtleClick = (turtleId: string, turtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteSeaTurtleClick = (seaTurtleId: string, seaTurtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      deleteSeaTurtle(turtleId);
+      deleteSeaTurtle(seaTurtleId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete turtle '${turtleName}' ?`);
+    setDialogBodyText(`Delete turtle '${seaTurtleName}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -275,21 +301,31 @@ const SeaTurtles: React.FC = () => {
     toast.success('Record saved');
   });
 
-  const saveSeaTurtle = ((modifiedSeaTurtle: SeaTurtleModel) => {
+  const saveSeaTurtle = async (modifiedSeaTurtle: SeaTurtleModel) => {
     if (!formState.dirty) return;
 
-    const patchedSeaTurtle = { ...appContext.seaTurtle, ...modifiedSeaTurtle };
-    SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
-    reset(patchedSeaTurtle);
-    setCurrentSeaTurtle(patchedSeaTurtle);
-    const index = currentSeaTurtles.findIndex(x => x.turtleId === patchedSeaTurtle.turtleId);
-    if (~index) {
-      currentSeaTurtles[index] = { ...patchedSeaTurtle };
-    } else {
-      currentSeaTurtles.push(patchedSeaTurtle);
+    try {
+      setShowSpinner(true);
+      const patchedSeaTurtle = { ...appContext.seaTurtle, ...modifiedSeaTurtle };
+      await SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
+      reset(patchedSeaTurtle);
+      setCurrentSeaTurtle(patchedSeaTurtle);
+      const index = currentSeaTurtles.findIndex(x => x.seaTurtleId === patchedSeaTurtle.seaTurtleId);
+      if (~index) {
+        currentSeaTurtles[index] = { ...patchedSeaTurtle };
+      } else {
+        currentSeaTurtles.push(patchedSeaTurtle);
+      }
+      setCurrentSeaTurtles([...currentSeaTurtles]);
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
     }
-    setCurrentSeaTurtles([...currentSeaTurtles]);
-  });
+    finally {
+      setShowSpinner(false);
+    }
+  };
 
   const saveAndNavigate = (linkTo: string) => {
     const modifiedSeaTurtle: SeaTurtleModel = getValues();
@@ -311,7 +347,7 @@ const SeaTurtles: React.FC = () => {
     const latitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Latitude`] as number;
     const longitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Longitude`] as number;
     if (latitude && longitude) {
-      data.markers = [{ latitude, longitude, description: modifiedSeaTurtle.turtleName }];
+      data.markers = [{ latitude, longitude, description: modifiedSeaTurtle.seaTurtleName }];
     }
     // data.title = `${dataType}: ${data.markers ? `${latitude}/${longitude}` : '(not set)'}`
     data.title = dataType;
@@ -321,6 +357,7 @@ const SeaTurtles: React.FC = () => {
 
   return (
     <div id='seaTurtle'>
+      <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}
@@ -374,8 +411,8 @@ const SeaTurtles: React.FC = () => {
             title='Sea Turtles'
             columns={tableColumns}
             data={currentSeaTurtles}
-            keyField='turtleId'
-            defaultSortField='turtleName'
+            keyField='seaTurtleId'
+            defaultSortField='seaTurtleName'
             noHeader={true}
             fixedHeader={true}
             fixedHeaderScrollHeight='9rem'
@@ -384,14 +421,14 @@ const SeaTurtles: React.FC = () => {
 
           <hr />
 
-          <h1 className='title has-text-centered'>{appContext.seaTurtle?.turtleName}</h1>
+          <h1 className='title has-text-centered'>{appContext.seaTurtle?.seaTurtleName}</h1>
 
           <FormContext {...methods}>
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <h2 className='subtitle'>General Information</h2>
                 <FormFieldRow>
-                  <TextFormField fieldName='turtleName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
+                  <TextFormField fieldName='seaTurtleName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
                   <TextFormField fieldName='sidNumber' labelText='SID number' />
                   <TextFormField fieldName='strandingIdNumber' labelText='Stranding ID number' />
                 </FormFieldRow>

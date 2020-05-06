@@ -103,7 +103,6 @@ const HatchlingsEvents: React.FC = () => {
   });
 
   useMount(() => {
-    // make async server request
     const getHatchlingsEvents = async () => {
       const hatchlingsEvents = await HatchlingsEventService.getHatchlingsEvents();
       setCurrentHatchlingsEvents(hatchlingsEvents);
@@ -124,7 +123,6 @@ const HatchlingsEvents: React.FC = () => {
   }, [editingStarted]);
 
   const fetchHatchlingsEvent = (hatchlingsEventId: string) => {
-    // make async server request
     const getHatchlingsEvent = async () => {
       const hatchlingsEvent = await HatchlingsEventService.getHatchlingsEvent(hatchlingsEventId);
       reset(hatchlingsEvent);
@@ -134,7 +132,6 @@ const HatchlingsEvents: React.FC = () => {
   };
 
   const deleteHatchlingsEvent = (hatchlingsEventId: string) => {
-    // make async server request
     const deleteHatchlingsEvent = async () => {
       await HatchlingsEventService.deleteHatchlingsEvent(hatchlingsEventId);
       const hatchlingsEvent = {} as HatchlingsEventModel;

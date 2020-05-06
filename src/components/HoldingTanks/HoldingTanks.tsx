@@ -72,7 +72,6 @@ const HoldingTanks: React.FC = () => {
   });
 
   useMount(() => {
-    // make async server request
     const getHoldingTanks = async () => {
       const holdingTanks = await HoldingTankService.getHoldingTanks();
       setCurrentHoldingTanks(holdingTanks);
@@ -97,7 +96,6 @@ const HoldingTanks: React.FC = () => {
   }
 
   const fetchHoldingTank = (tankId: string) => {
-    // make async server request
     const getHoldingTank = async () => {
       const holdingTank = await HoldingTankService.getHoldingTank(tankId);
       reset(holdingTank);
@@ -107,7 +105,6 @@ const HoldingTanks: React.FC = () => {
   };
 
   const deleteHoldingTank = (tankId: string) => {
-    // make async server request
     const deleteHoldingTank = async () => {
       await HoldingTankService.deleteHoldingTank(tankId);
       const holdingTank = {} as HoldingTankModel;

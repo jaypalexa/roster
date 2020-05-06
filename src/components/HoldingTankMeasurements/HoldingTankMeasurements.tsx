@@ -90,7 +90,6 @@ const HoldingTankMeasurements: React.FC = () => {
   });
 
   useMount(() => {
-    // make async server request
     if (!appContext.holdingTank?.tankId) {
       browserHistory.push('/holding-tanks')
     } else {
@@ -110,7 +109,6 @@ const HoldingTankMeasurements: React.FC = () => {
   }, [editingStarted]);
 
   const fetchHoldingTankMeasurement = (holdingTankMeasurementId: string) => {
-    // make async server request
     const getHoldingTankMeasurement = async () => {
       const holdingTankMeasurement = await HoldingTankMeasurementService.getHoldingTankMeasurement(holdingTankMeasurementId);
       reset(holdingTankMeasurement);
@@ -120,7 +118,6 @@ const HoldingTankMeasurements: React.FC = () => {
   };
 
   const deleteHoldingTankMeasurement = (holdingTankMeasurementId: string) => {
-    // make async server request
     const deleteHoldingTankMeasurement = async () => {
       await HoldingTankMeasurementService.deleteHoldingTankMeasurement(holdingTankMeasurementId);
       const holdingTankMeasurement = {} as HoldingTankMeasurementModel;

@@ -116,6 +116,10 @@ To be classified as a progressive web application:
 
 * [Download and install the AWS CLI MSI installer for Windows (64-bit)(.msi)](https://awscli.amazonaws.com/AWSCLIV2.msi)
 
+### AWS SDK
+
+* [AWS SDK for .NET](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/Index.html)
+
 ### Application Architecture
 
 The application architecture uses:

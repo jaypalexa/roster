@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import RosterConstants from 'rosterConstants';
 import OrganizationService from 'services/OrganizationService';
 import OrganizationModel from 'types/OrganizationModel';
 import './Organization.sass';
@@ -36,7 +37,6 @@ const Organization: React.FC = () => {
     // reset(organization);
     // setCurrentOrganization(organization);
 
-    // make async server request
     const fetchOrganization = async () => {
       try {
         const organization = await OrganizationService.getOrganization();
@@ -45,7 +45,7 @@ const Organization: React.FC = () => {
       } 
       catch (err) {
         console.log(err);
-        toast.error('ERROR (see browser console for details)');
+        toast.error(RosterConstants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
