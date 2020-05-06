@@ -15,7 +15,6 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthentication }) => {
-
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
   const methods = useForm<LoginModel>({ mode: 'onChange' });
   const { formState, handleSubmit, reset } = methods;
@@ -30,11 +29,11 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
     const initialLogin = { userName: lastUserName, password: '' };
     setCurrentLogin(initialLogin);
     reset(initialLogin);
-  })
+  });
 
   useMount(() => {
     firstEditControlRef?.current?.focus();
-  })
+  });
 
   const getPath = (): string => {
     if (!redirectPathOnAuthentication || redirectPathOnAuthentication === '/login') {
@@ -42,7 +41,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
     } else {
       return redirectPathOnAuthentication;
     }
-  }
+  };
 
   const onSubmit = handleSubmit(async (modifiedLogin: LoginModel) => {
     const patchedLogin = { ...currentLogin, ...modifiedLogin };
