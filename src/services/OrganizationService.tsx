@@ -15,12 +15,12 @@ const OrganizationService = {
     apiRequestPayload.resource = RESOURCE_SINGLE;
     apiRequestPayload.pathParameters = { organizationId: organizationId };
 
-    const organization = await ApiService.get<OrganizationModel>(apiRequestPayload);
+    const response = await ApiService.get<OrganizationModel>(apiRequestPayload);
 
     // TODO: CACHING ???
     // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
     
-    return organization;
+    return response;
   },
 
   async saveOrganization(organization: OrganizationModel) {
@@ -43,10 +43,8 @@ const OrganizationService = {
     // TODO: CACHING ???
     // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
 
-    await ApiService.save<OrganizationModel>(apiRequestPayload, organization);
-
-    // const response = await ApiService.execute(apiRequestPayload);
-    // console.log('saveOrganization::response', response);
+    const response = await ApiService.save<OrganizationModel>(apiRequestPayload, organization);
+    return response;
   }
 }
 

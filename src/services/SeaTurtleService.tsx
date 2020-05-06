@@ -10,8 +10,8 @@ const SeaTurtleService = {
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.resource = RESOURCE_MANY;
 
-    const seaTurtles = await ApiService.getMany<SeaTurtleModel>(apiRequestPayload);
-    return seaTurtles;
+    const response = await ApiService.getMany<SeaTurtleModel>(apiRequestPayload);
+    return response;
   },
 
   async getSeaTurtle(seaTurtleId: string): Promise<SeaTurtleModel> {
@@ -19,8 +19,8 @@ const SeaTurtleService = {
     apiRequestPayload.resource = RESOURCE_SINGLE;
     apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId };
 
-    const seaTurtle = await ApiService.get<SeaTurtleModel>(apiRequestPayload);
-    return seaTurtle;
+    const response = await ApiService.get<SeaTurtleModel>(apiRequestPayload);
+    return response;
   },
 
   async saveSeaTurtle(seaTurtle: SeaTurtleModel) {
@@ -36,8 +36,8 @@ const SeaTurtleService = {
     apiRequestPayload.resource = RESOURCE_SINGLE;
     apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId };
 
-    const seaTurtle = await ApiService.delete(apiRequestPayload);
-    return seaTurtle;
+    const response = await ApiService.delete(apiRequestPayload);
+    return response;
   },
 };
 

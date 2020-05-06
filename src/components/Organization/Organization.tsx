@@ -24,7 +24,7 @@ const Organization: React.FC = () => {
   const methods = useForm<OrganizationModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
-  const [showSpinner, setShowSpinner] = useState(true);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   useMount(() => {
     window.scrollTo(0, 0)
@@ -39,6 +39,7 @@ const Organization: React.FC = () => {
 
     const fetchOrganization = async () => {
       try {
+        setShowSpinner(true);
         const organization = await OrganizationService.getOrganization();
         reset(organization);
         setCurrentOrganization(organization);

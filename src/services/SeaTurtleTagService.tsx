@@ -1,40 +1,46 @@
+import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import SeaTurtleTagModel from '../types/SeaTurtleTagModel';
 
+const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}/sea-turtle-tags/{seaTurtleTagId}';
+const RESOURCE_MANY = '/sea-turtles/{seaTurtleId}/sea-turtle-tags';
+
 const SeaTurtleTagService = {
-  getSeaTurtleTag(turtleTagId?: string): SeaTurtleTagModel {
-    let seaTurtleTag: SeaTurtleTagModel | undefined;
-    if (turtleTagId) {
-      const seaTurtleTags = this.getAllSeaTurtleTags();
-      seaTurtleTag = seaTurtleTags.find(x => x.turtleTagId === turtleTagId);
-    }
-    return seaTurtleTag || {} as SeaTurtleTagModel;
+
+  async getSeaTurtleTags(seaTurtleId: string): Promise<SeaTurtleTagModel[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_MANY;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId };
+
+    const response = await ApiService.getMany<SeaTurtleTagModel>(apiRequestPayload);
+    return response;
   },
-  saveSeaTurtleTag(seaTurtleTag: SeaTurtleTagModel) {
-    const seaTurtleTags = this.getAllSeaTurtleTags();
-    const index = seaTurtleTags.findIndex(x => x.turtleTagId === seaTurtleTag.turtleTagId);
-    if (~index) {
-      seaTurtleTags[index] = {...seaTurtleTag};
-    } else {
-      seaTurtleTags.push(seaTurtleTag);
-    }
-    localStorage.setItem('seaTurtleTags', JSON.stringify(seaTurtleTags));
+
+  async getSeaTurtleTag(seaTurtleId: string, seaTurtleTagId: string): Promise<SeaTurtleTagModel> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId, seaTurtleTagId: seaTurtleTagId };
+
+    const response = await ApiService.get<SeaTurtleTagModel>(apiRequestPayload);
+    return response;
   },
-  deleteSeaTurtleTag(turtleTagId: string) {
-    const seaTurtleTags = this.getAllSeaTurtleTags();
-    const index = seaTurtleTags.findIndex(x => x.turtleTagId === turtleTagId);
-    if (~index) {
-      seaTurtleTags.splice(index, 1);
-    }
-    localStorage.setItem('seaTurtleTags', JSON.stringify(seaTurtleTags));
+
+  async saveSeaTurtleTag(seaTurtleTag: SeaTurtleTagModel) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleTag.seaTurtleId, seaTurtleTagId: seaTurtleTag.seaTurtleTagId };
+
+    await ApiService.save<SeaTurtleTagModel>(apiRequestPayload, seaTurtleTag);
   },
-  getSeaTurtleTagsForTurtle(turtleId?: string): SeaTurtleTagModel[] {
-    const allSeaTurtleTags: SeaTurtleTagModel[] = JSON.parse(localStorage.getItem('seaTurtleTags') || '[]')
-    const seaTurtleTags = allSeaTurtleTags.length > 0 ? allSeaTurtleTags.filter(tag => tag.turtleId === turtleId) : [];
-    return seaTurtleTags;
+
+  async deleteSeaTurtleTag(seaTurtleId: string, seaTurtleTagId: string) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId, seaTurtleTagId: seaTurtleTagId };
+
+    const response = await ApiService.delete(apiRequestPayload);
+    return response;
   },
-  getAllSeaTurtleTags(): SeaTurtleTagModel[] {
-    return JSON.parse(localStorage.getItem('seaTurtleTags') || '[]');
-  }
+
 };
 
 export default SeaTurtleTagService;

@@ -56,7 +56,7 @@ const SeaTurtles: React.FC = () => {
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
-  const [showSpinner, setShowSpinner] = useState(true);
+  const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   const tableColumns = [
@@ -148,6 +148,7 @@ const SeaTurtles: React.FC = () => {
   useMount(() => {
     const getSeaTurtles = async () => {
       try {
+        setShowSpinner(true);
         const seaTurtles = await SeaTurtleService.getSeaTurtles();
         setCurrentSeaTurtles(seaTurtles);
         if (appContext.seaTurtle?.seaTurtleId) {

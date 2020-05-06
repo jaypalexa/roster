@@ -1,6 +1,6 @@
 export default interface SeaTurtleTagModel {
-  turtleTagId: string;
-  turtleId: string;
+  seaTurtleTagId: string;
+  seaTurtleId: string;
   tagNumber: string;
   tagType: string;
   location: string;

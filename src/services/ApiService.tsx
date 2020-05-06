@@ -81,9 +81,9 @@ export const ApiService = {
         Payload: JSON.stringify(apiRequestPayload),
       };
 
-      // console.log('params', params);
+      console.log('params', params);
       const result = await (new AWS.Lambda().invoke(params).promise());
-      // console.log('result', result);
+      console.log('result', result);
 
       const statusCode = result.StatusCode || 0;
       if (statusCode < 200 || 299 < statusCode) {
@@ -111,7 +111,7 @@ export const ApiService = {
 
   async getMany<T>(apiRequestPayload: ApiRequestPayload): Promise<T[]> {
     apiRequestPayload.httpMethod = 'GET';
-    const response = await this.execute(apiRequestPayload);
+    const response = (await this.execute(apiRequestPayload)) || [];
     return (response.length > 0 ? response.map((x: string) => JSON.parse(x) as T) : []);
   },
 

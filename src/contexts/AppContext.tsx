@@ -11,7 +11,7 @@ interface AppContextStore {
   holdingTank?: HoldingTankModel;
 };
 
-const initialAppContextStore: AppContextStore = {};
+const initialAppContextStore = {} as AppContextStore;
 
 const AppContext = createContext<[AppContextStore, (appContextStore: AppContextStore) => void]>([initialAppContextStore, () => { }]);
 

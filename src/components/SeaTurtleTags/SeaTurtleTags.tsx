@@ -1,3 +1,4 @@
+import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -5,6 +6,7 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import RosterConstants from 'rosterConstants';
 import { v4 as uuidv4 } from 'uuid';
 import browserHistory from '../../browserHistory';
 import { useAppContext } from '../../contexts/AppContext';
@@ -42,6 +44,7 @@ const SeaTurtleTags: React.FC = () => {
   const [onDialogNo, setOnDialogNo] = useState(() => { });
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   const tableColumns = [
@@ -51,14 +54,14 @@ const SeaTurtleTags: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleTagClick(row.turtleTagId, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleTagClick(row.seaTurtleTagId, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleTagClick(row.turtleTagId, row.tagNumber, event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleTagClick(row.seaTurtleTagId, row.tagNumber, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Tag Number',
@@ -102,15 +105,26 @@ const SeaTurtleTags: React.FC = () => {
   });
 
   useMount(() => {
-    if (!appContext.seaTurtle?.seaTurtleId) {
+    const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
+    if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
-      const getSeaTurtleTagsForTurtle = async () => {
-        const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTagsForTurtle(appContext.seaTurtle?.seaTurtleId);
-        setCurrentSeaTurtleTags(seaTurtleTags);
-      };
-      getSeaTurtleTagsForTurtle();
-    }
+      try {
+        setShowSpinner(true);
+        const getSeaTurtleTagsForTurtle = async () => {
+          const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTags(seaTurtleId);
+          setCurrentSeaTurtleTags(seaTurtleTags);
+        };
+        getSeaTurtleTagsForTurtle();
+      }
+      catch (err) {
+        console.log(err);
+        toast.error(RosterConstants.ERROR.GENERIC);
+      }
+      finally {
+        setShowSpinner(false);
+      }
+    } 
   });
 
   useEffect(() => {
@@ -120,36 +134,56 @@ const SeaTurtleTags: React.FC = () => {
     setEditingStarted(false);
   }, [editingStarted]);
 
-  const fetchSeaTurtleTag = (turtleTagId: string) => {
-    const getSeaTurtleTag = async () => {
-      const seaTurtleTag = await SeaTurtleTagService.getSeaTurtleTag(turtleTagId);
+  const fetchSeaTurtleTag = async (seaTurtleTagId: string) => {
+    try {
+      const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
+      if (!seaTurtleId) return;
+      
+      setShowSpinner(true);
+      const seaTurtleTag = await SeaTurtleTagService.getSeaTurtleTag(seaTurtleId, seaTurtleTagId);
       reset(seaTurtleTag);
       setCurrentSeaTurtleTag(seaTurtleTag);
-    };
-    getSeaTurtleTag();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
-  const deleteSeaTurtleTag = (turtleTagId: string) => {
-    const deleteSeaTurtleTag = async () => {
-      await SeaTurtleTagService.deleteSeaTurtleTag(turtleTagId);
+  const deleteSeaTurtleTag = async (seaTurtleTagId: string) => {
+    const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
+    if (!seaTurtleId) return;
+    
+    try {
+      setShowSpinner(true);
+      await SeaTurtleTagService.deleteSeaTurtleTag(seaTurtleId, seaTurtleTagId);
       const seaTurtleTag = {} as SeaTurtleTagModel;
       reset(seaTurtleTag);
       setCurrentSeaTurtleTag(seaTurtleTag);
-      const index = currentSeaTurtleTags.findIndex(x => x.turtleTagId === turtleTagId);
+      const index = currentSeaTurtleTags.findIndex(x => x.seaTurtleTagId === seaTurtleTagId);
       if (~index) {
         var updatedCurrentSeaTurtleTags = [...currentSeaTurtleTags];
         updatedCurrentSeaTurtleTags.splice(index, 1)
         setCurrentSeaTurtleTags(updatedCurrentSeaTurtleTags);
       }
-    };
-    deleteSeaTurtleTag();
-  };
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
+};
 
   const onAddSeaTurtleTagButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const seaTurtleTag = {} as SeaTurtleTagModel;
-      seaTurtleTag.turtleTagId = uuidv4().toLowerCase();
-      seaTurtleTag.turtleId = appContext.seaTurtle?.seaTurtleId || '';
+      seaTurtleTag.seaTurtleTagId = uuidv4().toLowerCase();
+      seaTurtleTag.seaTurtleId = appContext.seaTurtle?.seaTurtleId || '';
       reset(seaTurtleTag);
       setCurrentSeaTurtleTag(seaTurtleTag);
       setIsFormEnabled(true);
@@ -177,9 +211,9 @@ const SeaTurtleTags: React.FC = () => {
     }
   };
 
-  const onEditSeaTurtleTagClick = (turtleTagId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditSeaTurtleTagClick = (seaTurtleTagId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      fetchSeaTurtleTag(turtleTagId);
+      fetchSeaTurtleTag(seaTurtleTagId);
       setIsFormEnabled(true);
     };
 
@@ -204,9 +238,9 @@ const SeaTurtleTags: React.FC = () => {
     }
   };
 
-  const onDeleteSeaTurtleTagClick = (turtleTagId: string, tagNumber: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteSeaTurtleTagClick = (seaTurtleTagId: string, tagNumber: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      deleteSeaTurtleTag(turtleTagId);
+      deleteSeaTurtleTag(seaTurtleTagId);
       setIsFormEnabled(false);
     };
 
@@ -222,20 +256,30 @@ const SeaTurtleTags: React.FC = () => {
     setShowYesNoDialog(true);
   };
 
-  const onSubmitSeaTurtleTag = handleSubmit((modifiedSeaTurtleTag: SeaTurtleTagModel) => {
-    const patchedSeaTurtleTag = { ...currentSeaTurtleTag, ...modifiedSeaTurtleTag };
-    SeaTurtleTagService.saveSeaTurtleTag(patchedSeaTurtleTag);
-    reset(patchedSeaTurtleTag);
-    setCurrentSeaTurtleTag(patchedSeaTurtleTag);
-    const index = currentSeaTurtleTags.findIndex(x => x.turtleTagId === patchedSeaTurtleTag.turtleTagId);
-    if (~index) {
-      currentSeaTurtleTags[index] = { ...patchedSeaTurtleTag };
-    } else {
-      currentSeaTurtleTags.push(patchedSeaTurtleTag);
-    }
-    setCurrentSeaTurtleTags([...currentSeaTurtleTags]);
+  const onSubmitSeaTurtleTag = handleSubmit(async (modifiedSeaTurtleTag: SeaTurtleTagModel) => {
+    try {
+      setShowSpinner(true);
+      const patchedSeaTurtleTag = { ...currentSeaTurtleTag, ...modifiedSeaTurtleTag };
+      await SeaTurtleTagService.saveSeaTurtleTag(patchedSeaTurtleTag);
+      reset(patchedSeaTurtleTag);
+      setCurrentSeaTurtleTag(patchedSeaTurtleTag);
+      const index = currentSeaTurtleTags.findIndex(x => x.seaTurtleTagId === patchedSeaTurtleTag.seaTurtleTagId);
+      if (~index) {
+        currentSeaTurtleTags[index] = { ...patchedSeaTurtleTag };
+      } else {
+        currentSeaTurtleTags.push(patchedSeaTurtleTag);
+      }
+      setCurrentSeaTurtleTags([...currentSeaTurtleTags]);
 
-    toast.success('Record saved');
+      toast.success('Record saved');
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   });
 
   const onCancelSeaTurtleTag = () => {
@@ -244,6 +288,7 @@ const SeaTurtleTags: React.FC = () => {
 
   return (
     <div id='seaTurtleTags'>
+      <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}
@@ -293,7 +338,7 @@ const SeaTurtleTags: React.FC = () => {
             title='Tags'
             columns={tableColumns}
             data={currentSeaTurtleTags}
-            keyField='turtleTagId'
+            keyField='seaTurtleTagId'
             defaultSortField='tagNumber'
             noHeader={true}
             fixedHeader={true}
