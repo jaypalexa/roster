@@ -1,6 +1,7 @@
 import browserHistory from 'browserHistory';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextFormField from 'components/FormFields/TextFormField';
+import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import React, { useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
@@ -16,6 +17,7 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthentication }) => {
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
+  const [showSpinner, setShowSpinner] = useState(false);
   const methods = useForm<LoginModel>({ mode: 'onChange' });
   const { formState, handleSubmit, reset } = methods;
   const firstEditControlRef = useRef<HTMLInputElement>()
@@ -44,6 +46,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
   };
 
   const onSubmit = handleSubmit(async (modifiedLogin: LoginModel) => {
+    setShowSpinner(true);
     const patchedLogin = { ...currentLogin, ...modifiedLogin };
     reset(patchedLogin);
     setCurrentLogin(patchedLogin);
@@ -51,6 +54,8 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
     localStorage.setItem('lastUserName', modifiedLogin.userName);
 
     const isSuccess = await AuthenticationService.authenticateUser(modifiedLogin);
+    setShowSpinner(false);
+    
     if (isSuccess) {
       setLoggedInUserName(AuthenticationService.getTokenUserName());
       browserHistory.push(getPath());
@@ -62,6 +67,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
 
   return (
     <div id='login'>
+      <Spinner isActive={showSpinner} />
       <div className='columns is-centered'>
         <div className='column is-two-fifths'>
           <h1 className='title has-text-centered'>Log In</h1>
