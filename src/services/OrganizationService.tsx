@@ -6,7 +6,7 @@ import OrganizationModel from 'types/OrganizationModel';
 const OrganizationService = {
   
   async getOrganization(): Promise<OrganizationModel> {
-    const organizationId = AuthenticationService.getTokenOrganizationId();
+    const organizationId = AuthenticationService.getOrganizationId();
 
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.httpMethod = 'GET';
@@ -37,7 +37,7 @@ const OrganizationService = {
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.httpMethod = 'PUT';
     apiRequestPayload.resource = '/organizations/{organizationId}';
-    apiRequestPayload.pathParameters = { organizationId: AuthenticationService.getTokenOrganizationId };
+    apiRequestPayload.pathParameters = { organizationId: AuthenticationService.getOrganizationId };
     apiRequestPayload.body = JSON.stringify(organization);
 
     // TODO: CACHING ???

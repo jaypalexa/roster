@@ -1,113 +1,132 @@
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession, IAuthenticationDetailsData, ICognitoUserData, ICognitoUserPoolData } from 'amazon-cognito-identity-js';
 import AWS from 'aws-sdk';
 import jwt_decode from 'jwt-decode';
 import LoginModel from 'types/LoginModel';
 
-const clientId = process.env.REACT_APP_AWS_COGNITO_CLIENT_ID || '';
-const identityPoolId = process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '';
-const userPoolId = process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID || '';
-const region = process.env.REACT_APP_AWS_REGION || '';
+const CLIENT_ID = process.env.REACT_APP_AWS_COGNITO_CLIENT_ID || '';
+const IDENTITY_POOL_ID = process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '';
+const USER_POOL_ID = process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID || '';
+const REGION = process.env.REACT_APP_AWS_REGION || '';
 
-const POOL_DATA = {
-  UserPoolId: userPoolId,
-  ClientId: clientId
+const USER_POOL_DATA: ICognitoUserPoolData = {
+  UserPoolId: USER_POOL_ID,
+  ClientId: CLIENT_ID
 };
 
-const cognitoUserPool = new CognitoUserPool(POOL_DATA);
-
-const getCurrentCognitoUser = (): CognitoUser | null => {
-  return cognitoUserPool.getCurrentUser();
-}
-
-const setCognitoUser = (userName: string): CognitoUser  => {
-  const cognitoUserData = { Username: userName, Pool: cognitoUserPool };
-  return new CognitoUser(cognitoUserData);
-}
-
-const doAuthenticateUser = (login: LoginModel) => {
-  const authenticationDetailsData = {
-    Username: login.userName,
-    Password: login.password
-  };
-  const authenticationDetails = new AuthenticationDetails(authenticationDetailsData);
-  const cognitoUser = setCognitoUser(login.userName);
-
-  return new Promise<CognitoUserSession | any>((resolve, reject) => {
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: resolve,
-      onFailure: reject,
-      newPasswordRequired: resolve
-    });
-  });
-}
+const USER_POOL = new CognitoUserPool(USER_POOL_DATA);
 
 const clearCurrentCredentials = () => {
-  const currentCredentials = new AWS.CognitoIdentityCredentials({IdentityPoolId: identityPoolId});
+  const currentCredentials = new AWS.CognitoIdentityCredentials({IdentityPoolId: IDENTITY_POOL_ID});
   currentCredentials.clearCachedId();
-}
+};
+
+const getCurrentCognitoUser = (): CognitoUser | null => {
+  return USER_POOL.getCurrentUser();
+};
+
+const getLastAuthUser = (): string => {
+  return localStorage.getItem(`CognitoIdentityServiceProvider.${CLIENT_ID}.LastAuthUser`) || '';
+};
+
+const getAccessToken = (): string => {
+  const lastAuthUser = getLastAuthUser();
+  return localStorage.getItem(`CognitoIdentityServiceProvider.${CLIENT_ID}.${lastAuthUser}.accessToken`) || '';
+};
 
 export const AuthenticationService = {
 
   async authenticateUser(login: LoginModel): Promise<boolean> {
     try {
-      await doAuthenticateUser(login);
-      await this.refreshCredentials();
+      const authenticationDetailsData: IAuthenticationDetailsData = {
+        Username: login.userName,
+        Password: login.password
+      };
+      const authenticationDetails = new AuthenticationDetails(authenticationDetailsData);
+
+      const cognitoUserData: ICognitoUserData = { 
+        Username: login.userName, 
+        Pool: USER_POOL 
+      };
+      const cognitoUser =  new CognitoUser(cognitoUserData);
+    
+      await new Promise<CognitoUserSession | any>((resolve, reject) => {
+        cognitoUser.authenticateUser(authenticationDetails, {
+          onSuccess: (session: CognitoUserSession) => {
+            this.refreshCredentials(session.getIdToken().getJwtToken());
+            resolve();
+          },
+          onFailure: (err: any) => {
+            console.log('ERROR in UseAuthentication::authenticateUser::cognitoUser.authenticateUser', err);
+            reject(err);
+          }
+        });
+      });
+
       return true;
     }
     catch(err) {
-      console.log('ERROR in UseAuthentication::authenticateUser()', err);
+      console.log('ERROR in UseAuthentication::authenticateUser', err);
       clearCurrentCredentials();
       return false;
     }
   },
 
-  getJwtIdToken(): string {
-    const lastAuthUser = this.getLastAuthUser();
-    return localStorage.getItem(`CognitoIdentityServiceProvider.${clientId}.${lastAuthUser}.idToken`) || '';
+  getIdToken(): string {
+    const lastAuthUser = getLastAuthUser();
+    return localStorage.getItem(`CognitoIdentityServiceProvider.${CLIENT_ID}.${lastAuthUser}.idToken`) || '';
   },
 
-  getJwtRefreshToken(): string {
-    const lastAuthUser = this.getLastAuthUser();
-    return localStorage.getItem(`CognitoIdentityServiceProvider.${clientId}.${lastAuthUser}.refreshToken`) || '';
+  getOrganizationId(): string {
+    const idToken = this.getIdToken();
+    if (!idToken) return '';
+
+    const decodedIdToken: any = jwt_decode(idToken);
+    if (!decodedIdToken) return '';
+
+    return decodedIdToken['custom:organizationId'];
   },
 
-  getLastAuthUser(): string {
-    return localStorage.getItem(`CognitoIdentityServiceProvider.${clientId}.LastAuthUser`) || '';
+  getUserName(): string {
+    const idToken = this.getIdToken();
+    if (!idToken) return '';
+
+    const decodedIdToken: any = jwt_decode(idToken);
+    if (!decodedIdToken) return '';
+
+    return decodedIdToken['cognito:username'];
   },
 
-  getTokenOrganizationId(): string {
-    const token = this.getJwtIdToken();
-    if (!token) return '';
-    const decodedToken: any = jwt_decode(token);
-    if (!decodedToken) return '';
+  isTokenActive(): boolean {
+    const idToken = this.getIdToken();
+    if (!idToken) return false;
 
-    return decodedToken['custom:organizationId'];
-  },
+    const decodedIdToken: any = jwt_decode(idToken);
+    if (!decodedIdToken) return false;
 
-  getTokenUserName(): string {
-    const token = this.getJwtIdToken();
-    if (!token) return '';
-    const decodedToken: any = jwt_decode(token);
-    if (!decodedToken) return '';
-    
-    return decodedToken['cognito:username'];
+    const accessToken = getAccessToken();
+    if (!accessToken) return false;
+
+    const decodedAccessToken: any = jwt_decode(accessToken);
+    if (!decodedAccessToken) return false;
+
+    const now = (Date.now() / 1000);
+    const isActive = ((now <= decodedIdToken?.exp) && (now <= decodedAccessToken?.exp)); // && (this.getUserName() === getLastAuthUser())
+    return isActive;
   },
 
   isUserAuthenticated(): boolean {
     try {
-      const idToken = this.getJwtIdToken();
-      if (!idToken) return false;
-      const decodedIdToken: any = jwt_decode(idToken);
-      if (!decodedIdToken) return false;
-
-      const userName = decodedIdToken['cognito:username'];
-
-      if ((Date.now() / 1000 <= decodedIdToken.exp) && (userName === this.getLastAuthUser())) {
-        this.refreshSession();
+      if (this.isTokenActive()) {
+        this.refreshCredentials(this.getIdToken());
         return true;
       } else {
-        this.signOut();
-        return false;
+        this.refreshSession();
+        if (this.isTokenActive()) {
+          return true;
+        } else {
+          this.signOut();
+          return false;
+        }
       }
     }
     catch(err) {
@@ -115,25 +134,25 @@ export const AuthenticationService = {
       return false;
     }
   },
-
-  refreshCredentials() {
-    return new Promise<void>((resolve, reject) => {
-      clearCurrentCredentials();
+  
+  async refreshCredentials(idToken: string) {
+    clearCurrentCredentials();
     
-      const credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: identityPoolId,
-        Logins: {
-          [`cognito-idp.${region}.amazonaws.com/${userPoolId}`]: this.getJwtIdToken()
-        }
-      });
-      
-      AWS.config.credentials = credentials;
-      AWS.config.region = region;
-
+    const credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: IDENTITY_POOL_ID,
+      Logins: {
+        [`cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID}`]: idToken
+      }
+    });
+    
+    AWS.config.credentials = credentials;
+    AWS.config.region = REGION;
+    
+    await new Promise<void>((resolve, reject) => {
       credentials.refresh(err => {
         if (err) {
           console.log('ERROR in AuthenticationService::refreshCredentials::credentials.refresh', err);
-          reject();
+          reject(err);
         } else {
           resolve();
         }
@@ -142,43 +161,43 @@ export const AuthenticationService = {
   },  
 
   async refreshSession() {
-    return await new Promise<void>((resolve, reject) => {
-      const cognitoUser = getCurrentCognitoUser();
-      if (cognitoUser != null) { 
-        cognitoUser.getSession(async (err: any, session: CognitoUserSession) => {
+    console.log('In refreshSession()...');
+    const cognitoUser = getCurrentCognitoUser();
+    if (cognitoUser != null) { 
+      await new Promise<void>((resolve, reject) => {
+        cognitoUser.getSession(async (err: any, currentSession: CognitoUserSession) => {
           if (err) {
             console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.getSession', err);
-            resolve();
-          } else {
-            if (session && session.isValid()) {
+            reject(err);
+          } 
+          else {
+            if (currentSession && currentSession.isValid) {
               if (!AWS.config.credentials) {
-                await this.refreshCredentials();
+                this.refreshCredentials(currentSession.getIdToken().getJwtToken());
               }
               const credentials = AWS.config.credentials as AWS.CognitoIdentityCredentials;
-              // console.log('credentials?.needsRefresh()', credentials?.needsRefresh());
+              console.log('credentials?.needsRefresh()', credentials?.needsRefresh());
               if (credentials?.needsRefresh()) {
-                const refreshToken = session.getRefreshToken();
-                cognitoUser.refreshSession(refreshToken, async (err: any, session: CognitoUserSession) => {
+                const refreshToken = currentSession.getRefreshToken();
+                cognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
                   if (err) {
                     console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.refreshSession', err);
-                    resolve();
-                  } else {
-                    // console.log('SESSION REFRESHED SUCCESSFULLY');
-                    resolve();
+                    reject(err);
+                  } 
+                  else {
+                    if (newSession && newSession.isValid()) {
+                      console.log('SESSION REFRESHED SUCCESSFULLY');
+                      this.refreshCredentials(newSession.getIdToken().getJwtToken());
+                      resolve();
+                    }
                   }
                 });
-              } else {
-                resolve();
-              }
-            } else {
-              resolve();
-            }
+              } 
+            } 
           }
         })
-      } else {
-        resolve();
-      }
-    });
+      });
+    }
   },
 
   signOut() {

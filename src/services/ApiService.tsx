@@ -68,7 +68,7 @@ export const ApiService = {
       }
       
       const headers = {
-        'jwt': AuthenticationService.getJwtIdToken(), // AWS Lambda will parse jwt to get 'custom:organizationId' attribute
+        'jwt': AuthenticationService.getIdToken(), // AWS Lambda will parse jwt to get 'custom:organizationId' attribute
         'Content-Type': 'application/json', 
         'Accept': 'application/json' 
       }
