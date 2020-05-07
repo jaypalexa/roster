@@ -1,3 +1,11 @@
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import DateFormField from 'components/FormFields/DateFormField';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
+import IntegerFormField from 'components/FormFields/IntegerFormField';
+import ListFormField from 'components/FormFields/ListFormField';
+import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
+import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -5,18 +13,12 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
+import HatchlingsEventService from 'services/HatchlingsEventService';
+import HatchlingsEventModel from 'types/HatchlingsEventModel';
+import NameValuePair from 'types/NameValuePair';
+import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import HatchlingsEventService from '../../services/HatchlingsEventService';
-import HatchlingsEventModel from '../../types/HatchlingsEventModel';
-import NameValuePair from '../../types/NameValuePair';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import IntegerFormField from '../FormFields/IntegerFormField';
-import ListFormField from '../FormFields/ListFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './HatchlingsEvents.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -38,6 +40,7 @@ const HatchlingsEvents: React.FC = () => {
   const [onDialogNo, setOnDialogNo] = useState(() => { });
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   const tableColumns = [
@@ -104,12 +107,17 @@ const HatchlingsEvents: React.FC = () => {
 
   useMount(() => {
     const getHatchlingsEvents = async () => {
-      const hatchlingsEvents = await HatchlingsEventService.getHatchlingsEvents();
-      setCurrentHatchlingsEvents(hatchlingsEvents);
-      if (currentHatchlingsEvent.hatchlingsEventId) {
-        reset(currentHatchlingsEvent);
-        setCurrentHatchlingsEvent(currentHatchlingsEvent);
-        setIsFormEnabled(true);
+      try {
+        setShowSpinner(true);
+        const hatchlingsEvents = await HatchlingsEventService.getHatchlingsEvents();
+        setCurrentHatchlingsEvents(hatchlingsEvents);
+      } 
+      catch (err) {
+        console.log(err);
+        toast.error(constants.ERROR.GENERIC);
+      }
+      finally {
+        setShowSpinner(false);
       }
     };
     getHatchlingsEvents();
@@ -122,29 +130,46 @@ const HatchlingsEvents: React.FC = () => {
     setEditingStarted(false);
   }, [editingStarted]);
 
-  const fetchHatchlingsEvent = (hatchlingsEventId: string) => {
-    const getHatchlingsEvent = async () => {
+  const fetchHatchlingsEvent = async (hatchlingsEventId: string) => {
+    try {
+      setShowSpinner(true);
       const hatchlingsEvent = await HatchlingsEventService.getHatchlingsEvent(hatchlingsEventId);
       reset(hatchlingsEvent);
       setCurrentHatchlingsEvent(hatchlingsEvent);
-    };
-    getHatchlingsEvent();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
   const deleteHatchlingsEvent = (hatchlingsEventId: string) => {
-    const deleteHatchlingsEvent = async () => {
-      await HatchlingsEventService.deleteHatchlingsEvent(hatchlingsEventId);
-      const hatchlingsEvent = {} as HatchlingsEventModel;
-      reset(hatchlingsEvent);
-      setCurrentHatchlingsEvent(hatchlingsEvent);
-      const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEventId);
+    try {
+      setShowSpinner(true);
+      const deleteHatchlingsEvent = async () => {
+        await HatchlingsEventService.deleteHatchlingsEvent(hatchlingsEventId);
+        const hatchlingsEvent = {} as HatchlingsEventModel;
+        reset(hatchlingsEvent);
+        setCurrentHatchlingsEvent(hatchlingsEvent);
+        const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEventId);
       if (~index) {
-        var updatedCurrentHatchlingsEvents = [...currentHatchlingsEvents];
-        updatedCurrentHatchlingsEvents.splice(index, 1)
-        setCurrentHatchlingsEvents(updatedCurrentHatchlingsEvents);
+          var updatedCurrentHatchlingsEvents = [...currentHatchlingsEvents];
+          updatedCurrentHatchlingsEvents.splice(index, 1)
+          setCurrentHatchlingsEvents(updatedCurrentHatchlingsEvents);
       }
     };
-    deleteHatchlingsEvent();
+      deleteHatchlingsEvent();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
   const onAddHatchlingsEventButtonClick = (eventType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -206,14 +231,14 @@ const HatchlingsEvents: React.FC = () => {
     }
   };
 
-  const onDeleteHatchlingsEventClick = (hatchlingsEventId: string, turtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteHatchlingsEventClick = (hatchlingsEventId: string, eventDate: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
       deleteHatchlingsEvent(hatchlingsEventId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete turtle '${turtleName}' ?`);
+    setDialogBodyText(`Delete event from '${eventDate}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -229,21 +254,31 @@ const HatchlingsEvents: React.FC = () => {
     toast.success('Record saved');
   });
 
-  const saveHatchlingsEvent = ((modifiedHatchlingsEvent: HatchlingsEventModel) => {
+  const saveHatchlingsEvent = async (modifiedHatchlingsEvent: HatchlingsEventModel) => {
     if (!formState.dirty) return;
 
-    const patchedHatchlingsEvent = { ...currentHatchlingsEvent, ...modifiedHatchlingsEvent };
-    HatchlingsEventService.saveHatchlingsEvent(patchedHatchlingsEvent);
-    reset(patchedHatchlingsEvent);
-    setCurrentHatchlingsEvent(patchedHatchlingsEvent);
-    const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === patchedHatchlingsEvent.hatchlingsEventId);
-    if (~index) {
-      currentHatchlingsEvents[index] = { ...patchedHatchlingsEvent };
-    } else {
-      currentHatchlingsEvents.push(patchedHatchlingsEvent);
+    try {
+      setShowSpinner(true);
+      const patchedHatchlingsEvent = { ...currentHatchlingsEvent, ...modifiedHatchlingsEvent };
+      await HatchlingsEventService.saveHatchlingsEvent(patchedHatchlingsEvent);
+      reset(patchedHatchlingsEvent);
+      setCurrentHatchlingsEvent(patchedHatchlingsEvent);
+      const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === patchedHatchlingsEvent.hatchlingsEventId);
+      if (~index) {
+          currentHatchlingsEvents[index] = { ...patchedHatchlingsEvent };
+      } else {
+        currentHatchlingsEvents.push(patchedHatchlingsEvent);
+      }
+      setCurrentHatchlingsEvents([...currentHatchlingsEvents]);
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
     }
-    setCurrentHatchlingsEvents([...currentHatchlingsEvents]);
-  });
+    finally {
+      setShowSpinner(false);
+    }
+  };
 
   const onCancel = () => {
     reset(currentHatchlingsEvent);
@@ -271,6 +306,7 @@ const HatchlingsEvents: React.FC = () => {
 
   return (
     <div id='hatchlingsEvents'>
+      <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}

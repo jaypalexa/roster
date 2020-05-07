@@ -1,3 +1,13 @@
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import DateFormField from 'components/FormFields/DateFormField';
+import FormFieldGroup from 'components/FormFields/FormFieldGroup';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
+import IntegerFormField from 'components/FormFields/IntegerFormField';
+import ListFormField from 'components/FormFields/ListFormField';
+import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
+import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -5,20 +15,12 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
+import WashbacksEventService from 'services/WashbacksEventService';
+import WashbacksEventModel from 'types/WashbacksEventModel';
+import NameValuePair from 'types/NameValuePair';
+import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import WashbacksEventService from '../../services/WashbacksEventService';
-import NameValuePair from '../../types/NameValuePair';
-import WashbacksEventModel from '../../types/WashbacksEventModel';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
-import CheckboxFormField from '../FormFields/CheckboxFormField';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldGroup from '../FormFields/FormFieldGroup';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import IntegerFormField from '../FormFields/IntegerFormField';
-import ListFormField from '../FormFields/ListFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './WashbacksEvents.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -40,6 +42,7 @@ const WashbacksEvents: React.FC = () => {
   const [onDialogNo, setOnDialogNo] = useState(() => { });
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   const tableColumns = [
@@ -112,13 +115,18 @@ const WashbacksEvents: React.FC = () => {
 
   useMount(() => {
     const getWashbacksEvents = async () => {
-      const washbacksEvents = await WashbacksEventService.getWashbacksEvents();
-      setCurrentWashbacksEvents(washbacksEvents);
-      // if (currentWashbacksEvent.washbacksEventId) {
-      //   reset(currentWashbacksEvent);
-      //   setCurrentWashbacksEvent(currentWashbacksEvent);
-      //   setIsFormEnabled(true);
-      // }
+      try {
+        setShowSpinner(true);
+        const washbacksEvents = await WashbacksEventService.getWashbacksEvents();
+        setCurrentWashbacksEvents(washbacksEvents);
+      } 
+      catch (err) {
+        console.log(err);
+        toast.error(constants.ERROR.GENERIC);
+      }
+      finally {
+        setShowSpinner(false);
+      }
     };
     getWashbacksEvents();
   });
@@ -130,29 +138,46 @@ const WashbacksEvents: React.FC = () => {
     setEditingStarted(false);
   }, [editingStarted]);
 
-  const fetchWashbacksEvent = (washbacksEventId: string) => {
-    const getWashbacksEvent = async () => {
+  const fetchWashbacksEvent = async (washbacksEventId: string) => {
+    try {
+      setShowSpinner(true);
       const washbacksEvent = await WashbacksEventService.getWashbacksEvent(washbacksEventId);
       reset(washbacksEvent);
       setCurrentWashbacksEvent(washbacksEvent);
-    };
-    getWashbacksEvent();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
   const deleteWashbacksEvent = (washbacksEventId: string) => {
-    const deleteWashbacksEvent = async () => {
-      await WashbacksEventService.deleteWashbacksEvent(washbacksEventId);
-      const washbacksEvent = {} as WashbacksEventModel;
-      reset(washbacksEvent);
-      setCurrentWashbacksEvent(washbacksEvent);
-      const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === washbacksEventId);
+    try {
+      setShowSpinner(true);
+      const deleteWashbacksEvent = async () => {
+        await WashbacksEventService.deleteWashbacksEvent(washbacksEventId);
+        const washbacksEvent = {} as WashbacksEventModel;
+        reset(washbacksEvent);
+        setCurrentWashbacksEvent(washbacksEvent);
+        const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === washbacksEventId);
       if (~index) {
-        var updatedCurrentWashbacksEvents = [...currentWashbacksEvents];
-        updatedCurrentWashbacksEvents.splice(index, 1)
-        setCurrentWashbacksEvents(updatedCurrentWashbacksEvents);
+          var updatedCurrentWashbacksEvents = [...currentWashbacksEvents];
+          updatedCurrentWashbacksEvents.splice(index, 1)
+          setCurrentWashbacksEvents(updatedCurrentWashbacksEvents);
       }
     };
-    deleteWashbacksEvent();
+      deleteWashbacksEvent();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
   const onAddWashbacksEventButtonClick = (eventType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -214,14 +239,14 @@ const WashbacksEvents: React.FC = () => {
     }
   };
 
-  const onDeleteWashbacksEventClick = (washbacksEventId: string, turtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteWashbacksEventClick = (washbacksEventId: string, eventDate: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
       deleteWashbacksEvent(washbacksEventId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete turtle '${turtleName}' ?`);
+    setDialogBodyText(`Delete event from '${eventDate}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -237,21 +262,31 @@ const WashbacksEvents: React.FC = () => {
     toast.success('Record saved');
   });
 
-  const saveWashbacksEvent = ((modifiedWashbacksEvent: WashbacksEventModel) => {
+  const saveWashbacksEvent = async (modifiedWashbacksEvent: WashbacksEventModel) => {
     if (!formState.dirty) return;
 
-    const patchedWashbacksEvent = { ...currentWashbacksEvent, ...modifiedWashbacksEvent };
-    WashbacksEventService.saveWashbacksEvent(patchedWashbacksEvent);
-    reset(patchedWashbacksEvent);
-    setCurrentWashbacksEvent(patchedWashbacksEvent);
-    const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === patchedWashbacksEvent.washbacksEventId);
-    if (~index) {
-      currentWashbacksEvents[index] = { ...patchedWashbacksEvent };
-    } else {
-      currentWashbacksEvents.push(patchedWashbacksEvent);
+    try {
+      setShowSpinner(true);
+      const patchedWashbacksEvent = { ...currentWashbacksEvent, ...modifiedWashbacksEvent };
+      await WashbacksEventService.saveWashbacksEvent(patchedWashbacksEvent);
+      reset(patchedWashbacksEvent);
+      setCurrentWashbacksEvent(patchedWashbacksEvent);
+      const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === patchedWashbacksEvent.washbacksEventId);
+      if (~index) {
+          currentWashbacksEvents[index] = { ...patchedWashbacksEvent };
+      } else {
+        currentWashbacksEvents.push(patchedWashbacksEvent);
+      }
+      setCurrentWashbacksEvents([...currentWashbacksEvents]);
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
     }
-    setCurrentWashbacksEvents([...currentWashbacksEvents]);
-  });
+    finally {
+      setShowSpinner(false);
+    }
+  };
 
   const onCancel = () => {
     reset(currentWashbacksEvent);
@@ -279,6 +314,7 @@ const WashbacksEvents: React.FC = () => {
 
   return (
     <div id='washbacksEvents'>
+      <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}

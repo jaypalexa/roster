@@ -1,16 +1,34 @@
-import { toNumber } from 'utils';
-import WashbacksEventModel from '../types/WashbacksEventModel';
+import ApiService, { ApiRequestPayload } from 'services/ApiService';
+import AuthenticationService from 'services/AuthenticationService';
+import WashbacksEventModel from 'types/WashbacksEventModel';
+import { sortByProperty, toNumber } from 'utils';
+
+const RESOURCE_SINGLE = '/washbacks-events/{washbacksEventId}';
+const RESOURCE_MANY = '/washbacks-events';
 
 const WashbacksEventService = {
-  getWashbacksEvent(washbacksEventId?: string): WashbacksEventModel {
-    let washbacksEvent: WashbacksEventModel | undefined;
-    if (washbacksEventId) {
-      const washbacksEvents = this.getWashbacksEvents();
-      washbacksEvent = washbacksEvents.find(x => x.washbacksEventId === washbacksEventId);
-    }
-    return washbacksEvent || {} as WashbacksEventModel;
+
+  async getWashbacksEvents(): Promise<WashbacksEventModel[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_MANY;
+
+    const response = await ApiService.getMany<WashbacksEventModel>(apiRequestPayload);
+    response.sort(sortByProperty('eventDate')); 
+    return response;
   },
-  saveWashbacksEvent(washbacksEvent: WashbacksEventModel) {
+
+  async getWashbacksEvent(washbacksEventId: string): Promise<WashbacksEventModel> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { washbacksEventId: washbacksEventId };
+
+    const response = await ApiService.get<WashbacksEventModel>(apiRequestPayload);
+    return response;
+  },
+
+  async saveWashbacksEvent(washbacksEvent: WashbacksEventModel) {
+    washbacksEvent.organizationId = AuthenticationService.getOrganizationId();
+
     // TODO: HACK: fix in SQL - released total
     if (washbacksEvent.eventType === 'Released') {
       washbacksEvent.beachEventCount = toNumber(washbacksEvent.beachEventCount);
@@ -19,26 +37,22 @@ const WashbacksEventService = {
     } else {
       washbacksEvent.eventCount = toNumber(washbacksEvent.eventCount);
     }
-    const washbacksEvents = this.getWashbacksEvents();
-    const index = washbacksEvents.findIndex(x => x.washbacksEventId === washbacksEvent.washbacksEventId);
-    if (~index) {
-      washbacksEvents[index] = {...washbacksEvent};
-    } else {
-      washbacksEvents.push(washbacksEvent);
-    }
-    localStorage.setItem('washbacksEvents', JSON.stringify(washbacksEvents));
+
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { washbacksEventId: washbacksEvent.washbacksEventId };
+
+    await ApiService.save<WashbacksEventModel>(apiRequestPayload, washbacksEvent);
   },
-  deleteWashbacksEvent(washbacksEventId: string) {
-    const washbacksEvents = this.getWashbacksEvents();
-    const index = washbacksEvents.findIndex(x => x.washbacksEventId === washbacksEventId);
-    if (~index) {
-      washbacksEvents.splice(index, 1);
-    }
-    localStorage.setItem('washbacksEvents', JSON.stringify(washbacksEvents));
+
+  async deleteWashbacksEvent(washbacksEventId: string) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { washbacksEventId: washbacksEventId };
+
+    const response = await ApiService.delete(apiRequestPayload);
+    return response;
   },
-  getWashbacksEvents(): WashbacksEventModel[] {
-    return JSON.parse(localStorage.getItem('washbacksEvents') || '[]');
-  }
 };
 
 export default WashbacksEventService;

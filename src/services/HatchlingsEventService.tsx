@@ -1,16 +1,34 @@
+import ApiService, { ApiRequestPayload } from 'services/ApiService';
+import AuthenticationService from 'services/AuthenticationService';
 import HatchlingsEventModel from 'types/HatchlingsEventModel';
-import { toNumber } from 'utils';
+import { sortByProperty, toNumber } from 'utils';
+
+const RESOURCE_SINGLE = '/hatchlings-events/{hatchlingsEventId}';
+const RESOURCE_MANY = '/hatchlings-events';
 
 const HatchlingsEventService = {
-  getHatchlingsEvent(hatchlingsEventId?: string): HatchlingsEventModel {
-    let hatchlingsEvent: HatchlingsEventModel | undefined;
-    if (hatchlingsEventId) {
-      const hatchlingsEvents = this.getHatchlingsEvents();
-      hatchlingsEvent = hatchlingsEvents.find(x => x.hatchlingsEventId === hatchlingsEventId);
-    }
-    return hatchlingsEvent || {} as HatchlingsEventModel;
+
+  async getHatchlingsEvents(): Promise<HatchlingsEventModel[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_MANY;
+
+    const response = await ApiService.getMany<HatchlingsEventModel>(apiRequestPayload);
+    response.sort(sortByProperty('eventDate')); 
+    return response;
   },
-  saveHatchlingsEvent(hatchlingsEvent: HatchlingsEventModel) {
+
+  async getHatchlingsEvent(hatchlingsEventId: string): Promise<HatchlingsEventModel> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { hatchlingsEventId: hatchlingsEventId };
+
+    const response = await ApiService.get<HatchlingsEventModel>(apiRequestPayload);
+    return response;
+  },
+
+  async saveHatchlingsEvent(hatchlingsEvent: HatchlingsEventModel) {
+    hatchlingsEvent.organizationId = AuthenticationService.getOrganizationId();
+
     // TODO: HACK: fix in SQL - released total
     if (hatchlingsEvent.eventType === 'Released') {
       hatchlingsEvent.beachEventCount = toNumber(hatchlingsEvent.beachEventCount);
@@ -19,26 +37,22 @@ const HatchlingsEventService = {
     } else {
       hatchlingsEvent.eventCount = toNumber(hatchlingsEvent.eventCount);
     }
-    const hatchlingsEvents = this.getHatchlingsEvents();
-    const index = hatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEvent.hatchlingsEventId);
-    if (~index) {
-      hatchlingsEvents[index] = {...hatchlingsEvent};
-    } else {
-      hatchlingsEvents.push(hatchlingsEvent);
-    }
-    localStorage.setItem('hatchlingsEvents', JSON.stringify(hatchlingsEvents));
+
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { hatchlingsEventId: hatchlingsEvent.hatchlingsEventId };
+
+    await ApiService.save<HatchlingsEventModel>(apiRequestPayload, hatchlingsEvent);
   },
-  deleteHatchlingsEvent(hatchlingsEventId: string) {
-    const hatchlingsEvents = this.getHatchlingsEvents();
-    const index = hatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEventId);
-    if (~index) {
-      hatchlingsEvents.splice(index, 1);
-    }
-    localStorage.setItem('hatchlingsEvents', JSON.stringify(hatchlingsEvents));
+
+  async deleteHatchlingsEvent(hatchlingsEventId: string) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { hatchlingsEventId: hatchlingsEventId };
+
+    const response = await ApiService.delete(apiRequestPayload);
+    return response;
   },
-  getHatchlingsEvents(): HatchlingsEventModel[] {
-    return JSON.parse(localStorage.getItem('hatchlingsEvents') || '[]');
-  }
 };
 
 export default HatchlingsEventService;
