@@ -1,4 +1,4 @@
-import NameValuePair from '../types/NameValuePair';
+import NameValuePair from 'types/NameValuePair';
 
 // VALUE is the "key"
 // NAME is the display value

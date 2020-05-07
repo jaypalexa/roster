@@ -1,7 +1,7 @@
 export default interface HoldingTankMeasurementModel {
   [key: string]: any;
-  tankMeasurementId: string;
-  tankId: string;
+  holdingTankMeasurementId: string;
+  holdingTankId: string;
   dateMeasured: Date;
   temperature: number;
   salinity: number;

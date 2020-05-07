@@ -1,5 +1,6 @@
 export default interface HoldingTankModel {
-  tankId: string;
+  [key: string]: any;
+  holdingTankId: string;
   organizationId: string;
-  tankName: string;
+  holdingTankName: string;
 };

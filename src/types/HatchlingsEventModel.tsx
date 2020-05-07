@@ -1,4 +1,5 @@
 export default interface HatchlingsEventModel {
+  [key: string]: any;
   hatchlingsEventId: string;
   organizationId: string;
   eventType: string;

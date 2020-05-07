@@ -1,4 +1,5 @@
 export default interface WashbacksAcquiredEventModel {
+  [key: string]: any;
   washbacksAcquiredEventId: string;
   organizationId: string;
   speciesCode: string;

@@ -1,5 +1,5 @@
+import HatchlingsEventModel from 'types/HatchlingsEventModel';
 import { toNumber } from 'utils';
-import HatchlingsEventModel from '../types/HatchlingsEventModel';
 
 const HatchlingsEventService = {
   getHatchlingsEvent(hatchlingsEventId?: string): HatchlingsEventModel {

@@ -1,12 +1,15 @@
+import browserHistory from 'browserHistory';
+import Spinner from 'components/Spinner/Spinner';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
-import HoldingTankMeasurementService from '../../services/HoldingTankMeasurementService';
-import HoldingTankMeasurementModel from '../../types/HoldingTankMeasurementModel';
+import { toast } from 'react-toastify';
+import HoldingTankMeasurementService from 'services/HoldingTankMeasurementService';
+import HoldingTankMeasurementModel from 'types/HoldingTankMeasurementModel';
+import { constants } from 'utils';
 import './HoldingTankGraphs.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -19,6 +22,7 @@ const HoldingTankGraphs: React.FC = () => {
   const [currentGraphType, setCurrentGraphType] = useState<string>();
   const [currentHoldingTankMeasurements, setCurrentHoldingTankMeasurements] = useState([] as Array<HoldingTankMeasurementModel>);
   const [data, setData] = useState<GraphData>({} as GraphData);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   interface GraphDataset {
     label: string;
@@ -133,14 +137,25 @@ const HoldingTankGraphs: React.FC = () => {
   }
 
   useMount(() => {
-    if (!appContext.holdingTank?.tankId) {
+    const holdingTankId = appContext.holdingTank?.holdingTankId;
+    if (!holdingTankId) {
       browserHistory.push('/holding-tanks')
     } else {
-      const getHoldingTankMeasurementsForTank = async () => {
-        const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurementsForTank(appContext.holdingTank?.tankId);
-        setCurrentHoldingTankMeasurements(holdingTankMeasurements);
-      };
-      getHoldingTankMeasurementsForTank();
+      try {
+        setShowSpinner(true);
+        const getHoldingTankMeasurementsForTank = async () => {
+          const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurements(holdingTankId);
+          setCurrentHoldingTankMeasurements(holdingTankMeasurements);
+        };
+        getHoldingTankMeasurementsForTank();
+      }
+      catch (err) {
+        console.log(err);
+        toast.error(constants.ERROR.GENERIC);
+      }
+      finally {
+        setShowSpinner(false);
+      }
     }
   });
 
@@ -165,6 +180,7 @@ const HoldingTankGraphs: React.FC = () => {
 
   return (
     <div id='holdingTankGraphs'>
+      <Spinner isActive={showSpinner} />
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
@@ -179,7 +195,7 @@ const HoldingTankGraphs: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Water Graphs for {appContext.holdingTank?.tankName}</h1>
+          <h1 className='title has-text-centered'>Water Graphs for {appContext.holdingTank?.holdingTankName}</h1>
 
           <div className='field has-text-centered'>
             <input className='is-checkradio is-medium' id='temperature' type='radio' name='graphTypeGroup' value='temperature' checked={currentGraphType === 'temperature'} onChange={onGraphTypeChange} />

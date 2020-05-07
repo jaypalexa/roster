@@ -1,5 +1,6 @@
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
-import SeaTurtleModel from '../types/SeaTurtleModel';
+import AuthenticationService from 'services/AuthenticationService';
+import SeaTurtleModel from 'types/SeaTurtleModel';
 
 const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}';
 const RESOURCE_MANY = '/sea-turtles';
@@ -24,6 +25,8 @@ const SeaTurtleService = {
   },
 
   async saveSeaTurtle(seaTurtle: SeaTurtleModel) {
+    seaTurtle.organizationId = AuthenticationService.getOrganizationId();
+
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.resource = RESOURCE_SINGLE;
     apiRequestPayload.pathParameters = { seaTurtleId: seaTurtle.seaTurtleId };

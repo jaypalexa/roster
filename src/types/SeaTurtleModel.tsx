@@ -1,6 +1,7 @@
 export default interface SeaTurtleModel {
   [key: string]: any;
   seaTurtleId: string;
+  organizationId: string;
   seaTurtleName: string;
   sidNumber: string;
   strandingIdNumber: string;

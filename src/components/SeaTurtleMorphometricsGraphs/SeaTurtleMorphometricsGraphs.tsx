@@ -1,12 +1,15 @@
+import browserHistory from 'browserHistory';
+import Spinner from 'components/Spinner/Spinner';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
-import SeaTurtleMorphometricService from '../../services/SeaTurtleMorphometricService';
-import SeaTurtleMorphometricModel from '../../types/SeaTurtleMorphometricModel';
+import { toast } from 'react-toastify';
+import SeaTurtleMorphometricService from 'services/SeaTurtleMorphometricService';
+import SeaTurtleMorphometricModel from 'types/SeaTurtleMorphometricModel';
+import { constants } from 'utils';
 import './SeaTurtleMorphometricsGraphs.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -19,6 +22,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
   const [currentGraphTypes, setCurrentGraphTypes] = useState<Map<string, boolean>>();
   const [currentSeaTurtleMorphometrics, setCurrentSeaTurtleMorphometrics] = useState([] as Array<SeaTurtleMorphometricModel>);
   const [data, setData] = useState<GraphData>({} as GraphData);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   interface GraphDataset {
     label: string;
@@ -147,11 +151,21 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
-      const getSeaTurtleMorphometricsForTurtle = async () => {
-        const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometrics(seaTurtleId);
-        setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
-      };
-      getSeaTurtleMorphometricsForTurtle();
+      try {
+        setShowSpinner(true);
+        const getSeaTurtleMorphometricsForTurtle = async () => {
+          const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometrics(seaTurtleId);
+          setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
+        };
+        getSeaTurtleMorphometricsForTurtle();
+      }
+      catch (err) {
+        console.log(err);
+        toast.error(constants.ERROR.GENERIC);
+      }
+      finally {
+        setShowSpinner(false);
+      }
     }
   });
 
@@ -182,6 +196,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
 
   return (
     <div id='seaTurtleMorphometricsGraphs'>
+      <Spinner isActive={showSpinner} />
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>

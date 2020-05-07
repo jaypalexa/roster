@@ -1,45 +1,52 @@
-import { toNumber } from 'utils';
-import HoldingTankMeasurementModel from '../types/HoldingTankMeasurementModel';
+import ApiService, { ApiRequestPayload } from 'services/ApiService';
+import HoldingTankMeasurementModel from 'types/HoldingTankMeasurementModel';
+import { sortByProperty, toNumber } from 'utils';
+
+const RESOURCE_SINGLE = '/holding-tanks/{holdingTankId}/holding-tank-measurements/{holdingTankMeasurementId}';
+const RESOURCE_MANY = '/holding-tanks/{holdingTankId}/holding-tank-measurements';
 
 const HoldingTankMeasurementService = {
-  getHoldingTankMeasurement(tankMeasurementId?: string): HoldingTankMeasurementModel {
-    let holdingTankMeasurement: HoldingTankMeasurementModel | undefined;
-    if (tankMeasurementId) {
-      const holdingTankMeasurements = this.getAllHoldingTankMeasurements();
-      holdingTankMeasurement = holdingTankMeasurements.find(x => x.tankMeasurementId === tankMeasurementId);
-    }
-    return holdingTankMeasurement || {} as HoldingTankMeasurementModel;
+
+  async getHoldingTankMeasurements(holdingTankId: string): Promise<HoldingTankMeasurementModel[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_MANY;
+    apiRequestPayload.pathParameters = { holdingTankId: holdingTankId };
+
+    const response = await ApiService.getMany<HoldingTankMeasurementModel>(apiRequestPayload);
+    response.sort(sortByProperty('dateMeasured')); 
+    return response;
   },
-  saveHoldingTankMeasurement(holdingTankMeasurement: HoldingTankMeasurementModel) {
+
+  async getHoldingTankMeasurement(holdingTankId: string, holdingTankMeasurementId: string): Promise<HoldingTankMeasurementModel> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { holdingTankId: holdingTankId, holdingTankMeasurementId: holdingTankMeasurementId };
+
+    const response = await ApiService.get<HoldingTankMeasurementModel>(apiRequestPayload);
+    return response;
+  },
+
+  async saveHoldingTankMeasurement(holdingTankMeasurement: HoldingTankMeasurementModel) {
     holdingTankMeasurement.temperature = toNumber(holdingTankMeasurement.temperature);
     holdingTankMeasurement.salinity = toNumber(holdingTankMeasurement.salinity);
     holdingTankMeasurement.ph = toNumber(holdingTankMeasurement.ph);
 
-    const holdingTankMeasurements = this.getAllHoldingTankMeasurements();
-    const index = holdingTankMeasurements.findIndex(x => x.tankMeasurementId === holdingTankMeasurement.tankMeasurementId);
-    if (~index) {
-      holdingTankMeasurements[index] = { ...holdingTankMeasurement };
-    } else {
-      holdingTankMeasurements.push(holdingTankMeasurement);
-    }
-    localStorage.setItem('holdingTankMeasurements', JSON.stringify(holdingTankMeasurements));
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { holdingTankId: holdingTankMeasurement.holdingTankId, holdingTankMeasurementId: holdingTankMeasurement.holdingTankMeasurementId };
+
+    await ApiService.save<HoldingTankMeasurementModel>(apiRequestPayload, holdingTankMeasurement);
   },
-  deleteHoldingTankMeasurement(tankMeasurementId: string) {
-    const holdingTankMeasurements = this.getAllHoldingTankMeasurements();
-    const index = holdingTankMeasurements.findIndex(x => x.tankMeasurementId === tankMeasurementId);
-    if (~index) {
-      holdingTankMeasurements.splice(index, 1);
-    }
-    localStorage.setItem('holdingTankMeasurements', JSON.stringify(holdingTankMeasurements));
+
+  async deleteHoldingTankMeasurement(holdingTankId: string, holdingTankMeasurementId: string) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { holdingTankId: holdingTankId, holdingTankMeasurementId: holdingTankMeasurementId };
+
+    const response = await ApiService.delete(apiRequestPayload);
+    return response;
   },
-  getHoldingTankMeasurementsForTank(tankId?: string): HoldingTankMeasurementModel[] {
-    const allHoldingTankMeasurements: HoldingTankMeasurementModel[] = JSON.parse(localStorage.getItem('holdingTankMeasurements') || '[]')
-    const holdingTankMeasurements = allHoldingTankMeasurements.length > 0 ? allHoldingTankMeasurements.filter(tag => tag.tankId === tankId) : [];
-    return holdingTankMeasurements;
-  },
-  getAllHoldingTankMeasurements(): HoldingTankMeasurementModel[] {
-    return JSON.parse(localStorage.getItem('holdingTankMeasurements') || '[]');
-  }
+
 };
 
 export default HoldingTankMeasurementService;

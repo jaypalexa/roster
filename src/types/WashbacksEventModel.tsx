@@ -1,4 +1,5 @@
 export default interface WashbacksEventModel {
+  [key: string]: any;
   washbacksEventId: string;
   organizationId: string;
   eventType: string;

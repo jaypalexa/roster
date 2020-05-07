@@ -1,19 +1,21 @@
+import browserHistory from 'browserHistory';
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
+import TextFormField from 'components/FormFields/TextFormField';
+import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
+import Spinner from 'components/Spinner/Spinner';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import HoldingTankService from 'services/HoldingTankService';
+import HoldingTankModel from 'types/HoldingTankModel';
+import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
-import HoldingTankService from '../../services/HoldingTankService';
-import HoldingTankModel from '../../types/HoldingTankModel';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import TextFormField from '../FormFields/TextFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './HoldingTanks.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -34,6 +36,7 @@ const HoldingTanks: React.FC = () => {
   const [onDialogNo, setOnDialogNo] = useState(() => { });
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   const tableColumns = [
@@ -43,14 +46,14 @@ const HoldingTanks: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankClick(row.tankId, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankClick(row.holdingTankId, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankClick(row.tankId, row.tankName, event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankClick(row.holdingTankId, row.holdingTankName, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Name',
@@ -73,12 +76,22 @@ const HoldingTanks: React.FC = () => {
 
   useMount(() => {
     const getHoldingTanks = async () => {
-      const holdingTanks = await HoldingTankService.getHoldingTanks();
-      setCurrentHoldingTanks(holdingTanks);
-      if (appContext.holdingTank?.tankId) {
-        reset(appContext.holdingTank);
-        setCurrentHoldingTank(appContext.holdingTank);
-        setIsFormEnabled(true);
+      try {
+        setShowSpinner(true);
+        const holdingTanks = await HoldingTankService.getHoldingTanks();
+        setCurrentHoldingTanks(holdingTanks);
+        if (appContext.holdingTank?.holdingTankId) {
+          reset(appContext.holdingTank);
+          setCurrentHoldingTank(appContext.holdingTank);
+          setIsFormEnabled(true);
+        }
+      } 
+      catch (err) {
+        console.log(err);
+        toast.error(constants.ERROR.GENERIC);
+      }
+      finally {
+        setShowSpinner(false);
       }
     };
     getHoldingTanks();
@@ -95,35 +108,52 @@ const HoldingTanks: React.FC = () => {
     setAppContext({ ...appContext, holdingTank: holdingTank });
   }
 
-  const fetchHoldingTank = (tankId: string) => {
-    const getHoldingTank = async () => {
-      const holdingTank = await HoldingTankService.getHoldingTank(tankId);
+  const fetchHoldingTank = async (holdingTankId: string) => {
+    try {
+      setShowSpinner(true);
+      const holdingTank = await HoldingTankService.getHoldingTank(holdingTankId);
       reset(holdingTank);
       setCurrentHoldingTank(holdingTank);
-    };
-    getHoldingTank();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
-  const deleteHoldingTank = (tankId: string) => {
-    const deleteHoldingTank = async () => {
-      await HoldingTankService.deleteHoldingTank(tankId);
-      const holdingTank = {} as HoldingTankModel;
-      reset(holdingTank);
-      setCurrentHoldingTank(holdingTank);
-      const index = currentHoldingTanks.findIndex(x => x.tankId === tankId);
+  const deleteHoldingTank = (holdingTankId: string) => {
+    try {
+      setShowSpinner(true);
+      const deleteHoldingTank = async () => {
+        await HoldingTankService.deleteHoldingTank(holdingTankId);
+        const holdingTank = {} as HoldingTankModel;
+        reset(holdingTank);
+        setCurrentHoldingTank(holdingTank);
+        const index = currentHoldingTanks.findIndex(x => x.holdingTankId === holdingTankId);
       if (~index) {
-        var updatedCurrentHoldingTanks = [...currentHoldingTanks];
-        updatedCurrentHoldingTanks.splice(index, 1)
-        setCurrentHoldingTanks(updatedCurrentHoldingTanks);
+          var updatedCurrentHoldingTanks = [...currentHoldingTanks];
+          updatedCurrentHoldingTanks.splice(index, 1)
+          setCurrentHoldingTanks(updatedCurrentHoldingTanks);
       }
     };
-    deleteHoldingTank();
+      deleteHoldingTank();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
   const onAddButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const holdingTank = {} as HoldingTankModel;
-      holdingTank.tankId = uuidv4().toLowerCase();
+      holdingTank.holdingTankId = uuidv4().toLowerCase();
       reset(holdingTank);
       setCurrentHoldingTank(holdingTank);
       setIsFormEnabled(true);
@@ -201,25 +231,35 @@ const HoldingTanks: React.FC = () => {
     toast.success('Record saved');
   });
 
-  const saveHoldingTank = ((modifiedHoldingTank: HoldingTankModel) => {
+  const saveHoldingTank = async (modifiedHoldingTank: HoldingTankModel) => {
     if (!formState.dirty) return;
 
-    const patchedHoldingTank = { ...appContext.holdingTank, ...modifiedHoldingTank };
-    HoldingTankService.saveHoldingTank(patchedHoldingTank);
-    reset(patchedHoldingTank);
-    setCurrentHoldingTank(patchedHoldingTank);
-    const index = currentHoldingTanks.findIndex(x => x.tankId === patchedHoldingTank.tankId);
+    try {
+      setShowSpinner(true);
+      const patchedHoldingTank = { ...appContext.holdingTank, ...modifiedHoldingTank };
+      await HoldingTankService.saveHoldingTank(patchedHoldingTank);
+      reset(patchedHoldingTank);
+      setCurrentHoldingTank(patchedHoldingTank);
+      const index = currentHoldingTanks.findIndex(x => x.holdingTankId === patchedHoldingTank.holdingTankId);
     if (~index) {
-      currentHoldingTanks[index] = { ...patchedHoldingTank };
+        currentHoldingTanks[index] = { ...patchedHoldingTank };
     } else {
-      currentHoldingTanks.push(patchedHoldingTank);
+        currentHoldingTanks.push(patchedHoldingTank);
+      }
+      setCurrentHoldingTanks([...currentHoldingTanks]);
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(constants.ERROR.GENERIC);
     }
-    setCurrentHoldingTanks([...currentHoldingTanks]);
-  });
+    finally {
+      setShowSpinner(false);
+    }
+  };
 
-  const saveAndNavigate = (linkTo: string) => {
+  const saveAndNavigate = async (linkTo: string) => {
     const modifiedHoldingTank: HoldingTankModel = getValues();
-    saveHoldingTank(modifiedHoldingTank);
+    await saveHoldingTank(modifiedHoldingTank);
     setTimeout(() => {
       browserHistory.push(linkTo);
     }, 0);
@@ -231,6 +271,7 @@ const HoldingTanks: React.FC = () => {
 
   return (
     <div id='holdingTank'>
+      <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}
@@ -289,7 +330,7 @@ const HoldingTanks: React.FC = () => {
 
           <hr />
 
-          <h1 className='title has-text-centered'>{appContext.holdingTank?.tankName}</h1>
+          <h1 className='title has-text-centered'>{appContext.holdingTank?.holdingTankName}</h1>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>

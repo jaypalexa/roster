@@ -1,4 +1,5 @@
 export default interface OrganizationModel {
+  [key: string]: any;
   organizationId: string;
   organizationName: string;
   address1: string;

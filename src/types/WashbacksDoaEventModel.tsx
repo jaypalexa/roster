@@ -1,4 +1,5 @@
 export default interface WashbacksDoaEventModel {
+  [key: string]: any;
   washbacksDoaEventId: string;
   organizationId: string;
   speciesCode: string;

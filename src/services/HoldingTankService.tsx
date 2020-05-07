@@ -1,35 +1,47 @@
-import HoldingTankModel from '../types/HoldingTankModel';
+import ApiService, { ApiRequestPayload } from 'services/ApiService';
+import AuthenticationService from 'services/AuthenticationService';
+import HoldingTankModel from 'types/HoldingTankModel';
+
+const RESOURCE_SINGLE = '/holding-tanks/{holdingTankId}';
+const RESOURCE_MANY = '/holding-tanks';
 
 const HoldingTankService = {
-  getHoldingTank(tankId?: string): HoldingTankModel {
-    let holdingTank: HoldingTankModel | undefined;
-    if (tankId) {
-      const holdingTanks = this.getHoldingTanks();
-      holdingTank = holdingTanks.find(x => x.tankId === tankId);
-    }
-    return holdingTank || {} as HoldingTankModel;
+
+  async getHoldingTanks(): Promise<HoldingTankModel[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_MANY;
+
+    const response = await ApiService.getMany<HoldingTankModel>(apiRequestPayload);
+    return response;
   },
-  saveHoldingTank(holdingTank: HoldingTankModel) {
-    const holdingTanks = this.getHoldingTanks();
-    const index = holdingTanks.findIndex(x => x.tankId === holdingTank.tankId);
-    if (~index) {
-      holdingTanks[index] = {...holdingTank};
-    } else {
-      holdingTanks.push(holdingTank);
-    }
-    localStorage.setItem('holdingTanks', JSON.stringify(holdingTanks));
+
+  async getHoldingTank(holdingTankId: string): Promise<HoldingTankModel> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { holdingTankId: holdingTankId };
+
+    const response = await ApiService.get<HoldingTankModel>(apiRequestPayload);
+    return response;
   },
-  deleteHoldingTank(tankId: string) {
-    const holdingTanks = this.getHoldingTanks();
-    const index = holdingTanks.findIndex(x => x.tankId === tankId);
-    if (~index) {
-      holdingTanks.splice(index, 1);
-    }
-    localStorage.setItem('holdingTanks', JSON.stringify(holdingTanks));
+
+  async saveHoldingTank(holdingTank: HoldingTankModel) {
+    holdingTank.organizationId = AuthenticationService.getOrganizationId();
+
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { holdingTankId: holdingTank.holdingTankId };
+
+    await ApiService.save<HoldingTankModel>(apiRequestPayload, holdingTank);
   },
-  getHoldingTanks(): HoldingTankModel[] {
-    return JSON.parse(localStorage.getItem('holdingTanks') || '[]');
-  }
+
+  async deleteHoldingTank(holdingTankId: string) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { holdingTankId: holdingTankId };
+
+    const response = await ApiService.delete(apiRequestPayload);
+    return response;
+  },
 };
 
 export default HoldingTankService;
