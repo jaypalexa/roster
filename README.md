@@ -10,6 +10,27 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 
 ---
 
+## Tech Stack
+
+* [React](https://reactjs.org/) for Typescript UI framework
+  * [react-router](https://www.npmjs.com/package/react-router) for client-side routing
+  * [react-hook-form](https://www.npmjs.com/package/react-hook-form) for forms
+  * [react-data-table-component](https://www.npmjs.com/package/react-data-table-component) for tables
+  * [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2) for charts and graphs
+  * [leaflet](https://www.npmjs.com/package/leaflet) and [react-leaflet](https://www.npmjs.com/package/react-leaflet) for maps
+  * [react-modal](https://www.npmjs.com/package/react-modal) for modal dialogs
+  * [react-toastify](https://www.npmjs.com/package/react-toastify) for toast popups
+* [Bulma](https://bulma.io/) for CSS framework and components
+* [Amazon Web Services](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=tier%23always-free) ("Always Free" tier *only*)
+  * [Amazon Cognito](https://aws.amazon.com/cognito/) for authentication
+  * ~~[Amazon S3](https://aws.amazon.com/s3/)~~ (not "Always Free" tier), 
+  * ~~[Amazon API Gateway](https://aws.amazon.com/apigateway/)~~ (not "Always Free" tier),
+  * [AWS Lambda](https://aws.amazon.com/lambda/) (.NET Core) to handle data storage/retrieval and PDF report generation
+  * [Amazon DynamoDB](https://aws.amazon.com/dynamodb/) for NoSQL data storage
+* [Netlify](https://www.netlify.com/) for static hosting
+
+---
+
 ## TODO
 
 | Item | Notes |
@@ -17,21 +38,19 @@ ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and hol
 | &check; User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
 | &check; Graphs for Sea Turtle > Morphometrics (temperature, salinity, pH) | ??? holding-tank-temperature-graph, etc. |
 | &check; Mapping | &bull; [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/) ([article](https://blog.logrocket.com/how-to-use-react-leaflet/))<br /> ~~&bull; [Mapbox](https://www.mapbox.com/)~~ |
-| &check; Data Table | https://www.npmjs.com/package/react-data-table-component |
+| &check; Data tables | https://www.npmjs.com/package/react-data-table-component |
 | &check; Sea Turtles: Prompt to save changes if form is dirty and user clicks Edit/Delete or Add button | ~~Make Yes/No into Yes/No/Cancel~~ |
-| &#10065; Add a loading spinner | ??? |
-| &#10065; Prevent tabbing outside of modal | ??? switch to [react-modal](https://www.npmjs.com/package/react-modal) |
-| &#10065; Make app a basic PWA | How to force update? |
-| &#10065; Session/Token Timeout | ??? auto-refresh |
-| &#10065; Multi-tenancy | ??? |
-| &#10065; Database | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
-| &#10065; Versioning / Database migrations | ??? |
-| &#10065; Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
-| &#10065; Offline Mode | ??? send updates if any made whilst offline...how to auth? |
-| &#10065; Poor Man's Caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
-| &#10065; Preventing Denial-of-Service attacks /excessive usage | ??? throttling |
+| &check; Add a loading spinner | home-grown |
+| &check;  Database (multi-tenant) | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
+| &#10065; Prevent tabbing outside of modal | ??? [react-modal](https://www.npmjs.com/package/react-modal) |
 | &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
-| &#10065; Filtering of tables | ??? |
+| &#10065; Filtering of tables | ???[react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) |
+| &#10065; Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
+| &#10065; Session/Token timeout | ??? auto-refresh |
+| &#10065; Preventing denial-of-service attacks /excessive usage | ??? throttling |
+| &#10065; Make app a basic PWA | How to force update? |
+| &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? |
+| &#10065; Poor Man's caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
 
 ---
 
