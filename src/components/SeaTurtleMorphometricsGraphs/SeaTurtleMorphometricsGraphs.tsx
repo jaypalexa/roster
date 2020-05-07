@@ -143,12 +143,13 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
   }
 
   useMount(() => {
-    if (!appContext.seaTurtle?.seaTurtleId) {
+    const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
+    if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
       const getSeaTurtleMorphometricsForTurtle = async () => {
-        const seaTurtleMeasurements = await SeaTurtleMorphometricService.getSeaTurtleMorphometricsForTurtle(appContext.seaTurtle?.seaTurtleId);
-        setCurrentSeaTurtleMorphometrics(seaTurtleMeasurements);
+        const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometrics(seaTurtleId);
+        setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
       };
       getSeaTurtleMorphometricsForTurtle();
     }

@@ -1,4 +1,13 @@
+import browserHistory from 'browserHistory';
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import DateFormField from 'components/FormFields/DateFormField';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
+import ListFormField from 'components/FormFields/ListFormField';
+import TextFormField from 'components/FormFields/TextFormField';
+import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -7,20 +16,11 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import RosterConstants from 'rosterConstants';
+import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
+import SeaTurtleTagService from 'services/SeaTurtleTagService';
+import NameValuePair from 'types/NameValuePair';
+import SeaTurtleTagModel from 'types/SeaTurtleTagModel';
 import { v4 as uuidv4 } from 'uuid';
-import browserHistory from '../../browserHistory';
-import { useAppContext } from '../../contexts/AppContext';
-import CodeListTableService, { CodeTableType } from '../../services/CodeTableListService';
-import SeaTurtleTagService from '../../services/SeaTurtleTagService';
-import NameValuePair from '../../types/NameValuePair';
-import SeaTurtleTagModel from '../../types/SeaTurtleTagModel';
-import YesNoCancelDialog from '../Dialogs/YesNoCancelDialog';
-import YesNoDialog from '../Dialogs/YesNoDialog';
-import DateFormField from '../FormFields/DateFormField';
-import FormFieldRow from '../FormFields/FormFieldRow';
-import ListFormField from '../FormFields/ListFormField';
-import TextFormField from '../FormFields/TextFormField';
-import LeaveThisPagePrompt from '../LeaveThisPagePrompt/LeaveThisPagePrompt';
 import './SeaTurtleTags.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */

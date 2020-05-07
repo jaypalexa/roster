@@ -328,9 +328,9 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const saveAndNavigate = (linkTo: string) => {
+  const saveAndNavigate = async (linkTo: string) => {
     const modifiedSeaTurtle: SeaTurtleModel = getValues();
-    saveSeaTurtle(modifiedSeaTurtle);
+    await saveSeaTurtle(modifiedSeaTurtle);
     setTimeout(() => {
       browserHistory.push(linkTo);
     }, 0);

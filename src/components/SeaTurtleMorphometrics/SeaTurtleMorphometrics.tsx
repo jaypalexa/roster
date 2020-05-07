@@ -6,6 +6,7 @@ import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormField from 'components/FormFields/ListFormField';
 import TextFormField from 'components/FormFields/TextFormField';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
+import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
@@ -14,6 +15,7 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import RosterConstants from 'rosterConstants';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import OrganizationService from 'services/OrganizationService';
 import SeaTurtleMorphometricService from 'services/SeaTurtleMorphometricService';
@@ -45,6 +47,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   const [onDialogNo, setOnDialogNo] = useState(() => { });
   const [onDialogCancel, setOnDialogCancel] = useState(() => { });
   const [editingStarted, setEditingStarted] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
   const tableColumns = [
@@ -54,14 +57,14 @@ const SeaTurtleMorphometrics: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleMorphometricClick(row.turtleMorphometricId, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleMorphometricClick(row.seaTurtleMorphometricId, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleMorphometricClick(row.turtleMorphometricId, row.dateMeasured ? moment(row.dateMeasured).format('YYYY-MM-DD') : '', event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleMorphometricClick(row.seaTurtleMorphometricId, row.dateMeasured ? moment(row.dateMeasured).format('YYYY-MM-DD') : '', event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Date Measured',
@@ -149,14 +152,25 @@ const SeaTurtleMorphometrics: React.FC = () => {
   });
 
   useMount(() => {
-    if (!appContext.seaTurtle?.seaTurtleId) {
+    const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
+    if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
-      const getSeaTurtleMorphometricsForTurtle = async () => {
-        const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometricsForTurtle(appContext.seaTurtle?.seaTurtleId);
-        setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
+      try {
+        setShowSpinner(true);
+        const getSeaTurtleMorphometricsForTurtle = async () => {
+          const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometrics(seaTurtleId);
+          setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
       };
-      getSeaTurtleMorphometricsForTurtle();
+        getSeaTurtleMorphometricsForTurtle();
+      }
+      catch (err) {
+        console.log(err);
+        toast.error(RosterConstants.ERROR.GENERIC);
+      }
+      finally {
+        setShowSpinner(false);
+      }
     }
   });
 
@@ -175,38 +189,58 @@ const SeaTurtleMorphometrics: React.FC = () => {
     setEditingStarted(false);
   }, [editingStarted]);
 
-  const fetchSeaTurtleMorphometric = (turtleMorphometricId: string) => {
-    const getSeaTurtleMorphometric = async () => {
-      const seaTurtleMorphometric = await SeaTurtleMorphometricService.getSeaTurtleMorphometric(turtleMorphometricId);
+  const fetchSeaTurtleMorphometric = async (seaTurtleMorphometricId: string) => {
+    try {
+      const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
+      if (!seaTurtleId) return;
+      
+      setShowSpinner(true);
+      const seaTurtleMorphometric = await SeaTurtleMorphometricService.getSeaTurtleMorphometric(seaTurtleId, seaTurtleMorphometricId);
       reset(seaTurtleMorphometric);
       setCurrentSeaTurtleMorphometric(seaTurtleMorphometric);
-    };
-    getSeaTurtleMorphometric();
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   };
 
-  const deleteSeaTurtleMorphometric = (turtleMorphometricId: string) => {
-    const deleteSeaTurtleMorphometric = async () => {
-      await SeaTurtleMorphometricService.deleteSeaTurtleMorphometric(turtleMorphometricId);
+  const deleteSeaTurtleMorphometric = async (seaTurtleMorphometricId: string) => {
+    const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
+    if (!seaTurtleId) return;
+    
+    try {
+      setShowSpinner(true);
+      await SeaTurtleMorphometricService.deleteSeaTurtleMorphometric(seaTurtleId, seaTurtleMorphometricId);
       const seaTurtleMorphometric = {} as SeaTurtleMorphometricModel;
       reset(seaTurtleMorphometric);
       setCurrentSeaTurtleMorphometric(seaTurtleMorphometric);
-      const index = currentSeaTurtleMorphometrics.findIndex(x => x.turtleMorphometricId === turtleMorphometricId);
+      const index = currentSeaTurtleMorphometrics.findIndex(x => x.seaTurtleMorphometricId === seaTurtleMorphometricId);
       if (~index) {
         var updatedCurrentSeaTurtleMorphometrics = [...currentSeaTurtleMorphometrics];
         updatedCurrentSeaTurtleMorphometrics.splice(index, 1)
         setCurrentSeaTurtleMorphometrics(updatedCurrentSeaTurtleMorphometrics);
       }
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+      }
     };
-    deleteSeaTurtleMorphometric();
-  };
 
   const onAddSeaTurtleMorphometricButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const defaultLengthUnits = () => currentOrganization.preferredUnitsType === 'I' ? 'in' : 'cm';
       const defaultWeightUnits = () => currentOrganization.preferredUnitsType === 'I' ? 'lb' : 'kg';
       const seaTurtleMorphometric = {} as SeaTurtleMorphometricModel;
-      seaTurtleMorphometric.turtleMorphometricId = uuidv4().toLowerCase();
-      seaTurtleMorphometric.turtleId = appContext.seaTurtle?.seaTurtleId || '';
+      seaTurtleMorphometric.seaTurtleMorphometricId = uuidv4().toLowerCase();
+      seaTurtleMorphometric.seaTurtleId = appContext.seaTurtle?.seaTurtleId || '';
       seaTurtleMorphometric.sclNotchNotchUnits = defaultLengthUnits();
       seaTurtleMorphometric.sclNotchTipUnits = defaultLengthUnits();
       seaTurtleMorphometric.sclTipTipUnits = defaultLengthUnits();
@@ -288,20 +322,30 @@ const SeaTurtleMorphometrics: React.FC = () => {
     setShowYesNoDialog(true);
   };
 
-  const onSubmitSeaTurtleMorphometric = handleSubmit((modifiedSeaTurtleMorphometric: SeaTurtleMorphometricModel) => {
-    const patchedSeaTurtleMorphometric = { ...currentSeaTurtleMorphometric, ...modifiedSeaTurtleMorphometric };
-    SeaTurtleMorphometricService.saveSeaTurtleMorphometric(patchedSeaTurtleMorphometric);
-    reset(patchedSeaTurtleMorphometric);
-    setCurrentSeaTurtleMorphometric(patchedSeaTurtleMorphometric);
-    const index = currentSeaTurtleMorphometrics.findIndex(x => x.turtleMorphometricId === patchedSeaTurtleMorphometric.turtleMorphometricId);
+  const onSubmitSeaTurtleMorphometric = handleSubmit(async (modifiedSeaTurtleMorphometric: SeaTurtleMorphometricModel) => {
+    try {
+      setShowSpinner(true);
+      const patchedSeaTurtleMorphometric = { ...currentSeaTurtleMorphometric, ...modifiedSeaTurtleMorphometric };
+      await SeaTurtleMorphometricService.saveSeaTurtleMorphometric(patchedSeaTurtleMorphometric);
+      reset(patchedSeaTurtleMorphometric);
+      setCurrentSeaTurtleMorphometric(patchedSeaTurtleMorphometric);
+      const index = currentSeaTurtleMorphometrics.findIndex(x => x.seaTurtleMorphometricId === patchedSeaTurtleMorphometric.seaTurtleMorphometricId);
     if (~index) {
-      currentSeaTurtleMorphometrics[index] = { ...patchedSeaTurtleMorphometric };
+        currentSeaTurtleMorphometrics[index] = { ...patchedSeaTurtleMorphometric };
     } else {
-      currentSeaTurtleMorphometrics.push(patchedSeaTurtleMorphometric);
+        currentSeaTurtleMorphometrics.push(patchedSeaTurtleMorphometric);
     }
-    setCurrentSeaTurtleMorphometrics([...currentSeaTurtleMorphometrics]);
+      setCurrentSeaTurtleMorphometrics([...currentSeaTurtleMorphometrics]);
 
     toast.success('Record saved');
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(RosterConstants.ERROR.GENERIC);
+    }
+    finally {
+      setShowSpinner(false);
+    }
   });
 
   const onCancelSeaTurtleMorphometric = () => {
@@ -310,6 +354,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
 
   return (
     <div id='seaTurtleMorphometrics'>
+      <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
         isActive={showYesNoDialog}

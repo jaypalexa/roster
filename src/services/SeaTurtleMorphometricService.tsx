@@ -1,16 +1,33 @@
-import TypeHelper from '../helpers/TypeHelper';
-import SeaTurtleMorphometricModel from '../types/SeaTurtleMorphometricModel';
+import TypeHelper from 'helpers/TypeHelper';
+import ApiService, { ApiRequestPayload } from 'services/ApiService';
+import SeaTurtleMorphometricModel from 'types/SeaTurtleMorphometricModel';
+
+const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}/sea-turtle-morphometrics/{seaTurtleMorphometricId}';
+const RESOURCE_MANY = '/sea-turtles/{seaTurtleId}/sea-turtle-morphometrics';
 
 const SeaTurtleMorphometricService = {
-  getSeaTurtleMorphometric(turtleMorphometricId?: string): SeaTurtleMorphometricModel {
-    let seaTurtleMorphometric: SeaTurtleMorphometricModel | undefined;
-    if (turtleMorphometricId) {
-      const seaTurtleMorphometrics = this.getAllSeaTurtleMorphometrics();
-      seaTurtleMorphometric = seaTurtleMorphometrics.find(x => x.turtleMorphometricId === turtleMorphometricId);
-    }
-    return seaTurtleMorphometric || {} as SeaTurtleMorphometricModel;
+
+  async getSeaTurtleMorphometrics(seaTurtleId: string): Promise<SeaTurtleMorphometricModel[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_MANY;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId };
+
+    const response = await ApiService.getMany<SeaTurtleMorphometricModel>(apiRequestPayload);
+    response.sort((a, b) => (a.dateMeasured > b.dateMeasured) ? 1 : ((b.dateMeasured > a.dateMeasured) ? -1 : 0)); 
+    return response;
   },
-  saveSeaTurtleMorphometric(seaTurtleMorphometric: SeaTurtleMorphometricModel) {
+
+  async getSeaTurtleMorphometric(seaTurtleId: string, seaTurtleMorphometricId: string): Promise<SeaTurtleMorphometricModel> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId, seaTurtleMorphometricId: seaTurtleMorphometricId };
+
+    const response = await ApiService.get<SeaTurtleMorphometricModel>(apiRequestPayload);
+    return response;
+  },
+
+
+  async saveSeaTurtleMorphometric(seaTurtleMorphometric: SeaTurtleMorphometricModel) {
     seaTurtleMorphometric.sclNotchNotchValue = TypeHelper.toNumber(seaTurtleMorphometric.sclNotchNotchValue);
     seaTurtleMorphometric.sclNotchTipValue = TypeHelper.toNumber(seaTurtleMorphometric.sclNotchTipValue);
     seaTurtleMorphometric.sclTipTipValue = TypeHelper.toNumber(seaTurtleMorphometric.sclTipTipValue);
@@ -21,31 +38,22 @@ const SeaTurtleMorphometricService = {
     seaTurtleMorphometric.ccwValue = TypeHelper.toNumber(seaTurtleMorphometric.ccwValue);
     seaTurtleMorphometric.weightValue = TypeHelper.toNumber(seaTurtleMorphometric.weightValue);
 
-    const seaTurtleMorphometrics = this.getAllSeaTurtleMorphometrics();
-    const index = seaTurtleMorphometrics.findIndex(x => x.turtleMorphometricId === seaTurtleMorphometric.turtleMorphometricId);
-    if (~index) {
-      seaTurtleMorphometrics[index] = {...seaTurtleMorphometric};
-    } else {
-      seaTurtleMorphometrics.push(seaTurtleMorphometric);
-    }
-    localStorage.setItem('seaTurtleMorphometrics', JSON.stringify(seaTurtleMorphometrics));
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleMorphometric.seaTurtleId, seaTurtleMorphometricId: seaTurtleMorphometric.seaTurtleMorphometricId };
+
+    await ApiService.save<SeaTurtleMorphometricModel>(apiRequestPayload, seaTurtleMorphometric);
   },
-  deleteSeaTurtleMorphometric(turtleMorphometricId: string) {
-    const seaTurtleMorphometrics = this.getAllSeaTurtleMorphometrics();
-    const index = seaTurtleMorphometrics.findIndex(x => x.turtleMorphometricId === turtleMorphometricId);
-    if (~index) {
-      seaTurtleMorphometrics.splice(index, 1);
-    }
-    localStorage.setItem('seaTurtleMorphometrics', JSON.stringify(seaTurtleMorphometrics));
+
+  async deleteSeaTurtleMorphometric(seaTurtleId: string, seaTurtleMorphometricId: string) {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_SINGLE;
+    apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId, seaTurtleMorphometricId: seaTurtleMorphometricId };
+
+    const response = await ApiService.delete(apiRequestPayload);
+    return response;
   },
-  getSeaTurtleMorphometricsForTurtle(turtleId?: string): SeaTurtleMorphometricModel[] {
-    const allSeaTurtleMorphometrics: SeaTurtleMorphometricModel[] = JSON.parse(localStorage.getItem('seaTurtleMorphometrics') || '[]')
-    const seaTurtleMorphometrics = allSeaTurtleMorphometrics.length > 0 ? allSeaTurtleMorphometrics.filter(tag => tag.turtleId === turtleId) : [];
-    return seaTurtleMorphometrics;
-  },
-  getAllSeaTurtleMorphometrics(): SeaTurtleMorphometricModel[] {
-    return JSON.parse(localStorage.getItem('seaTurtleMorphometrics') || '[]');
-  }
+
 };
 
 export default SeaTurtleMorphometricService;
