@@ -1,5 +1,5 @@
-# ROSTER
-ROSTER (Record Of Sea Turtles Electronic Reports) collects marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
+# ROSTER (Record Of Sea Turtles Electronic Reports) 
+ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) for collecting and reporting on marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
 
 ---
 
@@ -193,7 +193,6 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 
 ## Notes
 
-* [How to make react-hook-form work with multiple forms in one page?](https://stackoverflow.com/questions/60276510/how-to-make-react-hook-form-work-with-multiple-forms-in-one-page)
 * [Offer a page reload for users](https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users)
 * [Redirecting a user to the page they requested after successful authentication with react-router-dom](https://stackoverflow.com/questions/59422159/redirecting-a-user-to-the-page-they-requested-after-successful-authentication-wi/59423442#59423442)
 
@@ -204,4 +203,4 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 
 ## See also
 
-* [roster-db-access-lambda on GitHub](https://github.com/jaypalexa/roster-db-access-lambda)
+* [roster-api-lambda on GitHub](https://github.com/jaypalexa/roster-api-lambda)

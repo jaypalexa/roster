@@ -154,8 +154,9 @@ const Organization: React.FC = () => {
                 </section>
                 <section className='tab-content'> {/* Preferences */}
                   <RadioButtonGroupFormField fieldName='preferredUnitsType' labelText='Units Type' >
-                    <RadioButtonFormField fieldName='preferredUnitsType' labelText='Metric' value='M' />
-                    <RadioButtonFormField fieldName='preferredUnitsType' labelText='Imperial' value='I' />
+                    <RadioButtonFormField fieldName='preferredUnitsType' labelText='Metric (cm, kg, etc.)' value='M' />
+                    <br />
+                    <RadioButtonFormField fieldName='preferredUnitsType' labelText='Imperial (in, lbs, etc.)' value='I' />
                   </RadioButtonGroupFormField>
                 </section>
               </div>
