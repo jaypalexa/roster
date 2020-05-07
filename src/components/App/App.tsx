@@ -18,7 +18,7 @@ import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Router, Switch } from 'react-router-dom';
-import { Slide, toast, ToastContainer } from 'react-toastify';
+import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ApiService from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
@@ -204,7 +204,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200507.1905
+            &nbsp;|&nbsp;v0.20200507.1920
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
@@ -213,7 +213,7 @@ const App: React.FC = () => {
       </Router>
       <ToastContainer
         autoClose={1200}
-        position={toast.POSITION.BOTTOM_CENTER}
+        position='bottom-center'
         transition={Slide}
         pauseOnHover={true}
         className='toast-container'
