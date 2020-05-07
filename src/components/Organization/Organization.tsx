@@ -12,9 +12,9 @@ import React, { useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import RosterConstants from 'rosterConstants';
 import OrganizationService from 'services/OrganizationService';
 import OrganizationModel from 'types/OrganizationModel';
+import { constants } from 'utils';
 import './Organization.sass';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -46,7 +46,7 @@ const Organization: React.FC = () => {
       } 
       catch (err) {
         console.log(err);
-        toast.error(RosterConstants.ERROR.GENERIC);
+        toast.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);

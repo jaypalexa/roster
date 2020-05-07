@@ -20,12 +20,12 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import RosterConstants from 'rosterConstants';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import SeaTurtleService from 'services/SeaTurtleService';
 import MapDataModel from 'types/MapDataModel';
 import NameValuePair from 'types/NameValuePair';
 import SeaTurtleModel from 'types/SeaTurtleModel';
+import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './SeaTurtles.sass';
 
@@ -159,7 +159,7 @@ const SeaTurtles: React.FC = () => {
       } 
       catch (err) {
         console.log(err);
-        toast.error(RosterConstants.ERROR.GENERIC);
+        toast.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -188,7 +188,7 @@ const SeaTurtles: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(RosterConstants.ERROR.GENERIC);
+      toast.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -214,7 +214,7 @@ const SeaTurtles: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(RosterConstants.ERROR.GENERIC);
+      toast.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -321,7 +321,7 @@ const SeaTurtles: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(RosterConstants.ERROR.GENERIC);
+      toast.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);

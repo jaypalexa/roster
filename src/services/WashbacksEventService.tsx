@@ -1,4 +1,4 @@
-import TypeHelper from '../helpers/TypeHelper';
+import { toNumber } from 'utils';
 import WashbacksEventModel from '../types/WashbacksEventModel';
 
 const WashbacksEventService = {
@@ -13,11 +13,11 @@ const WashbacksEventService = {
   saveWashbacksEvent(washbacksEvent: WashbacksEventModel) {
     // TODO: HACK: fix in SQL - released total
     if (washbacksEvent.eventType === 'Released') {
-      washbacksEvent.beachEventCount = TypeHelper.toNumber(washbacksEvent.beachEventCount);
-      washbacksEvent.offshoreEventCount = TypeHelper.toNumber(washbacksEvent.offshoreEventCount);
+      washbacksEvent.beachEventCount = toNumber(washbacksEvent.beachEventCount);
+      washbacksEvent.offshoreEventCount = toNumber(washbacksEvent.offshoreEventCount);
       washbacksEvent.eventCount = washbacksEvent.beachEventCount + washbacksEvent.offshoreEventCount;
     } else {
-      washbacksEvent.eventCount = TypeHelper.toNumber(washbacksEvent.eventCount);
+      washbacksEvent.eventCount = toNumber(washbacksEvent.eventCount);
     }
     const washbacksEvents = this.getWashbacksEvents();
     const index = washbacksEvents.findIndex(x => x.washbacksEventId === washbacksEvent.washbacksEventId);

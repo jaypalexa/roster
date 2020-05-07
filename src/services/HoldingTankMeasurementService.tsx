@@ -1,4 +1,4 @@
-import TypeHelper from '../helpers/TypeHelper';
+import { toNumber } from 'utils';
 import HoldingTankMeasurementModel from '../types/HoldingTankMeasurementModel';
 
 const HoldingTankMeasurementService = {
@@ -11,9 +11,9 @@ const HoldingTankMeasurementService = {
     return holdingTankMeasurement || {} as HoldingTankMeasurementModel;
   },
   saveHoldingTankMeasurement(holdingTankMeasurement: HoldingTankMeasurementModel) {
-    holdingTankMeasurement.temperature = TypeHelper.toNumber(holdingTankMeasurement.temperature);
-    holdingTankMeasurement.salinity = TypeHelper.toNumber(holdingTankMeasurement.salinity);
-    holdingTankMeasurement.ph = TypeHelper.toNumber(holdingTankMeasurement.ph);
+    holdingTankMeasurement.temperature = toNumber(holdingTankMeasurement.temperature);
+    holdingTankMeasurement.salinity = toNumber(holdingTankMeasurement.salinity);
+    holdingTankMeasurement.ph = toNumber(holdingTankMeasurement.ph);
 
     const holdingTankMeasurements = this.getAllHoldingTankMeasurements();
     const index = holdingTankMeasurements.findIndex(x => x.tankMeasurementId === holdingTankMeasurement.tankMeasurementId);

@@ -15,13 +15,13 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import RosterConstants from 'rosterConstants';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import OrganizationService from 'services/OrganizationService';
 import SeaTurtleMorphometricService from 'services/SeaTurtleMorphometricService';
 import NameValuePair from 'types/NameValuePair';
 import OrganizationModel from 'types/OrganizationModel';
 import SeaTurtleMorphometricModel from 'types/SeaTurtleMorphometricModel';
+import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './SeaTurtleMorphometrics.sass';
 
@@ -166,7 +166,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       }
       catch (err) {
         console.log(err);
-        toast.error(RosterConstants.ERROR.GENERIC);
+        toast.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -201,7 +201,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(RosterConstants.ERROR.GENERIC);
+      toast.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -227,7 +227,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(RosterConstants.ERROR.GENERIC);
+      toast.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -341,7 +341,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(RosterConstants.ERROR.GENERIC);
+      toast.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);

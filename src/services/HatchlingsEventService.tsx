@@ -1,4 +1,4 @@
-import TypeHelper from '../helpers/TypeHelper';
+import { toNumber } from 'utils';
 import HatchlingsEventModel from '../types/HatchlingsEventModel';
 
 const HatchlingsEventService = {
@@ -13,11 +13,11 @@ const HatchlingsEventService = {
   saveHatchlingsEvent(hatchlingsEvent: HatchlingsEventModel) {
     // TODO: HACK: fix in SQL - released total
     if (hatchlingsEvent.eventType === 'Released') {
-      hatchlingsEvent.beachEventCount = TypeHelper.toNumber(hatchlingsEvent.beachEventCount);
-      hatchlingsEvent.offshoreEventCount = TypeHelper.toNumber(hatchlingsEvent.offshoreEventCount);
+      hatchlingsEvent.beachEventCount = toNumber(hatchlingsEvent.beachEventCount);
+      hatchlingsEvent.offshoreEventCount = toNumber(hatchlingsEvent.offshoreEventCount);
       hatchlingsEvent.eventCount = hatchlingsEvent.beachEventCount + hatchlingsEvent.offshoreEventCount;
     } else {
-      hatchlingsEvent.eventCount = TypeHelper.toNumber(hatchlingsEvent.eventCount);
+      hatchlingsEvent.eventCount = toNumber(hatchlingsEvent.eventCount);
     }
     const hatchlingsEvents = this.getHatchlingsEvents();
     const index = hatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEvent.hatchlingsEventId);

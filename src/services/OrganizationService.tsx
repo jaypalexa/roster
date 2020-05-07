@@ -1,7 +1,7 @@
-import TypeHelper from 'helpers/TypeHelper';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
 import OrganizationModel from 'types/OrganizationModel';
+import { toNumber } from 'utils';
 
 const RESOURCE_SINGLE = '/organizations/{organizationId}';
 // const RESOURCE_MANY = '/organizations';
@@ -25,16 +25,16 @@ const OrganizationService = {
 
   async saveOrganization(organization: OrganizationModel) {
     organization.organizationId = AuthenticationService.getOrganizationId();
-    organization.ccHatchlingsStartingBalance = TypeHelper.toNumber(organization.ccHatchlingsStartingBalance);
-    organization.cmHatchlingsStartingBalance = TypeHelper.toNumber(organization.cmHatchlingsStartingBalance);
-    organization.dcHatchlingsStartingBalance = TypeHelper.toNumber(organization.dcHatchlingsStartingBalance);
-    organization.otherHatchlingsStartingBalance = TypeHelper.toNumber(organization.otherHatchlingsStartingBalance);
-    organization.unknownHatchlingsStartingBalance = TypeHelper.toNumber(organization.unknownHatchlingsStartingBalance);
-    organization.ccWashbacksStartingBalance = TypeHelper.toNumber(organization.ccWashbacksStartingBalance);
-    organization.cmWashbacksStartingBalance = TypeHelper.toNumber(organization.cmWashbacksStartingBalance);
-    organization.dcWashbacksStartingBalance = TypeHelper.toNumber(organization.dcWashbacksStartingBalance);
-    organization.otherWashbacksStartingBalance = TypeHelper.toNumber(organization.otherWashbacksStartingBalance);
-    organization.unknownWashbacksStartingBalance = TypeHelper.toNumber(organization.unknownWashbacksStartingBalance);
+    organization.ccHatchlingsStartingBalance = toNumber(organization.ccHatchlingsStartingBalance);
+    organization.cmHatchlingsStartingBalance = toNumber(organization.cmHatchlingsStartingBalance);
+    organization.dcHatchlingsStartingBalance = toNumber(organization.dcHatchlingsStartingBalance);
+    organization.otherHatchlingsStartingBalance = toNumber(organization.otherHatchlingsStartingBalance);
+    organization.unknownHatchlingsStartingBalance = toNumber(organization.unknownHatchlingsStartingBalance);
+    organization.ccWashbacksStartingBalance = toNumber(organization.ccWashbacksStartingBalance);
+    organization.cmWashbacksStartingBalance = toNumber(organization.cmWashbacksStartingBalance);
+    organization.dcWashbacksStartingBalance = toNumber(organization.dcWashbacksStartingBalance);
+    organization.otherWashbacksStartingBalance = toNumber(organization.otherWashbacksStartingBalance);
+    organization.unknownWashbacksStartingBalance = toNumber(organization.unknownWashbacksStartingBalance);
 
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.resource = RESOURCE_SINGLE;
