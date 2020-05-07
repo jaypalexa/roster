@@ -3,8 +3,8 @@ import { Icon } from 'leaflet';
 import React, { useState } from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import Modal from 'react-modal';
-import MapDataModel from '../../types/MapDataModel';
-import MapPointModel from '../../types/MapPointModel';
+import MapDataModel from 'types/MapDataModel';
+import MapPointModel from 'types/MapPointModel';
 import './MapDialog.sass';
 
 interface MapDialogProps {
