@@ -1,3 +1,4 @@
+import spinnerImage from 'assets/images/spinner-image.png';
 import React from 'react';
 import './Spinner.sass';
 
@@ -9,8 +10,7 @@ const Spinner: React.FC<SpinnerProps> = ({isActive}) => {
   return (
     isActive 
       ? <div className='spinner-container'>
-          <img src='./logo192.png' className='rotating' alt='spinner' />
-          {/* <i className='spinner fa fa-spinner fa-spin'></i> */}
+          <img src={spinnerImage} className='rotating' alt='spinner' />
         </div> 
       : null
   );
