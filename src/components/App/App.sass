@@ -17,6 +17,13 @@
 			color: mediumblue
 			text-decoration: underline
 
+.connection-icon
+	margin-top: 2px
+	margin-left: 2px
+
+	&.offline
+		filter: opacity(0.5) drop-shadow(0 0 0 red) drop-shadow(0 0 0 red) drop-shadow(0 0 0 red)
+
 .content-container
 	display: flex
 	flex-direction: column
@@ -33,13 +40,6 @@
 
 .navbar-burger span:nth-child(3)
 	top: calc(55% + 4px) !important
-
-.offline-indicator
-	background-color: red
-	color: white
-	height: 2rem
-	line-height: 2rem
-	width: 100%
 
 .toast-custom
 	border-radius: 4px

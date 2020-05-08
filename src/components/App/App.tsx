@@ -1,3 +1,5 @@
+import wifiOffIcon from 'assets/images/wifi-off.png';
+import wifiOnIcon from 'assets/images/wifi-on.png';
 import browserHistory from 'browserHistory';
 import HatchlingEvents from 'components/HatchlingsEvents/HatchlingsEvents';
 import HoldingTankGraphs from 'components/HoldingTankGraphs/HoldingTankGraphs';
@@ -184,7 +186,11 @@ const App: React.FC = () => {
               <span className='icon'>
                 <i className='fa fa-home'></i>
               </span>
-              &nbsp;ROSTER
+              &nbsp;ROSTER&nbsp;
+              {isOnline 
+                ? <img src={wifiOnIcon} className='connection-icon' title='Online' alt='Online'></img> 
+                : <img src={wifiOffIcon} className='connection-icon offline' title='Offline' alt='Offline'></img>
+              }
             </Link>
             <div role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navMenu'>
               <span aria-hidden='true'></span>
@@ -211,7 +217,6 @@ const App: React.FC = () => {
           </div>
         </nav>
 
-        {!isOnline ? <h1 className='offline-indicator has-text-centered'>OFFLINE</h1> : null}
         <div className='content-container'>
           <Switch>
             <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact={true} path='/' component={Home} />
@@ -235,7 +240,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200508.0830
+            &nbsp;|&nbsp;v0.20200508.1000
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
