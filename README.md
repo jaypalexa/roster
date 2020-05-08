@@ -42,10 +42,9 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | &check; Prompt to save changes if form is dirty and user clicks Edit/Delete or Add button | ~~Make Yes/No into Yes/No/Cancel~~ |
 | &check; Add a loading spinner | home-grown |
 | &check; Database (multi-tenant) | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
-| &check; Prevent tabbing outside of modal | ??? [react-modal](https://www.npmjs.com/package/react-modal) |
+| &check; Prevent tabbing outside of modal | [react-modal](https://www.npmjs.com/package/react-modal) |
 | &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
 | &#10065; Filtering of tables | ??? [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) |
-| &#10065; Populate PDF forms | Some Node.js library in an [AWS Lambda](https://aws.amazon.com/lambda)? |
 | &#10065; Session/Token timeout | ??? auto-refresh |
 | &#10065; Preventing denial-of-service attacks /excessive usage | ??? throttling |
 | &#10065; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
