@@ -145,8 +145,8 @@ export const AuthenticationService = {
       }
     });
     
-    AWS.config.credentials = credentials;
     AWS.config.region = REGION;
+    AWS.config.credentials = credentials;
     
     await new Promise<void>((resolve, reject) => {
       credentials.refresh(err => {
@@ -162,11 +162,11 @@ export const AuthenticationService = {
 
   async refreshSession() {
     console.log('In refreshSession()...');
-    const cognitoUser = getCurrentCognitoUser();
-    console.log('cognitorUser', cognitoUser);
-    if (cognitoUser != null) { 
+    const currentCognitorUser = getCurrentCognitoUser();
+    console.log('cognitorUser', currentCognitorUser);
+    if (currentCognitorUser) { 
       await new Promise<void>((resolve, reject) => {
-        cognitoUser.getSession(async (err: any, currentSession: CognitoUserSession) => {
+        currentCognitorUser.getSession(async (err: any, currentSession: CognitoUserSession) => {
           if (err) {
             console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.getSession', err);
             reject(err);
@@ -183,7 +183,7 @@ export const AuthenticationService = {
               console.log('credentials?.needsRefresh()', credentials?.needsRefresh());
               if (credentials?.needsRefresh()) {
                 const refreshToken = currentSession.getRefreshToken();
-                cognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
+                currentCognitorUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
                   if (err) {
                     console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.refreshSession', err);
                     reject(err);
@@ -206,7 +206,10 @@ export const AuthenticationService = {
 
   signOut() {
     clearCurrentCredentials();
-    getCurrentCognitoUser()?.signOut();
+    const currentCognitoUser = getCurrentCognitoUser();
+    if (currentCognitoUser) {
+      currentCognitoUser.signOut();
+    }
   }
 }
 
