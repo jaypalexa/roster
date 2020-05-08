@@ -15,7 +15,7 @@ const USER_POOL_DATA: ICognitoUserPoolData = {
 
 const USER_POOL = new CognitoUserPool(USER_POOL_DATA);
 
-const clearCurrentCredentials = () => {
+const clearCachedCredentials = () => {
   const currentCredentials = new AWS.CognitoIdentityCredentials({IdentityPoolId: IDENTITY_POOL_ID});
   currentCredentials.clearCachedId();
 };
@@ -52,7 +52,7 @@ export const AuthenticationService = {
       await new Promise<CognitoUserSession | any>((resolve, reject) => {
         cognitoUser.authenticateUser(authenticationDetails, {
           onSuccess: (session: CognitoUserSession) => {
-            this.refreshCredentials(session.getIdToken().getJwtToken());
+            this.setConfigCredentials(session.getIdToken().getJwtToken());
             resolve();
           },
           onFailure: (err: any) => {
@@ -66,7 +66,7 @@ export const AuthenticationService = {
     }
     catch(err) {
       console.log('ERROR in UseAuthentication::authenticateUser', err);
-      clearCurrentCredentials();
+      this.signOut();
       return false;
     }
   },
@@ -117,7 +117,7 @@ export const AuthenticationService = {
   isUserAuthenticated(): boolean {
     try {
       if (this.isTokenActive()) {
-        this.refreshCredentials(this.getIdToken());
+        this.setConfigCredentials(this.getIdToken());
         return true;
       } else {
         this.refreshSession();
@@ -134,39 +134,14 @@ export const AuthenticationService = {
       return false;
     }
   },
-  
-  async refreshCredentials(idToken: string) {
-    clearCurrentCredentials();
-    
-    const credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: IDENTITY_POOL_ID,
-      Logins: {
-        [`cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID}`]: idToken
-      }
-    });
-    
-    AWS.config.region = REGION;
-    AWS.config.credentials = credentials;
-    
-    await new Promise<void>((resolve, reject) => {
-      credentials.refresh(err => {
-        if (err) {
-          console.log('ERROR in AuthenticationService::refreshCredentials::credentials.refresh', err);
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
-  },  
 
   async refreshSession() {
     console.log('In refreshSession()...');
-    const currentCognitorUser = getCurrentCognitoUser();
-    console.log('cognitorUser', currentCognitorUser);
-    if (currentCognitorUser) { 
+    const currentCognitoUser = getCurrentCognitoUser();
+    console.log('currentCognitoUser', currentCognitoUser);
+    if (currentCognitoUser) { 
       await new Promise<void>((resolve, reject) => {
-        currentCognitorUser.getSession(async (err: any, currentSession: CognitoUserSession) => {
+        currentCognitoUser.getSession(async (err: any, currentSession: CognitoUserSession) => {
           if (err) {
             console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.getSession', err);
             reject(err);
@@ -176,14 +151,14 @@ export const AuthenticationService = {
             if (currentSession && currentSession.isValid) {
               console.log('AWS.config.credentials', AWS.config.credentials);
               if (!AWS.config.credentials) {
-                this.refreshCredentials(currentSession.getIdToken().getJwtToken());
+                this.setConfigCredentials(currentSession.getIdToken().getJwtToken());
               }
               const credentials = AWS.config.credentials as AWS.CognitoIdentityCredentials;
               console.log('credentials', credentials);
               console.log('credentials?.needsRefresh()', credentials?.needsRefresh());
               if (credentials?.needsRefresh()) {
                 const refreshToken = currentSession.getRefreshToken();
-                currentCognitorUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
+                currentCognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
                   if (err) {
                     console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.refreshSession', err);
                     reject(err);
@@ -191,7 +166,7 @@ export const AuthenticationService = {
                   else {
                     if (newSession && newSession.isValid()) {
                       console.log('SESSION REFRESHED SUCCESSFULLY');
-                      this.refreshCredentials(newSession.getIdToken().getJwtToken());
+                      this.setConfigCredentials(newSession.getIdToken().getJwtToken());
                       resolve();
                     }
                   }
@@ -203,10 +178,23 @@ export const AuthenticationService = {
       });
     }
   },
+  
+  async setConfigCredentials(idToken: string) {
+    clearCachedCredentials();
+    
+    AWS.config.region = REGION;
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: IDENTITY_POOL_ID,
+      Logins: {
+        [`cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID}`]: idToken
+      }
+    });
+  },  
 
   signOut() {
-    clearCurrentCredentials();
+    clearCachedCredentials();
     const currentCognitoUser = getCurrentCognitoUser();
+    console.log('AuthenticationService::signOut::currentCognitoUser', currentCognitoUser);
     if (currentCognitoUser) {
       currentCognitoUser.signOut();
     }
