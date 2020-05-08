@@ -77,14 +77,6 @@ You may serve it with a static server; available at http://localhost:5000:
     npm install -g serve
     serve -s build
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you are on your own.
-
 ### More React
 
 * [React - Adding Custom Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/)
@@ -169,15 +161,8 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
     aws cognito-idp admin-update-user-attributes --profile roster-admin-user --user-pool-id <USER_POOL_ID> --region <REGION> --username <USER_NAME> --user-attributes Name="custom:CustomAttr1",Value="Purple"
 
 ### AWS Lambda (.NET Core)
-* [AWS Toolkit for Visual Studio 2017 and 2019](https://marketplace.visualstudio.com/items?itemName=AmazonWebServices.AWSToolkitforVisualStudio2017)
 
-#### To package a .NET Core AWS Lambda function and supporting files
-
-    dotnet lambda package
-
-#### To update .NET Core AWS Lambda function
-
-    dotnet lambda deploy-function --profile roster-admin-user --function-name roster-pdf-form-filler-lambda --package C:\JPFiles\src\roster-pdf-form-filler-lambda\bin\Debug\netcoreapp3.1\roster-pdf-form-filler-lambda.zip
+* See [roster-api-lambda on GitHub](https://github.com/jaypalexa/roster-api-lambda)
 
 ### Amazon DynamoDB
 
@@ -196,11 +181,3 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 * [Offer a page reload for users](https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users)
 * [Redirecting a user to the page they requested after successful authentication with react-router-dom](https://stackoverflow.com/questions/59422159/redirecting-a-user-to-the-page-they-requested-after-successful-authentication-wi/59423442#59423442)
 
-## PDF
-
-* [Why do I get an error saying that "use of extended features is no longer available"?](https://itextpdf.com/en/resources/faq/technical-support/itext-5-legacy/why-do-i-get-error-saying-use-extended-features-no)
----
-
-## See also
-
-* [roster-api-lambda on GitHub](https://github.com/jaypalexa/roster-api-lambda)

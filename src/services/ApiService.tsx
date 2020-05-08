@@ -47,16 +47,16 @@ export const ApiService = {
     apiRequestPayload.resource = '/wake-up';
 
     const params: AWS.Lambda.InvocationRequest = {
-      FunctionName: 'roster-db-access-lambda', 
+      FunctionName: 'roster-api-lambda', 
       InvocationType: 'RequestResponse',
       Payload: JSON.stringify(apiRequestPayload),
     };
 
-    // console.log('params', params);
-    // const result = await (new AWS.Lambda().invoke(params).promise());
-    // console.log('result', result);
+    console.log('WAKE-UP params', params);
+    const result = await (new AWS.Lambda().invoke(params).promise());
+    console.log('WAKE-UP result', result);
 
-    new AWS.Lambda().invoke(params)
+    // new AWS.Lambda().invoke(params)
   },
 
   async execute(apiRequestPayload: ApiRequestPayload): Promise<any> {

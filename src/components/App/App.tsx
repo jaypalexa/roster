@@ -33,6 +33,19 @@ const App: React.FC = () => {
   const [triggerRefresh, setTriggerRefresh] = useState(false);
   const [loggedInUserName, setLoggedInUserName] = useState('');
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
+  const [isOnline, setIsOnline] = useState(true);
+
+  const onlineOfflineHandler = (event: Event) => {
+    setIsOnline(navigator.onLine);
+
+    if (event.type === 'online') {
+      // handle stuffs when browser resume online
+      //alert('ONLINE');
+    } else {
+      // handle stuffs when browser goes offline
+      //alert('OFFLINE');
+    }
+  }
 
   const onReloadPageClick = () => {
     console.log('onReloadPageClick::newServiceWorker = ', newServiceWorker);
@@ -138,7 +151,24 @@ const App: React.FC = () => {
   });
 
   useMount(() => {
-    ApiService.wakeup();
+    const tryWakeup = async () => {
+      try {
+        await ApiService.wakeup();
+      }
+      catch(err) {
+        alert(err);
+      }
+    }
+    tryWakeup();
+  });
+
+  useMount(() => {
+    window.addEventListener('online', onlineOfflineHandler);
+    window.addEventListener('offline', onlineOfflineHandler);
+    return () => {
+      window.removeEventListener('online', onlineOfflineHandler);
+      window.removeEventListener('offline', onlineOfflineHandler);
+    }
   });
 
   useEffect(() => {
@@ -181,6 +211,7 @@ const App: React.FC = () => {
           </div>
         </nav>
 
+        {!isOnline ? <h1 className='offline-indicator has-text-centered'>OFFLINE</h1> : null}
         <div className='content-container'>
           <Switch>
             <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact={true} path='/' component={Home} />
@@ -204,7 +235,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200507.1920
+            &nbsp;|&nbsp;v0.20200508.0830
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

@@ -163,6 +163,7 @@ export const AuthenticationService = {
   async refreshSession() {
     console.log('In refreshSession()...');
     const cognitoUser = getCurrentCognitoUser();
+    console.log('cognitorUser', cognitoUser);
     if (cognitoUser != null) { 
       await new Promise<void>((resolve, reject) => {
         cognitoUser.getSession(async (err: any, currentSession: CognitoUserSession) => {
@@ -171,11 +172,14 @@ export const AuthenticationService = {
             reject(err);
           } 
           else {
+            console.log('currentSession', currentSession);
             if (currentSession && currentSession.isValid) {
+              console.log('AWS.config.credentials', AWS.config.credentials);
               if (!AWS.config.credentials) {
                 this.refreshCredentials(currentSession.getIdToken().getJwtToken());
               }
               const credentials = AWS.config.credentials as AWS.CognitoIdentityCredentials;
+              console.log('credentials', credentials);
               console.log('credentials?.needsRefresh()', credentials?.needsRefresh());
               if (credentials?.needsRefresh()) {
                 const refreshToken = currentSession.getRefreshToken();
