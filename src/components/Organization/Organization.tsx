@@ -45,7 +45,7 @@ const Organization: React.FC = () => {
         setCurrentOrganization(organization);
       } 
       catch (err) {
-        console.log(err);
+        console.error(err);
         toast.error(constants.ERROR.GENERIC);
       }
       finally {

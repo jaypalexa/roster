@@ -148,7 +148,7 @@ const HoldingTankGraphs: React.FC = () => {
           setCurrentHoldingTankMeasurements(holdingTankMeasurements);
         }
         catch (err) {
-          console.log(err);
+          console.error(err);
           toast.error(constants.ERROR.GENERIC);
         }
         finally {

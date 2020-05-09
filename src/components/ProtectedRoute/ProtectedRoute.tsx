@@ -9,7 +9,7 @@ interface ProtectedRouteProps extends RouteProps {
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
   const currentLocation = useLocation();
-  const isUserAuthenticated = AuthenticationService.isUserAuthenticated();
+  const isUserAuthenticated = AuthenticationService.isUserAuthenticated(`ProtectedRoute::${props.path}`);
   if (!isUserAuthenticated) {
     const renderComponent = () => <Login setLoggedInUserName={props.setLoggedInUserName} redirectPathOnAuthentication={currentLocation.pathname} />;
     return <Route {...props} component={renderComponent} render={undefined} />;

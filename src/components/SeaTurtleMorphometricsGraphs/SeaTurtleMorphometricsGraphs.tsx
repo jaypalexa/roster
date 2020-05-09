@@ -158,7 +158,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
           setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
         }
         catch (err) {
-          console.log(err);
+          console.error(err);
           toast.error(constants.ERROR.GENERIC);
         }
         finally {

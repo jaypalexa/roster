@@ -114,7 +114,8 @@ export const AuthenticationService = {
     return isActive;
   },
 
-  isUserAuthenticated(): boolean {
+  isUserAuthenticated(caller: string): boolean {
+    console.log(`>>> In isUserAuthenticated(${caller})...`);
     try {
       if (this.isTokenActive()) {
         console.log('isUserAuthenticated::isTokenActive === TRUE');

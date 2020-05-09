@@ -163,7 +163,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
           setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
         }
         catch (err) {
-          console.log(err);
+          console.error(err);
           toast.error(constants.ERROR.GENERIC);
         }
         finally {
@@ -182,7 +182,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
         setCurrentOrganization(organization);
       }
       catch (err) {
-        console.log(err);
+        console.error(err);
         toast.error(constants.ERROR.GENERIC);
       }
       finally {
@@ -210,7 +210,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       setCurrentSeaTurtleMorphometric(seaTurtleMorphometric);
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -236,7 +236,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       }
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -350,7 +350,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     toast.success('Record saved');
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {

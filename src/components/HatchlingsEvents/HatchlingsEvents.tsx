@@ -113,7 +113,7 @@ const HatchlingsEvents: React.FC = () => {
         setCurrentHatchlingsEvents(hatchlingsEvents);
       } 
       catch (err) {
-        console.log(err);
+        console.error(err);
         toast.error(constants.ERROR.GENERIC);
       }
       finally {
@@ -138,7 +138,7 @@ const HatchlingsEvents: React.FC = () => {
       setCurrentHatchlingsEvent(hatchlingsEvent);
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -164,7 +164,7 @@ const HatchlingsEvents: React.FC = () => {
       deleteHatchlingsEvent();
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -272,7 +272,7 @@ const HatchlingsEvents: React.FC = () => {
       setCurrentHatchlingsEvents([...currentHatchlingsEvents]);
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {

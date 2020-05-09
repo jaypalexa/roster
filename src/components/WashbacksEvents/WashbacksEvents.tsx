@@ -17,8 +17,8 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import WashbacksEventService from 'services/WashbacksEventService';
-import WashbacksEventModel from 'types/WashbacksEventModel';
 import NameValuePair from 'types/NameValuePair';
+import WashbacksEventModel from 'types/WashbacksEventModel';
 import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './WashbacksEvents.sass';
@@ -121,7 +121,7 @@ const WashbacksEvents: React.FC = () => {
         setCurrentWashbacksEvents(washbacksEvents);
       } 
       catch (err) {
-        console.log(err);
+        console.error(err);
         toast.error(constants.ERROR.GENERIC);
       }
       finally {
@@ -146,7 +146,7 @@ const WashbacksEvents: React.FC = () => {
       setCurrentWashbacksEvent(washbacksEvent);
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -172,7 +172,7 @@ const WashbacksEvents: React.FC = () => {
       deleteWashbacksEvent();
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -280,7 +280,7 @@ const WashbacksEvents: React.FC = () => {
       setCurrentWashbacksEvents([...currentWashbacksEvents]);
     } 
     catch (err) {
-      console.log(err);
+      console.error(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {

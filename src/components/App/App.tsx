@@ -41,10 +41,10 @@ const App: React.FC = () => {
     setIsOnline(navigator.onLine);
 
     if (event.type === 'online') {
-      // handle stuffs when browser resume online
+      //TODO:  do something when browser goes back online
       //alert('ONLINE');
     } else {
-      // handle stuffs when browser goes offline
+      //TODO:  do something when browser goes offline
       //alert('OFFLINE');
     }
   }
@@ -111,7 +111,11 @@ const App: React.FC = () => {
     document.querySelector('.navbar-burger')?.classList.remove('is-active');
   };
 
-  const logOut = () => {
+  const onLogInClick = () => {
+    closeMenu();
+  }
+
+  const onLogOutClick = () => {
     setLoggedInUserName('');
     AuthenticationService.signOut();
     closeMenu();
@@ -147,7 +151,7 @@ const App: React.FC = () => {
   });
 
   useMount(() => {
-    if (AuthenticationService.isUserAuthenticated()) {
+    if (AuthenticationService.isUserAuthenticated('App::useMount::setLoggedInUserName(AuthenticationService.getUserName())')) {
       setLoggedInUserName(AuthenticationService.getUserName());
     }
   });
@@ -158,7 +162,7 @@ const App: React.FC = () => {
         await ApiService.wakeup();
       }
       catch(err) {
-        alert(err);
+        console.error(err);
       }
     }
     tryWakeup();
@@ -209,27 +213,27 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
             <div className='navbar-end'>
-              <Link className={`navbar-item ${loggedInUserName ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
-              <Link className={`navbar-item ${loggedInUserName ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out ({loggedInUserName})</Link>
+              <Link className={`navbar-item ${loggedInUserName ? 'hidden' : ''}`} to='/login' onClick={onLogInClick}>Log In</Link>
+              <Link className={`navbar-item ${loggedInUserName ? '' : 'hidden'}`} to='/login' onClick={onLogOutClick}>Log Out ({loggedInUserName})</Link>
             </div>
           </div>
         </nav>
 
         <div className='content-container'>
           <Switch>
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact={true} path='/' component={Home} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/sea-turtles' component={SeaTurtles} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/sea-turtle-tags' component={SeaTurtleTags} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/holding-tanks' component={HoldingTanks} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/holding-tank-measurements' component={HoldingTankMeasurements} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/holding-tank-graphs' component={HoldingTankGraphs} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/hatchlings-events' component={HatchlingEvents} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/washbacks-events' component={WashbackEvents} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/reports' component={Reports} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} path='/organization' component={Organization} />
-            <Route path='/login' render={ (routeProps) => <Login {...{setLoggedInUserName, ...routeProps}} /> } />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/' component={Home} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtles' component={SeaTurtles} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-tags' component={SeaTurtleTags} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tanks' component={HoldingTanks} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tank-measurements' component={HoldingTankMeasurements} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tank-graphs' component={HoldingTankGraphs} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/hatchlings-events' component={HatchlingEvents} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/washbacks-events' component={WashbackEvents} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/reports' component={Reports} />
+            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/organization' component={Organization} />
+            <Route exact path='/login' render={ (routeProps) => <Login {...{setLoggedInUserName, ...routeProps}} /> } />
             <Route component={NotFound} />
           </Switch>
           <div className='bottom-panel has-text-centered'>
@@ -238,7 +242,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200509.1630
+            &nbsp;|&nbsp;v0.20200509.1645
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

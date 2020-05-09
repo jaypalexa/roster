@@ -88,7 +88,7 @@ export const handler: Handler = async (event: any, _context: Context, _callback:
   }
 
   // ddb.get(params, function(err, data) {
-  //   if (err) console.log(err);
+  //   if (err) console.error(err);
   //   else     console.log(data);
   // });
 
