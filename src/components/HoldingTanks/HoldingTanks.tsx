@@ -57,7 +57,7 @@ const HoldingTanks: React.FC = () => {
     },
     {
       name: 'Name',
-      selector: 'tankName',
+      selector: 'holdingTankName',
       sortable: true
     },
   ];
@@ -320,8 +320,8 @@ const HoldingTanks: React.FC = () => {
             title='Holding Tanks'
             columns={tableColumns}
             data={currentHoldingTanks}
-            keyField='tankId'
-            defaultSortField='tankName'
+            keyField='holdingTankId'
+            defaultSortField='holdingTankName'
             noHeader={true}
             fixedHeader={true}
             fixedHeaderScrollHeight='9rem'
@@ -337,7 +337,7 @@ const HoldingTanks: React.FC = () => {
               <fieldset disabled={!isFormEnabled}>
                 <h2 className='subtitle'>General Information</h2>
                 <FormFieldRow>
-                  <TextFormField fieldName='tankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
+                  <TextFormField fieldName='holdingTankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
                 </FormFieldRow>
                 <hr />
 

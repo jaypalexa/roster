@@ -87,7 +87,11 @@ export const ApiService = {
 
       const statusCode = result.StatusCode || 0;
       if (statusCode < 200 || 299 < statusCode) {
-        throw new Error(`HTTP status code of ${statusCode} indicates an unsuccessful request`);
+        throw new Error(`ERROR: HTTP status code of ${statusCode} indicates an unsuccessful request`);
+      }
+
+      if (result.FunctionError) {
+        throw new Error(`ERROR: ${result.Payload}`);
       }
       
       // console.log('result.Payload', result.Payload);

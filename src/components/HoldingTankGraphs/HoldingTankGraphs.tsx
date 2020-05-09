@@ -141,21 +141,21 @@ const HoldingTankGraphs: React.FC = () => {
     if (!holdingTankId) {
       browserHistory.push('/holding-tanks')
     } else {
-      try {
-        setShowSpinner(true);
-        const getHoldingTankMeasurementsForTank = async () => {
+      const getHoldingTankMeasurementsForTank = async () => {
+        try {
+          setShowSpinner(true);
           const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurements(holdingTankId);
           setCurrentHoldingTankMeasurements(holdingTankMeasurements);
-        };
-        getHoldingTankMeasurementsForTank();
-      }
-      catch (err) {
-        console.log(err);
-        toast.error(constants.ERROR.GENERIC);
-      }
-      finally {
-        setShowSpinner(false);
-      }
+        }
+        catch (err) {
+          console.log(err);
+          toast.error(constants.ERROR.GENERIC);
+        }
+        finally {
+          setShowSpinner(false);
+        }
+      };
+      getHoldingTankMeasurementsForTank();
     }
   });
 

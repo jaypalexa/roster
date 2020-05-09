@@ -156,13 +156,30 @@ const SeaTurtleMorphometrics: React.FC = () => {
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
-      try {
-        setShowSpinner(true);
-        const getSeaTurtleMorphometricsForTurtle = async () => {
+      const getSeaTurtleMorphometricsForTurtle = async () => {
+        try {
+          setShowSpinner(true);
           const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometrics(seaTurtleId);
           setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
+        }
+        catch (err) {
+          console.log(err);
+          toast.error(constants.ERROR.GENERIC);
+        }
+        finally {
+          setShowSpinner(false);
+        }
       };
-        getSeaTurtleMorphometricsForTurtle();
+      getSeaTurtleMorphometricsForTurtle();
+    }
+  });
+
+  useMount(() => {
+    const fetchOrganization = async () => {
+      try {
+        setShowSpinner(true);
+        const organization = await OrganizationService.getOrganization();
+        setCurrentOrganization(organization);
       }
       catch (err) {
         console.log(err);
@@ -171,13 +188,6 @@ const SeaTurtleMorphometrics: React.FC = () => {
       finally {
         setShowSpinner(false);
       }
-    }
-  });
-
-  useMount(() => {
-    const fetchOrganization = async () => {
-      const organization = await OrganizationService.getOrganization();
-      setCurrentOrganization(organization);
     };
     fetchOrganization();
   });

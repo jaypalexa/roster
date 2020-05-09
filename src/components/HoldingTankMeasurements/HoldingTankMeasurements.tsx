@@ -97,21 +97,21 @@ const HoldingTankMeasurements: React.FC = () => {
     if (!holdingTankId) {
       browserHistory.push('/sea-turtles')
     } else {
-      try {
-        setShowSpinner(true);
-        const getHoldingTankMeasurementsForTurtle = async () => {
+      const getHoldingTankMeasurementsForTurtle = async () => {
+        try {
+          setShowSpinner(true);
           const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurements(holdingTankId);
           setCurrentHoldingTankMeasurements(holdingTankMeasurements);
-        };
-        getHoldingTankMeasurementsForTurtle();
-      }
-      catch (err) {
-        console.log(err);
-        toast.error(constants.ERROR.GENERIC);
-      }
-      finally {
-        setShowSpinner(false);
-      }
+        }
+        catch (err) {
+          console.log(err);
+          toast.error(constants.ERROR.GENERIC);
+        }
+        finally {
+          setShowSpinner(false);
+        }
+      };
+      getHoldingTankMeasurementsForTurtle();
     } 
   });
 

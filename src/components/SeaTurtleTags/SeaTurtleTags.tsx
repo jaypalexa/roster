@@ -109,21 +109,21 @@ const SeaTurtleTags: React.FC = () => {
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
-      try {
-        setShowSpinner(true);
-        const getSeaTurtleTagsForTurtle = async () => {
+      const getSeaTurtleTagsForTurtle = async () => {
+        try {
+          setShowSpinner(true);
           const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTags(seaTurtleId);
           setCurrentSeaTurtleTags(seaTurtleTags);
-        };
-        getSeaTurtleTagsForTurtle();
-      }
-      catch (err) {
-        console.log(err);
-        toast.error(constants.ERROR.GENERIC);
-      }
-      finally {
-        setShowSpinner(false);
-      }
+        }
+        catch (err) {
+          console.log(err);
+          toast.error(constants.ERROR.GENERIC);
+        }
+        finally {
+          setShowSpinner(false);
+        }
+      };
+      getSeaTurtleTagsForTurtle();
     } 
   });
 

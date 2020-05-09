@@ -151,21 +151,21 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
-      try {
-        setShowSpinner(true);
-        const getSeaTurtleMorphometricsForTurtle = async () => {
+      const getSeaTurtleMorphometricsForTurtle = async () => {
+        try {
+          setShowSpinner(true);
           const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometrics(seaTurtleId);
           setCurrentSeaTurtleMorphometrics(seaTurtleMorphometrics);
-        };
-        getSeaTurtleMorphometricsForTurtle();
-      }
-      catch (err) {
-        console.log(err);
-        toast.error(constants.ERROR.GENERIC);
-      }
-      finally {
-        setShowSpinner(false);
-      }
+        }
+        catch (err) {
+          console.log(err);
+          toast.error(constants.ERROR.GENERIC);
+        }
+        finally {
+          setShowSpinner(false);
+        }
+      };
+      getSeaTurtleMorphometricsForTurtle();
     }
   });
 

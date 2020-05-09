@@ -1,4 +1,4 @@
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession, IAuthenticationDetailsData, ICognitoUserData, ICognitoUserPoolData } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoRefreshToken, CognitoUser, CognitoUserPool, CognitoUserSession, IAuthenticationDetailsData, ICognitoUserData, ICognitoUserPoolData } from 'amazon-cognito-identity-js';
 import AWS from 'aws-sdk';
 import jwt_decode from 'jwt-decode';
 import LoginModel from 'types/LoginModel';
@@ -117,13 +117,17 @@ export const AuthenticationService = {
   isUserAuthenticated(): boolean {
     try {
       if (this.isTokenActive()) {
+        console.log('isUserAuthenticated::isTokenActive === TRUE');
         this.setConfigCredentials(this.getIdToken());
         return true;
       } else {
+        console.log('isUserAuthenticated::isTokenActive === FALSE');
         this.refreshSession();
         if (this.isTokenActive()) {
+          console.log('isUserAuthenticated::isTokenActive::post-refreshSession === TRUE');
           return true;
         } else {
+          console.log('isUserAuthenticated::isTokenActive::post-refreshSession === FALSE');
           this.signOut();
           return false;
         }
@@ -138,45 +142,42 @@ export const AuthenticationService = {
   async refreshSession() {
     console.log('In refreshSession()...');
     const currentCognitoUser = getCurrentCognitoUser();
-    console.log('currentCognitoUser', currentCognitoUser);
+    console.log('refreshSession::currentCognitoUser', currentCognitoUser);
     if (currentCognitoUser) { 
-      await new Promise<void>((resolve, reject) => {
-        currentCognitoUser.getSession(async (err: any, currentSession: CognitoUserSession) => {
-          if (err) {
-            console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.getSession', err);
-            reject(err);
-          } 
-          else {
-            console.log('currentSession', currentSession);
-            if (currentSession && currentSession.isValid) {
-              console.log('AWS.config.credentials', AWS.config.credentials);
-              if (!AWS.config.credentials) {
-                this.setConfigCredentials(currentSession.getIdToken().getJwtToken());
-              }
-              const credentials = AWS.config.credentials as AWS.CognitoIdentityCredentials;
-              console.log('credentials', credentials);
-              console.log('credentials?.needsRefresh()', credentials?.needsRefresh());
-              if (credentials?.needsRefresh()) {
-                const refreshToken = currentSession.getRefreshToken();
-                currentCognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
-                  if (err) {
-                    console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.refreshSession', err);
-                    reject(err);
-                  } 
-                  else {
-                    if (newSession && newSession.isValid()) {
-                      console.log('SESSION REFRESHED SUCCESSFULLY');
-                      this.setConfigCredentials(newSession.getIdToken().getJwtToken());
-                      resolve();
-                    }
-                  }
-                });
-              } 
-            } 
+        const currentSession = currentCognitoUser.getSignInUserSession();
+        console.log('refreshSession::currentSession', currentSession);
+        if (currentSession && currentSession.isValid) {
+          console.log('refreshSession::AWS.config.credentials', AWS.config.credentials);
+          if (!AWS.config.credentials) {
+            this.setConfigCredentials(currentSession.getIdToken().getJwtToken());
           }
-        })
-      });
+          const credentials = AWS.config.credentials as AWS.CognitoIdentityCredentials;
+          console.log('refreshSession::credentials', credentials);
+          console.log('refreshSession::credentials?.needsRefresh()', credentials?.needsRefresh());
+          if (credentials?.needsRefresh()) {
+            const refreshToken = currentSession.getRefreshToken();
+            await this.doRefresh(currentCognitoUser, refreshToken);
+          } 
+        } 
     }
+  },
+
+  doRefresh(currentCognitoUser: CognitoUser, refreshToken: CognitoRefreshToken) {
+    return new Promise<void>((resolve, reject) => {
+      currentCognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
+        if (err) {
+          console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.refreshSession', err);
+          reject(err);
+        } 
+        else {
+          if (newSession && newSession.isValid()) {
+            console.log('SESSION REFRESHED SUCCESSFULLY');
+            this.setConfigCredentials(newSession.getIdToken().getJwtToken());
+            resolve();
+          }
+        }
+      });
+    });
   },
   
   async setConfigCredentials(idToken: string) {

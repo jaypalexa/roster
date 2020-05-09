@@ -210,9 +210,7 @@ const App: React.FC = () => {
             </div>
             <div className='navbar-end'>
               <Link className={`navbar-item ${loggedInUserName ? 'hidden' : ''}`} to='/login' onClick={closeMenu}>Log In</Link>
-              <span className={`navbar-item ${loggedInUserName ? '' : 'hidden'} is-hidden-mobile`} >{loggedInUserName}</span>
-              <span className={`navbar-item ${loggedInUserName ? '' : 'hidden'} is-hidden-mobile`} >|</span>
-              <Link className={`navbar-item ${loggedInUserName ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out</Link>
+              <Link className={`navbar-item ${loggedInUserName ? '' : 'hidden'}`} to='/login' onClick={logOut}>Log Out ({loggedInUserName})</Link>
             </div>
           </div>
         </nav>
@@ -240,7 +238,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200508.1915
+            &nbsp;|&nbsp;v0.20200509.1630
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
