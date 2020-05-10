@@ -151,7 +151,7 @@ export const AuthenticationService = {
         return true;
       } else {
         console.log('isUserAuthenticated::isTokenActive === FALSE');
-        this.tryRefreshSession(caller);
+        await this.tryRefreshSession(caller);
         if (this.isTokenActive()) {
           console.log('isUserAuthenticated::isTokenActive::post-refreshSession === TRUE');
           return true;
