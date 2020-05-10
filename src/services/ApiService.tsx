@@ -62,9 +62,9 @@ export const ApiService = {
   async execute(apiRequestPayload: ApiRequestPayload): Promise<any> {
 
     try {
-      const isUserAuthenticated = AuthenticationService.isUserAuthenticated(`ApiService::execute::${apiRequestPayload.resource}`);
+      const isUserAuthenticated = await AuthenticationService.isUserAuthenticated(`ApiService::execute::${apiRequestPayload.resource}`);
       if (!isUserAuthenticated) {
-        throw new Error('ApiService::execute::User not authenticated');
+        throw new Error('ERROR: User not authenticated');
       }
       
       const headers = {

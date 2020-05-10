@@ -53,11 +53,12 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
 
     localStorage.setItem('lastUserName', modifiedLogin.userName);
 
-    const isSuccess = await AuthenticationService.authenticateUserAsync(modifiedLogin);
+    const isAuthenticated = await AuthenticationService.authenticateUserAsync(modifiedLogin);
     setShowSpinner(false);
     
-    if (isSuccess) {
-      setLoggedInUserName(AuthenticationService.getUserName('Login::onSubmit::isSuccess'));
+    if (isAuthenticated) {
+      const userName = await AuthenticationService.getLoggedInUserName('Login::onSubmit'); 
+      setLoggedInUserName(userName);
       browserHistory.push(getPath());
     } else {
       setLoggedInUserName('');

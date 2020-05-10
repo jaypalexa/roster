@@ -33,7 +33,7 @@ const App: React.FC = () => {
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
   const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [triggerRefresh, setTriggerRefresh] = useState(false);
-  const [loggedInUserName, setLoggedInUserName] = useState(AuthenticationService.getUserName('App::useState::loggedInUserName'));
+  const [loggedInUserName, setLoggedInUserName] = useState('');
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
   const [isOnline, setIsOnline] = useState(true);
 
@@ -122,6 +122,16 @@ const App: React.FC = () => {
     setTriggerRefresh(!triggerRefresh);
   }
 
+  /* fetch user name */
+  useMount(() => {
+    const fetchUserName = async () => {
+      const userName = await AuthenticationService.getLoggedInUserName('App::useState::loggedInUserName');
+      setLoggedInUserName(userName);
+    };
+    fetchUserName();
+  });
+
+  /* register navbar burger toggle handlers */
   useMount(() => {
     const navbarBurgerDiv = document.querySelector('.navbar-burger') as HTMLDivElement;
     const toggleOn = () => {
@@ -136,6 +146,7 @@ const App: React.FC = () => {
     }
   });
 
+  /* register service worker onUpdate() */
   useMount(() => {
     const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
       setNewServiceWorker(registration.installing || registration.waiting);
@@ -146,10 +157,12 @@ const App: React.FC = () => {
     return () => { serviceWorker.unregister() }
   });
 
+  /* check for update */
   useMount(() => {
     checkForUpdate();
   });
 
+  /* wake up lambda */
   useMount(() => {
     const tryWakeup = async () => {
       try {
@@ -162,6 +175,7 @@ const App: React.FC = () => {
     tryWakeup();
   });
 
+  /* add online/offline event handlers */
   useMount(() => {
     window.addEventListener('online', onlineOfflineHandler);
     window.addEventListener('offline', onlineOfflineHandler);
@@ -175,7 +189,7 @@ const App: React.FC = () => {
     setIsShowUpdateAvailable(isUpdateAvailable);
   }, [isUpdateAvailable]);
 
-  console.log(`*** App at ${(new Date().toUTCString())} ***`);
+  console.log(`*** APP at ${(new Date().toUTCString())} : LOGIN = ${loggedInUserName} ***`);
 
   return (
     <div id='app'>
@@ -238,7 +252,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200510.1200
+            &nbsp;|&nbsp;v0.20200510.1700
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
