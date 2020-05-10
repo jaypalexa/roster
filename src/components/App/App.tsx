@@ -33,7 +33,7 @@ const App: React.FC = () => {
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
   const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [triggerRefresh, setTriggerRefresh] = useState(false);
-  const [loggedInUserName, setLoggedInUserName] = useState('');
+  const [loggedInUserName, setLoggedInUserName] = useState(AuthenticationService.getUserName('App::useState::loggedInUserName'));
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
   const [isOnline, setIsOnline] = useState(true);
 
@@ -151,12 +151,6 @@ const App: React.FC = () => {
   });
 
   useMount(() => {
-    if (AuthenticationService.isUserAuthenticated('App::useMount::setLoggedInUserName(AuthenticationService.getUserName())')) {
-      setLoggedInUserName(AuthenticationService.getUserName());
-    }
-  });
-
-  useMount(() => {
     const tryWakeup = async () => {
       try {
         await ApiService.wakeup();
@@ -180,6 +174,8 @@ const App: React.FC = () => {
   useEffect(() => {
     setIsShowUpdateAvailable(isUpdateAvailable);
   }, [isUpdateAvailable]);
+
+  console.log(`*** App at ${(new Date().toUTCString())} ***`);
 
   return (
     <div id='app'>
@@ -242,7 +238,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200509.1645
+            &nbsp;|&nbsp;v0.20200510.1200
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
