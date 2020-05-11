@@ -28,6 +28,7 @@ import * as serviceWorker from 'serviceWorker';
 import './App.sass';
 
 const App: React.FC = () => {
+  console.log(`[${Date.now().toString()}] *** APP at ${(new Date().toUTCString())} ***`);
 
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
@@ -124,11 +125,8 @@ const App: React.FC = () => {
 
   /* fetch user name */
   useMount(() => {
-    const fetchUserName = async () => {
-      const userName = await AuthenticationService.getLoggedInUserName('App::useState::loggedInUserName');
-      setLoggedInUserName(userName);
-    };
-    fetchUserName();
+    const userName = AuthenticationService.getLoggedInUserName();
+    setLoggedInUserName(userName);
   });
 
   /* register navbar burger toggle handlers */
@@ -188,8 +186,6 @@ const App: React.FC = () => {
   useEffect(() => {
     setIsShowUpdateAvailable(isUpdateAvailable);
   }, [isUpdateAvailable]);
-
-  console.log(`*** APP at ${(new Date().toUTCString())} : LOGIN = ${loggedInUserName} ***`);
 
   return (
     <div id='app'>
@@ -252,7 +248,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200510.1818
+            &nbsp;|&nbsp;v0.20200511.1245
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
