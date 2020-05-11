@@ -123,6 +123,19 @@ const App: React.FC = () => {
     setTriggerRefresh(!triggerRefresh);
   }
 
+  /* schedule session refresh */
+  useMount(() => {
+    // const REFRESH_INTERVAL = 10 * 1000; // 10 sec
+    const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 min
+    const scheduleSessionRefresh = (interval = REFRESH_INTERVAL) => {
+      setTimeout(async () => {
+        await AuthenticationService.refreshSessionAsync();
+        scheduleSessionRefresh(REFRESH_INTERVAL);         
+      }, interval);
+    };
+    scheduleSessionRefresh();
+  });
+
   /* fetch user name */
   useMount(() => {
     const userName = AuthenticationService.getLoggedInUserName();
@@ -248,7 +261,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200511.1245
+            &nbsp;|&nbsp;v0.20200511.1330
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

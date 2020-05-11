@@ -24,15 +24,11 @@ const getCurrentCognitoUser = (): CognitoUser | null => {
   return USER_POOL.getCurrentUser();
 };
 
-const getCurrentSessionAsync = (cognitoUser: CognitoUser) => {
+const getCurrentSessionPromise = (cognitoUser: CognitoUser) => {
   return new Promise<CognitoUserSession>((resolve, reject) => {
-    console.log('In getCurrentSessionAsync(); calling cognitoUser.getSession()...');
     cognitoUser.getSession((err: any, session: CognitoUserSession) => {
-      console.log('In getCurrentSessionAsync(); cognitoUser.getSession() has been executed...');
-      console.log('In getCurrentSessionAsync(); cognitoUser.getSession() has been executed::err', err);
-      console.log('In getCurrentSessionAsync(); cognitoUser.getSession() has been executed::session', session);
       if (err) {
-        console.log('ERROR in AuthenticationService::getCurrentSessionAsync::cognitoUser.getSession', err);
+        console.log('ERROR in AuthenticationService::getCurrentSessionPromise()::cognitoUser.getSession()', err);
         reject(err);
       } else {
         resolve(session);
@@ -73,7 +69,7 @@ export const AuthenticationService = {
             resolve();
           },
           onFailure: (err: any) => {
-            console.log('ERROR in UseAuthentication::authenticateUser::cognitoUser.authenticateUser', err);
+            console.log('ERROR in UseAuthentication::authenticateUserAsync()::cognitoUser.authenticateUser()', err);
             reject(err);
           }
         });
@@ -82,7 +78,7 @@ export const AuthenticationService = {
       return true;
     }
     catch(err) {
-      console.log('ERROR in UseAuthentication::authenticateUser', err);
+      console.log('ERROR in UseAuthentication::authenticateUserAsync()', err);
       this.signOut();
       return false;
     }
@@ -144,38 +140,29 @@ export const AuthenticationService = {
     }
   },
 
-  async tryRefreshSessionAsync() {
-    console.log(`In tryRefreshSessionAsync()...`);
+  async refreshSessionAsync() {
+    console.log(`In refreshSessionAsync()...`);
     const currentCognitoUser = getCurrentCognitoUser();
-    console.log(`tryRefreshSessionAsync()::currentCognitoUser`, currentCognitoUser);
+    console.log(`refreshSessionAsync()::currentCognitoUser`, currentCognitoUser);
     if (currentCognitoUser) {
-      console.log(`tryRefreshSessionAsync()::BEFORE await getCurrentSessionAsync(currentCognitoUser)`);
-      const currentSession = await getCurrentSessionAsync(currentCognitoUser);
-      console.log(`tryRefreshSessionAsync()::AFTER await getCurrentSessionAsync(currentCognitoUser)`);
-      console.log(`tryRefreshSessionAsync()::currentSession`, currentSession);
-      console.log(`tryRefreshSessionAsync()::currentSession?.isValid()`, currentSession?.isValid());
+      const currentSession = await getCurrentSessionPromise(currentCognitoUser);
+      console.log(`refreshSessionAsync()::currentSession`, currentSession);
+      console.log(`refreshSessionAsync()::currentSession?.isValid()`, currentSession?.isValid());
       if (currentSession?.isValid()) {
-        console.log(`tryRefreshSessionAsync()::AWS.config.credentials`, AWS.config.credentials);
-        if (!AWS.config.credentials) {
-          this.setConfigCredentials(currentSession.getIdToken().getJwtToken());
-        }
-        const credentials = AWS.config.credentials as AWS.CognitoIdentityCredentials;
-        console.log(`tryRefreshSessionAsync()::credentials`, credentials);
-        console.log(`tryRefreshSessionAsync()::credentials?.needsRefresh()`, credentials?.needsRefresh());
-        if (credentials?.needsRefresh()) {
-          const refreshToken = currentSession.getRefreshToken();
-          currentCognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
-            if (err) {
-              console.log('ERROR in AuthenticationService::refreshSession::cognitoUser.refreshSession', err);
-            } 
-            else {
-              if (newSession && newSession.isValid()) {
-                console.log('SESSION REFRESHED SUCCESSFULLY');
-                this.setConfigCredentials(newSession.getIdToken().getJwtToken());
-              }
+        const refreshToken = currentSession.getRefreshToken();
+        currentCognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
+          if (err) {
+            console.log('ERROR in AuthenticationService::refreshSessionAsync()::currentCognitoUser.refreshSession()', err);
+          } 
+          else {
+            console.log(`refreshSessionAsync()::newSession`, newSession);
+            console.log(`refreshSessionAsync()::newSession?.isValid()`, newSession?.isValid());
+            if (newSession?.isValid()) {
+              console.log('SESSION REFRESHED SUCCESSFULLY');
+              this.setConfigCredentials(newSession.getIdToken().getJwtToken());
             }
-          });
-        } 
+          }
+        });
       }
     }
   },
