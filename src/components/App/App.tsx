@@ -1,27 +1,13 @@
 import wifiOffIcon from 'assets/images/wifi-off.png';
 import wifiOnIcon from 'assets/images/wifi-on.png';
 import browserHistory from 'browserHistory';
-import HatchlingEvents from 'components/HatchlingsEvents/HatchlingsEvents';
-import HoldingTankGraphs from 'components/HoldingTankGraphs/HoldingTankGraphs';
-import HoldingTankMeasurements from 'components/HoldingTankMeasurements/HoldingTankMeasurements';
-import HoldingTanks from 'components/HoldingTanks/HoldingTanks';
-import Home from 'components/Home/Home';
-import Login from 'components/Login/Login';
-import NotFound from 'components/NotFound/NotFound';
-import Organization from 'components/Organization/Organization';
-import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
-import Reports from 'components/Reports/Reports';
-import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics';
-import SeaTurtleMorphometricsGraphs from 'components/SeaTurtleMorphometricsGraphs/SeaTurtleMorphometricsGraphs';
-import SeaTurtles from 'components/SeaTurtles/SeaTurtles';
-import SeaTurtleTags from 'components/SeaTurtleTags/SeaTurtleTags';
-import WashbackEvents from 'components/WashbacksEvents/WashbacksEvents';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, Route, Router, Switch } from 'react-router-dom';
+import { Link, Router } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import routes from 'routes';
 import ApiService from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
 import * as serviceWorker from 'serviceWorker';
@@ -237,36 +223,19 @@ const App: React.FC = () => {
             </div>
           </div>
         </nav>
-
         <div className='content-container'>
-          <Switch>
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/' component={Home} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtles' component={SeaTurtles} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-tags' component={SeaTurtleTags} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tanks' component={HoldingTanks} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tank-measurements' component={HoldingTankMeasurements} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tank-graphs' component={HoldingTankGraphs} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/hatchlings-events' component={HatchlingEvents} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/washbacks-events' component={WashbackEvents} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/reports' component={Reports} />
-            <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/organization' component={Organization} />
-            <Route exact path='/login' render={ (routeProps) => <Login {...{setLoggedInUserName, ...routeProps}} /> } />
-            <Route component={NotFound} />
-          </Switch>
+          {routes(setLoggedInUserName)}
           <div className='bottom-panel has-text-centered'>
             Copyright &copy; 2006-2020 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='TurtleGeek.com'>TurtleGeek.com</a>
             &nbsp;|&nbsp;
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200511.1330
+            &nbsp;|&nbsp;v0.20200511.1415
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
         </div>
-
       </Router>
       <ToastContainer
         autoClose={1200}
