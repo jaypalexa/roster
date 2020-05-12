@@ -60,21 +60,21 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | &#10065; Marine Turtle Holding Facility Quarterly Report | [ generate \| blank ]  |
 | &#10065; Marine Turtle Captive Facility Quarterly Report for Hatchlings | [ generate \| blank ]  |
 | &#10065; Marine Turtle Captive Facility Quarterly Report for Washbacks | [ generate \| blank ]  |
-| &#10065; Monitoring for Beach Restoration Projects | [ blank ]  |
-| &#10065; Disorientation Incident Form | [ generate \| blank ]  |
-| &#10065; Disorientation Incident Form Directions | [ blank ]  |
-| &#10065; Educational Presentations Using Turtles | [ generate \| blank ]  |
-| &#10065; Necropsy Report Form | [ generate \| blank ]  |
-| &#10065; Nighttime Public Hatchling Release | [ generate \| blank ]  |
-| &#10065; Obstructed Nesting Attempt Form | [ generate \| blank ]  |
-| &#10065; Obstructed Nesting Attempt Form Directions | [ blank ]  |
-| &#10065; Papilloma Documentation Form | [ generate \| blank ]  |
-| &#10065; Public Turtle Watch Schedule Form | [ generate \| blank ]  |
-| &#10065; Public Turtle Watch Summary Form | [ generate \| blank ]  |
-| &#10065; Stranding and Salvage Form | [ generate \| blank ]  |
-| &#10065; Tag Request Form | [ generate \| blank ]  |
+| &check; Monitoring for Beach Restoration Projects | [ blank ]  |
+| &check; Disorientation Incident Form | [ blank ]  |
+| &check; Disorientation Incident Form Directions | [ blank ]  |
+| &check; Educational Presentations Using Turtles | [ blank ]  |
+| &check; Necropsy Report Form | [ blank ]  |
+| &check; Nighttime Public Hatchling Release | [ blank ]  |
+| &check; Obstructed Nesting Attempt Form | [ blank ]  |
+| &check; Obstructed Nesting Attempt Form Directions | [ blank ]  |
+| &check; Papilloma Documentation Form | [ blank ]  |
+| &check; Public Turtle Watch Schedule Form | [ blank ]  |
+| &check; Public Turtle Watch Summary Form | [ blank ]  |
+| &check; Stranding and Salvage Form | [ blank ]  |
+| &check; Tag Request Form | [ blank ]  |
 | &#10065; Tagging Data Form | [ generate \| blank ]  |
-| &#10065; Turtle Transfer Form | [ generate \| blank ]  |
+| &check; Turtle Transfer Form | [ blank ]  |
 
 ### Reports - Other
 

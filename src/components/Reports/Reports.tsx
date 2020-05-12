@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
 import ReportListItemModel from 'types/ReportListItemModel';
 import { constants } from 'utils';
@@ -37,6 +38,13 @@ const Reports: React.FC = () => {
       name: 'Name',
       selector: 'reportName',
       sortable: true
+    },
+    {
+      name: 'Type',
+      maxWidth: '4.5rem',
+      minWidth: '4.5rem',
+      style: '{padding-right: 4rem}',
+      cell: (row: ReportListItemModel) => <i className={`fa ${row.isPdf ? 'fa-file-pdf-o' : 'fa-file-code-o'}`} title={row.isPdf ? 'PDF' : 'HTML'}></i>,
     },
   ];
 
@@ -75,8 +83,9 @@ const Reports: React.FC = () => {
   });
 
   const showBlankReport = (reportListItem: ReportListItemModel) => {
+    AuthenticationService.updateUserActivity();
     if (!reportListItem.isPdf) {
-      toast.error(`${reportListItem.reportName} is an HTML report`);
+      toast.info(`The '${reportListItem.reportName}' is an HTML report`);
       return;
     }
     const url = `https://www.turtlegeek.com/pdf/roster/${reportListItem.blankFileName}`;
@@ -87,7 +96,7 @@ const Reports: React.FC = () => {
     setCurrentReportListItem({} as ReportListItemModel);
     try {
       if (!reportListItem.isPdf) {
-        toast.error(`${reportListItem.reportName} is an HTML report`);
+        toast.info(`The '${reportListItem.reportName}' is an HTML report`);
         return;
       }
       setShowSpinner(true)
