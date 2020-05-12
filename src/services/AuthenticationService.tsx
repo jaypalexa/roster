@@ -166,7 +166,7 @@ export const AuthenticationService = {
 
     const now = (Date.now() / 1000); // seconds
     
-    const isFutureAuthTime = ((now < decodedIdToken.auth_time) || (now < decodedAccessToken.auth_time));
+    const isFutureAuthTime = ((now < decodedIdToken.auth_time - 300) || (now < decodedAccessToken.auth_time - 300));
     if (isFutureAuthTime) {
       console.log('THE ID TOKEN AND/OR THE ACCESS TOKEN HAVE AUTH TIMES IN THE FUTURE');
       return false;

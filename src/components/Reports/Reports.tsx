@@ -26,7 +26,7 @@ const Reports: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onBlankReportListItemClick(row, event) }}><i className='fa fa-edit' title='Blank'></i></span>,
+      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onBlankReportListItemClick(row, event) }}><i className={`fa ${row.isPdf && row.blankFileName ? 'fa-external-link' : ''}`} title='Blank'></i></span>,
     },
     {
       name: '',
@@ -76,14 +76,24 @@ const Reports: React.FC = () => {
     setShowSpinner(false);
   });
 
-  const fetchReport = async (reportListItem: ReportListItemModel) => {
+  const showBlankReport = (reportListItem: ReportListItemModel) => {
+    if (!reportListItem.isPdf) {
+      toast.error(`${reportListItem.reportName} is an HTML report`);
+      return;
+    }
+    const url = `https://www.turtlegeek.com/pdf/roster/${reportListItem.blankFileName}`;
+    window.open(url);
+  };
+
+  const generateReport = async (reportListItem: ReportListItemModel) => {
+    setCurrentReportListItem({} as ReportListItemModel);
     try {
       if (!reportListItem.isPdf) {
         toast.error(`${reportListItem.reportName} is an HTML report`);
         return;
       }
       setShowSpinner(true)
-      //const report = await ReportService.getReport('DisorientationIncidentReportForm');
+      setCurrentReportListItem(reportListItem);
       const report = await ReportService.getReport(reportListItem.reportId);
       setPdfData(`data:application/pdf;base64,${report.data}`);
       setPdfUrl(report.url);
@@ -99,11 +109,11 @@ const Reports: React.FC = () => {
   };
 
   const onBlankReportListItemClick = (reportListItem: ReportListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    fetchReport(reportListItem);
+    showBlankReport(reportListItem);
   };
 
   const onGenerateReportListItemClick = (reportListItem: ReportListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    fetchReport(reportListItem);
+    generateReport(reportListItem);
   };
 
   return (
@@ -131,29 +141,26 @@ const Reports: React.FC = () => {
             keyField='reportId'
             defaultSortField='reportName'
             noHeader={true}
-            // fixedHeader={true}
-            // fixedHeaderScrollHeight='9rem'
             customStyles={tableCustomStyles}
           />
 
           <hr />
-          {/* <h2 className='subtitle has-text-centered'>TEST</h2>
-          <button className='button' onClick={(event) => {fetchReport('StrandingAndSalvageForm')}}>Fetch Report</button> */}
-          <div>
-            {/* <iframe src={pdfData}></iframe> */}
-            <object 
-              style={{height: '85vh'}} 
-              // data={'https://www.turtlegeek.com/pdf/test.pdf'} 
-              data={pdfData} 
-              type='application/pdf' 
-              width='100%' 
-              height='100%'
-              title='moo'
-              name='mew'
-            >
-                <a href={pdfUrl} title='report'>View Report</a>
-            </object>
-          </div>
+
+          {currentReportListItem.reportId ? 
+            <div>
+              <object 
+                style={{height: '85vh'}} 
+                data={pdfData} 
+                type='application/pdf' 
+                width='100%' 
+                height='100%'
+                title={currentReportListItem.reportName}
+                name={currentReportListItem.reportName}
+              >
+                  <a href={pdfUrl} title='report'>View Report</a>
+              </object>
+            </div>
+           : null}
         </div>
       </div>
     </div>

@@ -4,4 +4,5 @@ export default interface ReportListItemModel {
   reportName: string;
   canGenerate: boolean;
   isPdf: boolean;
+  blankFileName?: string;
 };
