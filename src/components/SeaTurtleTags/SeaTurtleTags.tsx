@@ -116,7 +116,7 @@ const SeaTurtleTags: React.FC = () => {
           setCurrentSeaTurtleTags(seaTurtleTags);
         }
         catch (err) {
-          console.error(err);
+          console.log(err);
           toast.error(constants.ERROR.GENERIC);
         }
         finally {
@@ -145,7 +145,7 @@ const SeaTurtleTags: React.FC = () => {
       setCurrentSeaTurtleTag(seaTurtleTag);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -171,7 +171,7 @@ const SeaTurtleTags: React.FC = () => {
       }
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -274,7 +274,7 @@ const SeaTurtleTags: React.FC = () => {
       toast.success('Record saved');
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {

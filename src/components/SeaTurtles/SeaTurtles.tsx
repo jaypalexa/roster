@@ -158,7 +158,7 @@ const SeaTurtles: React.FC = () => {
         }
       } 
       catch (err) {
-        console.error(err);
+        console.log(err);
         toast.error(constants.ERROR.GENERIC);
       }
       finally {
@@ -187,7 +187,7 @@ const SeaTurtles: React.FC = () => {
       setCurrentSeaTurtle(seaTurtle);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -213,7 +213,7 @@ const SeaTurtles: React.FC = () => {
       deleteSeaTurtle();
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -320,7 +320,7 @@ const SeaTurtles: React.FC = () => {
       setCurrentSeaTurtles([...currentSeaTurtles]);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {

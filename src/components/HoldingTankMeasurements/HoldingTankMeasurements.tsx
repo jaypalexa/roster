@@ -104,7 +104,7 @@ const HoldingTankMeasurements: React.FC = () => {
           setCurrentHoldingTankMeasurements(holdingTankMeasurements);
         }
         catch (err) {
-          console.error(err);
+          console.log(err);
           toast.error(constants.ERROR.GENERIC);
         }
         finally {
@@ -133,7 +133,7 @@ const HoldingTankMeasurements: React.FC = () => {
       setCurrentHoldingTankMeasurement(holdingTankMeasurement);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -159,7 +159,7 @@ const HoldingTankMeasurements: React.FC = () => {
       }
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -262,7 +262,7 @@ const HoldingTankMeasurements: React.FC = () => {
     toast.success('Record saved');
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {

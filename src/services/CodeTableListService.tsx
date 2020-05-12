@@ -30,21 +30,21 @@ export enum CodeTableType {
 
 const CodeTableListService = {
   getList(codeTableType: CodeTableType, includeBlankLine: boolean): NameValuePair[] {
-    let codeTableList: NameValuePair[] = [];
+    let listItems: NameValuePair[] = [];
 
     if (includeBlankLine) {
-      codeTableList.push({ name: '', value: '' });
+      listItems.push({ name: '', value: '' });
     }
 
     switch(codeTableType) {
       case CodeTableType.BurialLocation:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'N - On Beach', value: 'N' },
           { name: 'F - Off Beach', value: 'F' }
         ]);
         break;
       case CodeTableType.CaptureProjectType:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'N - Nesting beach', value: 'N' },
           { name: 'T - Tangle net', value: 'T' },
           { name: 'P - Pound net', value: 'P' },
@@ -54,13 +54,13 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.CmIn:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'cm', value: 'cm' },
           { name: 'in', value: 'in' }
         ]);
         break;
       case CodeTableType.County:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'Alachua', value: 'Alachua' },
           { name: 'Baker', value: 'Baker' },
           { name: 'Bay', value: 'Bay' },
@@ -131,7 +131,7 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.Disposition:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: '1 - Left On Beach Where Found', value: '1' },
           { name: '2 - Buried', value: '2' },
           { name: '3 - Salvaged', value: '3' },
@@ -143,7 +143,7 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.Flipper:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'LFF - Left Front Flipper', value: 'LFF' },
           { name: 'LRF - Left Rear Flipper', value: 'LRF' },
           { name: 'RFF - Right Front Flipper', value: 'RFF' },
@@ -151,13 +151,13 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.HowWasSexDetermined:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'N - Necropsy', value: 'N' },
           { name: 'T - Tail Length (adult only)', value: 'T' }
         ]);
         break;
       case CodeTableType.InitialCondition:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: '0 - Alive', value: '0' },
           { name: '1 - Fresh Dead', value: '1' },
           { name: '2 - Moderately Decomposed', value: '2' },
@@ -167,38 +167,38 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.KgLb:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'kg', value: 'kg' },
           { name: 'lb', value: 'lb' }
         ]);
         break;
       case CodeTableType.PartsSalvagedType:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'A - All', value: 'A' },
           { name: 'P - Part(s)', value: 'P' }
         ]);
         break;
       case CodeTableType.PreferredUnitsType:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'M - Metric', value: 'M' },
           { name: 'I - Imperial', value: 'I' } 
         ]);
         break;
       case CodeTableType.RecaptureType:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'S - Recapture of same project turtle', value: 'S' },
           { name: 'D - Recapture of different project turtle', value: 'D' } 
         ]);
         break;
       case CodeTableType.Sex:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'F - Female', value: 'F' },
           { name: 'M - Male', value: 'M' },
           { name: 'U - Undetermined', value: 'U' }
         ]);
         break;
       case CodeTableType.Species:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'CC - Caretta carretta (Loggerhead)', value: 'CC' },
           { name: 'CM - Chelonia mydas (Green)', value: 'CM' },
           { name: 'DC - Dermochelys coriacea (Leatherback)', value: 'DC' },
@@ -210,7 +210,7 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.StateCoordinatorNotified:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'X - Not Notified', value: 'X' },
           { name: 'P - Phone', value: 'P' },
           { name: 'F - Fax', value: 'F' },
@@ -218,13 +218,13 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.StrandingLocationShore:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'O - Offshore (Atlantic or Gulf beach)', value: 'O' },
           { name: 'I - Inshore (bay, river, sound, inlet, etc.)', value: 'I' }
         ]);
         break;
       case CodeTableType.TagLocation:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'RFF', value: 'RFF' },
           { name: 'LFF', value: 'LFF' },
           { name: 'RRF', value: 'RRF' },
@@ -233,7 +233,7 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.TagType:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'Inconel', value: 'Inconel' },
           { name: 'Monel', value: 'Monel' },
           { name: 'PIT', value: 'PIT' },
@@ -242,7 +242,7 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.TurtleSize:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'Hatchling', value: 'Hatchling' },
           { name: 'Post-hatchling', value: 'Post-hatchling' },
           { name: 'Juvenile', value: 'Juvenile' },
@@ -252,7 +252,7 @@ const CodeTableListService = {
         ]);
       break;
       case CodeTableType.TurtleStatus:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'UR - Undergoing rehab', value: 'UR' },
           { name: 'ED - Educational display', value: 'ED' },
           { name: 'UO - Unknown origin', value: 'UO' },
@@ -265,13 +265,13 @@ const CodeTableListService = {
         ]);
         break;
       case CodeTableType.WeightAccuracyType:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'A - Actual', value: 'A' },
           { name: 'E - Estimated', value: 'E' }
         ]);
         break;
       case CodeTableType.YesNoUndetermined:
-        codeTableList = codeTableList.concat([
+        listItems = listItems.concat([
           { name: 'Y - Yes', value: 'Y' },
           { name: 'N - No', value: 'N' },
           { name: 'U - Undetermined', value: 'U' }
@@ -279,7 +279,7 @@ const CodeTableListService = {
         break;
     }
 
-    return codeTableList;
+    return listItems;
   }
 };
 

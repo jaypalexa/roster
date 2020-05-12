@@ -121,7 +121,7 @@ const WashbacksEvents: React.FC = () => {
         setCurrentWashbacksEvents(washbacksEvents);
       } 
       catch (err) {
-        console.error(err);
+        console.log(err);
         toast.error(constants.ERROR.GENERIC);
       }
       finally {
@@ -146,7 +146,7 @@ const WashbacksEvents: React.FC = () => {
       setCurrentWashbacksEvent(washbacksEvent);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -172,7 +172,7 @@ const WashbacksEvents: React.FC = () => {
       deleteWashbacksEvent();
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -280,7 +280,7 @@ const WashbacksEvents: React.FC = () => {
       setCurrentWashbacksEvents([...currentWashbacksEvents]);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -385,7 +385,7 @@ const WashbacksEvents: React.FC = () => {
             columns={tableColumns}
             data={currentWashbacksEvents}
             keyField='washbacksEventId'
-            defaultSortField='turtleName'
+            defaultSortField='eventDate'
             noHeader={true}
             fixedHeader={true}
             fixedHeaderScrollHeight='9rem'

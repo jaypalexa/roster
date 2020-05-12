@@ -87,7 +87,7 @@ const HoldingTanks: React.FC = () => {
         }
       } 
       catch (err) {
-        console.error(err);
+        console.log(err);
         toast.error(constants.ERROR.GENERIC);
       }
       finally {
@@ -116,7 +116,7 @@ const HoldingTanks: React.FC = () => {
       setCurrentHoldingTank(holdingTank);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -142,7 +142,7 @@ const HoldingTanks: React.FC = () => {
       deleteHoldingTank();
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -249,7 +249,7 @@ const HoldingTanks: React.FC = () => {
       setCurrentHoldingTanks([...currentHoldingTanks]);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {

@@ -24,6 +24,10 @@ let sessionStatusPollingTimeout: NodeJS.Timeout;
 export const AuthenticationService = {
   
   resetSessionStatusPolling() {
+    console.log(`In resetSessionStatusPolling() at ${(new Date().toUTCString())} -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
+
+    clearTimeout(sessionStatusPollingTimeout);
+
     const POLLING_INTERVAL = 5 * 60 * 1000; // 5 min
     if (!this.isUserAuthenticated()) return;
     sessionStatusPollingTimeout = setTimeout(async () => {

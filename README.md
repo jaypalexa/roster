@@ -43,13 +43,45 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | &check; Add a loading spinner | home-grown |
 | &check; Database (multi-tenant) | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
 | &check; Prevent tabbing outside of modal | [react-modal](https://www.npmjs.com/package/react-modal) |
+| &#10065; Session/Token timeout | ??? auto-refresh |
 | &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
 | &#10065; Filtering of tables | ??? [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) |
-| &#10065; Session/Token timeout | ??? auto-refresh |
 | &#10065; Preventing denial-of-service attacks /excessive usage | ??? throttling |
 | &#10065; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
 | &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? Service worker unable to distinguish different payloads when calling AWS Lambda (https://lambda.us-east-2.amazonaws.com/2015-03-31/functions/roster-api-lambda/invocations)? |
 | &#10065; Poor man's caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
+
+
+### Reports - PDFs for FWC
+
+| Report | Notes |
+|--------|-------|
+| &#10065; Marine Turtle Holding Facility Quarterly Report | [ generate \| blank ]  |
+| &#10065; Marine Turtle Captive Facility Quarterly Report for Hatchlings | [ generate \| blank ]  |
+| &#10065; Marine Turtle Captive Facility Quarterly Report for Washbacks | [ generate \| blank ]  |
+| &#10065; Monitoring for Beach Restoration Projects | [ blank ]  |
+| &#10065; Disorientation Incident Form | [ generate \| blank ]  |
+| &#10065; Disorientation Incident Form Directions | [ blank ]  |
+| &#10065; Educational Presentations Using Turtles | [ generate \| blank ]  |
+| &#10065; Necropsy Report Form | [ generate \| blank ]  |
+| &#10065; Nighttime Public Hatchling Release | [ generate \| blank ]  |
+| &#10065; Obstructed Nesting Attempt Form | [ generate \| blank ]  |
+| &#10065; Obstructed Nesting Attempt Form Directions | [ blank ]  |
+| &#10065; Papilloma Documentation Form | [ generate \| blank ]  |
+| &#10065; Public Turtle Watch Schedule Form | [ generate \| blank ]  |
+| &#10065; Public Turtle Watch Summary Form | [ generate \| blank ]  |
+| &#10065; Stranding and Salvage Form | [ generate \| blank ]  |
+| &#10065; Tag Request Form | [ generate \| blank ]  |
+| &#10065; Tagging Data Form | [ generate \| blank ]  |
+| &#10065; Turtle Transfer Form | [ generate \| blank ]  |
+
+### Reports - Other
+
+| Report | Notes |
+|--------|-------|
+| &#10065; Turtle Injury Report | [ generate ]  |
+| &#10065; Turtle Tag Report | [ generate ]  |
+| &#10065; Hatchlings and Washbacks by County Report | [ generate ]  |
 
 ---
 

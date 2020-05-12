@@ -153,7 +153,7 @@ const App: React.FC = () => {
         await ApiService.wakeup();
       }
       catch(err) {
-        console.error(err);
+        console.log(err);
       }
     }
     tryWakeup();
@@ -167,6 +167,11 @@ const App: React.FC = () => {
       window.removeEventListener('online', onlineOfflineHandler);
       window.removeEventListener('offline', onlineOfflineHandler);
     }
+  });
+
+  /* start the session activity polling */
+  useMount(() => {
+    AuthenticationService.resetSessionStatusPolling();
   });
 
   useEffect(() => {
@@ -218,7 +223,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200512.0850
+            &nbsp;|&nbsp;v0.20200512.0915
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

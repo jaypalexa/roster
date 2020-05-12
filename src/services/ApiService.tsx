@@ -103,7 +103,7 @@ export const ApiService = {
       return data;
     }
     catch (err) {
-      console.error(err, err.stack);
+      console.log(err, err.stack);
       throw err;
     }
   },

@@ -113,7 +113,7 @@ const HatchlingsEvents: React.FC = () => {
         setCurrentHatchlingsEvents(hatchlingsEvents);
       } 
       catch (err) {
-        console.error(err);
+        console.log(err);
         toast.error(constants.ERROR.GENERIC);
       }
       finally {
@@ -138,7 +138,7 @@ const HatchlingsEvents: React.FC = () => {
       setCurrentHatchlingsEvent(hatchlingsEvent);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -164,7 +164,7 @@ const HatchlingsEvents: React.FC = () => {
       deleteHatchlingsEvent();
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -272,7 +272,7 @@ const HatchlingsEvents: React.FC = () => {
       setCurrentHatchlingsEvents([...currentHatchlingsEvents]);
     } 
     catch (err) {
-      console.error(err);
+      console.log(err);
       toast.error(constants.ERROR.GENERIC);
     }
     finally {
@@ -377,7 +377,7 @@ const HatchlingsEvents: React.FC = () => {
             columns={tableColumns}
             data={currentHatchlingsEvents}
             keyField='hatchlingsEventId'
-            defaultSortField='turtleName'
+            defaultSortField='eventDate'
             noHeader={true}
             fixedHeader={true}
             fixedHeaderScrollHeight='9rem'
