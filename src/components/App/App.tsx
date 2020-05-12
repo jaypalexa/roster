@@ -1,5 +1,3 @@
-import wifiOffIcon from 'assets/images/wifi-off.png';
-import wifiOnIcon from 'assets/images/wifi-on.png';
 import browserHistory from 'browserHistory';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
@@ -188,10 +186,10 @@ const App: React.FC = () => {
                 <i className='fa fa-home'></i>
               </span>
               &nbsp;ROSTER&nbsp;
-              {isOnline 
-                ? <img src={wifiOnIcon} className='connection-icon' title='Online' alt='Online'></img> 
-                : <img src={wifiOffIcon} className='connection-icon offline' title='Offline' alt='Offline'></img>
-              }
+              <span className='fa-stack'>
+                <i className='fa fa-wifi fa-stack-1x' title='Online'></i>
+                {!isOnline ? <i className='fa fa-ban fa-stack-2x red' title='Offline'></i> : null}
+              </span>
             </Link>
             <div role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navMenu'>
               <span aria-hidden='true'></span>
@@ -223,7 +221,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200512.1311
+            &nbsp;|&nbsp;v0.20200512.1620
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

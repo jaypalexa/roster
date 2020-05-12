@@ -21,8 +21,6 @@ import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './HatchlingsEvents.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const HatchlingsEvents: React.FC = () => {
 
   const methods = useForm<HatchlingsEventModel>({ mode: 'onChange' });
@@ -326,7 +324,7 @@ const HatchlingsEvents: React.FC = () => {
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Hatchlings Events</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Hatchlings Events</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>

@@ -9,8 +9,6 @@ import ReportListItemModel from 'types/ReportListItemModel';
 import { constants } from 'utils';
 import './Reports.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const Reports: React.FC = () => {
 
   const [currentReportListItem, setCurrentReportListItem] = useState({} as ReportListItemModel);
@@ -26,14 +24,14 @@ const Reports: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onBlankReportListItemClick(row, event) }}><i className={`fa ${row.isPdf && row.blankFileName ? 'fa-external-link' : ''}`} title='Blank'></i></span>,
+      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onBlankReportListItemClick(row, event) }}><i className={`fa ${row.isPdf && row.blankFileName ? 'fa-external-link' : ''}`} title='Blank Form'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onGenerateReportListItemClick(row, event) }}><i className={`fa ${row.canGenerate ? 'fa-print' : ''}`} title='Generate'></i></span>,
+      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onGenerateReportListItemClick(row, event) }}><i className={`fa ${row.canGenerate ? 'fa-print' : ''}`} title='Generate Report'></i></span>,
     },
     {
       name: 'Name',
@@ -122,7 +120,7 @@ const Reports: React.FC = () => {
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Reports</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Reports</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>

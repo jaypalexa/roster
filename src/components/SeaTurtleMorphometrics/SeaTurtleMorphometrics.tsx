@@ -25,12 +25,9 @@ import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './SeaTurtleMorphometrics.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const SeaTurtleMorphometrics: React.FC = () => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
+  const [appContext] = useAppContext();
   const methods = useForm<SeaTurtleMorphometricModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
@@ -385,7 +382,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Morphometrics Measurements</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Morphometrics Measurements</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>

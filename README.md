@@ -21,6 +21,7 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
   * [react-modal](https://www.npmjs.com/package/react-modal) for modal dialogs
   * [react-toastify](https://www.npmjs.com/package/react-toastify) for toast popups
 * [Bulma](https://bulma.io/) for CSS framework and components
+* [Font Awesome](https://fontawesome.com/v4.7.0/icons/) for icons
 * [Amazon Web Services](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=tier%23always-free) ("Always Free" tier *only*)
   * [Amazon Cognito](https://aws.amazon.com/cognito/) for authentication
   * ~~[Amazon S3](https://aws.amazon.com/s3/)~~ (not "Always Free" tier), 

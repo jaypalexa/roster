@@ -17,8 +17,6 @@ import OrganizationModel from 'types/OrganizationModel';
 import { constants } from 'utils';
 import './Organization.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const Organization: React.FC = () => {
 
   const methods = useForm<OrganizationModel>({ mode: 'onChange' });
@@ -76,7 +74,7 @@ const Organization: React.FC = () => {
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Organization</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Organization</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
@@ -92,9 +90,9 @@ const Organization: React.FC = () => {
 
               <div className='tabs'>
                 <ul>
-                  <li className='is-active'><a>General Information</a></li>
-                  <li><a>Hatchling and Washback Starting Balances</a></li>
-                  <li><a>Preferences</a></li>
+                  <li className='is-active'><span>General Information</span></li>
+                  <li><span>Hatchling and Washback Starting Balances</span></li>
+                  <li><span>Preferences</span></li>
                 </ul>
               </div>
 

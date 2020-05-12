@@ -29,11 +29,8 @@ import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './SeaTurtles.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const SeaTurtles: React.FC = () => {
 
-  // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, getValues, reset } = methods;
@@ -383,7 +380,7 @@ const SeaTurtles: React.FC = () => {
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Sea Turtles</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Sea Turtles</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>

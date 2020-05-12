@@ -18,11 +18,8 @@ import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './HoldingTanks.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const HoldingTanks: React.FC = () => {
 
-  // eslint-disable-next-line
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<HoldingTankModel>({ mode: 'onChange' });
   const { handleSubmit, formState, getValues, reset } = methods;
@@ -291,7 +288,7 @@ const HoldingTanks: React.FC = () => {
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Holding Tanks</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Holding Tanks</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>

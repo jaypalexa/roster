@@ -20,12 +20,9 @@ import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './HoldingTankMeasurements.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const HoldingTankMeasurements: React.FC = () => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
+  const [appContext] = useAppContext();
   const methods = useForm<HoldingTankMeasurementModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentHoldingTankMeasurement, setCurrentHoldingTankMeasurement] = useState({} as HoldingTankMeasurementModel);
@@ -297,7 +294,7 @@ const HoldingTankMeasurements: React.FC = () => {
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/holding-tanks'>Holding Tanks</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Water Measurements</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Water Measurements</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>

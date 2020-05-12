@@ -12,12 +12,9 @@ import SeaTurtleMorphometricModel from 'types/SeaTurtleMorphometricModel';
 import { constants } from 'utils';
 import './SeaTurtleMorphometricsGraphs.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const SeaTurtleMorphometricsGraphs: React.FC = () => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
+  const [appContext] = useAppContext();
   const [graphTypeSettings, setGraphTypeSettings] = useState<Map<string, GraphTypeSettings>>();
   const [currentGraphTypes, setCurrentGraphTypes] = useState<Map<string, boolean>>();
   const [currentSeaTurtleMorphometrics, setCurrentSeaTurtleMorphometrics] = useState([] as Array<SeaTurtleMorphometricModel>);
@@ -201,7 +198,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Morphometrics Graphs</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Morphometrics Graphs</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>

@@ -12,12 +12,9 @@ import HoldingTankMeasurementModel from 'types/HoldingTankMeasurementModel';
 import { constants } from 'utils';
 import './HoldingTankGraphs.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const HoldingTankGraphs: React.FC = () => {
 
-  // eslint-disable-next-line
-  const [appContext, setAppContext] = useAppContext();
+  const [appContext] = useAppContext();
   const [graphTypeSettings, setGraphTypeSettings] = useState<Map<string, GraphTypeSettings>>();
   const [currentGraphType, setCurrentGraphType] = useState<string>();
   const [currentHoldingTankMeasurements, setCurrentHoldingTankMeasurements] = useState([] as Array<HoldingTankMeasurementModel>);
@@ -185,7 +182,7 @@ const HoldingTankGraphs: React.FC = () => {
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/holding-tanks'>Holding Tanks</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Water Graphs</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Water Graphs</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>

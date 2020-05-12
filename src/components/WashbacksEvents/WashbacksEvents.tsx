@@ -23,8 +23,6 @@ import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './WashbacksEvents.sass';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 const WashbacksEvents: React.FC = () => {
 
   const methods = useForm<WashbacksEventModel>({ mode: 'onChange' });
@@ -334,7 +332,7 @@ const WashbacksEvents: React.FC = () => {
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='#' aria-current='page'>Washbacks Events</a></li>
+          <li className='is-active'><a href='/#' aria-current='page'>Washbacks Events</a></li>
         </ul>
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
