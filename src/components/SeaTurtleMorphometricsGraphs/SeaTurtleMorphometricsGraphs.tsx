@@ -111,7 +111,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
 
     const graphTypes = new Map<string, boolean>();
     settings.forEach((value, key) => {
-      graphTypes.set(key, false);
+      graphTypes.set(key, true);
     })
     setCurrentGraphTypes(graphTypes);
   });
@@ -211,27 +211,27 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
           <h1 className='title has-text-centered'>Morphometrics Graphs for {appContext.seaTurtle?.seaTurtleName}</h1>
 
           <div className='field has-text-centered'>
-            <input className='is-checkradio is-black' id='sclNotchNotchValue' type='checkbox' name='sclNotchNotchValue' value='sclNotchNotchValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='sclNotchNotchValue' type='checkbox' name='sclNotchNotchValue' value='sclNotchNotchValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='sclNotchNotchValue'>SCL notch-notch</label>
-            <input className='is-checkradio is-black' id='sclNotchTipValue' type='checkbox' name='sclNotchTipValue' value='sclNotchTipValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='sclNotchTipValue' type='checkbox' name='sclNotchTipValue' value='sclNotchTipValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='sclNotchTipValue'>SCL notch-tip</label>
-            <input className='is-checkradio is-black' id='sclTipTipValue' type='checkbox' name='sclTipTipValue' value='sclTipTipValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='sclTipTipValue' type='checkbox' name='sclTipTipValue' value='sclTipTipValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='sclTipTipValue'>SCL tip-tip</label>
-            <input className='is-checkradio is-black' id='scwValue' type='checkbox' name='scwValue' value='scwValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='scwValue' type='checkbox' name='scwValue' value='scwValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='scwValue'>SCW</label>
           </div>
           <div className='field has-text-centered'>
-            <input className='is-checkradio is-black' id='cclNotchNotchValue' type='checkbox' name='cclNotchNotchValue' value='cclNotchNotchValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='cclNotchNotchValue' type='checkbox' name='cclNotchNotchValue' value='cclNotchNotchValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='cclNotchNotchValue'>CCL notch-notch</label>
-            <input className='is-checkradio is-black' id='cclNotchTipValue' type='checkbox' name='cclNotchTipValue' value='cclNotchTipValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='cclNotchTipValue' type='checkbox' name='cclNotchTipValue' value='cclNotchTipValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='cclNotchTipValue'>CCL notch-tip</label>
-            <input className='is-checkradio is-black' id='cclTipTipValue' type='checkbox' name='cclTipTipValue' value='cclTipTipValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='cclTipTipValue' type='checkbox' name='cclTipTipValue' value='cclTipTipValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='cclTipTipValue'>CCL tip-tip</label>
-            <input className='is-checkradio is-black' id='ccwValue' type='checkbox' name='ccwValue' value='ccwValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='ccwValue' type='checkbox' name='ccwValue' value='ccwValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='ccwValue'>CCW</label>
           </div>
           <div className='field has-text-centered'>
-            <input className='is-checkradio is-black' id='weightValue' type='checkbox' name='weightValue' value='weightValue' onChange={onGraphTypeChange} />
+            <input className='is-checkradio is-black' id='weightValue' type='checkbox' name='weightValue' value='weightValue' defaultChecked={true} onChange={onGraphTypeChange} />
             <label htmlFor='weightValue'>Weight</label>
           </div>
 
