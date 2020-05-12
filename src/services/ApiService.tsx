@@ -65,6 +65,8 @@ export const ApiService = {
       if (!AuthenticationService.isUserAuthenticated()) {
         throw new Error('ERROR: User not authenticated');
       }
+
+      AuthenticationService.updateUserActivity();
       
       const headers = {
         'jwt': AuthenticationService.getIdToken(), // AWS Lambda will parse jwt to get 'custom:organizationId' attribute

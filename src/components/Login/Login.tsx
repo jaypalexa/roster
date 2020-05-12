@@ -57,7 +57,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
     setShowSpinner(false);
     
     if (isAuthenticated) {
-      const userName = AuthenticationService.getLoggedInUserName(); 
+      const userName = AuthenticationService.getCognitoUserNameFromToken(); 
       setLoggedInUserName(userName);
       browserHistory.push(getPath());
     } else {

@@ -14,6 +14,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
     const renderComponent = () => <Login setLoggedInUserName={props.setLoggedInUserName} redirectPathOnAuthentication={currentLocation.pathname} />;
     return <Route {...props} component={renderComponent} render={undefined} />;
   } else {
+    AuthenticationService.updateUserActivity();
     return <Route {...props} />;
   }
 };
