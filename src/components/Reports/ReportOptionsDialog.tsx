@@ -61,6 +61,17 @@ const ReportOptionsDialog: React.FC<ReportOptionsDialogProps> = ({isActive, repo
     Modal.setAppElement('#app')
   });
 
+  const renderQuarterDateRange = () => {
+    return (
+      <>
+        <FormFieldRow>
+          <DateFormField fieldName='dateFrom' labelText='Date from' />
+          <DateFormField fieldName='dateThru' labelText='Date thru' />
+        </FormFieldRow>
+      </>
+    );
+  };
+
   const onSubmit = handleSubmit((reportOptions: any) => {
     console.log('reportOptions', reportOptions);
     onGenerate(reportListItem, reportOptions);
@@ -78,16 +89,9 @@ const ReportOptionsDialog: React.FC<ReportOptionsDialogProps> = ({isActive, repo
                 <p className='modal-card-title'>Report Options</p>
               </header>
               <section className='modal-card-body'>
-                {reportListItem.reportId !== 'TaggingDataForm' ?
-                  <>
-                    <FormFieldRow>
-                      <DateFormField fieldName='dateFrom' labelText='Date from' />
-                      <DateFormField fieldName='dateThru' labelText='Date thru' />
-                    </FormFieldRow>
-                  </>
-                : null}
                 {reportListItem.reportId === 'MarineTurtleHoldingFacilityQuarterlyReport' ?
                   <>
+                    {renderQuarterDateRange()}
                     <FormFieldRow>
                       <CheckboxFormField fieldName='includeAnomalies' labelText='Include anomalies' />
                     </FormFieldRow>
@@ -107,6 +111,7 @@ const ReportOptionsDialog: React.FC<ReportOptionsDialogProps> = ({isActive, repo
                 {(reportListItem.reportId === 'MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings'
                   || reportListItem.reportId === 'MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks') ?
                   <>
+                    {renderQuarterDateRange()}
                     <TextareaFormField fieldName='comments' labelText='Comments' />
                     <FormFieldRow>
                       <CheckboxFormField fieldName='includeDoaCounts' labelText='Include DOA counts by species for this period' />
