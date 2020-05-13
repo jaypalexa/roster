@@ -1,9 +1,28 @@
+@import 'node_modules/bulma/bulma'
+
 .Modal
   position: absolute
   top: 40px
   left: 40px
   right: 40px
   bottom: 40px
+
+.close-icon-button
+  position: absolute
+  top: 6px
+  right: 6px
+  border: 0
+  background-color: transparent
+  color: $danger
+  cursor: pointer
+  padding: 0
+  outline: none
+
+  &:hover
+    opacity: .65
+  
+  i.fa-window-close
+    font-size: 1.5rem
 
 .dialog-header
   position: fixed

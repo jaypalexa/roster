@@ -32,6 +32,9 @@ const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) 
     <Modal isOpen={isActive}>
       <div className='dialog-header'>
         <h2 className='subtitle has-text-centered'>{mapData.title || ''}</h2>
+        <button className='close-icon-button' aria-label='close' onClick={onCloseClick}>
+          <i className='fa fa-window-close'></i>
+        </button>
       </div>
       <div className='dialog-content'>
         <Map center={[center.latitude, center.longitude]} zoom={mapData.initialZoom || 7}>
