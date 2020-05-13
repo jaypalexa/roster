@@ -28,7 +28,7 @@ export default interface SeaTurtleModel {
   recaptureType: string;
   tagReturnAddress: string;
   captureProjectType: string;
-  didTurtleNest: boolean;
+  didTurtleNest: string;
   captureProjectOther: string;
   acquiredCounty: string;
   acquiredLatitude: number;

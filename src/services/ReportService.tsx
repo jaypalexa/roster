@@ -4,14 +4,15 @@ import ReportModel from 'types/ReportModel';
 
 const ReportService = {
   
-  async getReport(reportId: String): Promise<ReportModel> {
+  async generateReport(reportListItem: ReportListItemModel, reportOptions: any): Promise<ReportModel> {
     
     const report = {} as ReportModel
 
     const apiRequestPayload = {} as ApiRequestPayload;
-    apiRequestPayload.httpMethod = 'GET';
+    apiRequestPayload.httpMethod = 'POST';
     apiRequestPayload.resource = '/reports/{reportId}';
-    apiRequestPayload.pathParameters = { reportId: reportId };
+    apiRequestPayload.pathParameters = { reportId: reportListItem.reportId };
+    apiRequestPayload.body = JSON.stringify(reportOptions);
   
     const response = await ApiService.execute(apiRequestPayload);
     // console.log('ReportService::getReport::response = ', response);

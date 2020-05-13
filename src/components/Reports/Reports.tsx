@@ -7,13 +7,18 @@ import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
 import ReportListItemModel from 'types/ReportListItemModel';
+import ReportModel from 'types/ReportModel';
 import { constants } from 'utils';
+import ReportOptionsDialog from './ReportOptionsDialog';
 import './Reports.sass';
 
 const Reports: React.FC = () => {
 
+  const [currentReport, setCurrentReport] = useState({} as ReportModel);
   const [currentReportListItem, setCurrentReportListItem] = useState({} as ReportListItemModel);
   const [currentReportListItems, setCurrentReportListItems] = useState([] as Array<ReportListItemModel>);
+  const [currentReportOptions, setCurrentReportOptions] = useState({});
+  const [showReportOptionsDialog, setShowReportOptionsDialog] = useState(false);
   const [pdfData, setPdfData] = useState('');
   const [pdfUrl, setPdfUrl] = useState('');
   const [showSpinner, setShowSpinner] = useState(false);
@@ -82,6 +87,12 @@ const Reports: React.FC = () => {
     setShowSpinner(false);
   });
 
+  const promptForReportOptions = (reportListItem: ReportListItemModel) => {
+    AuthenticationService.updateUserActivity();
+    setCurrentReportListItem(reportListItem);
+    setShowReportOptionsDialog(true);
+  };
+
   const showBlankReport = (reportListItem: ReportListItemModel) => {
     AuthenticationService.updateUserActivity();
     if (!reportListItem.isPdf) {
@@ -92,18 +103,16 @@ const Reports: React.FC = () => {
     window.open(url);
   };
 
-  const generateReport = async (reportListItem: ReportListItemModel) => {
-    setCurrentReportListItem({} as ReportListItemModel);
+  const generatePdfReport = async (reportListItem: ReportListItemModel, reportOptions: any) => {
+    AuthenticationService.updateUserActivity();
+    setCurrentReport({} as ReportModel);
     try {
-      if (!reportListItem.isPdf) {
-        toast.info(`The '${reportListItem.reportName}' is an HTML report`);
-        return;
-      }
       setShowSpinner(true)
-      setCurrentReportListItem(reportListItem);
-      const report = await ReportService.getReport(reportListItem.reportId);
+      const report = await ReportService.generateReport(reportListItem, reportOptions);
+      setCurrentReport(report);
       setPdfData(`data:application/pdf;base64,${report.data}`);
       setPdfUrl(report.url);
+      console.log(report.url);
       // window.open(report.url);
     }
     catch (err) {
@@ -120,12 +129,33 @@ const Reports: React.FC = () => {
   };
 
   const onGenerateReportListItemClick = (reportListItem: ReportListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    generateReport(reportListItem);
+    if (reportListItem.isPdf) {
+      promptForReportOptions(reportListItem);
+    }
+    else {
+      toast.info(`The '${reportListItem.reportName}' is an HTML report`);
+      return;
+    }
   };
+
+  const onGenerate = (reportListItem: ReportListItemModel, reportOptions: any) => {
+    setShowReportOptionsDialog(false);
+    console.log('reportOptions', reportOptions);
+    generatePdfReport(reportListItem, reportOptions)
+  }
 
   return (
     <div id='reports'>
       <Spinner isActive={showSpinner} />
+      <ReportOptionsDialog
+        isActive={showReportOptionsDialog}
+        reportListItem={currentReportListItem}
+        onGenerate={onGenerate}
+        onCancel={() => {
+          setShowReportOptionsDialog(false);
+        }}
+      />
+
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
@@ -153,7 +183,7 @@ const Reports: React.FC = () => {
 
           <hr />
 
-          {currentReportListItem.reportId ? 
+          {currentReport ? 
             <div>
               <object 
                 style={{height: '85vh'}} 
@@ -161,8 +191,8 @@ const Reports: React.FC = () => {
                 type='application/pdf' 
                 width='100%' 
                 height='100%'
-                title={currentReportListItem.reportName}
-                name={currentReportListItem.reportName}
+                title={currentReport.reportName}
+                name={currentReport.reportName}
               >
                   <a href={pdfUrl} title='report'>View Report</a>
               </object>
