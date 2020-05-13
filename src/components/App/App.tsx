@@ -34,23 +34,23 @@ const App: React.FC = () => {
     }
   }
 
-  const onReloadPageClick = () => {
-    console.log('onReloadPageClick::newServiceWorker = ', newServiceWorker);
+  const onUpdateAvailableClick = () => {
+    console.log('onUpdateAvailableClick::newServiceWorker = ', newServiceWorker);
     if (newServiceWorker) {
       newServiceWorker.postMessage({ type: 'SKIP_WAITING' });
     } else {
       if ('serviceWorker' in navigator) {
-        console.log('onReloadPageClick::\'serviceWorker\' in navigator...');
+        console.log('onUpdateAvailableClick::\'serviceWorker\' in navigator...');
         navigator.serviceWorker.ready.then(registration => {
-          console.log('onReloadPageClick::registration.update().then()::registration = ', registration);
+          console.log('onUpdateAvailableClick::registration.update().then()::registration = ', registration);
           const serviceWorker = (registration.installing || registration.waiting);
-          console.log('onReloadPageClick::registration.update().then()::serviceWorker = ', serviceWorker);
+          console.log('onUpdateAvailableClick::registration.update().then()::serviceWorker = ', serviceWorker);
           if (serviceWorker) {
             serviceWorker.postMessage({ type: 'SKIP_WAITING' });
           }
         })
       } else {
-        console.log('onReloadPageClick::\'serviceWorker\' NOT in navigator...');
+        console.log('onUpdateAvailableClick::\'serviceWorker\' NOT in navigator...');
       }
     }
     setIsUpdateAvailable(false);
@@ -169,7 +169,11 @@ const App: React.FC = () => {
 
   /* start the session activity polling */
   useMount(() => {
-    AuthenticationService.resetSessionStatusPolling();
+    const startSessionActivityPolling = async () => {
+      await AuthenticationService.checkSessionStatusAsync();
+      AuthenticationService.resetSessionStatusPolling();
+    }
+    startSessionActivityPolling();
   });
 
   useEffect(() => {
@@ -221,8 +225,8 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200513.2200
-            {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onReloadPageClick}>update available</span><span>)</span></p> : null}
+            &nbsp;|&nbsp;v0.20200513.2230
+            {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onUpdateAvailableClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
         </div>
