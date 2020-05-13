@@ -4,13 +4,14 @@ import FormFieldProps from './FormFieldProps';
 
 interface RadioButtonFormFieldProps extends FormFieldProps {
   value?: string | number | string[] | undefined;
+  defaultChecked?: boolean | undefined;
 }
 
-export const RadioButtonFormField: React.FC<RadioButtonFormFieldProps> = ({ fieldName, labelText, value }) => {
+export const RadioButtonFormField: React.FC<RadioButtonFormFieldProps> = ({ fieldName, labelText, value, defaultChecked }) => {
   const { register } = useFormContext();
   return (
     <label className='radio'>
-      <input type='radio' name={fieldName} value={value} ref={register({})} />
+      <input type='radio' name={fieldName} value={value} ref={register({})} defaultChecked={defaultChecked} />
       {labelText}
     </label>
   );

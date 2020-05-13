@@ -1,6 +1,8 @@
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
+import NameValuePair from 'types/NameValuePair';
 import SeaTurtleModel from 'types/SeaTurtleModel';
+import { sortByProperty } from 'utils';
 
 const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}';
 const RESOURCE_MANY = '/sea-turtles';
@@ -41,6 +43,14 @@ const SeaTurtleService = {
 
     const response = await ApiService.delete(apiRequestPayload);
     return response;
+  },
+
+  async getSeaTurtleListItems(): Promise<NameValuePair[]> {
+    const seaTurtles = await this.getSeaTurtles();
+    const seaTurtleListItems = seaTurtles.map(x => ({value: x.seaTurtleId, name: x.seaTurtleName}));
+    seaTurtleListItems.sort(sortByProperty('name')); 
+
+    return seaTurtleListItems;
   },
 };
 

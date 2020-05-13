@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import browserHistory from 'browserHistory';
 import AuthenticationService from 'services/AuthenticationService';
 
 export interface ApiRequestPayload {
@@ -63,7 +64,10 @@ export const ApiService = {
 
     try {
       if (!AuthenticationService.isUserAuthenticated()) {
-        throw new Error('ERROR: User not authenticated');
+        browserHistory.push('/login');
+        console.log('ERROR: User not authenticated');
+        Promise.reject({});
+        //throw new Error('ERROR: User not authenticated');
       }
 
       AuthenticationService.updateUserActivity();

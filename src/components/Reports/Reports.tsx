@@ -17,7 +17,6 @@ const Reports: React.FC = () => {
   const [currentReport, setCurrentReport] = useState({} as ReportModel);
   const [currentReportListItem, setCurrentReportListItem] = useState({} as ReportListItemModel);
   const [currentReportListItems, setCurrentReportListItems] = useState([] as Array<ReportListItemModel>);
-  const [currentReportOptions, setCurrentReportOptions] = useState({});
   const [showReportOptionsDialog, setShowReportOptionsDialog] = useState(false);
   const [pdfData, setPdfData] = useState('');
   const [pdfUrl, setPdfUrl] = useState('');
