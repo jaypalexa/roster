@@ -497,6 +497,29 @@ const SeaTurtles: React.FC = () => {
                 </FormFieldRow>
                 <hr />
 
+                <h2 className='subtitle'>Inspected and/or Scanned For</h2>
+                <FormFieldRow>
+                  <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Inspected for'>
+                    <CheckboxFormField fieldName='inspectedForTagScars' labelText='Tag scars' />
+                  </FormFieldGroup>
+                  <TextFormField fieldName='tagScarsLocated' labelText='Located?' />
+                  <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Scanned for'>
+                    <CheckboxFormField fieldName='scannedForPitTags' labelText='PIT tags' />
+                  </FormFieldGroup>
+                  <TextFormField fieldName='pitTagsScanFrequency' labelText='Frequency?' />
+                </FormFieldRow>
+                <FormFieldRow>
+                  <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Scanned for'>
+                    <CheckboxFormField fieldName='scannedForMagneticWires' labelText='Magnetic wires' />
+                  </FormFieldGroup>
+                  <TextFormField fieldName='magneticWiresLocated' labelText='Located?' />
+                  <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Inspected for'>
+                    <CheckboxFormField fieldName='inspectedForLivingTags' labelText='Living tags' />
+                  </FormFieldGroup>
+                  <TextFormField fieldName='livingTagsLocated' labelText='Located?' />
+                </FormFieldRow>
+                <hr />
+
                 <div
                   className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
                   onClick={() => saveAndNavigate('/sea-turtle-tags')}>
