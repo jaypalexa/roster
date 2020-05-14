@@ -50,14 +50,14 @@ const WashbacksEvents: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditWashbacksEventClick(row.washbacksEventId, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditWashbacksEventClick(row, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteWashbacksEventClick(row.washbacksEventId, row.eventDate ? moment(row.eventDate).format('YYYY-MM-DD') : '', event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteWashbacksEventClick(row, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Species',
@@ -210,9 +210,9 @@ const WashbacksEvents: React.FC = () => {
     }
   };
 
-  const onEditWashbacksEventClick = (washbacksEventId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditWashbacksEventClick = (washbacksEvent: WashbacksEventModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      fetchWashbacksEvent(washbacksEventId);
+      fetchWashbacksEvent(washbacksEvent.washbacksEventId);
       setIsFormEnabled(true);
     };
 
@@ -237,14 +237,14 @@ const WashbacksEvents: React.FC = () => {
     }
   };
 
-  const onDeleteWashbacksEventClick = (washbacksEventId: string, eventDate: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteWashbacksEventClick = (washbacksEvent: WashbacksEventModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      deleteWashbacksEvent(washbacksEventId);
+      deleteWashbacksEvent(washbacksEvent.washbacksEventId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete event from '${eventDate}' ?`);
+    setDialogBodyText(`Delete event from '${washbacksEvent.eventDate ? moment(washbacksEvent.eventDate).format('YYYY-MM-DD') : ''}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);

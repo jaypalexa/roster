@@ -21,19 +21,19 @@ export const constants = Object.freeze({
 
 export const handleModalKeyDownEvent = (e: KeyboardEvent) => {
   if (e.keyCode === 9) { // TAB KEY
-    const dlg = document.querySelector('.modal') as HTMLElement;
-    let focusable = dlg.querySelectorAll('input,button,select,textarea');
-    if (focusable.length) {
-      let first = focusable[0] as HTMLElement;
-      let last = focusable[focusable.length - 1] as HTMLElement;
+    const modalDialog = document.querySelector('.modal') as HTMLElement;
+    const focusableElements = modalDialog.querySelectorAll('input,button,select,textarea');
+    if (focusableElements.length) {
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
       if (e.shiftKey) {
-        if (e.target === first) { // shift-tab pressed on first input in dialog
-          last.focus();
+        if (e.target === firstElement) { // shift-tab pressed on first input in dialog
+          lastElement.focus();
           e.preventDefault();
         }
       } else {
-        if (e.target === last) { // tab pressed on last input in dialog
-          first.focus();
+        if (e.target === lastElement) { // tab pressed on last input in dialog
+          firstElement.focus();
           e.preventDefault();
         }
       }

@@ -43,14 +43,14 @@ const HoldingTanks: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankClick(row.holdingTankId, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankClick(row, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankClick(row.holdingTankId, row.holdingTankName, event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankClick(row, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Name',
@@ -178,9 +178,9 @@ const HoldingTanks: React.FC = () => {
     }
   };
 
-  const onEditHoldingTankClick = (tankId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditHoldingTankClick = (holdingTank: HoldingTankModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      fetchHoldingTank(tankId);
+      fetchHoldingTank(holdingTank.holdingTankId);
       setIsFormEnabled(true);
     };
 
@@ -205,14 +205,14 @@ const HoldingTanks: React.FC = () => {
     }
   };
 
-  const onDeleteHoldingTankClick = (tankId: string, tankName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteHoldingTankClick = (holdingTank: HoldingTankModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      deleteHoldingTank(tankId);
+      deleteHoldingTank(holdingTank.holdingTankId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete tank '${tankName}' ?`);
+    setDialogBodyText(`Delete tank '${holdingTank.holdingTankName}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);

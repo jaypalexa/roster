@@ -48,14 +48,14 @@ const HatchlingsEvents: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHatchlingsEventClick(row.hatchlingsEventId, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHatchlingsEventClick(row, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHatchlingsEventClick(row.hatchlingsEventId, row.eventDate ? moment(row.eventDate).format('YYYY-MM-DD') : '', event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHatchlingsEventClick(row, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Species',
@@ -202,9 +202,9 @@ const HatchlingsEvents: React.FC = () => {
     }
   };
 
-  const onEditHatchlingsEventClick = (hatchlingsEventId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditHatchlingsEventClick = (hatchlingsEvent: HatchlingsEventModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      fetchHatchlingsEvent(hatchlingsEventId);
+      fetchHatchlingsEvent(hatchlingsEvent.hatchlingsEventId);
       setIsFormEnabled(true);
     };
 
@@ -229,14 +229,14 @@ const HatchlingsEvents: React.FC = () => {
     }
   };
 
-  const onDeleteHatchlingsEventClick = (hatchlingsEventId: string, eventDate: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteHatchlingsEventClick = (hatchlingsEvent: HatchlingsEventModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      deleteHatchlingsEvent(hatchlingsEventId);
+      deleteHatchlingsEvent(hatchlingsEvent.hatchlingsEventId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete event from '${eventDate}' ?`);
+    setDialogBodyText(`Delete event from '${hatchlingsEvent.eventDate ? moment(hatchlingsEvent.eventDate).format('YYYY-MM-DD') : ''}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
