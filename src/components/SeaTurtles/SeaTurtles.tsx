@@ -63,14 +63,14 @@ const SeaTurtles: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row.seaTurtleId, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row, event) }}><i className='fa fa-pencil'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row.seaTurtleId, row.seaTurtleName, event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row, event) }}><i className='fa fa-trash'></i></span>,
     },
     {
       name: 'Name',
@@ -249,9 +249,9 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onEditSeaTurtleClick = (seaTurtleId: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditSeaTurtleClick = (seaTurtle: SeaTurtleModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      fetchSeaTurtle(seaTurtleId);
+      fetchSeaTurtle(seaTurtle.seaTurtleId);
       setIsFormEnabled(true);
     };
 
@@ -276,14 +276,14 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onDeleteSeaTurtleClick = (seaTurtleId: string, seaTurtleName: string, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteSeaTurtleClick = (seaTurtle: SeaTurtleModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      deleteSeaTurtle(seaTurtleId);
+      deleteSeaTurtle(seaTurtle.seaTurtleId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete turtle '${seaTurtleName}' ?`);
+    setDialogBodyText(`Delete turtle '${seaTurtle.seaTurtleName || seaTurtle.sidNumber}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -345,10 +345,10 @@ const SeaTurtles: React.FC = () => {
     const latitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Latitude`] as number;
     const longitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Longitude`] as number;
     if (latitude && longitude) {
-      data.markers = [{ latitude, longitude, description: modifiedSeaTurtle.seaTurtleName }];
+      data.markers = [{ latitude, longitude, description: modifiedSeaTurtle.seaTurtleName || modifiedSeaTurtle.sidNumber }];
+      data.subtitle = `Lat: ${latitude} | Lon: ${longitude}`;
     }
-    // data.title = `${dataType}: ${data.markers ? `${latitude}/${longitude}` : '(not set)'}`
-    data.title = dataType;
+    data.title = `${dataType} Location for ${modifiedSeaTurtle.seaTurtleName || modifiedSeaTurtle.sidNumber}`;
     setMapData(data);
     setIsMapDialogOpen(true);
   };
@@ -419,14 +419,14 @@ const SeaTurtles: React.FC = () => {
 
           <hr />
 
-          <h1 className='title has-text-centered'>{appContext.seaTurtle?.seaTurtleName}</h1>
+          <h1 className='title has-text-centered'>{appContext.seaTurtle?.seaTurtleName || appContext.seaTurtle?.sidNumber}</h1>
 
           <FormContext {...methods}>
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <h2 className='subtitle'>General Information</h2>
                 <FormFieldRow>
-                  <TextFormField fieldName='seaTurtleName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
+                  <TextFormField fieldName='seaTurtleName' labelText='Name' refObject={firstEditControlRef} />
                   <TextFormField fieldName='sidNumber' labelText='SID number' />
                   <TextFormField fieldName='strandingIdNumber' labelText='Stranding ID number' />
                 </FormFieldRow>

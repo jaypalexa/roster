@@ -18,7 +18,6 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
   * [react-data-table-component](https://www.npmjs.com/package/react-data-table-component) for tables
   * [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2) for charts and graphs
   * [leaflet](https://www.npmjs.com/package/leaflet) and [react-leaflet](https://www.npmjs.com/package/react-leaflet) for maps
-  * [react-modal](https://www.npmjs.com/package/react-modal) for modal dialogs
   * [react-toastify](https://www.npmjs.com/package/react-toastify) for toast popups
 * [Bulma](https://bulma.io/) for CSS framework and components
 * [Font Awesome](https://fontawesome.com/v4.7.0/icons/) for icons

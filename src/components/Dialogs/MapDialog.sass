@@ -1,11 +1,12 @@
 @import 'node_modules/bulma/bulma'
 
-.Modal
-  position: absolute
-  top: 40px
-  left: 40px
-  right: 40px
-  bottom: 40px
+h2
+  width: 100%
+
+@media (max-width: 768px) // when mobile
+  h2.subtitle
+    font-size: 1rem
+    line-height: 1.5
 
 .close-icon-button
   position: absolute
@@ -24,43 +25,8 @@
   i.fa-window-close
     font-size: 1.5rem
 
-.dialog-header
-  position: fixed
-  top: 40px
-  left: 40px
-  right: 40px
-  height: 40px
-  background-color: lightgoldenrodyellow
-  border-top-left-radius: inherit
-  border-top-right-radius: inherit
-  padding-top: 6px
-
-@media (max-width: 768px) // when mobile
-  h2.subtitle
-    font-size: 1rem
-    line-height: 1.5
-
-.dialog-content
-  position: fixed
-  top: 80px
-  bottom: 105px
-  left: 40px
-  right: 40px
-  background-color: lightblue
-  overflow: auto
-
-.dialog-footer
-  position: fixed
-  bottom: 40px
-  left: 40px
-  right: 40px
-  height: 65px
-  background-color: lightgoldenrodyellow
-  border-bottom-left-radius: inherit
-  border-bottom-right-radius: inherit
-
 .leaflet-popup-content p
-  margin: 0
+  margin: 0 ! important
 
 .marker-description
   font-size: larger

@@ -1,6 +1,5 @@
-import useMount from 'hooks/UseMount';
-import React from 'react';
-import Modal from 'react-modal';
+import React, { useEffect, useRef } from 'react';
+import { handleModalKeyDownEvent } from 'utils';
 
 interface YesNoCancelDialogProps {
   isActive: boolean,
@@ -12,13 +11,19 @@ interface YesNoCancelDialogProps {
 }
 
 const YesNoCancelDialog: React.FC<YesNoCancelDialogProps> = ({isActive, titleText, bodyText, onYes, onNo, onCancel}) => {
+  const yesButtonRef = useRef<HTMLButtonElement>(null);
 
-  useMount(() => {
-    Modal.setAppElement('#app')
-  });
+  useEffect(() => {
+    if (!isActive) return;
+    yesButtonRef?.current?.focus();
+    document.addEventListener('keydown', handleModalKeyDownEvent);
+    return () => {
+      document.removeEventListener('keydown', handleModalKeyDownEvent);
+    }
+  }, [isActive]);
 
   return (
-    <Modal isOpen={isActive}>
+    isActive ?
       <div className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className='modal-background'></div>
         <div className='modal-card'>
@@ -29,13 +34,13 @@ const YesNoCancelDialog: React.FC<YesNoCancelDialogProps> = ({isActive, titleTex
             <p>{bodyText}</p>
           </section>
           <footer className='modal-card-foot'>
-            <button className='button is-success' onClick={onYes}>Yes</button>
+            <button className='button is-success' onClick={onYes} ref={yesButtonRef}>Yes</button>
             <button className='button is-danger' onClick={onNo}>No</button>
             <button className='button is-info' onClick={onCancel}>Cancel</button>
           </footer>
         </div>
       </div>
-    </Modal>
+    : null
   );
 };
 

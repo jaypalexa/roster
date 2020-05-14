@@ -1,10 +1,9 @@
-import useMount from 'hooks/UseMount';
 import { Icon } from 'leaflet';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import Modal from 'react-modal';
 import MapDataModel from 'types/MapDataModel';
 import MapPointModel from 'types/MapPointModel';
+import { handleModalKeyDownEvent } from 'utils';
 import './MapDialog.sass';
 
 interface MapDialogProps {
@@ -14,12 +13,17 @@ interface MapDialogProps {
 }
 
 const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) => {
-  
   const [activeMarker, setActiveMarker] = useState<MapPointModel | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  useMount(() => {
-    Modal.setAppElement('#app')
-  });
+  useEffect(() => {
+    if (!isActive) return;
+    closeButtonRef?.current?.focus();
+    document.addEventListener('keydown', handleModalKeyDownEvent);
+    return () => {
+      document.removeEventListener('keydown', handleModalKeyDownEvent);
+    }
+  }, [isActive]);
 
   const mapIcon = new Icon({
     iconUrl: '/favicon-32x32.png',
@@ -29,51 +33,57 @@ const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) 
   const center = mapData.center || [{latitude: 0, longitude: 0}];
 
   return (
-    <Modal isOpen={isActive}>
-      <div className='dialog-header'>
-        <h2 className='subtitle has-text-centered'>{mapData.title || ''}</h2>
-        <button className='close-icon-button' aria-label='close' onClick={onCloseClick}>
-          <i className='fa fa-window-close'></i>
-        </button>
-      </div>
-      <div className='dialog-content'>
-        <Map center={[center.latitude, center.longitude]} zoom={mapData.initialZoom || 7}>
-          {mapData.markers ? 
-            mapData.markers.map(marker => (
-              <Marker
-                key={`${marker.latitude}${marker.longitude}`}
-                position={[ marker.latitude, marker.longitude ]}
-                onClick={() => setActiveMarker(marker)}
-                icon={mapIcon}
-              /> 
-            ))
-          : null}
+    isActive ?
+      <div className={`modal ${isActive ? 'is-active' : ''}`}>
+        <div className='modal-background'></div>
+        <div className='modal-card'>
+          <header className='modal-card-head'>
+            <h2 className='subtitle has-text-centered'>{mapData.title || ''}</h2>
+            {mapData.subtitle ? <><br /><h2 className='subtitle has-text-centered'>{mapData.subtitle || ''}</h2></> : null}
+            <button className='close-icon-button' aria-label='close' onClick={onCloseClick}>
+              <i className='fa fa-window-close'></i>
+            </button>
+          </header>
+          <section className='modal-card-body'>
+            <Map center={[center.latitude, center.longitude]} zoom={mapData.initialZoom || 7}>
+              {mapData.markers ? 
+                mapData.markers.map(marker => (
+                  <Marker
+                    key={`${marker.latitude}${marker.longitude}`}
+                    position={[ marker.latitude, marker.longitude ]}
+                    onClick={() => setActiveMarker(marker)}
+                    icon={mapIcon}
+                  /> 
+                ))
+              : null}
 
-          {activeMarker && (
-            <Popup
-              position={[ activeMarker.latitude, activeMarker.longitude ]}
-              onClose={() => setActiveMarker(null)}
-            >
-              <div>
-                {activeMarker.description ?
-                  <p className='marker-description'>{activeMarker.description}</p>
-                : null}
-                <p>{`Lat: ${activeMarker.latitude}`}</p>
-                <p>{`Lon: ${activeMarker.longitude}`}</p>
-              </div>
-            </Popup>
-          )}
+              {activeMarker && (
+                <Popup
+                  position={[ activeMarker.latitude, activeMarker.longitude ]}
+                  onClose={() => setActiveMarker(null)}
+                >
+                  <div>
+                    {activeMarker.description ?
+                      <p className='marker-description'>{activeMarker.description}</p>
+                    : null}
+                    <p>{`Lat: ${activeMarker.latitude}`}</p>
+                    <p>{`Lon: ${activeMarker.longitude}`}</p>
+                  </div>
+                </Popup>
+              )}
 
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
-        </Map>
-      </div>
-      <div className='dialog-footer'>
-        <button className='button is-danger is-centered-both' onClick={onCloseClick}>Close</button>
-      </div>
-    </Modal>
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              />
+            </Map>
+          </section>
+          <footer className='modal-card-foot'>
+            <button className='button is-danger' onClick={onCloseClick} ref={closeButtonRef}>Close</button>
+          </footer>
+        </div>
+      </div> 
+    : null
   );
 };
 

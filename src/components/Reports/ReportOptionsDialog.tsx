@@ -6,13 +6,12 @@ import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import Spinner from 'components/Spinner/Spinner';
-import useMount from 'hooks/UseMount';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
-import Modal from 'react-modal';
 import SeaTurtleService from 'services/SeaTurtleService';
 import NameValuePair from 'types/NameValuePair';
 import ReportListItemModel from 'types/ReportListItemModel';
+import { handleModalKeyDownEvent } from 'utils';
 
 interface ReportOptionsDialogProps {
   isActive: boolean,
@@ -22,16 +21,25 @@ interface ReportOptionsDialogProps {
 }
 
 const ReportOptionsDialog: React.FC<ReportOptionsDialogProps> = ({isActive, reportListItem, onGenerate, onCancel}) => {
-
   const methods = useForm<any>({ mode: 'onChange' });
   const { handleSubmit, reset } = methods;
   
   const [seaTurtleListItems, setSeaTurtleListItems] = useState([] as Array<NameValuePair>);
   const [showSpinner, setShowSpinner] = useState(false);
+  const generateButtonRef = useRef<HTMLButtonElement>(null);
 
   const convertDateToYyyyMmDdString = (dateValue: Date) => {
     return new Date(dateValue.getTime() - (dateValue.getTimezoneOffset() * 60000 )).toISOString().split('T')[0];
   }
+
+  useEffect(() => {
+    if (!isActive) return;
+    generateButtonRef?.current?.focus();
+    document.addEventListener('keydown', handleModalKeyDownEvent);
+    return () => {
+      document.removeEventListener('keydown', handleModalKeyDownEvent);
+    }
+  }, [isActive]);
 
   useEffect(() => {
     if (reportListItem.reportId === 'TaggingDataForm') {
@@ -57,10 +65,6 @@ const ReportOptionsDialog: React.FC<ReportOptionsDialogProps> = ({isActive, repo
     }
   }, [reportListItem.reportId, reset]);
 
-  useMount(() => {
-    Modal.setAppElement('#app')
-  });
-
   const renderQuarterDateRange = () => {
     return (
       <>
@@ -78,13 +82,13 @@ const ReportOptionsDialog: React.FC<ReportOptionsDialogProps> = ({isActive, repo
   });
 
   return (
-    <Modal isOpen={isActive}>
+    isActive ?
       <div className={`modal ${isActive ? 'is-active' : ''}`}>
         <Spinner isActive={showSpinner} />
-        <FormContext {...methods} >
-          <form>
-            <div className='modal-background'></div>
-            <div className='modal-card'>
+        <div className='modal-background'></div>
+        <div className='modal-card'>
+          <FormContext {...methods} >
+            <form>
               <header className='modal-card-head'>
                 <p className='modal-card-title'>Report Options</p>
               </header>
@@ -132,28 +136,23 @@ const ReportOptionsDialog: React.FC<ReportOptionsDialogProps> = ({isActive, repo
                     <FormFieldRow>
                       <CheckboxFormField fieldName='printSidOnForm' labelText='Print SID on form' />
                     </FormFieldRow>
-                    <RadioButtonGroupFormField fieldName='useMorphometricsClosestTo' labelText='Morphometrics' >
-                      <RadioButtonFormField fieldName='useMorphometricsClosestTo' labelText='Use morphometrics closest to date acquired' value='dateAcquired' defaultChecked={true} />
+                    <RadioButtonGroupFormField fieldName='useMorphometricsClosestTo' labelText='Use morphometrics closest to ' >
+                      <RadioButtonFormField fieldName='useMorphometricsClosestTo' labelText='Date acquired' value='dateAcquired' defaultChecked={true} />
                       <br />
-                      <RadioButtonFormField fieldName='useMorphometricsClosestTo' labelText='Use morphometrics closest to date relinquished' value='dateRelinquished' />
+                      <RadioButtonFormField fieldName='useMorphometricsClosestTo' labelText='Date relinquished' value='dateRelinquished' />
                     </RadioButtonGroupFormField>
                   </>
                 : null }
-                {/* <FormFieldRow>
-                  <TextFormField fieldName='organizationName' labelText='Organization Name' />
-                  <TextFormField fieldName='permitNumber' labelText='Permit Number' />
-                  <TextFormField fieldName='contactName' labelText='Contact Name' />
-                </FormFieldRow> */}
               </section>
               <footer className='modal-card-foot'>
-                <button className='button is-success' type='submit' onClick={onSubmit}>Generate</button>
+                <button className='button is-success' type='submit' onClick={onSubmit} ref={generateButtonRef}>Generate</button>
                 <button className='button is-danger' type='button' onClick={onCancel}>Cancel</button>
               </footer>
-            </div>
-          </form>
-        </FormContext>
+            </form>
+          </FormContext>
+        </div>
       </div>
-    </Modal>
+    : null
   );
 };
 

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-//import Modal from 'react-modal';
-import AriaModal from 'react-aria-modal';
+import React, { useEffect, useRef } from 'react';
+import { handleModalKeyDownEvent } from 'utils';
 
 interface YesNoDialogProps {
   isActive: boolean,
@@ -11,18 +10,21 @@ interface YesNoDialogProps {
 }
 
 const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText, onYes, onNo}) => {
+  const yesButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    //Modal.setAppElement('#app')
-  }, []);
-
-  const getApplicationNode = () => {
-    return document.getElementById('application') as Element;
-  };
+    if (!isActive) return;
+    yesButtonRef?.current?.focus();
+    console.log('MOUNT YES-NO');
+    document.addEventListener('keydown', handleModalKeyDownEvent);
+    return () => {
+      console.log('UNMOUNT YES-NO');
+      document.removeEventListener('keydown', handleModalKeyDownEvent);
+    }
+  }, [isActive]);
 
   return (
-    // <Modal isOpen={isActive} appElement={document.getElementById('app') || undefined}>
-    isActive ? <AriaModal titleText={titleText || ''} getApplicationNode={getApplicationNode}>
+    isActive ?
       <div className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className='modal-background'></div>
         <div className='modal-card'>
@@ -33,14 +35,12 @@ const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText,
             <p>{bodyText}</p>
           </section>
           <footer className='modal-card-foot'>
-            <button className='button is-success' onClick={onYes}>Yes</button>
+            <button className='button is-success' onClick={onYes} ref={yesButtonRef}>Yes</button>
             <button className='button is-danger' onClick={onNo}>No</button>
           </footer>
         </div>
       </div>
-      </AriaModal>
-      : null
-    // </Modal>
+    : null
   );
 };
 
