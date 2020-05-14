@@ -15,10 +15,8 @@ const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText,
   useEffect(() => {
     if (!isActive) return;
     yesButtonRef?.current?.focus();
-    console.log('MOUNT YES-NO');
     document.addEventListener('keydown', handleModalKeyDownEvent);
     return () => {
-      console.log('UNMOUNT YES-NO');
       document.removeEventListener('keydown', handleModalKeyDownEvent);
     }
   }, [isActive]);
