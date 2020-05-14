@@ -42,7 +42,7 @@ export default interface SeaTurtleModel {
   pitTagsScanFrequency: string;
   scannedForMagneticWires: boolean;
   magneticWiresLocated: string;
-  inspectedForLivingTags: string;
+  inspectedForLivingTags: boolean;
   livingTagsLocated: string;
   brochureComments: string;
   brochureBackgroundColor: string;

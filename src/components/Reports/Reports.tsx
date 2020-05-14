@@ -28,7 +28,7 @@ const Reports: React.FC = () => {
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onGenerateReportListItemClick(row, event) }}><i className={`fa ${row.canGenerate ? 'fa-print' : ''}`} title='Generate Report'></i></span>,
+      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onGenerateReportListItemClick(row, event) }}><i className='fa fa-print' title='Generate Report'></i></span>,
     },
     {
       name: 'Name',
@@ -39,7 +39,7 @@ const Reports: React.FC = () => {
       name: 'Type',
       maxWidth: '4.5rem',
       minWidth: '4.5rem',
-      style: '{padding-right: 4rem}',
+      style: '{padding-right: 3.9rem}',
       cell: (row: ReportListItemModel) => <i className={`fa ${row.isPdf ? 'fa-file-pdf-o' : 'fa-file-code-o'}`} title={row.isPdf ? 'PDF' : 'HTML'}></i>,
     },
   ];

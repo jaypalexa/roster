@@ -339,7 +339,7 @@ const HoldingTankMeasurements: React.FC = () => {
                 <FormFieldRow>
                   <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
                   <DecimalFormField fieldName='temperature' labelText='Temperature' decimalPlaces={2} />
-                  <DecimalFormField fieldName='salinity' labelText='Salinity' decimalPlaces={2} />
+                  <DecimalFormField fieldName='salinity' labelText='Salinity (in ppt)' decimalPlaces={2} />
                   <DecimalFormField fieldName='ph' labelText='pH' decimalPlaces={2} />
                 </FormFieldRow>
 
