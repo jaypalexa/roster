@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Modal from 'react-modal';
+//import Modal from 'react-modal';
 
 interface YesNoDialogProps {
   isActive: boolean,
@@ -16,7 +16,7 @@ const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText,
   }, []);
 
   return (
-    <Modal isOpen={isActive} appElement={document.getElementById('app') || undefined}>
+    // <Modal isOpen={isActive} appElement={document.getElementById('app') || undefined}>
       <div className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className='modal-background'></div>
         <div className='modal-card'>
@@ -32,7 +32,7 @@ const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText,
           </footer>
         </div>
       </div>
-    </Modal>
+    // </Modal>
   );
 };
 
