@@ -26,8 +26,13 @@ const Home: React.FC = () => {
                   <MenuTile color='hsl(245, 100%, 40%)' title='Washbacks Events' linkTo='/washbacks-events' />
                 </div>
               </div>
-              <div className='tile is-parent'>
-                <MenuTile color='darkred' title='Reports' linkTo='/reports' />
+              <div className='tile'>
+                <div className='tile is-parent is-5'>
+                  <MenuTile color='darkred' title='Reports' linkTo='/reports' />
+                </div>
+                <div className='tile is-parent is-7'>
+                  <MenuTile color='firebrick' title='Blank Forms' linkTo='/blank-forms' />
+                </div>
               </div>
             </div>
           </div>

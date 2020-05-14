@@ -1,3 +1,4 @@
+import BlankForms from 'components/BlankForms/BlankForms'
 import HatchlingsEvents from 'components/HatchlingsEvents/HatchlingsEvents'
 import HoldingTankGraphs from 'components/HoldingTankGraphs/HoldingTankGraphs'
 import HoldingTankMeasurements from 'components/HoldingTankMeasurements/HoldingTankMeasurements'
@@ -29,6 +30,7 @@ const routes = (setLoggedInUserName: React.Dispatch<React.SetStateAction<string>
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/hatchlings-events' component={HatchlingsEvents} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/washbacks-events' component={WashbacksEvents} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/reports' component={Reports} />
+    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/blank-forms' component={BlankForms} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/organization' component={Organization} />
     <Route exact path='/login' render={ (routeProps) => <Login {...{setLoggedInUserName, ...routeProps}} /> } />
     <Route component={NotFound} />

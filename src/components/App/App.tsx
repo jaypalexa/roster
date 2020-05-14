@@ -209,6 +209,7 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/hatchlings-events' onClick={closeMenu}>Hatchlings Events</Link>
               <Link className='navbar-item' to='/washbacks-events' onClick={closeMenu}>Washbacks Events</Link>
               <Link className='navbar-item' to='/reports' onClick={closeMenu}>Reports</Link>
+              <Link className='navbar-item' to='/blank-forms' onClick={closeMenu}>Blank Forms</Link>
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
             </div>
             <div className='navbar-end'>
@@ -225,7 +226,7 @@ const App: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200514.1254
+            &nbsp;|&nbsp;v0.20200514.1354
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onUpdateAvailableClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link show-underline' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

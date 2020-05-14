@@ -14,7 +14,7 @@ import './Reports.sass';
 
 const Reports: React.FC = () => {
 
-  const [currentReport, setCurrentReport] = useState({} as ReportModel);
+  const [currentReport, setCurrentReport] = useState<ReportModel | null>();
   const [currentReportListItem, setCurrentReportListItem] = useState({} as ReportListItemModel);
   const [currentReportListItems, setCurrentReportListItems] = useState([] as Array<ReportListItemModel>);
   const [showReportOptionsDialog, setShowReportOptionsDialog] = useState(false);
@@ -23,14 +23,6 @@ const Reports: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   const tableColumns = [
-    {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onBlankReportListItemClick(row, event) }}><i className={`fa ${row.isPdf && row.blankFileName ? 'fa-external-link' : ''}`} title='Blank Form'></i></span>,
-    },
     {
       name: '',
       ignoreRowClick: true,
@@ -81,7 +73,7 @@ const Reports: React.FC = () => {
 
   useMount(() => {
     setShowSpinner(true);
-    const listItems = ReportService.getList();
+    const listItems = ReportService.getReportList();
     setCurrentReportListItems(listItems);
     setShowSpinner(false);
   });
@@ -92,27 +84,17 @@ const Reports: React.FC = () => {
     setShowReportOptionsDialog(true);
   };
 
-  const showBlankReport = (reportListItem: ReportListItemModel) => {
-    AuthenticationService.updateUserActivity();
-    if (!reportListItem.isPdf) {
-      toast.info(`The '${reportListItem.reportName}' is an HTML report`);
-      return;
-    }
-    const url = `https://www.turtlegeek.com/pdf/roster/${reportListItem.blankFileName}`;
-    window.open(url);
-  };
-
   const generatePdfReport = async (reportListItem: ReportListItemModel, reportOptions: any) => {
     AuthenticationService.updateUserActivity();
-    setCurrentReport({} as ReportModel);
+    setCurrentReport(null);
     try {
       setShowSpinner(true)
       const report = await ReportService.generateReport(reportListItem, reportOptions);
       setCurrentReport(report);
-      setPdfData(`data:application/pdf;base64,${report.data}`);
+      //setPdfData(`data:application/pdf;base64,${report.data}`);
       setPdfUrl(report.url);
-      console.log(report.url);
-      // window.open(report.url);
+      //console.log(report.url);
+      window.open(report.url);
     }
     catch (err) {
       console.log(err);
@@ -123,16 +105,13 @@ const Reports: React.FC = () => {
     }
   };
 
-  const onBlankReportListItemClick = (reportListItem: ReportListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    showBlankReport(reportListItem);
-  };
-
   const onGenerateReportListItemClick = (reportListItem: ReportListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     if (reportListItem.isPdf) {
       promptForReportOptions(reportListItem);
     }
     else {
-      toast.info(`The '${reportListItem.reportName}' is an HTML report`);
+      //toast.info(`The '${reportListItem.reportName}' is an HTML report`);
+      alert(`TODO:  The '${reportListItem.reportName}' is an HTML report`);
       return;
     }
   };
@@ -184,6 +163,7 @@ const Reports: React.FC = () => {
 
           {currentReport ? 
             <div>
+              <a href={pdfUrl} title={currentReportListItem.reportName} target='_blank' rel='noopener noreferrer'>View Report</a>
               <object 
                 style={{height: '85vh'}} 
                 data={pdfData} 
@@ -193,7 +173,7 @@ const Reports: React.FC = () => {
                 title={currentReport.reportName}
                 name={currentReport.reportName}
               >
-                  <a href={pdfUrl} title='report'>View Report</a>
+                  <a href={pdfUrl} title={currentReportListItem.reportName} target='_blank' rel='noopener noreferrer'>View Report</a>
               </object>
             </div>
            : null}
