@@ -1,25 +1,15 @@
+import browserHistory from 'browserHistory';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import ReportListItemModel from 'models/ReportListItemModel';
-import ReportModel from 'models/ReportModel';
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
-import { constants } from 'utils';
-import ReportOptionsDialog from './ReportOptionsDialog';
 import './Reports.sass';
 
 const Reports: React.FC = () => {
-
-  const [currentReport, setCurrentReport] = useState<ReportModel | null>();
-  const [currentReportListItem, setCurrentReportListItem] = useState({} as ReportListItemModel);
   const [currentReportListItems, setCurrentReportListItems] = useState([] as Array<ReportListItemModel>);
-  const [showReportOptionsDialog, setShowReportOptionsDialog] = useState(false);
-  const [pdfData, setPdfData] = useState('');
-  const [pdfUrl, setPdfUrl] = useState('');
   const [showSpinner, setShowSpinner] = useState(false);
 
   const tableColumns = [
@@ -33,7 +23,8 @@ const Reports: React.FC = () => {
     {
       name: 'Name',
       selector: 'reportName',
-      sortable: true
+      sortable: true,
+      cell: (row: ReportListItemModel) => <a href={`/report/${row.reportId}`}>{row.reportName}</a>,
     },
     {
       name: 'Type',
@@ -78,62 +69,16 @@ const Reports: React.FC = () => {
     setShowSpinner(false);
   });
 
-  const promptForReportOptions = (reportListItem: ReportListItemModel) => {
-    AuthenticationService.updateUserActivity();
-    setCurrentReportListItem(reportListItem);
-    setShowReportOptionsDialog(true);
-  };
-
-  const generatePdfReport = async (reportListItem: ReportListItemModel, reportOptions: any) => {
-    AuthenticationService.updateUserActivity();
-    setCurrentReport(null);
-    try {
-      setShowSpinner(true)
-      const report = await ReportService.generateReport(reportListItem, reportOptions);
-      setCurrentReport(report);
-      //setPdfData(`data:application/pdf;base64,${report.data}`);
-      setPdfUrl(report.url);
-      //console.log(report.url);
-      window.open(report.url);
-    }
-    catch (err) {
-      console.log(err);
-      toast.error(constants.ERROR.GENERIC);
-    }
-    finally {
-      setShowSpinner(false)
-    }
-  };
-
   const onGenerateReportListItemClick = (reportListItem: ReportListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    if (reportListItem.isPdf) {
-      promptForReportOptions(reportListItem);
-    }
-    else {
-      //toast.info(`The '${reportListItem.reportName}' is an HTML report`);
-      alert(`TODO:  The '${reportListItem.reportName}' is an HTML report`);
-      return;
-    }
+    setTimeout(() => {
+      browserHistory.push(`/report/${reportListItem.reportId}`);
+    }, 0);
+    return;
   };
-
-  const onGenerate = (reportListItem: ReportListItemModel, reportOptions: any) => {
-    setShowReportOptionsDialog(false);
-    console.log('reportOptions', reportOptions);
-    generatePdfReport(reportListItem, reportOptions)
-  }
 
   return (
     <div id='reports'>
       <Spinner isActive={showSpinner} />
-      <ReportOptionsDialog
-        isActive={showReportOptionsDialog}
-        reportListItem={currentReportListItem}
-        onGenerate={onGenerate}
-        onCancel={() => {
-          setShowReportOptionsDialog(false);
-        }}
-      />
-
       <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
@@ -158,25 +103,6 @@ const Reports: React.FC = () => {
             noHeader={true}
             customStyles={tableCustomStyles}
           />
-
-          <hr />
-
-          {currentReport ? 
-            <div>
-              <a href={pdfUrl} title={currentReportListItem.reportName} target='_blank' rel='noopener noreferrer'>View Report</a>
-              <object 
-                style={{height: '85vh'}} 
-                data={pdfData} 
-                type='application/pdf' 
-                width='100%' 
-                height='100%'
-                title={currentReport.reportName}
-                name={currentReport.reportName}
-              >
-                  <a href={pdfUrl} title={currentReportListItem.reportName} target='_blank' rel='noopener noreferrer'>View Report</a>
-              </object>
-            </div>
-           : null}
         </div>
       </div>
     </div>

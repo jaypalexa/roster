@@ -59,12 +59,17 @@ const ReportService = {
   },
 
   getReportList(): ReportListItemModel[] {
-    const listItems = new Array<ReportListItemModel>().concat(reports).filter(x => x.canGenerate);
+    const listItems = reports.filter(x => x.canGenerate);
     return listItems;
   },
 
+  getReportListItem(reportId: string): ReportListItemModel {
+    const listItem = reports.filter(x => x.reportId === reportId)[0];
+    return listItem;
+  },
+
   getBlankFormList(): ReportListItemModel[] {
-    const listItems = new Array<ReportListItemModel>().concat(reports).filter(x => x.isPdf);
+    const listItems = reports.filter(x => x.isPdf);
     return listItems;
   },
   

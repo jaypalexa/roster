@@ -8,6 +8,7 @@ import Login from 'components/Login/Login'
 import NotFound from 'components/NotFound/NotFound'
 import Organization from 'components/Organization/Organization'
 import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute'
+import Report from 'components/Report/Report'
 import Reports from 'components/Reports/Reports'
 import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics/SeaTurtleMorphometrics'
 import SeaTurtleMorphometricsGraphs from 'components/SeaTurtleMorphometricsGraphs/SeaTurtleMorphometricsGraphs'
@@ -30,6 +31,7 @@ const routes = (setLoggedInUserName: React.Dispatch<React.SetStateAction<string>
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/hatchlings-events' component={HatchlingsEvents} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/washbacks-events' component={WashbacksEvents} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/reports' component={Reports} />
+    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/report/:reportId' component={Report} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/blank-forms' component={BlankForms} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/organization' component={Organization} />
     <Route exact path='/login' render={ (routeProps) => <Login {...{setLoggedInUserName, ...routeProps}} /> } />
