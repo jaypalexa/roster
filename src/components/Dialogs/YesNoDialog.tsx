@@ -1,5 +1,4 @@
-import useMount from 'hooks/UseMount';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 
 interface YesNoDialogProps {
@@ -12,12 +11,12 @@ interface YesNoDialogProps {
 
 const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText, onYes, onNo}) => {
 
-  useMount(() => {
-    Modal.setAppElement('#app')
-  });
+  useEffect(() => {
+    //Modal.setAppElement('#app')
+  }, []);
 
   return (
-    <Modal isOpen={isActive}>
+    <Modal isOpen={isActive} appElement={document.getElementById('app') || undefined}>
       <div className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className='modal-background'></div>
         <div className='modal-card'>
