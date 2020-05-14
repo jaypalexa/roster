@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 //import Modal from 'react-modal';
+import AriaModal from 'react-aria-modal';
 
 interface YesNoDialogProps {
   isActive: boolean,
@@ -15,8 +16,13 @@ const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText,
     //Modal.setAppElement('#app')
   }, []);
 
+  const getApplicationNode = () => {
+    return document.getElementById('application') as Element;
+  };
+
   return (
     // <Modal isOpen={isActive} appElement={document.getElementById('app') || undefined}>
+    isActive ? <AriaModal titleText={titleText || ''} getApplicationNode={getApplicationNode}>
       <div className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className='modal-background'></div>
         <div className='modal-card'>
@@ -32,6 +38,8 @@ const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText,
           </footer>
         </div>
       </div>
+      </AriaModal>
+      : null
     // </Modal>
   );
 };
