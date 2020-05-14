@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import NameValuePair from '../../types/NameValuePair';
+import NameValuePair from '../../models/NameValuePair';
 import FormField from './FormField';
 import FormFieldProps from './FormFieldProps';
 

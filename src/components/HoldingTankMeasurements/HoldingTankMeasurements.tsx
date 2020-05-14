@@ -8,6 +8,7 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePro
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
@@ -15,7 +16,6 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import HoldingTankMeasurementService from 'services/HoldingTankMeasurementService';
-import HoldingTankMeasurementModel from 'types/HoldingTankMeasurementModel';
 import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './HoldingTankMeasurements.sass';

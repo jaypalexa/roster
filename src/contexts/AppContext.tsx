@@ -1,6 +1,6 @@
+import HoldingTankModel from 'models/HoldingTankModel';
+import SeaTurtleModel from 'models/SeaTurtleModel';
 import React, { createContext, useContext, useState } from 'react';
-import HoldingTankModel from 'types/HoldingTankModel';
-import SeaTurtleModel from 'types/SeaTurtleModel';
 
 interface Props {
   children: React.ReactNode;

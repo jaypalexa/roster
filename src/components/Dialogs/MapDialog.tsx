@@ -1,8 +1,8 @@
 import { Icon } from 'leaflet';
+import MapDataModel from 'models/MapDataModel';
+import MapPointModel from 'models/MapPointModel';
 import React, { useEffect, useRef, useState } from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import MapDataModel from 'types/MapDataModel';
-import MapPointModel from 'types/MapPointModel';
 import { handleModalKeyDownEvent } from 'utils';
 import './MapDialog.sass';
 

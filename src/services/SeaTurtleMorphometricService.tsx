@@ -1,5 +1,5 @@
+import SeaTurtleMorphometricModel from 'models/SeaTurtleMorphometricModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
-import SeaTurtleMorphometricModel from 'types/SeaTurtleMorphometricModel';
 import { sortByProperty, toNumber } from 'utils';
 
 const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}/sea-turtle-morphometrics/{seaTurtleMorphometricId}';

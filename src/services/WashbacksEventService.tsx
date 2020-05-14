@@ -1,6 +1,6 @@
+import WashbacksEventModel from 'models/WashbacksEventModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
-import WashbacksEventModel from 'types/WashbacksEventModel';
 import { sortByProperty, toNumber } from 'utils';
 
 const RESOURCE_SINGLE = '/washbacks-events/{washbacksEventId}';

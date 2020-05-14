@@ -3,11 +3,11 @@ import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextFormField from 'components/FormFields/TextFormField';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
+import LoginModel from 'models/LoginModel';
 import React, { useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
-import LoginModel from 'types/LoginModel';
 import './Login.sass';
 
 interface LoginProps {

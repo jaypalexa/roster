@@ -1,7 +1,7 @@
+import NameValuePair from 'models/NameValuePair';
+import SeaTurtleModel from 'models/SeaTurtleModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
-import NameValuePair from 'types/NameValuePair';
-import SeaTurtleModel from 'types/SeaTurtleModel';
 import { sortByProperty } from 'utils';
 
 const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}';

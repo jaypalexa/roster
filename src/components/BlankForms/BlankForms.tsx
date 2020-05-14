@@ -1,12 +1,12 @@
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
+import ReportListItemModel from 'models/ReportListItemModel';
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
-import ReportListItemModel from 'types/ReportListItemModel';
 import './BlankForms.sass';
 
 const BlankForms: React.FC = () => {

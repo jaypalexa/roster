@@ -1,5 +1,5 @@
+import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
-import HoldingTankMeasurementModel from 'types/HoldingTankMeasurementModel';
 import { sortByProperty, toNumber } from 'utils';
 
 const RESOURCE_SINGLE = '/holding-tanks/{holdingTankId}/holding-tank-measurements/{holdingTankMeasurementId}';

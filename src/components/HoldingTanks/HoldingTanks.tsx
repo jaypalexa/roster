@@ -7,13 +7,13 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePro
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import HoldingTankModel from 'models/HoldingTankModel';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import HoldingTankService from 'services/HoldingTankService';
-import HoldingTankModel from 'types/HoldingTankModel';
 import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './HoldingTanks.sass';

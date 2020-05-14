@@ -8,12 +8,12 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePro
 import Spinner from 'components/Spinner/Spinner';
 import TabHelper from 'helpers/TabHelper';
 import useMount from 'hooks/UseMount';
+import OrganizationModel from 'models/OrganizationModel';
 import React, { useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import OrganizationService from 'services/OrganizationService';
-import OrganizationModel from 'types/OrganizationModel';
 import { constants } from 'utils';
 import './Organization.sass';
 

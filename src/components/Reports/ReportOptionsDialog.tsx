@@ -6,11 +6,11 @@ import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import Spinner from 'components/Spinner/Spinner';
+import NameValuePair from 'models/NameValuePair';
+import ReportListItemModel from 'models/ReportListItemModel';
 import React, { useEffect, useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import SeaTurtleService from 'services/SeaTurtleService';
-import NameValuePair from 'types/NameValuePair';
-import ReportListItemModel from 'types/ReportListItemModel';
 import { handleModalKeyDownEvent } from 'utils';
 
 interface ReportOptionsDialogProps {

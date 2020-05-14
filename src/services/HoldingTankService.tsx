@@ -1,6 +1,6 @@
+import HoldingTankModel from 'models/HoldingTankModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
-import HoldingTankModel from 'types/HoldingTankModel';
 
 const RESOURCE_SINGLE = '/holding-tanks/{holdingTankId}';
 const RESOURCE_MANY = '/holding-tanks';

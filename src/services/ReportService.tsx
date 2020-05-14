@@ -1,6 +1,6 @@
+import ReportListItemModel from 'models/ReportListItemModel';
+import ReportModel from 'models/ReportModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
-import ReportListItemModel from 'types/ReportListItemModel';
-import ReportModel from 'types/ReportModel';
 
 const reports = [
   { reportId: 'DisorientationIncidentForm', reportName: 'Disorientation Incident Form', canGenerate: false, isPdf: true, blankFileName: 'Disorientation Incident Report form.pdf' },

@@ -2,13 +2,13 @@ import browserHistory from 'browserHistory';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import HoldingTankMeasurementService from 'services/HoldingTankMeasurementService';
-import HoldingTankMeasurementModel from 'types/HoldingTankMeasurementModel';
 import { constants } from 'utils';
 import './HoldingTankGraphs.sass';
 

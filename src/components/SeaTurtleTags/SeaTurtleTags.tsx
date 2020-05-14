@@ -9,6 +9,8 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePro
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import NameValuePair from 'models/NameValuePair';
+import SeaTurtleTagModel from 'models/SeaTurtleTagModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
@@ -17,8 +19,6 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import SeaTurtleTagService from 'services/SeaTurtleTagService';
-import NameValuePair from 'types/NameValuePair';
-import SeaTurtleTagModel from 'types/SeaTurtleTagModel';
 import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './SeaTurtleTags.sass';

@@ -1,6 +1,6 @@
+import HatchlingsEventModel from 'models/HatchlingsEventModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
-import HatchlingsEventModel from 'types/HatchlingsEventModel';
 import { sortByProperty, toNumber } from 'utils';
 
 const RESOURCE_SINGLE = '/hatchlings-events/{hatchlingsEventId}';

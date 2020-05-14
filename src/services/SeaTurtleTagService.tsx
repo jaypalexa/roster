@@ -1,5 +1,5 @@
+import SeaTurtleTagModel from 'models/SeaTurtleTagModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
-import SeaTurtleTagModel from 'types/SeaTurtleTagModel';
 
 const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}/sea-turtle-tags/{seaTurtleTagId}';
 const RESOURCE_MANY = '/sea-turtles/{seaTurtleId}/sea-turtle-tags';

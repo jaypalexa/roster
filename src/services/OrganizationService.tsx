@@ -1,6 +1,6 @@
+import OrganizationModel from 'models/OrganizationModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
-import OrganizationModel from 'types/OrganizationModel';
 import { toNumber } from 'utils';
 
 const RESOURCE_SINGLE = '/organizations/{organizationId}';
