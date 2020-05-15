@@ -38,8 +38,8 @@ const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) 
         <div className='modal-background'></div>
         <div className='modal-card'>
           <header className='modal-card-head'>
-            <h2 className='subtitle has-text-centered'>{mapData.title || ''}</h2>
-            {mapData.subtitle ? <h3 className='subtitle has-text-centered'>{mapData.subtitle || ''}</h3> : null}
+            <h2 className='subtitle has-text-centered map-header'>{mapData.title || ''}</h2>
+            {mapData.subtitle ? <h3 className='subtitle has-text-centered map-header'>{mapData.subtitle || ''}</h3> : null}
             {/* {mapData.subtitle ? <><br /><h2 className='subtitle has-text-centered'>{mapData.subtitle || ''}</h2></> : null}
             <button className='close-icon-button' aria-label='close' onClick={onCloseClick}>
               <i className='fa fa-window-close'></i>

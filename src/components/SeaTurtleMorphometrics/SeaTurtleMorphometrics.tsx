@@ -54,14 +54,14 @@ const SeaTurtleMorphometrics: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleMorphometricClick(row, event) }}><i className='fa fa-pencil fa-lg'></i></span>,
+      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleMorphometricClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleMorphometricClick(row, event) }}><i className='fa fa-trash fa-lg'></i></span>,
+      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleMorphometricClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Date Measured',

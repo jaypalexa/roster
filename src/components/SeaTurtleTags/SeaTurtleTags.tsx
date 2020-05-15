@@ -51,14 +51,14 @@ const SeaTurtleTags: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleTagClick(row, event) }}><i className='fa fa-pencil fa-lg'></i></span>,
+      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleTagClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleTagClick(row, event) }}><i className='fa fa-trash fa-lg'></i></span>,
+      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleTagClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Tag Number',
