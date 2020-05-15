@@ -108,15 +108,16 @@ const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
       setPdfUrl(report.url);
       //setPdfData(`data:application/pdf;base64,${report.data}`);
       //window.open(report.url);
-      var link = document.createElementNS("http://www.w3.org/1999/xhtml", "a") as any;
-      link.href = report.url;
-      link.target = iOS ? '_self' : '_blank';
-      var event = new MouseEvent('click', {
-          'view': window,
-          'bubbles': false,
-          'cancelable': true
-      });
-      link.dispatchEvent(event);
+
+      // var link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a') as HTMLAnchorElement;
+      // link.href = report.url;
+      // link.target = iOS ? '_self' : '_blank';
+      // var event = new MouseEvent('click', {
+      //     'view': window,
+      //     'bubbles': false,
+      //     'cancelable': true
+      // });
+      // link.dispatchEvent(event);
     }
     catch (err) {
       console.log(err);
