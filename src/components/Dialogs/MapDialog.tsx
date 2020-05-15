@@ -39,10 +39,11 @@ const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) 
         <div className='modal-card'>
           <header className='modal-card-head'>
             <h2 className='subtitle has-text-centered'>{mapData.title || ''}</h2>
-            {mapData.subtitle ? <><br /><h2 className='subtitle has-text-centered'>{mapData.subtitle || ''}</h2></> : null}
+            {mapData.subtitle ? <h3 className='subtitle has-text-centered'>{mapData.subtitle || ''}</h3> : null}
+            {/* {mapData.subtitle ? <><br /><h2 className='subtitle has-text-centered'>{mapData.subtitle || ''}</h2></> : null}
             <button className='close-icon-button' aria-label='close' onClick={onCloseClick}>
               <i className='fa fa-window-close'></i>
-            </button>
+            </button> */}
           </header>
           <section className='modal-card-body'>
             <Map center={[center.latitude, center.longitude]} zoom={mapData.initialZoom || 7}>

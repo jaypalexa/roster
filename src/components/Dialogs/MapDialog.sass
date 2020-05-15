@@ -1,12 +1,18 @@
 @import 'node_modules/bulma/bulma'
 
-h2
+h2.subtitle
+  margin-bottom: 0 ! important
   width: 100%
 
 @media (max-width: 768px) // when mobile
   h2.subtitle
     font-size: 1rem
     line-height: 1.5
+
+h3.subtitle
+  font-size: smaller
+  margin-bottom: 0 ! important
+  width: 100%
 
 .close-icon-button
   position: absolute
@@ -31,3 +37,6 @@ h2
 .marker-description
   font-size: larger
   margin-bottom: .25rem ! important
+
+.modal-card-head
+  flex-direction: column

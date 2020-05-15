@@ -531,7 +531,7 @@ const SeaTurtles: React.FC = () => {
 
                 <ChildNavigation itemName='Morphometrics Graphs' 
                   disabled={!isFormEnabled} 
-                  onClick={() => onChildNavigationClick('/sea-turtle-graphs')} />
+                  onClick={() => onChildNavigationClick('/sea-turtle-morphometrics-graphs')} />
 
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>

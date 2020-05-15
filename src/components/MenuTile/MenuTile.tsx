@@ -1,5 +1,5 @@
+import browserHistory from 'browserHistory';
 import React from 'react';
-import browserHistory from '../../browserHistory';
 import './MenuTile.sass';
 
 type MenuTileProps = {
