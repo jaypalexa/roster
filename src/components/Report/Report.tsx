@@ -45,10 +45,6 @@ const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
   };
 
   useMount(() => {
-    window.scrollTo(0, 0)
-  });
-
-  useMount(() => {
     const fetchReportListItem = async () => {
       try {
         setShowSpinner(true);
@@ -144,7 +140,7 @@ const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered hidden-when-mobile'>{currentReportListItem.reportName}</h1>
+          <h1 className='title has-text-centered'>{currentReportListItem.reportName}</h1>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>

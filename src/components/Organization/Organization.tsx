@@ -89,7 +89,7 @@ const Organization: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered hidden-when-mobile'>Organization</h1>
+          <h1 className='title has-text-centered'>Organization</h1>
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
 

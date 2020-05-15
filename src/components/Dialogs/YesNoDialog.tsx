@@ -5,8 +5,8 @@ interface YesNoDialogProps {
   isActive: boolean,
   titleText?: string,
   bodyText?: string,
-  onYes: any,
-  onNo: any
+  onYes: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
+  onNo: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
 }
 
 const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText, onYes, onNo}) => {

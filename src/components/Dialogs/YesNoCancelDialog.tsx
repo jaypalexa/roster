@@ -5,9 +5,9 @@ interface YesNoCancelDialogProps {
   isActive: boolean,
   titleText?: string,
   bodyText?: string,
-  onYes: any,
-  onNo: any,
-  onCancel: any
+  onYes: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
+  onNo: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
+  onCancel: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
 }
 
 const YesNoCancelDialog: React.FC<YesNoCancelDialogProps> = ({isActive, titleText, bodyText, onYes, onNo, onCancel}) => {

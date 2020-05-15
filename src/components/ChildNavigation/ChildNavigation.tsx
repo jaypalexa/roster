@@ -4,7 +4,7 @@ import './ChildNavigation.sass';
 interface ChildNavigationProps {
   itemName: string,
   disabled?: boolean,
-  onClick: () => {}
+  onClick: ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined
 }
 
 const ChildNavigation: React.FC<ChildNavigationProps> = ({itemName, disabled, onClick}) => {

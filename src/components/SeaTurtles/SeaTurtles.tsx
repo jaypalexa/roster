@@ -49,9 +49,9 @@ const SeaTurtles: React.FC = () => {
   const [showYesNoDialog, setShowYesNoDialog] = useState(false);
   const [dialogTitleText, setDialogTitleText] = useState('');
   const [dialogBodyText, setDialogBodyText] = useState('');
-  const [onDialogYes, setOnDialogYes] = useState(() => { });
-  const [onDialogNo, setOnDialogNo] = useState(() => { });
-  const [onDialogCancel, setOnDialogCancel] = useState(() => { });
+  const [onDialogYes, setOnDialogYes] = useState<((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined>(() => {});
+  const [onDialogNo, setOnDialogNo] = useState<((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined>(() => {});
+  const [onDialogCancel, setOnDialogCancel] = useState<((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined>(() => {});
   const [editingStarted, setEditingStarted] = useState(false);
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
@@ -326,7 +326,7 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const saveAndNavigate = async (linkTo: string) => {
+  const onChildNavigationClick = async (linkTo: string) => {
     const modifiedSeaTurtle: SeaTurtleModel = getValues();
     await saveSeaTurtle(modifiedSeaTurtle);
     setTimeout(() => {
@@ -391,7 +391,7 @@ const SeaTurtles: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered hidden-when-mobile'>Sea Turtles</h1>
+          <h1 className='title has-text-centered'>Sea Turtles</h1>
           <div className='level'>
             <div className='level-left'></div>
             <div className='level-right'>
@@ -523,15 +523,15 @@ const SeaTurtles: React.FC = () => {
 
                 <ChildNavigation itemName='Tags' 
                   disabled={!isFormEnabled} 
-                  onClick={() => saveAndNavigate('/sea-turtle-tags')} />
+                  onClick={() => onChildNavigationClick('/sea-turtle-tags')} />
 
                 <ChildNavigation itemName='Morphometrics Measurements' 
                   disabled={!isFormEnabled} 
-                  onClick={() => saveAndNavigate('/sea-turtle-morphometrics')} />
+                  onClick={() => onChildNavigationClick('/sea-turtle-morphometrics')} />
 
                 <ChildNavigation itemName='Morphometrics Graphs' 
                   disabled={!isFormEnabled} 
-                  onClick={() => saveAndNavigate('/sea-turtle-graphs')} />
+                  onClick={() => onChildNavigationClick('/sea-turtle-graphs')} />
 
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>

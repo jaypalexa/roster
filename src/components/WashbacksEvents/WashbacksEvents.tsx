@@ -36,9 +36,9 @@ const WashbacksEvents: React.FC = () => {
   const [showYesNoDialog, setShowYesNoDialog] = useState(false);
   const [dialogTitleText, setDialogTitleText] = useState('');
   const [dialogBodyText, setDialogBodyText] = useState('');
-  const [onDialogYes, setOnDialogYes] = useState(() => { });
-  const [onDialogNo, setOnDialogNo] = useState(() => { });
-  const [onDialogCancel, setOnDialogCancel] = useState(() => { });
+  const [onDialogYes, setOnDialogYes] = useState<((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined>(() => {});
+  const [onDialogNo, setOnDialogNo] = useState<((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined>(() => {});
+  const [onDialogCancel, setOnDialogCancel] = useState<((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined>(() => {});
   const [editingStarted, setEditingStarted] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
@@ -342,7 +342,7 @@ const WashbacksEvents: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered hidden-when-mobile'>Washbacks Events</h1>
+          <h1 className='title has-text-centered'>Washbacks Events</h1>
           <div className='level add-washbacks-event-buttons-container'>
             <p className='level-item'>
               <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('Acquired')}>

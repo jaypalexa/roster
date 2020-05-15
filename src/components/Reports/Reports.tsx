@@ -1,9 +1,9 @@
 import browserHistory from 'browserHistory';
+import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import ReportListItemModel from 'models/ReportListItemModel';
 import React, { useState } from 'react';
-import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import ReportService from 'services/ReportService';
 import './Reports.sass';
@@ -12,56 +12,6 @@ const Reports: React.FC = () => {
   const [currentReportListItems, setCurrentReportListItems] = useState([] as Array<ReportListItemModel>);
   const [showSpinner, setShowSpinner] = useState(false);
 
-  const tableColumns = [
-    {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onGenerateReportListItemClick(row, event) }}><i className='fa fa-print' title='Generate Report'></i></span>,
-    },
-    {
-      name: 'Name',
-      selector: 'reportName',
-      sortable: true,
-      cell: (row: ReportListItemModel) => <a href={`/report/${row.reportId}`}>{row.reportName}</a>,
-    },
-    {
-      name: 'Type',
-      maxWidth: '4.5rem',
-      minWidth: '4.5rem',
-      style: '{padding-right: 3.9rem}',
-      cell: (row: ReportListItemModel) => <i className={`fa ${row.isPdf ? 'fa-file-pdf-o' : 'fa-file-code-o'}`} title={row.isPdf ? 'PDF' : 'HTML'}></i>,
-    },
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    },
-    headCells: {
-      style: {
-        fontSize: 'large'
-      }
-    },
-    table: {
-      style: {
-        height: '100%'
-      }
-    },
-    cells: {
-      style: {
-        fontSize: 'large'
-      }
-    },
-  };
-
-  useMount(() => {
-    window.scrollTo(0, 0)
-  });
-
   useMount(() => {
     setShowSpinner(true);
     const listItems = ReportService.getReportList();
@@ -69,11 +19,18 @@ const Reports: React.FC = () => {
     setShowSpinner(false);
   });
 
-  const onGenerateReportListItemClick = (reportListItem: ReportListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onChildNavigationClick = (reportListItem: ReportListItemModel) => {
     setTimeout(() => {
       browserHistory.push(`/report/${reportListItem.reportId}`);
     }, 0);
-    return;
+  };
+
+  const renderChildNavigation = (reportListItem: ReportListItemModel) => {
+    return <ChildNavigation 
+              key={reportListItem.reportId} 
+              itemName={reportListItem.reportName} 
+              onClick={() => onChildNavigationClick(reportListItem)}
+            />
   };
 
   return (
@@ -92,17 +49,18 @@ const Reports: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered hidden-when-mobile'>Reports</h1>
 
-          <DataTable
-            title='Reports'
-            columns={tableColumns}
-            data={currentReportListItems}
-            keyField='reportId'
-            defaultSortField='reportName'
-            noHeader={true}
-            customStyles={tableCustomStyles}
-          />
+          <h1 className='title has-text-centered'>FWC Reports</h1>
+          {currentReportListItems
+            .filter(item => item.isPdf)
+            .map((item) => renderChildNavigation(item))
+          }
+
+          <h1 className='title has-text-centered'>Other Reports</h1>
+          {currentReportListItems
+            .filter(item => !item.isPdf)
+            .map((item) => renderChildNavigation(item))
+          }
         </div>
       </div>
     </div>

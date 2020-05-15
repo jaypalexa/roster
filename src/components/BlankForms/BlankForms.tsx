@@ -1,8 +1,8 @@
+import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import ReportListItemModel from 'models/ReportListItemModel';
 import React, { useState } from 'react';
-import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
@@ -13,49 +13,6 @@ const BlankForms: React.FC = () => {
   const [currentReportListItems, setCurrentReportListItems] = useState([] as Array<ReportListItemModel>);
   const [showSpinner, setShowSpinner] = useState(false);
 
-  const tableColumns = [
-    {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: ReportListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onBlankReportListItemClick(row, event) }}><i className={`fa ${row.isPdf && row.blankFileName ? 'fa-external-link' : ''}`} title='Open in new tab'></i></span>,
-    },
-    {
-      name: 'Name',
-      selector: 'reportName',
-      sortable: true
-    },
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    },
-    headCells: {
-      style: {
-        fontSize: 'large'
-      }
-    },
-    table: {
-      style: {
-        height: '100%'
-      }
-    },
-    cells: {
-      style: {
-        fontSize: 'large'
-      }
-    },
-  };
-
-  useMount(() => {
-    window.scrollTo(0, 0)
-  });
-
   useMount(() => {
     setShowSpinner(true);
     const listItems = ReportService.getBlankFormList();
@@ -63,7 +20,7 @@ const BlankForms: React.FC = () => {
     setShowSpinner(false);
   });
 
-  const showBlankReport = (reportListItem: ReportListItemModel) => {
+  const onChildNavigationClick = (reportListItem: ReportListItemModel) => {
     AuthenticationService.updateUserActivity();
     if (!reportListItem.isPdf) {
       toast.info(`The '${reportListItem.reportName}' is an HTML report`);
@@ -73,8 +30,12 @@ const BlankForms: React.FC = () => {
     window.open(url);
   };
 
-  const onBlankReportListItemClick = (reportListItem: ReportListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    showBlankReport(reportListItem);
+  const renderChildNavigation = (reportListItem: ReportListItemModel) => {
+    return <ChildNavigation 
+              key={reportListItem.reportId} 
+              itemName={reportListItem.reportName} 
+              onClick={() => onChildNavigationClick(reportListItem)}
+            />
   };
 
   return (
@@ -94,17 +55,11 @@ const BlankForms: React.FC = () => {
       </nav>
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered hidden-when-mobile'>Blank Forms</h1>
 
-          <DataTable
-            title='Blank Forms'
-            columns={tableColumns}
-            data={currentReportListItems}
-            keyField='reportId'
-            defaultSortField='reportName'
-            noHeader={true}
-            customStyles={tableCustomStyles}
-          />
+          <h1 className='title has-text-centered'>Blank Forms</h1>
+          {currentReportListItems
+            .map((item) => renderChildNavigation(item))
+          }
           
         </div>
       </div>
