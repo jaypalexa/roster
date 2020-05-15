@@ -172,8 +172,8 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
     const buildNewDatasets = () => {
       const newDatasets = new Array<GraphDataset>();
       currentGraphTypes.forEach((isChecked: boolean, graphType: string) => {
-        if (isChecked === true) {
-          const newData = currentSeaTurtleMorphometrics.map(x => x[graphType] as number);
+        if (isChecked) {
+          const newData = currentSeaTurtleMorphometrics.map(x => x[graphType] as number).filter(x => x > 0);
           const newDataset = Object.assign({}, graphTypeSettings?.get(graphType)?.dataset, { data: newData });
           newDatasets.push(newDataset);
         }

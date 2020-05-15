@@ -77,6 +77,7 @@ const WashbacksEvents: React.FC = () => {
     {
       name: 'Event Count',
       selector: 'eventCount',
+      cell: (row: WashbacksEventModel) => <span>{row.eventType === 'Released' ? row.beachEventCount + row.offshoreEventCount : row.eventCount}</span>,
       sortable: true,
       hide: 599
     },

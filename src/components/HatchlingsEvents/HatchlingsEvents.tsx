@@ -75,6 +75,7 @@ const HatchlingsEvents: React.FC = () => {
     {
       name: 'Event Count',
       selector: 'eventCount',
+      cell: (row: HatchlingsEventModel) => <span>{row.eventType === 'Released' ? row.beachEventCount + row.offshoreEventCount : row.eventCount}</span>,
       sortable: true,
       hide: 599
     },

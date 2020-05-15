@@ -29,11 +29,9 @@ const HatchlingsEventService = {
   async saveHatchlingsEvent(hatchlingsEvent: HatchlingsEventModel) {
     hatchlingsEvent.organizationId = AuthenticationService.getOrganizationId();
 
-    // TODO: HACK: fix in SQL - released total
     if (hatchlingsEvent.eventType === 'Released') {
       hatchlingsEvent.beachEventCount = toNumber(hatchlingsEvent.beachEventCount);
       hatchlingsEvent.offshoreEventCount = toNumber(hatchlingsEvent.offshoreEventCount);
-      hatchlingsEvent.eventCount = hatchlingsEvent.beachEventCount + hatchlingsEvent.offshoreEventCount;
     } else {
       hatchlingsEvent.eventCount = toNumber(hatchlingsEvent.eventCount);
     }

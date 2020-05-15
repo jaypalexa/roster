@@ -29,11 +29,9 @@ const WashbacksEventService = {
   async saveWashbacksEvent(washbacksEvent: WashbacksEventModel) {
     washbacksEvent.organizationId = AuthenticationService.getOrganizationId();
 
-    // TODO: HACK: fix in SQL - released total
     if (washbacksEvent.eventType === 'Released') {
       washbacksEvent.beachEventCount = toNumber(washbacksEvent.beachEventCount);
       washbacksEvent.offshoreEventCount = toNumber(washbacksEvent.offshoreEventCount);
-      washbacksEvent.eventCount = washbacksEvent.beachEventCount + washbacksEvent.offshoreEventCount;
     } else {
       washbacksEvent.eventCount = toNumber(washbacksEvent.eventCount);
     }

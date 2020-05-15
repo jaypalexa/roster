@@ -45,7 +45,7 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | &check; Prevent tabbing outside of modal | [react-modal](https://www.npmjs.com/package/react-modal) |
 | &#10065; Session/Token timeout | ??? auto-refresh |
 | &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
-| &#10065; Filtering of tables | ??? [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) |
+| &#10065; Paging and Filtering (search) of tables | ??? [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) |
 | &#10065; Preventing denial-of-service attacks /excessive usage | ??? throttling |
 | &#10065; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
 | &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? Service worker unable to distinguish different payloads when calling AWS Lambda (https://lambda.us-east-2.amazonaws.com/2015-03-31/functions/roster-api-lambda/invocations)? |
