@@ -64,14 +64,14 @@ const SeaTurtles: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row, event) }}><i className='fa fa-pencil fa-lg'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row, event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row, event) }}><i className='fa fa-trash fa-lg'></i></span>,
     },
     {
       name: 'Name',
@@ -341,7 +341,8 @@ const SeaTurtles: React.FC = () => {
   const onShowMapDialogClick = (dataType: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const modifiedSeaTurtle: SeaTurtleModel = getValues();
     const data = {} as MapDataModel;
-    data.center = { latitude: 28.681389, longitude: -82.46, description: 'Geographic center of Florida' };
+    // data.center = { latitude: 28.681389, longitude: -82.46, description: 'Geographic center of Florida' };
+    data.center = { latitude: 29.5, longitude: -82.46, description: 'Geographic center of Florida' };
     data.initialZoom = 6;
     const latitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Latitude`] as number;
     const longitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Longitude`] as number;

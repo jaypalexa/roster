@@ -46,14 +46,14 @@ const HoldingTankMeasurements: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankMeasurementClick(row, event) }}><i className='fa fa-pencil'></i></span>,
+      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankMeasurementClick(row, event) }}><i className='fa fa-pencil fa-lg'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankMeasurementClick(row, event) }}><i className='fa fa-trash'></i></span>,
+      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankMeasurementClick(row, event) }}><i className='fa fa-trash fa-lg'></i></span>,
     },
     {
       name: 'Date Measured',
