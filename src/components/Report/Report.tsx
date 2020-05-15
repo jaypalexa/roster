@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
 import SeaTurtleService from 'services/SeaTurtleService';
-import { constants } from 'utils';
+import { constants, iOS } from 'utils';
 import './Report.sass';
 
 type TParams =  { reportId: string };
@@ -206,7 +206,14 @@ const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
 
           {pdfUrl ? 
             <div className='view-report-button-container has-text-centered'>
-              <a href={pdfUrl} className='view-report-button is-fixed-width-medium' title={currentReportListItem.reportName} target='_blank' rel='noopener noreferrer'>View Report</a>
+              <a href={pdfUrl} 
+                className='view-report-button is-fixed-width-medium' 
+                title={currentReportListItem.reportName} 
+                target={iOS ? '_self' : '_blank'} 
+                rel='noopener noreferrer'
+              >
+                  View Report
+              </a>
             </div>
            : null}
         </div>

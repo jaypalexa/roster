@@ -40,3 +40,7 @@ export const handleModalKeyDownEvent = (e: KeyboardEvent) => {
     }
   }
 };
+
+export const isIphone = /(iPhone)/i.test(navigator.userAgent);
+export const iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent) && !window.MSStream;
+export const isSafari = !!navigator.userAgent.match(/Version\/[\\d\\.]+.*Safari/);
