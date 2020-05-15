@@ -1,0 +1,3066 @@
+[
+  {
+    "holdingTankMeasurementId": "093627ac-5d9d-4a93-bde6-82f8a4a8d8f5",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-01-01",
+    "temperature": 23,
+    "salinity": 28,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "f12f0beb-7fda-4da4-a883-6ccbcdd3e8d0",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-01-09",
+    "temperature": 23,
+    "salinity": 24,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "90e719d9-ddda-4582-85d7-ee86294e0b4c",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-01-14",
+    "temperature": 25.7,
+    "salinity": 31,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "1af80f45-2ed7-42dd-afdd-6bba612a9fb6",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-01-21",
+    "temperature": 23.5,
+    "salinity": 29,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "32fce54b-ec0c-4491-a5be-e3c1c0b55324",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-01-28",
+    "temperature": 23,
+    "salinity": 34.2,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "01ca7847-4822-4083-a255-1e5a4697cbef",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-02-03",
+    "temperature": 23,
+    "salinity": 25.3,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "e8b09a25-58b0-4cb0-bfe5-fa1f87965554",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-02-07",
+    "temperature": 23.3,
+    "salinity": 32,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "a7127138-0e2a-4399-8a02-7081e6737614",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-02-14",
+    "temperature": 23.5,
+    "salinity": 32.2,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "ad10dc71-4037-4d87-bf50-26a56db559de",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-03-16",
+    "temperature": 2.5,
+    "salinity": 28.5,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "f2853538-e2ec-475c-9e68-35931e9b5fc5",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-03-21",
+    "temperature": 23.8,
+    "salinity": 27.9,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "22fe4620-ae17-4c6c-b54f-19ecefa154da",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-03-28",
+    "temperature": 24.6,
+    "salinity": 32,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "f7bb1f29-dd5c-4c69-ba64-0d0efa3f8802",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-01-01",
+    "temperature": 23.2,
+    "salinity": 28.2,
+    "ph": 8.13
+  },
+  {
+    "holdingTankMeasurementId": "7a6271b2-5c8a-44fe-aba1-8744e3ec88d4",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-01-09",
+    "temperature": 23.2,
+    "salinity": 2.2,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "489a4bb1-c151-4bf7-88e5-80b7550952a2",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-01-14",
+    "temperature": 26,
+    "salinity": 30.1,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "25f98c2e-0688-4d95-b51a-0484d4cce687",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-01-21",
+    "temperature": 23.5,
+    "salinity": 29.1,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "3aad19c6-1285-4046-b55a-458a9b6d0340",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-01-28",
+    "temperature": 23,
+    "salinity": 34.2,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "8e15590a-f613-45ca-adca-44b92a6aa903",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-02-03",
+    "temperature": 23,
+    "salinity": 25.2,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "a972ce73-924f-4871-bf9e-5b9f856145f3",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-02-07",
+    "temperature": 23,
+    "salinity": 32,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "230e12bf-5acc-4d5b-9d00-9ceda0120a8a",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-02-14",
+    "temperature": 23.5,
+    "salinity": 32.2,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "e953fd77-8896-43e9-a113-9036e42c6bb6",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-03-16",
+    "temperature": 24.5,
+    "salinity": 28.5,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "ac648f0b-24bd-4a76-9a02-68bb3a4fb204",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-03-21",
+    "temperature": 23.8,
+    "salinity": 27.5,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "7fa15d33-b5cc-42d7-a145-eb3bd4109e18",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-03-28",
+    "temperature": 24.6,
+    "salinity": 32,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "1078b9f5-3625-47d0-89f9-dc15b466ba0f",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-01-01",
+    "temperature": 23,
+    "salinity": 28.6,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "affb41da-6bb4-448b-8703-fd61772417d7",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-01-09",
+    "temperature": 23.1,
+    "salinity": 28.6,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "505a3c9f-5f1a-4e69-8ea1-ce3e72190ad8",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-01-14",
+    "temperature": 2.8,
+    "salinity": 27.5,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "9ab4ca7e-577f-4fad-8309-1692e1603461",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-01-21",
+    "temperature": 23.8,
+    "salinity": 34.6,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "fd8407f9-2a21-4f71-b9b2-f2710945c9fe",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-01-28",
+    "temperature": 23.3,
+    "salinity": 29.7,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "332edd57-75d3-4b92-beba-fe3523fe6c4f",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-02-03",
+    "temperature": 23,
+    "salinity": 25.7,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "8e7b6b41-66fd-4133-8466-f23f47144c13",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-02-07",
+    "temperature": 23.2,
+    "salinity": 33.6,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "cb2b9f8b-969d-46be-9066-386cecb32e04",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-02-14",
+    "temperature": 23,
+    "salinity": 32.3,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "3936c499-e317-413a-9dbd-7e4982e96b35",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-03-16",
+    "temperature": 24.5,
+    "salinity": 30.26,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "9eb087a8-586f-4104-940f-334c5158b2d7",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-03-21",
+    "temperature": 23.8,
+    "salinity": 34,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "9d23ee59-1dd5-4879-a224-947ec3073709",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-03-28",
+    "temperature": 24.5,
+    "salinity": 32,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "e7c231f6-e99a-4d12-aba9-200af0cbfc3a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-01-01",
+    "temperature": 23,
+    "salinity": 29.9,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "eca68a8f-71fb-4ff5-9841-d8c91041e781",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-01-09",
+    "temperature": 23.6,
+    "salinity": 29.9,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "76dbdc39-d8bf-4c15-80a4-3a1373f14f29",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-01-14",
+    "temperature": 25,
+    "salinity": 29.5,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "da057904-7126-4d62-8da9-90ecc46f101a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-01-21",
+    "temperature": 24,
+    "salinity": 29,
+    "ph": 7.65
+  },
+  {
+    "holdingTankMeasurementId": "b539e705-1aab-4cf5-a268-6f09cae44e2d",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-01-28",
+    "temperature": 23.5,
+    "salinity": 27.4,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "6b1ee74f-32b4-4bc8-9404-195156674d20",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-02-03",
+    "temperature": 23,
+    "salinity": 30.2,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "87bd31c8-3679-4331-a4cc-b9ec1bb0aa2a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-02-07",
+    "temperature": 23.6,
+    "salinity": 30.5,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "930855f7-bb6d-419a-951c-82190ba2a011",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-02-14",
+    "temperature": 23.6,
+    "salinity": 30.8,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "c054ae1d-3f66-4ec4-99ea-6e5dc8cc7c11",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-03-16",
+    "temperature": 25.5,
+    "salinity": 28.3,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "e6034379-38a5-4b4b-b058-897cc47d7f86",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-03-21",
+    "temperature": 24.1,
+    "salinity": 30.8,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "4136a706-9492-4825-8ae0-e7d90eb7c014",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-03-28",
+    "temperature": 25.8,
+    "salinity": 29.4,
+    "ph": 7.95
+  },
+  {
+    "holdingTankMeasurementId": "b96cc34f-f451-4556-b36c-5df2d938f9c6",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-04-01",
+    "temperature": 23.5,
+    "salinity": 33.56,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "fb3340a0-3a4d-439f-8e26-7070cfb2cc34",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-04-08",
+    "temperature": 22.9,
+    "salinity": 29.2,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "41e07719-af5e-4c9c-bb10-316b0734535d",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-04-15",
+    "temperature": 25.7,
+    "salinity": 30.3,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "0633fc3d-6a96-423d-bcf6-6a7dbeb2c3c5",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-04-22",
+    "temperature": 23.5,
+    "salinity": 30.9,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "3664295d-c5e5-4ee3-b402-db5f69808631",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-04-28",
+    "temperature": 24.5,
+    "salinity": 32.1,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "cd597a03-5e69-4eaf-856a-b0ec53df38b7",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-05-06",
+    "temperature": 25.7,
+    "salinity": 35,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "4dc80ba3-86fb-44fd-8a3f-28bf7f345815",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-05-13",
+    "temperature": 24.8,
+    "salinity": 37.9,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "08629dfa-9cd9-4260-8207-1b6a53129f95",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-05-19",
+    "temperature": 24.4,
+    "salinity": 25,
+    "ph": 8.15
+  },
+  {
+    "holdingTankMeasurementId": "053249be-a7fc-4254-a110-29a489e25f19",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-05-28",
+    "temperature": 25.4,
+    "salinity": 29.6,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "845469d5-05fb-449a-9efb-c36c93e5eaf8",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-06-03",
+    "temperature": 24.2,
+    "salinity": 31.9,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "6f834375-8711-40d3-844f-64cb04b7f8e1",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-06-07",
+    "temperature": 25.3,
+    "salinity": 30.6,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "19af0529-563b-40ab-9f04-ff6c93be4c20",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-06-15",
+    "temperature": 25.7,
+    "salinity": 32.4,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "02176da9-58fb-4d95-ae90-2c5012646c7c",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-06-22",
+    "temperature": 25.7,
+    "salinity": 31.8,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "46e92c3c-e1e6-4896-ae5d-4b28bfe4d535",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-06-28",
+    "temperature": 25.5,
+    "salinity": 32.4,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "ea4cdb41-c3f0-4f3f-b453-520ca268abe4",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-04-01",
+    "temperature": 23.7,
+    "salinity": 31.5,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "bcc485ca-3944-4d2c-b7b8-3768e2d7b291",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-04-08",
+    "temperature": 22.9,
+    "salinity": 23,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "fd42b2e8-953e-42de-89dc-2be352951c0d",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-04-22",
+    "temperature": 23.7,
+    "salinity": 30.4,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "4f427b84-818d-4753-a6da-2c17bdd599aa",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-04-28",
+    "temperature": 25,
+    "salinity": 30.7,
+    "ph": 7.4
+  },
+  {
+    "holdingTankMeasurementId": "43806616-28b3-4596-abac-435a50455597",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-05-06",
+    "temperature": 26.7,
+    "salinity": 27.3,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "48c37e81-a4e9-4815-9da1-5616696008c0",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-05-13",
+    "temperature": 25.9,
+    "salinity": 36.5,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "f050d823-f4d2-462a-af49-3e37ce28f541",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-05-19",
+    "temperature": 25.2,
+    "salinity": 2,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "20a102a5-3665-46b7-86d5-44770cb30fb5",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-05-28",
+    "temperature": 27.2,
+    "salinity": 29.3,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "b323aaf1-d592-468a-8b18-0eb6c76c4ea3",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-06-03",
+    "temperature": 25.1,
+    "salinity": 28.4,
+    "ph": 7
+  },
+  {
+    "holdingTankMeasurementId": "d4ae6da9-a03d-433b-bfde-bf597d2c891b",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-06-07",
+    "temperature": 25.8,
+    "salinity": 29.1,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "08cf6703-8165-41e8-b337-984e5a8044b8",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-06-15",
+    "temperature": 26.5,
+    "salinity": 30.2,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "43e512c7-345b-406b-8629-dfef5902ef38",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-06-22",
+    "temperature": 26.1,
+    "salinity": 30.9,
+    "ph": 7
+  },
+  {
+    "holdingTankMeasurementId": "ba6c0022-29ac-4f23-bf9c-426d87fa522b",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-06-28",
+    "temperature": 26.6,
+    "salinity": 27.2,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "4955d1cf-04b4-46ae-a833-c1a0dfb9fc0b",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-06-28",
+    "temperature": 25.36,
+    "salinity": 30.65,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "b972b11a-3477-4097-88ba-b8a44f83e9dd",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-06-22",
+    "temperature": 25.5,
+    "salinity": 31,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "3857f13f-2fca-4fc1-8329-2f766ed8aa3b",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-06-15",
+    "temperature": 25.2,
+    "salinity": 32.2,
+    "ph": 8.4
+  },
+  {
+    "holdingTankMeasurementId": "89f9b9e4-51e7-43ea-a2fa-e1946fb405ae",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-06-04",
+    "temperature": 25.4,
+    "salinity": 33,
+    "ph": 8.34
+  },
+  {
+    "holdingTankMeasurementId": "e98b8a8f-8bf6-4c51-838f-41d39c27e948",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-06-03",
+    "temperature": 24.7,
+    "salinity": 32.2,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "0daf8fb0-712c-4cdb-a63a-c53cb80c12fe",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-05-28",
+    "temperature": 26.6,
+    "salinity": 31,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "7a150ba1-6407-4e29-a446-4835b6773371",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-05-19",
+    "temperature": 25,
+    "salinity": 31,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "08cd5100-6fff-4baf-aa49-df0c256965ca",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-05-13",
+    "temperature": 25.4,
+    "salinity": 32,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "043645ab-14f8-4883-ba3f-83e5b906c106",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-05-06",
+    "temperature": 25.4,
+    "salinity": 30.5,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "40ac9d63-4700-4888-b758-dac69d66fc6a",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-04-28",
+    "temperature": 24.9,
+    "salinity": 32.5,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "0e5767f1-681f-4ce7-9555-897d00c30a0a",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-04-22",
+    "temperature": 24.8,
+    "salinity": 31.6,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "17341c6d-e09e-425e-a654-41c66bc41a67",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-04-15",
+    "temperature": 25.3,
+    "salinity": 31.3,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "769fd987-fd84-4ede-a423-984fd972d22d",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-04-08",
+    "temperature": 24.3,
+    "salinity": 27.2,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "f729ad79-61ce-42e6-b924-9f407a2a5e4c",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-04-01",
+    "temperature": 24.1,
+    "salinity": 33.2,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "b27e61ab-2803-49b5-9982-7be26d83c43a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-04-01",
+    "temperature": 25.1,
+    "salinity": 30.2,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "6715f603-0f7b-4bc3-9ad3-d9c635e5fa68",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-04-08",
+    "temperature": 23.3,
+    "salinity": 26.1,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "c50585e5-eee3-4c7b-a6d3-3b2664f18e8b",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-04-15",
+    "temperature": 26,
+    "salinity": 29,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "4245cd42-5997-433c-b918-3ffa76bc113d",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-04-22",
+    "temperature": 24.7,
+    "salinity": 30,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "ab058903-59fb-48d7-ad0c-0c9c65268ce3",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-04-28",
+    "temperature": 26.3,
+    "salinity": 27.6,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "2f480bef-f9cd-44c1-8a6f-b9aef2deaddf",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-05-06",
+    "temperature": 26.8,
+    "salinity": 26.8,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "10084893-1323-452f-9aa9-28123ac4f3f1",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-05-13",
+    "temperature": 26,
+    "salinity": 31,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "d2810726-508d-4f99-88c3-6f722750f4ea",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-05-19",
+    "temperature": 23.8,
+    "salinity": 29.3,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "dca01d80-164b-4640-b005-ff4435a3c22e",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-05-28",
+    "temperature": 25,
+    "salinity": 29.2,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "4f8e8d44-97ae-4082-af03-3896ffd6826a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-06-03",
+    "temperature": 25.1,
+    "salinity": 27,
+    "ph": 7.2
+  },
+  {
+    "holdingTankMeasurementId": "b89faf7d-4bb6-48b2-9183-a6ae1d1d91ea",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-06-07",
+    "temperature": 26.5,
+    "salinity": 30,
+    "ph": 7
+  },
+  {
+    "holdingTankMeasurementId": "9a92b660-c069-4e27-8177-3540da63cb30",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-06-15",
+    "temperature": 26.4,
+    "salinity": 30.7,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "9890a36f-31ec-43c8-82fc-4aec18ba107d",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-06-22",
+    "temperature": 27.6,
+    "salinity": 27.8,
+    "ph": 7.4
+  },
+  {
+    "holdingTankMeasurementId": "84af8214-6156-48aa-afac-1251d63828a5",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-06-28",
+    "temperature": 28.7,
+    "salinity": 29.1,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "b664ee92-b36c-4631-b7ef-8ac8d435d2cc",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-07-06",
+    "temperature": 26,
+    "salinity": 33,
+    "ph": 8.5
+  },
+  {
+    "holdingTankMeasurementId": "ca216367-d733-4d72-a418-cbfd55855ab4",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-07-13",
+    "temperature": 27,
+    "salinity": 34,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "ca2357d6-5993-41f7-9dd9-5fa4e5b9e6d5",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-07-20",
+    "temperature": 26,
+    "salinity": 30.5,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "56b999d1-06f4-4ed1-9651-aae0f4ca619d",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-07-27",
+    "temperature": 26.2,
+    "salinity": 29.32,
+    "ph": 7.81
+  },
+  {
+    "holdingTankMeasurementId": "4fe1c042-c511-4dd5-a19b-1a01dc8e4bcf",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-08-03",
+    "temperature": 26,
+    "salinity": 32.9,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "436dd4d6-5098-4302-a013-b9f826604731",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-08-09",
+    "temperature": 25.8,
+    "salinity": 28.5,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "8688d221-b646-4c92-bc44-59642b731116",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-08-14",
+    "temperature": 25.4,
+    "salinity": 27.2,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "9c392a5b-4358-4e64-822b-3743569dffc5",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-08-20",
+    "temperature": 26.2,
+    "salinity": 29.8,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "dfee74f1-cb43-4f94-a101-9dcba8ce3afa",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-08-28",
+    "temperature": 25.6,
+    "salinity": 35.6,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "1ab053c4-bddc-471e-8450-43808f1c837a",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-09-06",
+    "temperature": 25.9,
+    "salinity": 32.3,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "c3853a2a-26e2-471e-a779-88fd5f1534e3",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-09-11",
+    "temperature": 25.4,
+    "salinity": 30,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "0212896a-cfa1-4b24-8f9a-62baeb128878",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-09-18",
+    "temperature": 25.7,
+    "salinity": 34,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "48aab909-782d-43a4-8d03-6bb2532f4203",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-09-23",
+    "temperature": 25.6,
+    "salinity": 28,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "3af86de1-2a91-42ac-8292-dfc70f7a0549",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-09-29",
+    "temperature": 25.9,
+    "salinity": 35.9,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "b278323a-4b66-40c3-9fea-4587e86060dc",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-07-06",
+    "temperature": 25.9,
+    "salinity": 25.8,
+    "ph": 7
+  },
+  {
+    "holdingTankMeasurementId": "60416b12-34c0-439d-aaf4-1efe7d78cd2c",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-07-13",
+    "temperature": 27.4,
+    "salinity": 29.9,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "b16ec878-d3ef-41a5-a339-d4f5b7bd30f6",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-07-20",
+    "temperature": 26.1,
+    "salinity": 25.4,
+    "ph": 7.4
+  },
+  {
+    "holdingTankMeasurementId": "cc602d79-8439-4408-999e-b3452e67a277",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-07-27",
+    "temperature": 27,
+    "salinity": 29.7,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "b8d3f685-afd7-4967-abcd-2966cdd51742",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-08-03",
+    "temperature": 26.2,
+    "salinity": 27.8,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "d19c8d24-d401-4416-8f1b-5e8ea71a7da4",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-08-09",
+    "temperature": 25.4,
+    "salinity": 31.9,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "3225afba-b429-4411-a2a5-89aaeb8a24d2",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-08-14",
+    "temperature": 25.5,
+    "salinity": 28.5,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "6c646959-dbd7-427a-ba7e-72978c050324",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-08-20",
+    "temperature": 25.3,
+    "salinity": 30.5,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "7fe5b6a9-1f90-498a-b054-074e00317dda",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-08-28",
+    "temperature": 26.6,
+    "salinity": 33,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "1c57b2a1-cf1c-46db-9382-fbed9c31f2f6",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-09-06",
+    "temperature": 26.1,
+    "salinity": 27.4,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "45c8410b-1d4e-411e-81a6-929e43285680",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-09-11",
+    "temperature": 26.4,
+    "salinity": 31.6,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "3ccd4db7-ac73-45d5-85ca-fbd9fbd40d16",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-09-18",
+    "temperature": 26.5,
+    "salinity": 31,
+    "ph": 7.3
+  },
+  {
+    "holdingTankMeasurementId": "573e9d74-f7e3-4713-81ed-247e1aa93da4",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-09-23",
+    "temperature": 26.8,
+    "salinity": 23,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "be279b59-571b-4416-b0d5-44e1c546b6ab",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-09-29",
+    "temperature": 26.8,
+    "salinity": 32,
+    "ph": 7.3
+  },
+  {
+    "holdingTankMeasurementId": "267e76f1-7184-4683-95d6-309cdfcd2c8d",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-07-06",
+    "temperature": 25,
+    "salinity": 31.3,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "19d18fab-2e47-4122-8a8b-21c9e4f48970",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-07-13",
+    "temperature": 26.3,
+    "salinity": 31.5,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "606810f3-0c90-4557-8576-bf1065a14564",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-07-20",
+    "temperature": 24.6,
+    "salinity": 30,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "4983336e-e0ea-4341-bec8-9ff5b31498ec",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-07-27",
+    "temperature": 25.5,
+    "salinity": 30.6,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "61d4d59a-87ab-4ca7-b41c-c01fe2cb6efc",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-08-03",
+    "temperature": 25,
+    "salinity": 30,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "b96409bb-266a-4b3f-86df-67d0ea7c617c",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-08-09",
+    "temperature": 25,
+    "salinity": 28.2,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "80714237-0f61-407b-a8ff-158110f68465",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-08-14",
+    "temperature": 24.9,
+    "salinity": 29,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "e61cdfbb-f564-4660-9025-02d48543fb66",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-08-20",
+    "temperature": 25,
+    "salinity": 28.5,
+    "ph": 8.4
+  },
+  {
+    "holdingTankMeasurementId": "d949a5c2-3a22-4754-bd65-3112a6cdabb4",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-08-28",
+    "temperature": 25.4,
+    "salinity": 34.2,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "e2eb2596-b541-4351-a3a5-9b9b95eb552b",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-09-06",
+    "temperature": 25.2,
+    "salinity": 32.8,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "753a8b37-e179-4034-963f-99f53881655f",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-09-11",
+    "temperature": 24.3,
+    "salinity": 32.2,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "780e67bb-f0bf-46e3-9526-22b50f3da748",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-09-18",
+    "temperature": 25.5,
+    "salinity": 32.2,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "eebe63c4-34bc-404c-9a6e-6b36510b3a7d",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-09-23",
+    "temperature": 24.9,
+    "salinity": 27,
+    "ph": 8.24
+  },
+  {
+    "holdingTankMeasurementId": "c3428ede-f210-4b04-a9db-b0f478c86438",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-09-29",
+    "temperature": 24.8,
+    "salinity": 31.8,
+    "ph": 8.12
+  },
+  {
+    "holdingTankMeasurementId": "ced7206c-54f5-4ffd-afe0-d366bcc7c0f1",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-07-06",
+    "temperature": 28.2,
+    "salinity": 26.6,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "85a19e20-584d-4c1e-993d-fba9eaa4547d",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-07-13",
+    "temperature": 29.3,
+    "salinity": 28.9,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "1ba481f5-e97c-47a2-bb87-3745430e16a3",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-08-20",
+    "temperature": 28.6,
+    "salinity": 27.8,
+    "ph": 7.1
+  },
+  {
+    "holdingTankMeasurementId": "3cbee3c7-89cf-4757-a78b-89212b513388",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-07-27",
+    "temperature": 29.2,
+    "salinity": 27.8,
+    "ph": 7.4
+  },
+  {
+    "holdingTankMeasurementId": "910152ee-e0b6-4a64-b646-f6368d33e6d3",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-08-03",
+    "temperature": 28.3,
+    "salinity": 29.1,
+    "ph": 7.72
+  },
+  {
+    "holdingTankMeasurementId": "615e8f40-9ead-4f5d-9446-4c4fcb97bee1",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-08-09",
+    "temperature": 30,
+    "salinity": 30,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "ccb7515d-9494-4fc1-8008-ffef189c50c5",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-08-14",
+    "temperature": 29.5,
+    "salinity": 31.1,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "5d23f725-aaa7-4388-a1b0-c62244cf52c3",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-08-20",
+    "temperature": 29.6,
+    "salinity": 26.9,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "66ffbdca-82e8-4908-9b0b-91d451c10006",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-08-28",
+    "temperature": 29.3,
+    "salinity": 31,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "2718d11e-0289-4ef0-b183-ff415c37f945",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-09-03",
+    "temperature": 28.3,
+    "salinity": 28.8,
+    "ph": 7.93
+  },
+  {
+    "holdingTankMeasurementId": "15554f9a-ace9-47ad-8582-ec83e39bcc24",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-09-11",
+    "temperature": 27.9,
+    "salinity": 29.4,
+    "ph": 7.92
+  },
+  {
+    "holdingTankMeasurementId": "42b4d3e4-b732-483f-8938-f0b08faec35a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-09-18",
+    "temperature": 27.7,
+    "salinity": 29.7,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "8bb9d11a-f017-455a-9c87-fc1c1031640c",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-09-23",
+    "temperature": 28.5,
+    "salinity": 28,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "63765b2a-0fc6-4363-8eaf-3d0c9d39945f",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-09-29",
+    "temperature": 27.8,
+    "salinity": 29.7,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "41a95a1a-7897-464a-9a11-e2c1b1d79787",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-10-01",
+    "temperature": 25.7,
+    "salinity": 27.2,
+    "ph": 7.98
+  },
+  {
+    "holdingTankMeasurementId": "c79e1d94-4aac-42ee-b594-e26cae350d00",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-10-07",
+    "temperature": 25.8,
+    "salinity": 244.9,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "45da801e-106b-4082-9460-98538480d44a",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-10-15",
+    "temperature": 26.3,
+    "salinity": 30.76,
+    "ph": 7.96
+  },
+  {
+    "holdingTankMeasurementId": "071de504-7149-4dbf-814d-c6855cb6f9ce",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-10-21",
+    "temperature": 26.5,
+    "salinity": 23.7,
+    "ph": 7.72
+  },
+  {
+    "holdingTankMeasurementId": "11b9ca7a-b445-4c0e-a86b-81404bd6544b",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-10-28",
+    "temperature": 26.5,
+    "salinity": 29.2,
+    "ph": 6.9
+  },
+  {
+    "holdingTankMeasurementId": "64150cb7-69dd-4903-ada0-e99082ed4d2c",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-11-04",
+    "temperature": 24.1,
+    "salinity": 23.5,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "3af469e9-e9f1-4ac6-8e28-469d10ccf7e5",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-11-12",
+    "temperature": 24.5,
+    "salinity": 36.5,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "56a5257c-8146-4df3-8334-6f090ed5c8a9",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-11-18",
+    "temperature": 24.3,
+    "salinity": 31.9,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "1794f8bd-45ec-45d4-9ea6-a1787d155b4a",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-11-25",
+    "temperature": 25.8,
+    "salinity": 30.4,
+    "ph": 7.64
+  },
+  {
+    "holdingTankMeasurementId": "da59f885-7e6c-4a30-b799-8f87a9becc07",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-12-02",
+    "temperature": 24.8,
+    "salinity": 26.4,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "04c7722a-d7ce-4d83-bd73-47d8020649c0",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-12-08",
+    "temperature": 26,
+    "salinity": 29.3,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "aa24b2fb-1d26-4df8-ad69-d3848fe0b051",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-12-15",
+    "temperature": 26.8,
+    "salinity": 23.6,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "d69d9003-192d-43d0-91a5-342292d3e6ed",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-12-23",
+    "temperature": 24.8,
+    "salinity": 22,
+    "ph": 8.12
+  },
+  {
+    "holdingTankMeasurementId": "be7ed0b0-abd8-433b-b6f8-185b376899d7",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2007-12-31",
+    "temperature": 23.8,
+    "salinity": 29,
+    "ph": 6.9
+  },
+  {
+    "holdingTankMeasurementId": "8e75e2e4-50a6-4cae-909f-b15235e03342",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-10-01",
+    "temperature": 27.1,
+    "salinity": 32.2,
+    "ph": 7.2
+  },
+  {
+    "holdingTankMeasurementId": "c5df1c57-b8fa-4aca-b9cf-4b559bbfa887",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-10-07",
+    "temperature": 26.4,
+    "salinity": 23.3,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "eebf3f6f-f74d-442e-993a-e209bf7ddd75",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-10-15",
+    "temperature": 27.4,
+    "salinity": 26.4,
+    "ph": 8.4
+  },
+  {
+    "holdingTankMeasurementId": "821c7de2-8417-4e1b-afe0-94535459571a",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-10-21",
+    "temperature": 27.1,
+    "salinity": 36.7,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "76c49006-6fd8-462e-9729-7164edeef6ef",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-10-28",
+    "temperature": 26.8,
+    "salinity": 31.6,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "b9b42b46-3e71-49fd-b555-07f1b4431394",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-11-04",
+    "temperature": 24.9,
+    "salinity": 30.6,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "e2aff7ae-aaf5-4ac8-821f-6600a8af312d",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-11-12",
+    "temperature": 24.4,
+    "salinity": 32,
+    "ph": 7.96
+  },
+  {
+    "holdingTankMeasurementId": "79e25fd4-7892-4e75-9f05-f82456002504",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-11-18",
+    "temperature": 24,
+    "salinity": 29.1,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "f29ad573-1b64-45d6-a05a-641d346fa7f7",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-11-25",
+    "temperature": 25.9,
+    "salinity": 26.7,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "1eb4e3b9-50fb-43c0-b000-e6d02a0932a0",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-12-02",
+    "temperature": 25.2,
+    "salinity": 30.9,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "a6690135-4455-4be6-82bb-a90036e68f2b",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-12-08",
+    "temperature": 24.3,
+    "salinity": 26,
+    "ph": 8.4
+  },
+  {
+    "holdingTankMeasurementId": "48107e91-397f-4eb8-993b-e9eefbb84589",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-12-15",
+    "temperature": 26.6,
+    "salinity": 21.5,
+    "ph": 8.05
+  },
+  {
+    "holdingTankMeasurementId": "89f47c59-e2a4-44c6-8ab9-e0af93169220",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-12-23",
+    "temperature": 24.7,
+    "salinity": 28,
+    "ph": 7.95
+  },
+  {
+    "holdingTankMeasurementId": "e7d11a71-235d-4296-bdcf-73a3815f4864",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2007-12-31",
+    "temperature": 25.3,
+    "salinity": 32,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "52e3600d-6991-4035-893b-b567f4fa12ac",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-10-01",
+    "temperature": 25.5,
+    "salinity": 32.3,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "8cb81498-4196-436c-88c2-3ec971adaf7f",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-10-07",
+    "temperature": 25,
+    "salinity": 26,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "13a4f5fa-4afa-4ff7-8443-5c9531c7c023",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-10-15",
+    "temperature": 26,
+    "salinity": 28.6,
+    "ph": 7.44
+  },
+  {
+    "holdingTankMeasurementId": "01e71d43-b476-4e19-aea2-ab0f17c41e80",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-10-21",
+    "temperature": 25,
+    "salinity": 32.2,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "b600c730-515d-4db6-a37a-c882ea519e4f",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-10-28",
+    "temperature": 25.6,
+    "salinity": 30.5,
+    "ph": 8.7
+  },
+  {
+    "holdingTankMeasurementId": "d0188a82-4a64-4d76-8796-aaee10461a54",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-11-04",
+    "temperature": 25.2,
+    "salinity": 30.5,
+    "ph": 8.13
+  },
+  {
+    "holdingTankMeasurementId": "03790f28-558c-435a-8a73-54bc42736fd7",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-11-12",
+    "temperature": 24.84,
+    "salinity": 30.95,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "3d5b8a62-73de-47b4-9131-f1349b414830",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-11-18",
+    "temperature": 24.75,
+    "salinity": 29.58,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "be843a1f-e26f-4d23-86b2-c64e7645bac7",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-11-25",
+    "temperature": 26,
+    "salinity": 26.8,
+    "ph": 7.97
+  },
+  {
+    "holdingTankMeasurementId": "6b41208a-9ba3-419d-9904-290baabcc127",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-12-02",
+    "temperature": 25.6,
+    "salinity": 29.1,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "6efcd516-ac64-4a2b-922a-811810541fe7",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-12-08",
+    "temperature": 25.7,
+    "salinity": 32.9,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "e926f55b-3a9a-4f07-b8c4-613ca9b9f4e2",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-12-15",
+    "temperature": 26.7,
+    "salinity": 28,
+    "ph": 7.61
+  },
+  {
+    "holdingTankMeasurementId": "62ff3b9e-2834-4615-a438-98a9c6273646",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-12-23",
+    "temperature": 24.6,
+    "salinity": 20,
+    "ph": 7.43
+  },
+  {
+    "holdingTankMeasurementId": "22db9d2a-4987-465e-aa28-49b6ac9e1cf5",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2007-12-31",
+    "temperature": 24.75,
+    "salinity": 32,
+    "ph": 7.21
+  },
+  {
+    "holdingTankMeasurementId": "340c691b-901a-441e-8566-e1b0f450845b",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-10-01",
+    "temperature": 26.5,
+    "salinity": 30.25,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "f953bdcf-49c5-4375-97b0-c14c5f1cf9ed",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-10-07",
+    "temperature": 28.65,
+    "salinity": 26.82,
+    "ph": 7.4
+  },
+  {
+    "holdingTankMeasurementId": "cb716c49-4949-4cd3-b1f6-eae1ab62235a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-10-15",
+    "temperature": 26.88,
+    "salinity": 28.58,
+    "ph": 7.41
+  },
+  {
+    "holdingTankMeasurementId": "b26e4b3e-4b3f-40b9-ac2b-9aa76412fd90",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-10-21",
+    "temperature": 27.33,
+    "salinity": 25.59,
+    "ph": 7.33
+  },
+  {
+    "holdingTankMeasurementId": "8772b1d6-514d-47c4-bd4f-cd47db77354f",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-10-28",
+    "temperature": 26.96,
+    "salinity": 26.81,
+    "ph": 7.51
+  },
+  {
+    "holdingTankMeasurementId": "a6f5adad-6b9b-436a-9c61-cb1fcb328f5a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-11-04",
+    "temperature": 24.85,
+    "salinity": 29.4,
+    "ph": 7.72
+  },
+  {
+    "holdingTankMeasurementId": "340319a6-25a3-4dfe-bfc7-0517dc1335de",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-11-12",
+    "temperature": 24.81,
+    "salinity": 28.65,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "2db033da-e75e-4aeb-8470-10ef512a675c",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-11-18",
+    "temperature": 24.2,
+    "salinity": 29.15,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "9c1f86ee-3a0b-407d-9754-c277aceb95bf",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-11-25",
+    "temperature": 25.65,
+    "salinity": 29.48,
+    "ph": 7.57
+  },
+  {
+    "holdingTankMeasurementId": "9af27e5f-1c47-4627-ab2b-d1eb8fa22b69",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-12-02",
+    "temperature": 25.58,
+    "salinity": 29.05,
+    "ph": 7.79
+  },
+  {
+    "holdingTankMeasurementId": "d94a9170-c990-4085-89d2-3f1d622296f0",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-12-08",
+    "temperature": 24.6,
+    "salinity": 28.95,
+    "ph": 7.86
+  },
+  {
+    "holdingTankMeasurementId": "ae91a506-8cff-415a-a02f-ae29d92579fc",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-12-15",
+    "temperature": 26.72,
+    "salinity": 28,
+    "ph": 7.61
+  },
+  {
+    "holdingTankMeasurementId": "ebb3c3c5-f43d-41e7-acb2-e19b4b87cce2",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-12-23",
+    "temperature": 24.55,
+    "salinity": 20,
+    "ph": 7.43
+  },
+  {
+    "holdingTankMeasurementId": "0c11ce41-5874-4d02-b5fd-a27fb8c9baa1",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2007-12-31",
+    "temperature": 24.8,
+    "salinity": 25,
+    "ph": 7
+  },
+  {
+    "holdingTankMeasurementId": "955cc718-097b-413b-9da9-b7e4ed344339",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-01-02",
+    "temperature": 23.5,
+    "salinity": 30,
+    "ph": 7.2
+  },
+  {
+    "holdingTankMeasurementId": "69b7af9f-c1e1-46c4-84ca-ff386a0f2525",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-01-08",
+    "temperature": 24.33,
+    "salinity": 30,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "8c55c2ee-9d6b-485c-8e24-f71f56cad5bc",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-01-15",
+    "temperature": 23.5,
+    "salinity": 30,
+    "ph": 7.2
+  },
+  {
+    "holdingTankMeasurementId": "b0fc2d9f-ea40-4b80-bd1f-e788206fa88a",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-01-21",
+    "temperature": 24.7,
+    "salinity": 32,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "351d47d9-3d49-4757-8fdd-1af39dc01590",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-01-28",
+    "temperature": 24.5,
+    "salinity": 27,
+    "ph": 7.78
+  },
+  {
+    "holdingTankMeasurementId": "ab21113c-60a4-46cd-be4f-00aa193deecb",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-02-05",
+    "temperature": 25.7,
+    "salinity": 33,
+    "ph": 7.81
+  },
+  {
+    "holdingTankMeasurementId": "2e1e1d56-513a-4027-a4a4-d796c4c865dc",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-02-14",
+    "temperature": 24.3,
+    "salinity": 30,
+    "ph": 7.87
+  },
+  {
+    "holdingTankMeasurementId": "58382b4e-27f9-4a1f-adea-abbbef129ab1",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-02-21",
+    "temperature": 25.6,
+    "salinity": 23,
+    "ph": 7.43
+  },
+  {
+    "holdingTankMeasurementId": "bd638586-0eb4-4695-af79-e56383a12295",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-02-28",
+    "temperature": 24.6,
+    "salinity": 33,
+    "ph": 7.26
+  },
+  {
+    "holdingTankMeasurementId": "1c1eef13-0666-422d-ab1e-93b85453e14e",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-03-07",
+    "temperature": 24.77,
+    "salinity": 326,
+    "ph": 8.13
+  },
+  {
+    "holdingTankMeasurementId": "f775a62c-1992-470e-8a6f-183fd5bb6cdd",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-03-15",
+    "temperature": 23.71,
+    "salinity": 30.2,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "a6043830-df33-4a54-acc9-1abcc053ce9a",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-03-22",
+    "temperature": 24.23,
+    "salinity": 33.6,
+    "ph": 7.85
+  },
+  {
+    "holdingTankMeasurementId": "fbd72ce5-bace-4c26-988f-60561de3f979",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-03-29",
+    "temperature": 24.31,
+    "salinity": 31.34,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "3cd9a2e7-53b9-4ed3-8ed7-423b5117ac6d",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-03-29",
+    "temperature": 24.44,
+    "salinity": 26.7,
+    "ph": 7.25
+  },
+  {
+    "holdingTankMeasurementId": "1de57b67-db46-49a5-b95a-63f13ae4c978",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-03-22",
+    "temperature": 24.1,
+    "salinity": 31.3,
+    "ph": 7
+  },
+  {
+    "holdingTankMeasurementId": "8274ec2e-70d5-41b2-8f3a-1e0e0a71240c",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-03-15",
+    "temperature": 24.14,
+    "salinity": 24.61,
+    "ph": 7.56
+  },
+  {
+    "holdingTankMeasurementId": "97800508-29fe-4bf5-ab5f-39aec0f4d38d",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-03-07",
+    "temperature": 24.29,
+    "salinity": 27.62,
+    "ph": 7.87
+  },
+  {
+    "holdingTankMeasurementId": "20aed050-815c-4a18-b2cf-6e458aacda04",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-02-28",
+    "temperature": 24.6,
+    "salinity": 31,
+    "ph": 7.25
+  },
+  {
+    "holdingTankMeasurementId": "15e4cc19-7826-4a82-b699-708ad175b112",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-02-21",
+    "temperature": 25.1,
+    "salinity": 23,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "474048c0-abd8-4a72-a51b-7688d963122d",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-02-14",
+    "temperature": 24.6,
+    "salinity": 30,
+    "ph": 8.14
+  },
+  {
+    "holdingTankMeasurementId": "43d1d3a2-2561-455d-b399-52a2ccfcc070",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-02-05",
+    "temperature": 25.5,
+    "salinity": 30,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "12d9948e-7e96-4bde-8fab-2a0fc5d55269",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-01-28",
+    "temperature": 23.7,
+    "salinity": 27,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "a036e95a-528e-48d1-b25b-2f989563809d",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-01-21",
+    "temperature": 24.3,
+    "salinity": 28,
+    "ph": 7.65
+  },
+  {
+    "holdingTankMeasurementId": "7ff91d67-f35b-4aec-8938-3e280a0c9692",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-01-15",
+    "temperature": 23.2,
+    "salinity": 32,
+    "ph": 7.44
+  },
+  {
+    "holdingTankMeasurementId": "cc2d9d9e-95c6-4d5d-b364-2d059cb947cf",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-01-08",
+    "temperature": 24.27,
+    "salinity": 29,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "6c383641-7714-4b9a-ad95-a8cc7b4f4e1a",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-01-02",
+    "temperature": 24.36,
+    "salinity": 34,
+    "ph": 8.01
+  },
+  {
+    "holdingTankMeasurementId": "a6ea4bc9-a971-4665-b32c-ad1d9b942f26",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-01-02",
+    "temperature": 25.4,
+    "salinity": 35,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "7177d178-025c-4bdd-b4c8-fcbf5a4d0bab",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-01-08",
+    "temperature": 25.1,
+    "salinity": 30,
+    "ph": 8.12
+  },
+  {
+    "holdingTankMeasurementId": "3a527054-7bd0-4440-a76c-4f3e317f7e86",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-01-15",
+    "temperature": 25.1,
+    "salinity": 33,
+    "ph": 7.74
+  },
+  {
+    "holdingTankMeasurementId": "46e31f65-8948-4442-8766-f2fcb6a7333d",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-01-20",
+    "temperature": 25.4,
+    "salinity": 32,
+    "ph": 8.24
+  },
+  {
+    "holdingTankMeasurementId": "055c6b74-594b-402c-bd2f-35f9c6bed15b",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-01-28",
+    "temperature": 25.2,
+    "salinity": 32,
+    "ph": 8.34
+  },
+  {
+    "holdingTankMeasurementId": "c7fde6d3-46cc-4d27-a5f0-1ed0d798e901",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-02-05",
+    "temperature": 26.5,
+    "salinity": 31,
+    "ph": 8.25
+  },
+  {
+    "holdingTankMeasurementId": "20ba55a8-84c8-46c5-867f-ece655d67cfd",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-02-14",
+    "temperature": 255,
+    "salinity": 30,
+    "ph": 812
+  },
+  {
+    "holdingTankMeasurementId": "7fec58d3-3f88-4a4d-a51b-6fe002d3e28c",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-02-21",
+    "temperature": 25.8,
+    "salinity": 31,
+    "ph": 8.02
+  },
+  {
+    "holdingTankMeasurementId": "67387644-1636-4fcc-afe3-f260b464547a",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-02-28",
+    "temperature": 25.3,
+    "salinity": 34,
+    "ph": 7.89
+  },
+  {
+    "holdingTankMeasurementId": "712cf0c4-c6d8-43db-a4d3-05cc210edb1c",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-03-07",
+    "temperature": 25.13,
+    "salinity": 33.4,
+    "ph": 84.5
+  },
+  {
+    "holdingTankMeasurementId": "03e0fd91-ee20-41e3-87c1-90dc175bca8a",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-03-15",
+    "temperature": 25,
+    "salinity": 33.12,
+    "ph": 8.45
+  },
+  {
+    "holdingTankMeasurementId": "e91c8135-25d5-4c6b-bfcb-a418d85f0f02",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-03-22",
+    "temperature": 24.85,
+    "salinity": 31,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "be68c45f-f0c9-4955-9197-626f7f914d4b",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-03-29",
+    "temperature": 25.1,
+    "salinity": 30.8,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "b0add577-c324-4368-aa89-90d52f04c2b9",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-03-29",
+    "temperature": 24.7,
+    "salinity": 29,
+    "ph": 7.34
+  },
+  {
+    "holdingTankMeasurementId": "8916e5ea-a521-4838-b8c2-fab32e02da7b",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-03-22",
+    "temperature": 24.14,
+    "salinity": 28.32,
+    "ph": 7.41
+  },
+  {
+    "holdingTankMeasurementId": "00975785-1a84-46e7-a9bb-400c7e7a96c6",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-03-15",
+    "temperature": 24.3,
+    "salinity": 29.5,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "d972da6a-77af-4050-bc9e-c152de29ff01",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-03-07",
+    "temperature": 24.39,
+    "salinity": 29,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "23c4393a-ed19-4b55-8869-ca3c972e7f85",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-02-28",
+    "temperature": 24.7,
+    "salinity": 32,
+    "ph": 7.1
+  },
+  {
+    "holdingTankMeasurementId": "6b275a82-f542-40ea-a443-524539ae7793",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-02-21",
+    "temperature": 25.16,
+    "salinity": 30,
+    "ph": 7.76
+  },
+  {
+    "holdingTankMeasurementId": "a893f00d-1f3f-4c03-89ff-57b001bc07bb",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-02-14",
+    "temperature": 24.7,
+    "salinity": 32,
+    "ph": 7.54
+  },
+  {
+    "holdingTankMeasurementId": "266db27c-dc1e-41fd-9360-b5c5ebe22329",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-02-05",
+    "temperature": 25.9,
+    "salinity": 30,
+    "ph": 7.58
+  },
+  {
+    "holdingTankMeasurementId": "5383beaf-bb66-4aee-92aa-16a983cbc3d9",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-01-28",
+    "temperature": 24.4,
+    "salinity": 31,
+    "ph": 8.03
+  },
+  {
+    "holdingTankMeasurementId": "9fc1a3b5-a097-4337-977a-740695180b49",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-01-20",
+    "temperature": 25,
+    "salinity": 29,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "b60fd01e-6ae2-42c7-8b80-c8b8ca287ca7",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-01-15",
+    "temperature": 22.7,
+    "salinity": 30,
+    "ph": 7.23
+  },
+  {
+    "holdingTankMeasurementId": "0bebdcf7-7ecf-4565-96f6-5c36c62710bb",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-01-08",
+    "temperature": 24.16,
+    "salinity": 30,
+    "ph": 7.76
+  },
+  {
+    "holdingTankMeasurementId": "ba0c5c80-f59e-4ca2-b5c4-47140b84c3d7",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-01-02",
+    "temperature": 24.13,
+    "salinity": 30,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "8e64f03b-d7c3-4eeb-9797-0feba6b1b1bc",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-04-01",
+    "temperature": 25.2,
+    "salinity": 32.3,
+    "ph": 8.22
+  },
+  {
+    "holdingTankMeasurementId": "72382e1e-610b-453b-98a4-b66bf31bfb55",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-04-07",
+    "temperature": 25.3,
+    "salinity": 32.33,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "caa1a5c4-06df-4f4f-84e3-869c932f8f7b",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-04-14",
+    "temperature": 24.2,
+    "salinity": 30.7,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "15e9beb1-c594-4cf7-b732-741042b5c2d0",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-04-20",
+    "temperature": 25,
+    "salinity": 28.7,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "0e983641-7a8c-4fe4-93f9-274266186137",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-04-27",
+    "temperature": 24.4,
+    "salinity": 29.3,
+    "ph": 7.3
+  },
+  {
+    "holdingTankMeasurementId": "ea4e71f2-7a97-45da-98ca-cd2711e0693d",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-05-01",
+    "temperature": 24.3,
+    "salinity": 31.3,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "c95b0c42-9d13-4982-8da4-9d76c4e31af3",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-05-07",
+    "temperature": 26.7,
+    "salinity": 31.6,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "c3970ff9-dec2-458c-bb02-d3d9c8eb22b6",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-05-14",
+    "temperature": 25,
+    "salinity": 33,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "1351abf7-1f7e-4e6b-b482-b8e6fef5c4fa",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-05-21",
+    "temperature": 26.2,
+    "salinity": 32.5,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "af08fc0f-312b-457a-86f2-b2fa90a6854c",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-05-26",
+    "temperature": 24.9,
+    "salinity": 30.1,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "17658e43-2538-4a1d-9a14-e0a6f05a59a3",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-06-01",
+    "temperature": 26,
+    "salinity": 31.1,
+    "ph": 7.75
+  },
+  {
+    "holdingTankMeasurementId": "695195d1-34fa-4567-90fa-5d556d8a4f78",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-06-07",
+    "temperature": 25.9,
+    "salinity": 32.6,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "0f964722-7355-4e6b-961f-49cd1f57cb3b",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-04-01",
+    "temperature": 25.76,
+    "salinity": 33.4,
+    "ph": 7.3
+  },
+  {
+    "holdingTankMeasurementId": "f406fdb6-bcfa-4429-878e-ec6236eadfb6",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-04-07",
+    "temperature": 25.7,
+    "salinity": 31.6,
+    "ph": 7.65
+  },
+  {
+    "holdingTankMeasurementId": "6d7e0f8d-20a7-4e05-b570-c15fd790cf60",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-04-14",
+    "temperature": 23.8,
+    "salinity": 28,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "01c248de-fd99-470b-835e-dd7cd2ecb1d5",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-04-20",
+    "temperature": 24.9,
+    "salinity": 33.4,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "37243516-67b6-42d4-9573-8d6062846423",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-04-27",
+    "temperature": 24.7,
+    "salinity": 33.5,
+    "ph": 7.1
+  },
+  {
+    "holdingTankMeasurementId": "f3461e3a-1b8a-4980-944d-939c802ba8dd",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-05-01",
+    "temperature": 24.4,
+    "salinity": 34.3,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "1a26bded-f150-460f-9011-31bfeb36a56e",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-05-07",
+    "temperature": 26.9,
+    "salinity": 29.5,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "fc382f17-44fc-479d-885d-344cdbd6e8f5",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-05-14",
+    "temperature": 24.9,
+    "salinity": 32.3,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "5a30f1d2-c4b2-40c5-a128-62dcc8ce61da",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-05-21",
+    "temperature": 26.9,
+    "salinity": 30,
+    "ph": 7.76
+  },
+  {
+    "holdingTankMeasurementId": "40588f32-8203-4146-abf0-3f80ba8a8113",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-05-26",
+    "temperature": 26.98,
+    "salinity": 31.24,
+    "ph": 7.56
+  },
+  {
+    "holdingTankMeasurementId": "564f30a6-91d2-40e3-b432-d95fc3a352e9",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-06-01",
+    "temperature": 27.25,
+    "salinity": 28.06,
+    "ph": 7.36
+  },
+  {
+    "holdingTankMeasurementId": "5f59361b-6c29-4089-8c86-b08673f6e8e2",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-06-07",
+    "temperature": 26,
+    "salinity": 29.4,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "0a5be4b3-58fb-44ab-aaf6-047daa1fc671",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-04-01",
+    "temperature": 26.1,
+    "salinity": 31.1,
+    "ph": 8.12
+  },
+  {
+    "holdingTankMeasurementId": "44707995-c6ef-44e1-b224-7aad8707b786",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-04-07",
+    "temperature": 25.75,
+    "salinity": 31.93,
+    "ph": 8.02
+  },
+  {
+    "holdingTankMeasurementId": "0320164c-5c24-402d-a8f1-4c267f131eac",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-04-14",
+    "temperature": 24.9,
+    "salinity": 30.3,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "ec36e438-cefe-4122-8974-d32ebe3ac49c",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-04-20",
+    "temperature": 25.7,
+    "salinity": 28.4,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "5bcd2418-edab-4325-b10b-dae826ca38e6",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-04-27",
+    "temperature": 24.9,
+    "salinity": 28.2,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "7ab3bcf7-f11c-46ba-8450-5ce4f8f85798",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-05-01",
+    "temperature": 25.6,
+    "salinity": 24.4,
+    "ph": 8.12
+  },
+  {
+    "holdingTankMeasurementId": "b534858c-9dc4-4877-aa2e-c34a93746df5",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-05-07",
+    "temperature": 26.13,
+    "salinity": 30.9,
+    "ph": 8.18
+  },
+  {
+    "holdingTankMeasurementId": "e2ef66d1-3c4e-4ccd-8ddf-1e42b5bc7573",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-05-14",
+    "temperature": 25,
+    "salinity": 31.6,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "9e82902f-50d1-4403-964b-78c3d4c15577",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-05-21",
+    "temperature": 25.4,
+    "salinity": 31.4,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "06f451ef-6f7b-4b88-8daa-7db216ca616c",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-05-26",
+    "temperature": 25.7,
+    "salinity": 29.5,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "744253dd-fc48-451e-af87-ca8664929a25",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-06-01",
+    "temperature": 26.04,
+    "salinity": 31.1,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "32b41d94-9596-4490-b397-8daa907949fb",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-06-07",
+    "temperature": 25.8,
+    "salinity": 32.4,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "31de976c-613d-4db6-b26e-87d9cdf0a09b",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-04-01",
+    "temperature": 25.7,
+    "salinity": 29.2,
+    "ph": 7.4
+  },
+  {
+    "holdingTankMeasurementId": "41c280bd-5355-4dc9-8431-95ea19fafa53",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-04-07",
+    "temperature": 25.74,
+    "salinity": 29,
+    "ph": 7.3
+  },
+  {
+    "holdingTankMeasurementId": "59bbb122-ee07-46b6-945b-5fe0e4fdd364",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-04-14",
+    "temperature": 23.9,
+    "salinity": 31,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "d84edf94-9a6a-412f-bcbb-f4db186a690c",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-04-20",
+    "temperature": 25.3,
+    "salinity": 29.2,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "e72d4a6b-dd58-4174-81eb-f7c4fe57c568",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-04-27",
+    "temperature": 25.9,
+    "salinity": 30.2,
+    "ph": 7.2
+  },
+  {
+    "holdingTankMeasurementId": "ef75d945-ff4d-4dc1-b158-66f88afe3cb2",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-05-01",
+    "temperature": 24.7,
+    "salinity": 26.3,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "e036075a-70a9-4cca-851b-c1519582e18f",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-05-07",
+    "temperature": 27.8,
+    "salinity": 29.5,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "7f75513d-1ad5-4522-9264-882151914a64",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-05-14",
+    "temperature": 27.1,
+    "salinity": 31.4,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "24c46240-b2a8-4274-a3e4-aae1687baf7e",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-05-21",
+    "temperature": 28.7,
+    "salinity": 31.9,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "cc1f241c-0936-468d-8993-bb3de20d8ac3",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-05-26",
+    "temperature": 27.9,
+    "salinity": 30.8,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "33ab024d-111e-4d62-baf9-517bf04fd57e",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-06-01",
+    "temperature": 28.6,
+    "salinity": 31.8,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "2ee8bda8-ed7e-445a-a476-c6af8242a3b9",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-06-07",
+    "temperature": 28.5,
+    "salinity": 29.4,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "705a849b-adaf-4d19-b58e-9084617045da",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-06-14",
+    "temperature": 26.13,
+    "salinity": 30.6,
+    "ph": 7.95
+  },
+  {
+    "holdingTankMeasurementId": "5e2d3329-416f-4ca9-9f8a-66da8d20f701",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-06-20",
+    "temperature": 26.4,
+    "salinity": 34.4,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "d3c171ce-83f0-499f-bf01-f9d2b1fe075d",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-06-27",
+    "temperature": 26.5,
+    "salinity": 28.4,
+    "ph": 8.04
+  },
+  {
+    "holdingTankMeasurementId": "aad881f2-a783-4877-8536-f2e95a1bfb02",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-06-27",
+    "temperature": 27.5,
+    "salinity": 27.42,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "a3d1fd0c-5745-4884-9106-126f057944c5",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-06-20",
+    "temperature": 26.9,
+    "salinity": 34.4,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "2638ab83-690b-4a6e-8cf0-90cf54455b06",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-06-14",
+    "temperature": 26.5,
+    "salinity": 29.6,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "98883aef-6f5a-4cdc-9d6d-bfe5efe4bee3",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-06-14",
+    "temperature": 25.6,
+    "salinity": 28.1,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "b3b04e82-85fc-4dea-93a1-8c21c6ab6b42",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-06-20",
+    "temperature": 26.35,
+    "salinity": 31.75,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "b3cfbdcd-111e-46eb-aae2-e2dc1239bd46",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-06-27",
+    "temperature": 25.86,
+    "salinity": 32,
+    "ph": 8.36
+  },
+  {
+    "holdingTankMeasurementId": "49a95f6e-9f9f-412d-a081-6d736566304a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-06-27",
+    "temperature": 27.25,
+    "salinity": 28.56,
+    "ph": 8.27
+  },
+  {
+    "holdingTankMeasurementId": "3f631925-d175-47da-848f-0b2941bfb0df",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-06-20",
+    "temperature": 27.4,
+    "salinity": 29.3,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "2f5c9c5f-b33d-4ded-b8e2-1e7590eb01f0",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-07-14",
+    "temperature": 27.97,
+    "salinity": 30.2,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "b458b775-0882-4a80-bd22-10eb3ef322d3",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-07-01",
+    "temperature": 26,
+    "salinity": 30,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "3bb30395-4e34-4528-8ec2-28a33ae94bc3",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-07-07",
+    "temperature": 27,
+    "salinity": 32,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "c688f894-8500-414b-a174-adae1750a7a3",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-07-14",
+    "temperature": 26,
+    "salinity": 36,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "593d3865-5702-4d92-9759-bb79d6947c57",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-07-21",
+    "temperature": 26,
+    "salinity": 34,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "b27c3c5d-db2f-4d4b-8193-1d6369fe87b3",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-07-28",
+    "temperature": 26,
+    "salinity": 36,
+    "ph": 7.3
+  },
+  {
+    "holdingTankMeasurementId": "0048ce3b-35ea-449e-9164-f99c0f3aabe4",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-08-04",
+    "temperature": 26.5,
+    "salinity": 31,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "e97d867e-f46f-433d-b8de-5ae09793d897",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-08-11",
+    "temperature": 26,
+    "salinity": 30,
+    "ph": 7.3
+  },
+  {
+    "holdingTankMeasurementId": "3fd8c688-a604-44ba-8906-f96a95e6c540",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-08-18",
+    "temperature": 26.3,
+    "salinity": 29,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "c05fc8c0-d151-44a6-a5c2-a1bb11bcf1a7",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-08-25",
+    "temperature": 27,
+    "salinity": 27,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "e63b15a6-271b-4522-9f44-0af18e1b7984",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-09-01",
+    "temperature": 27,
+    "salinity": 28,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "f1774217-f002-40bb-b5f2-b2feb9bafabf",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-09-08",
+    "temperature": 26,
+    "salinity": 29,
+    "ph": 8.3
+  },
+  {
+    "holdingTankMeasurementId": "008a0bae-da7c-443a-b8c0-65faa999401d",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-09-14",
+    "temperature": 26,
+    "salinity": 33,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "c42296ac-87fc-4adb-b1af-0fcfcb04f283",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-09-21",
+    "temperature": 26,
+    "salinity": 32,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "e124cf0a-47b1-4d76-8a76-79c41e71d2c6",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-09-28",
+    "temperature": 26,
+    "salinity": 31,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "4c849adc-467d-49fa-84e1-945018c056e7",
+    "holdingTankId": "2d4403df-5b6d-4469-a28e-d957c03ce813",
+    "dateMeasured": "2008-10-06",
+    "temperature": 26,
+    "salinity": 32,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "1e1a7966-c05f-4369-9821-2d95cf6fe755",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-10-06",
+    "temperature": 25,
+    "salinity": 32,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "ea58ea28-5a79-4579-9cff-d5a71a791787",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-09-28",
+    "temperature": 26,
+    "salinity": 25,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "7ef16358-49b3-430a-b8e6-c00969744125",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-09-21",
+    "temperature": 26,
+    "salinity": 21,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "bb893e77-53bd-4c89-b337-5ffeedda7941",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-09-12",
+    "temperature": 26,
+    "salinity": 19,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "8c468079-9698-446e-8688-9424082a7abc",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-09-08",
+    "temperature": 27.4,
+    "salinity": 29,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "d650dcbb-7cde-44d1-85ec-a20171c1ced0",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-09-01",
+    "temperature": 30,
+    "salinity": 20,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "1e1c7a94-15fe-48cc-b10c-529e947f2ade",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-08-25",
+    "temperature": 27,
+    "salinity": 25,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "ea825269-94eb-40fd-a155-18a0adea5517",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-08-18",
+    "temperature": 27,
+    "salinity": 26,
+    "ph": 8.4
+  },
+  {
+    "holdingTankMeasurementId": "8453b9c0-097d-41f7-ac01-df62319cb6ff",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-08-11",
+    "temperature": 27,
+    "salinity": 23,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "8334a5b4-3498-45f7-a635-189c1fea71bd",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-08-04",
+    "temperature": 27,
+    "salinity": 26,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "050c9f55-6f30-4464-8b08-92adbc7fc73d",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-07-28",
+    "temperature": 26.4,
+    "salinity": 18,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "330f7b57-005f-4e84-b6a4-1e396c594912",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-07-21",
+    "temperature": 26,
+    "salinity": 32,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "c20d31c5-8eb9-4faa-a4ef-51462ff01b82",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-07-14",
+    "temperature": 26.8,
+    "salinity": 32.8,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "3f23e411-f85f-48cc-8250-dbc619a98b4b",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-07-07",
+    "temperature": 27,
+    "salinity": 30,
+    "ph": 7.2
+  },
+  {
+    "holdingTankMeasurementId": "db3e820a-0b23-4629-b198-8ffd799e0d53",
+    "holdingTankId": "703340b0-b629-452f-8c7d-975852a56729",
+    "dateMeasured": "2008-07-01",
+    "temperature": 26.8,
+    "salinity": 32,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "f98dab99-2f50-4f72-aef9-7b27e1c69b63",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-07-01",
+    "temperature": 26,
+    "salinity": 32.5,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "2acb3b3f-31f1-459e-b7b1-1869c77bcf3f",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-07-07",
+    "temperature": 26,
+    "salinity": 28,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "26579731-3bac-4086-9f7f-163fcd6e2755",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-07-14",
+    "temperature": 26,
+    "salinity": 31,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "2fcd93d0-5c67-4f8d-84db-caf2f132f16a",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-07-21",
+    "temperature": 26,
+    "salinity": 30,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "35ec8b56-5fcf-4547-bb60-f26c611d51f3",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-07-28",
+    "temperature": 25,
+    "salinity": 31,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "9e2475d2-0ab1-4a10-bd21-f9d72af83473",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-08-04",
+    "temperature": 25,
+    "salinity": 29,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "f9e0310d-2675-49e9-b249-85cf9c13c66d",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-08-11",
+    "temperature": 26,
+    "salinity": 34,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "5f180a68-1529-41ac-be37-a807843a17e0",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-08-18",
+    "temperature": 25,
+    "salinity": 33,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "fb298f68-1913-4699-8f2e-947f2e8df769",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-08-25",
+    "temperature": 26,
+    "salinity": 29,
+    "ph": 8.1
+  },
+  {
+    "holdingTankMeasurementId": "49b55f84-ca0e-4e4e-acdb-4097a566eac7",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-09-01",
+    "temperature": 26,
+    "salinity": 28,
+    "ph": 8.2
+  },
+  {
+    "holdingTankMeasurementId": "1752a01e-ae5c-4261-af2d-da0286075c8e",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-09-08",
+    "temperature": 26,
+    "salinity": 28,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "cd4c76d6-3c0f-4535-b29c-641d5036738a",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-09-14",
+    "temperature": 25,
+    "salinity": 31,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "59bc6592-80d9-4be0-8812-e7ecaa030602",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-09-21",
+    "temperature": 26,
+    "salinity": 29,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "ea4303de-13a4-40fd-a169-270b17f67ac5",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-09-28",
+    "temperature": 25.6,
+    "salinity": 26,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "e3a36725-7ba7-4b4d-9c2d-cd79232cc2d9",
+    "holdingTankId": "c4ebf2bb-60ed-4672-80e7-37ad1bd916d7",
+    "dateMeasured": "2008-10-06",
+    "temperature": 25.5,
+    "salinity": 31,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "06d2465c-67dd-47fc-9315-32a7bb78a1d7",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-10-06",
+    "temperature": 27,
+    "salinity": 26,
+    "ph": 7.7
+  },
+  {
+    "holdingTankMeasurementId": "2bc535ba-d6d5-477b-a886-e90aa180bc04",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-09-28",
+    "temperature": 26,
+    "salinity": 24,
+    "ph": 7.6
+  },
+  {
+    "holdingTankMeasurementId": "c2010167-c63f-47f7-a324-464ae22bed3f",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-09-21",
+    "temperature": 26,
+    "salinity": 26,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "b37019a8-ea9c-4008-bed8-3f03361a0fd1",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-09-14",
+    "temperature": 28,
+    "salinity": 27,
+    "ph": 7.5
+  },
+  {
+    "holdingTankMeasurementId": "7dfcfd73-d861-4d2c-9d05-c8fed3f32cac",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-09-08",
+    "temperature": 27,
+    "salinity": 25,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "399ec91b-0b46-435a-a603-5868b882d46b",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-09-01",
+    "temperature": 29,
+    "salinity": 26,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "9ba27de4-0bcf-4843-8bff-492c524af321",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-08-25",
+    "temperature": 27,
+    "salinity": 28,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "db03617e-1f22-43aa-82c1-9b761faa85c4",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-08-18",
+    "temperature": 27,
+    "salinity": 27,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "926027ca-1496-401f-a571-8560e938b0a7",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-08-11",
+    "temperature": 27,
+    "salinity": 29,
+    "ph": 7.8
+  },
+  {
+    "holdingTankMeasurementId": "5ce0e994-b365-4caf-b2c7-878d3fe7e441",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-08-04",
+    "temperature": 27.4,
+    "salinity": 30,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "45f234f5-e568-4465-9022-1b0c48025b26",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-07-28",
+    "temperature": 27.6,
+    "salinity": 30,
+    "ph": 7.9
+  },
+  {
+    "holdingTankMeasurementId": "070f3101-4bcf-4b22-93e2-7083d49004d1",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-07-21",
+    "temperature": 28,
+    "salinity": 29,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "85b9b555-2964-468c-b392-d62dcd03bfe4",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-07-14",
+    "temperature": 27,
+    "salinity": 29,
+    "ph": 8
+  },
+  {
+    "holdingTankMeasurementId": "a1f4e8a1-703f-475f-9836-624c52afce6e",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-07-07",
+    "temperature": 27,
+    "salinity": 31,
+    "ph": 8.25
+  },
+  {
+    "holdingTankMeasurementId": "f4f241e2-24ad-4b61-b706-f1533551bc1a",
+    "holdingTankId": "3b05bd27-a998-443c-8c78-b992af3df6b1",
+    "dateMeasured": "2008-07-01",
+    "temperature": 27,
+    "salinity": 30,
+    "ph": 8.2
+  }
+]

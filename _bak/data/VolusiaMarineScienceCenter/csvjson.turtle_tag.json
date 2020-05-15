@@ -1,0 +1,834 @@
+[
+  {
+    "seaTurtleTagId": "95545967-cd52-4377-aef4-d376c9f1f4fa",
+    "seaTurtleId": "9e3ca021-bb0f-4f55-a068-a943e308f29e",
+    "tagNumber": "4305263402",
+    "tagType": "PIT",
+    "Location": "LFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "354b8c4b-5b6e-4f02-936b-aaa1521a57ec",
+    "seaTurtleId": "c7a5de4f-c46c-4d7c-80df-a5d972a6dfc0",
+    "tagNumber": "RRZ460",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2006-10-11"
+  },
+  {
+    "seaTurtleTagId": "f845df82-8de7-4d9c-ac96-75018a952009",
+    "seaTurtleId": "c7a5de4f-c46c-4d7c-80df-a5d972a6dfc0",
+    "tagNumber": "RRZ461",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2006-10-11"
+  },
+  {
+    "seaTurtleTagId": "ad711b85-81e1-4ff4-92b5-bd642c63d72a",
+    "seaTurtleId": "c7a5de4f-c46c-4d7c-80df-a5d972a6dfc0",
+    "tagNumber": "4462242D29",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2006-10-11"
+  },
+  {
+    "seaTurtleTagId": "54a33787-3883-4824-acdc-4ff51947f694",
+    "seaTurtleId": "b339eb6d-e223-48ab-8678-26f1f4918bba",
+    "tagNumber": "RRZ465",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "2d2aa8d4-5799-4a49-86cf-d5154af76b40",
+    "seaTurtleId": "b339eb6d-e223-48ab-8678-26f1f4918bba",
+    "tagNumber": "RRZ464",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "6f0e1b8a-08a6-4c2a-ba7a-8d9d5046a345",
+    "seaTurtleId": "b339eb6d-e223-48ab-8678-26f1f4918bba",
+    "tagNumber": "4304763D0E",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "ba365e13-722a-4d09-b0f9-5398c1c7c3e6",
+    "seaTurtleId": "fae33702-6a91-41a8-8eb1-6989c60e11e1",
+    "tagNumber": "RRZ469",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "52eb262b-d401-47e1-aec8-c93052153927",
+    "seaTurtleId": "fae33702-6a91-41a8-8eb1-6989c60e11e1",
+    "tagNumber": "RRZ468",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "4d21d208-9775-4930-b889-b02df48b1ed0",
+    "seaTurtleId": "fae33702-6a91-41a8-8eb1-6989c60e11e1",
+    "tagNumber": "430477476C",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "c9b17223-61f4-4263-bede-3f31e7dcf35d",
+    "seaTurtleId": "63d676a0-bd33-4f69-bab9-a74a69b13aea",
+    "tagNumber": "RRZ467",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "eb3c3b18-bc7e-4e09-9d7f-841e138a2337",
+    "seaTurtleId": "63d676a0-bd33-4f69-bab9-a74a69b13aea",
+    "tagNumber": "RRZ466",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "d80f5eb3-4f1a-4336-9fc4-98b9572e9a2a",
+    "seaTurtleId": "63d676a0-bd33-4f69-bab9-a74a69b13aea",
+    "tagNumber": "4302145112",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-03-28"
+  },
+  {
+    "seaTurtleTagId": "4c8664af-478c-478d-89fa-8ac41df02e53",
+    "seaTurtleId": "d2ca4bd9-03fe-4e82-8911-96de9044716e",
+    "tagNumber": "RRZ62",
+    "tagType": "Monel",
+    "Location": "LFF",
+    "dateTagged": "2007-03-08"
+  },
+  {
+    "seaTurtleTagId": "95c8d2db-ae95-4a92-b30a-badfa8656d08",
+    "seaTurtleId": "d2ca4bd9-03fe-4e82-8911-96de9044716e",
+    "tagNumber": "RRZ463",
+    "tagType": "Monel",
+    "Location": "RFF",
+    "dateTagged": "2007-03-08"
+  },
+  {
+    "seaTurtleTagId": "de4de86b-db80-4730-9d61-ab84de3dd45b",
+    "seaTurtleId": "d2ca4bd9-03fe-4e82-8911-96de9044716e",
+    "tagNumber": "4304595200",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-03-08"
+  },
+  {
+    "seaTurtleTagId": "3b426b8a-80f3-4581-9b5e-320354a6f084",
+    "seaTurtleId": "04136e76-5239-4d0c-bfa8-055c28b63913",
+    "tagNumber": "RRZ470",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-04-20"
+  },
+  {
+    "seaTurtleTagId": "4f6a9162-34cd-486e-bf67-9d9d61360a0b",
+    "seaTurtleId": "04136e76-5239-4d0c-bfa8-055c28b63913",
+    "tagNumber": "RRZ471",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-04-20"
+  },
+  {
+    "seaTurtleTagId": "94aeeb2f-1b48-420f-8fe3-24ba982f05bf",
+    "seaTurtleId": "04136e76-5239-4d0c-bfa8-055c28b63913",
+    "tagNumber": "430270358",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-04-20"
+  },
+  {
+    "seaTurtleTagId": "46263933-483a-4c8d-9f76-93d10d487129",
+    "seaTurtleId": "3fcec9c4-30bf-426c-ae09-6074b9cda76a",
+    "tagNumber": "RRZ477",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-04-27"
+  },
+  {
+    "seaTurtleTagId": "f27f2ba2-a14e-4c61-bdf1-c3b5133692b3",
+    "seaTurtleId": "3fcec9c4-30bf-426c-ae09-6074b9cda76a",
+    "tagNumber": "RRZ476",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-04-27"
+  },
+  {
+    "seaTurtleTagId": "4e9ff782-c22d-476b-b307-ded29600d37a",
+    "seaTurtleId": "3fcec9c4-30bf-426c-ae09-6074b9cda76a",
+    "tagNumber": "4301711A7",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-04-27"
+  },
+  {
+    "seaTurtleTagId": "657631c7-c93a-45a2-b829-1841bdc9df8c",
+    "seaTurtleId": "5aaaf06e-5283-4910-8c4c-19c0e2bbfca7",
+    "tagNumber": "RRZ482",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "cd02e1dd-c284-4dfb-9a47-6cbd90303591",
+    "seaTurtleId": "5aaaf06e-5283-4910-8c4c-19c0e2bbfca7",
+    "tagNumber": "RRZ483",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "72881089-20fa-4b73-b6b7-d8f5a2ef7fa0",
+    "seaTurtleId": "5aaaf06e-5283-4910-8c4c-19c0e2bbfca7",
+    "tagNumber": "094605023",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "ae9df543-9860-4e0c-9636-dec2c4d6d579",
+    "seaTurtleId": "9415f8fe-bcb7-4b6c-be92-0d0a2f9dc9f2",
+    "tagNumber": "RRZ479",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "49e50f86-baa1-4ad1-a498-f5b0b37ec9f7",
+    "seaTurtleId": "9415f8fe-bcb7-4b6c-be92-0d0a2f9dc9f2",
+    "tagNumber": "RRZ478",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "f601644a-651d-46f8-b6e3-c773d79c0a45",
+    "seaTurtleId": "9415f8fe-bcb7-4b6c-be92-0d0a2f9dc9f2",
+    "tagNumber": "094607789",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "9df06d44-c9f2-494d-bd8d-079f02fd92fd",
+    "seaTurtleId": "a6921557-55d5-447c-8fc4-8c7c572faec0",
+    "tagNumber": "RRZ480",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "e423559f-82bd-4fa6-859d-36330cfd3363",
+    "seaTurtleId": "a6921557-55d5-447c-8fc4-8c7c572faec0",
+    "tagNumber": "RRZ481",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "28ee5d1d-9d72-45da-a7dd-c6aa3329bda4",
+    "seaTurtleId": "a6921557-55d5-447c-8fc4-8c7c572faec0",
+    "tagNumber": "094770868",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-05-13"
+  },
+  {
+    "seaTurtleTagId": "22a780b1-6ba9-4602-8136-802fe510ea48",
+    "seaTurtleId": "1174de64-874e-488d-b6b8-7e9ba795818b",
+    "tagNumber": "094619536",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-06-20"
+  },
+  {
+    "seaTurtleTagId": "e60dcd55-0742-4211-bb46-1278dddec9b9",
+    "seaTurtleId": "244e46b5-05cc-4ae6-a81c-e49e312af07e",
+    "tagNumber": "094790572",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-06-07"
+  },
+  {
+    "seaTurtleTagId": "fe63f86d-50dd-4500-899e-8d725c659484",
+    "seaTurtleId": "244e46b5-05cc-4ae6-a81c-e49e312af07e",
+    "tagNumber": "RRZ484",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-06-07"
+  },
+  {
+    "seaTurtleTagId": "c370e1b9-2f87-4e41-8885-71f6ba15d326",
+    "seaTurtleId": "244e46b5-05cc-4ae6-a81c-e49e312af07e",
+    "tagNumber": "RRZ485",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-06-07"
+  },
+  {
+    "seaTurtleTagId": "87f171a3-735a-4c42-b8ee-83436a24c613",
+    "seaTurtleId": "3c21de95-cfe2-4396-ac59-dce5e7b6b2c0",
+    "tagNumber": "094601550",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-06-20"
+  },
+  {
+    "seaTurtleTagId": "c2ac7f79-5a07-45a6-8a78-178faaf25184",
+    "seaTurtleId": "9e80db68-1a05-4d0a-b6e6-1fecb9d14f8e",
+    "tagNumber": "RRZ486",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-07-23"
+  },
+  {
+    "seaTurtleTagId": "141513da-eb73-4e09-8cd9-83476906f3d1",
+    "seaTurtleId": "9e80db68-1a05-4d0a-b6e6-1fecb9d14f8e",
+    "tagNumber": "RRZ487",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-07-23"
+  },
+  {
+    "seaTurtleTagId": "c9b1eb79-5791-46f2-abdb-7dada7828a82",
+    "seaTurtleId": "9e80db68-1a05-4d0a-b6e6-1fecb9d14f8e",
+    "tagNumber": "094616632",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-07-23"
+  },
+  {
+    "seaTurtleTagId": "0fd55598-5203-4682-86bf-81d3e82406b5",
+    "seaTurtleId": "6f9635ec-6a48-4877-8e39-7b3dd244dcbc",
+    "tagNumber": "4305047f5a",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-04-27"
+  },
+  {
+    "seaTurtleTagId": "02c56af8-a1ab-4dde-9b6b-27d318545638",
+    "seaTurtleId": "6f9635ec-6a48-4877-8e39-7b3dd244dcbc",
+    "tagNumber": "RRZ499",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-04-27"
+  },
+  {
+    "seaTurtleTagId": "c6d33b07-0faa-48d3-9b1c-608becc841b6",
+    "seaTurtleId": "6f9635ec-6a48-4877-8e39-7b3dd244dcbc",
+    "tagNumber": "RRZ500",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-04-27"
+  },
+  {
+    "seaTurtleTagId": "97fd9ae1-9d83-4f0f-8445-aa9b06cb9a6b",
+    "seaTurtleId": "51b88d9d-8cfa-44f1-b8c8-180445a6c440",
+    "tagNumber": "094571324",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-09-16"
+  },
+  {
+    "seaTurtleTagId": "d8facfa2-3dc7-4f0f-adba-9efd4d78c470",
+    "seaTurtleId": "595aab93-f261-4e53-b8b8-12c3b7a1d5e4",
+    "tagNumber": "RRZ492",
+    "tagType": "Monel",
+    "Location": "LFF",
+    "dateTagged": "2007-11-18"
+  },
+  {
+    "seaTurtleTagId": "4ca2b040-af06-453d-ae9a-985d091fe112",
+    "seaTurtleId": "595aab93-f261-4e53-b8b8-12c3b7a1d5e4",
+    "tagNumber": "RRZ493",
+    "tagType": "Monel",
+    "Location": "RFF",
+    "dateTagged": "2007-11-18"
+  },
+  {
+    "seaTurtleTagId": "44868d6d-fa96-49ba-a7e3-b392d78d13b7",
+    "seaTurtleId": "595aab93-f261-4e53-b8b8-12c3b7a1d5e4",
+    "tagNumber": "094574268",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-11-18"
+  },
+  {
+    "seaTurtleTagId": "ac8953de-0878-4ff1-8656-066bf29100eb",
+    "seaTurtleId": "8ff49ab8-298e-4ef2-91ae-eb2e49531772",
+    "tagNumber": "RRZ490",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-11-11"
+  },
+  {
+    "seaTurtleTagId": "ac300e6d-b9dd-4238-bcfa-10a176302ec7",
+    "seaTurtleId": "8ff49ab8-298e-4ef2-91ae-eb2e49531772",
+    "tagNumber": "RRZ491",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-11-11"
+  },
+  {
+    "seaTurtleTagId": "c759a76c-3259-41d2-8ecb-b5a7743ee9a1",
+    "seaTurtleId": "8ff49ab8-298e-4ef2-91ae-eb2e49531772",
+    "tagNumber": "094785026",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-11-11"
+  },
+  {
+    "seaTurtleTagId": "9f589207-95cc-4ea5-9fff-6cc2ad24d972",
+    "seaTurtleId": "8d1ca4d5-751a-4f43-b2ed-3be28416e25b",
+    "tagNumber": "094590631",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-11-24"
+  },
+  {
+    "seaTurtleTagId": "ffa55da1-a341-46eb-853d-fcaee83425d6",
+    "seaTurtleId": "327a3136-edaa-484f-a10c-ae3d43156a4c",
+    "tagNumber": "094615368",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-11-28"
+  },
+  {
+    "seaTurtleTagId": "c58e4238-02be-4553-94e9-3eeaff52331d",
+    "seaTurtleId": "76f79ca3-7ec9-42ac-b6a6-1b4b1df340c5",
+    "tagNumber": "094574280",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "8a6a3a28-2c5d-43f2-a3a6-a648bcc9658f",
+    "seaTurtleId": "7f8646f5-0956-408c-9e00-a568e3b8e729",
+    "tagNumber": "094593078",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "4be0310a-901f-4914-b02f-d5db22673b5b",
+    "seaTurtleId": "0c9d7100-3650-4345-81ff-b82ede34a090",
+    "tagNumber": "094605363",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "f57a215b-dfed-4ab9-8e2d-0f95a38733dc",
+    "seaTurtleId": "747464a8-a7ae-41bd-8fc0-b18f0fd0a5a6",
+    "tagNumber": "094621350",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "c6ed702a-0f8a-4638-b5ab-2bad95b553ac",
+    "seaTurtleId": "54583149-9c64-4b6a-abe0-0d101d94ba9f",
+    "tagNumber": "094572297",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "27861f37-6e15-432a-8ac8-10e5f4754913",
+    "seaTurtleId": "b6834822-0edc-4c6b-8a18-0512fdfb7ff1",
+    "tagNumber": "094606515",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "0a48cfcf-3f90-4c92-a774-5d665d63aa5e",
+    "seaTurtleId": "7c7fa2e4-4b79-4fb3-afb7-63bb03efbbb7",
+    "tagNumber": "RRZ495",
+    "tagType": "Inconel",
+    "Location": "RFF",
+    "dateTagged": "2007-12-09"
+  },
+  {
+    "seaTurtleTagId": "06b35585-de77-430b-9520-9cc04028cf42",
+    "seaTurtleId": "7c7fa2e4-4b79-4fb3-afb7-63bb03efbbb7",
+    "tagNumber": "RRZ494",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-12-09"
+  },
+  {
+    "seaTurtleTagId": "710e4fdc-ed27-4df6-b003-55a0ad6c3724",
+    "seaTurtleId": "7c7fa2e4-4b79-4fb3-afb7-63bb03efbbb7",
+    "tagNumber": "094565560",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-09"
+  },
+  {
+    "seaTurtleTagId": "13384918-6f15-4a47-b6ea-40426fecb997",
+    "seaTurtleId": "2ef1b290-50a1-43db-9b07-a1300d71aa1b",
+    "tagNumber": "09597334",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "01b7bba5-fc1f-4d09-88fa-6e731f0e3b73",
+    "seaTurtleId": "3d42c5fe-1b82-45b9-90ce-b057de2688ec",
+    "tagNumber": "094570293",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "e944a189-6ba2-4b41-9b13-bf22e491db55",
+    "seaTurtleId": "5cd1e25a-8741-437b-853c-1958d3162c92",
+    "tagNumber": "094570564",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "5a11646a-9e03-4a68-a88a-e954af111d13",
+    "seaTurtleId": "1273a98d-5cfc-4eb6-a09c-9fa75f575d95",
+    "tagNumber": "094579817",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "259eac8c-d6d0-481c-8bc0-8b4db3ae4a3a",
+    "seaTurtleId": "dd377fc4-80ff-4adc-bcdf-8f36576e2969",
+    "tagNumber": "107544791",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-01-07"
+  },
+  {
+    "seaTurtleTagId": "c4cdf25a-0c95-4872-9f72-0dd741103fdd",
+    "seaTurtleId": "df9092be-c16d-45ae-9f59-7b3e391cdf6d",
+    "tagNumber": "094820099",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "b2f9f6df-b0b4-4c5c-b033-aa9888536689",
+    "seaTurtleId": "630741ed-25e4-448c-b85b-86910bb4bc7b",
+    "tagNumber": "094768077",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2007-12-07"
+  },
+  {
+    "seaTurtleTagId": "24685be9-ef42-4531-ae59-07ee01b9747b",
+    "seaTurtleId": "19e79adf-2209-4586-a8dd-22cca6401c04",
+    "tagNumber": "107365531",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-01-07"
+  },
+  {
+    "seaTurtleTagId": "8f21ee01-083f-4e44-a8b1-6e0a2b7e9c8d",
+    "seaTurtleId": "dd15c4f0-7225-444d-8334-6bfb997b1bb4",
+    "tagNumber": "107516067",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-01-09"
+  },
+  {
+    "seaTurtleTagId": "1abb2031-4321-4da3-a76e-916584ed5a93",
+    "seaTurtleId": "dd15c4f0-7225-444d-8334-6bfb997b1bb4",
+    "tagNumber": "RRZ496",
+    "tagType": "Monel",
+    "Location": "RFF",
+    "dateTagged": "2007-12-09"
+  },
+  {
+    "seaTurtleTagId": "13970267-562c-43ea-bebc-fc4637ff81f5",
+    "seaTurtleId": "dd15c4f0-7225-444d-8334-6bfb997b1bb4",
+    "tagNumber": "RRZ497",
+    "tagType": "Monel",
+    "Location": "LFF",
+    "dateTagged": "2007-12-09"
+  },
+  {
+    "seaTurtleTagId": "3c4691df-236d-4706-ad10-37bac7806db0",
+    "seaTurtleId": "5e0f0dea-9706-4af0-9126-b80cd0891e5b",
+    "tagNumber": "XN647",
+    "tagType": "Inconel",
+    "Location": "LFF",
+    "dateTagged": "2007-01-08"
+  },
+  {
+    "seaTurtleTagId": "0f016f4c-c261-4d64-b77c-ec2b1a55ca0c",
+    "seaTurtleId": "6a368b7c-9364-432b-9a45-29a4ee324b7d",
+    "tagNumber": "107547305",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-01-14"
+  },
+  {
+    "seaTurtleTagId": "e7b80634-a529-430e-b39d-8c1674f9d152",
+    "seaTurtleId": "b0b67b1c-567f-4bdb-85c9-75f3d3786713",
+    "tagNumber": "107367127",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-01-14"
+  },
+  {
+    "seaTurtleTagId": "4ac51a31-bf36-4797-a03b-8eeb59b4bdc1",
+    "seaTurtleId": "12714843-b65a-44b5-9e86-e42c9bab95cd",
+    "tagNumber": "107525082",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-01-14"
+  },
+  {
+    "seaTurtleTagId": "c7886edf-6e99-4ac9-b15e-abd0f1fd134e",
+    "seaTurtleId": "1f2331eb-ac15-4bb5-aafa-6602af3b030c",
+    "tagNumber": "107545340",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-01-08"
+  },
+  {
+    "seaTurtleTagId": "72fef8a7-d137-427f-b5a8-1af7e3ac73ce",
+    "seaTurtleId": "6ab82cfe-eba0-456c-b700-246e452d5dc0",
+    "tagNumber": "107362796",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-01-08"
+  },
+  {
+    "seaTurtleTagId": "78e82bdf-529f-4c9e-b7fb-e25c4b959d1b",
+    "seaTurtleId": "6168e083-209b-45f9-a305-6f2b530d96f1",
+    "tagNumber": "107311277",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-02-17"
+  },
+  {
+    "seaTurtleTagId": "73759b68-16b1-4eac-b73c-68b45616942a",
+    "seaTurtleId": "6168e083-209b-45f9-a305-6f2b530d96f1",
+    "tagNumber": "YYK101",
+    "tagType": "Monel",
+    "Location": "RFF",
+    "dateTagged": "2008-02-17"
+  },
+  {
+    "seaTurtleTagId": "760ccdd7-c78d-4dd4-8481-8c0f407b1213",
+    "seaTurtleId": "6168e083-209b-45f9-a305-6f2b530d96f1",
+    "tagNumber": "YYK102",
+    "tagType": "Monel",
+    "Location": "LFF",
+    "dateTagged": "2008-02-17"
+  },
+  {
+    "seaTurtleTagId": "43a6de0f-6991-4d82-a2e0-a95df059bada",
+    "seaTurtleId": "aef9853e-05f0-4155-8b15-0a778960850d",
+    "tagNumber": "107513019",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-02-17"
+  },
+  {
+    "seaTurtleTagId": "2b5da7b1-aa32-44c3-bc53-8f388b4695c0",
+    "seaTurtleId": "af9db8ac-cfbb-44c4-bb62-94440b3019fe",
+    "tagNumber": "107521039",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-04-10"
+  },
+  {
+    "seaTurtleTagId": "5aa21989-3ffb-489e-8d8b-e254e646b2be",
+    "seaTurtleId": "65e9bfe1-1b95-4fe5-8d08-da38b7189f7e",
+    "tagNumber": "107368812",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-04-03"
+  },
+  {
+    "seaTurtleTagId": "f3fbcdb0-f86c-4393-840d-d2bda7aa1aa6",
+    "seaTurtleId": "90b3b94e-fb82-4b8e-abb9-c8533b3af273",
+    "tagNumber": "107374531",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-04-03"
+  },
+  {
+    "seaTurtleTagId": "ac0455d2-d655-4e3b-9efa-f8f862f925ef",
+    "seaTurtleId": "497a0536-7a53-4e6a-b384-6719bdb764fc",
+    "tagNumber": "107515808",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-04-19"
+  },
+  {
+    "seaTurtleTagId": "d3c2cfc4-0011-49e5-8c73-88528ab8dc51",
+    "seaTurtleId": "497a0536-7a53-4e6a-b384-6719bdb764fc",
+    "tagNumber": "yyk103",
+    "tagType": "Monel",
+    "Location": "RFF",
+    "dateTagged": "2008-04-19"
+  },
+  {
+    "seaTurtleTagId": "990342d7-e980-44a9-bdc6-deb1a630f828",
+    "seaTurtleId": "497a0536-7a53-4e6a-b384-6719bdb764fc",
+    "tagNumber": "yyk104",
+    "tagType": "Monel",
+    "Location": "LFF",
+    "dateTagged": "2008-04-19"
+  },
+  {
+    "seaTurtleTagId": "8be5484a-2fc6-404c-8c86-b0094d7da8b5",
+    "seaTurtleId": "1c02648b-6728-4770-8023-fc2664baaf1e",
+    "tagNumber": "107322846",
+    "tagType": "Monel",
+    "Location": "RFF",
+    "dateTagged": "2008-04-19"
+  },
+  {
+    "seaTurtleTagId": "661387f3-5e0f-4bb2-b8f2-ed78c5c75e73",
+    "seaTurtleId": "97c653d6-251a-4869-a4df-369c0c9cb9af",
+    "tagNumber": "107348288",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-04-27"
+  },
+  {
+    "seaTurtleTagId": "f45d45f3-d918-4dc6-8fcd-143ab7f8d5be",
+    "seaTurtleId": "97c653d6-251a-4869-a4df-369c0c9cb9af",
+    "tagNumber": "YYK105",
+    "tagType": "Monel",
+    "Location": "LFF",
+    "dateTagged": "2008-04-27"
+  },
+  {
+    "seaTurtleTagId": "a37c4748-78fe-430f-99f9-42ec784989c0",
+    "seaTurtleId": "97c653d6-251a-4869-a4df-369c0c9cb9af",
+    "tagNumber": "YYK106",
+    "tagType": "Monel",
+    "Location": "RFF",
+    "dateTagged": "2008-04-27"
+  },
+  {
+    "seaTurtleTagId": "6902cbca-8010-4e44-8740-97197967153c",
+    "seaTurtleId": "60249f8f-2632-4434-8aaa-c1648fe7355b",
+    "tagNumber": "107522101",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-05-06"
+  },
+  {
+    "seaTurtleTagId": "d76338b1-a1f4-48e4-a6da-080b9b1ce8c8",
+    "seaTurtleId": "f04efdbd-b75f-4ec9-99b2-c0d8df7f98a2",
+    "tagNumber": "107521337",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-05-22"
+  },
+  {
+    "seaTurtleTagId": "88920d3f-2b11-46da-b040-aa9ffb31c879",
+    "seaTurtleId": "2d255270-54f6-4afc-944d-20038b82b048",
+    "tagNumber": "107372079",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-05-22"
+  },
+  {
+    "seaTurtleTagId": "a264f3f4-a366-41e5-9f17-13e585757ed2",
+    "seaTurtleId": "fe76aa37-f3e0-4659-9f10-be5ab8aaaffd",
+    "tagNumber": "107529267",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-05-28"
+  },
+  {
+    "seaTurtleTagId": "cee2d3d5-6439-4cfc-9989-d657c8c1cce7",
+    "seaTurtleId": "bacd8182-568a-4aad-b809-9450115dd944",
+    "tagNumber": "107319318",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-07-07"
+  },
+  {
+    "seaTurtleTagId": "7502ee42-9f0d-43bb-a145-c0df25591c76",
+    "seaTurtleId": "e5fec462-e2b5-4519-86b4-0f5ce6400089",
+    "tagNumber": "107353893",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-06-04"
+  },
+  {
+    "seaTurtleTagId": "fc80bdac-2671-4cda-ac11-81c17ee12751",
+    "seaTurtleId": "e5fec462-e2b5-4519-86b4-0f5ce6400089",
+    "tagNumber": "yyk107",
+    "tagType": "Monel",
+    "Location": "LFF",
+    "dateTagged": "2008-06-04"
+  },
+  {
+    "seaTurtleTagId": "331bd708-c4fd-4b6d-aa74-6c2e7561e44b",
+    "seaTurtleId": "e5fec462-e2b5-4519-86b4-0f5ce6400089",
+    "tagNumber": "yyk108",
+    "tagType": "Monel",
+    "Location": "RFF",
+    "dateTagged": "2008-06-04"
+  },
+  {
+    "seaTurtleTagId": "25a971e6-94ba-4e9c-8e56-171528b19118",
+    "seaTurtleId": "1d084b7c-dfdd-4b23-99f8-b2ebfc205e04",
+    "tagNumber": "107312322",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-08-24"
+  },
+  {
+    "seaTurtleTagId": "66cb0885-0d03-4fb9-9a67-29ef08a86f95",
+    "seaTurtleId": "e52d891b-392f-4ab7-af80-8a7eb177268c",
+    "tagNumber": "107347547",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-08-21"
+  },
+  {
+    "seaTurtleTagId": "5b5eb7bf-b0f1-461a-b895-6172bb5f5226",
+    "seaTurtleId": "568babfa-a5b1-4a72-8655-5464ef6f1883",
+    "tagNumber": "107318819",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-08-12"
+  },
+  {
+    "seaTurtleTagId": "3cd4ce51-7fd0-4ccd-80c6-7ec9cab659c9",
+    "seaTurtleId": "73cc4792-0ef6-4ddc-a351-6f8e857e6eb8",
+    "tagNumber": "107328335",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-11-02"
+  },
+  {
+    "seaTurtleTagId": "7f320517-dbb0-4936-92aa-e65eb494dbde",
+    "seaTurtleId": "9124dd07-4ab5-46e1-851b-bb645d679998",
+    "tagNumber": "107310017",
+    "tagType": "PIT",
+    "Location": "RFF",
+    "dateTagged": "2008-11-13"
+  }
+]
