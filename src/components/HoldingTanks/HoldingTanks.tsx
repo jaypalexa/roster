@@ -1,4 +1,5 @@
 import browserHistory from 'browserHistory';
+import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
@@ -338,19 +339,13 @@ const HoldingTanks: React.FC = () => {
                 </FormFieldRow>
                 <hr />
 
-                <div
-                  className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
-                  onClick={() => saveAndNavigate('/holding-tank-measurements')}>
-                  <span className='child-navigation-item'>Water Measurements</span>
-                  <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
-                </div>
+                <ChildNavigation itemName='Water Measurements' 
+                  disabled={!isFormEnabled} 
+                  onClick={() => saveAndNavigate('/holding-tank-measurements')} />
 
-                <div
-                  className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
-                  onClick={() => saveAndNavigate('/holding-tank-graphs')}>
-                  <span className='child-navigation-item'>Water Graphs</span>
-                  <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
-                </div>
+                <ChildNavigation itemName='Water Graphs' 
+                  disabled={!isFormEnabled} 
+                  onClick={() => saveAndNavigate('/holding-tank-graphs')} />
 
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>

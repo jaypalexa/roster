@@ -1,6 +1,6 @@
+import MenuTile from 'components/MenuTile/MenuTile';
 import useMount from 'hooks/UseMount';
 import React from 'react';
-import MenuTile from '../MenuTile/MenuTile';
 import './Home.sass';
 
 const Home: React.FC = () => {

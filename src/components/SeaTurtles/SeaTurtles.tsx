@@ -1,4 +1,5 @@
 import browserHistory from 'browserHistory';
+import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import MapDialog from 'components/Dialogs/MapDialog';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
@@ -520,26 +521,17 @@ const SeaTurtles: React.FC = () => {
                 </FormFieldRow>
                 <hr />
 
-                <div
-                  className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
-                  onClick={() => saveAndNavigate('/sea-turtle-tags')}>
-                  <span className='child-navigation-item'>Tags</span>
-                  <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
-                </div>
+                <ChildNavigation itemName='Tags' 
+                  disabled={!isFormEnabled} 
+                  onClick={() => saveAndNavigate('/sea-turtle-tags')} />
 
-                <div
-                  className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
-                  onClick={() => saveAndNavigate('/sea-turtle-morphometrics')}>
-                  <span className='child-navigation-item'>Morphometrics Measurements</span>
-                  <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
-                </div>
+                <ChildNavigation itemName='Morphometrics Measurements' 
+                  disabled={!isFormEnabled} 
+                  onClick={() => saveAndNavigate('/sea-turtle-morphometrics')} />
 
-                <div
-                  className={'child-navigation-container ' + (isFormEnabled ? '' : 'is-disabled')}
-                  onClick={() => saveAndNavigate('/sea-turtle-morphometrics-graphs')}>
-                  <span className='child-navigation-item'>Morphometrics Graphs</span>
-                  <span className='child-navigation-item'>&nbsp;&nbsp;&#10095;</span>
-                </div>
+                <ChildNavigation itemName='Morphometrics Graphs' 
+                  disabled={!isFormEnabled} 
+                  onClick={() => saveAndNavigate('/sea-turtle-graphs')} />
 
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>

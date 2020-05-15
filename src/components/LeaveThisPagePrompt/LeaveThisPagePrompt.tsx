@@ -1,6 +1,6 @@
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import React from 'react';
 import NavigationPrompt from 'react-router-navigation-prompt';
-import YesNoDialog from '../Dialogs/YesNoDialog';
 
 interface LeaveThisPagePromptProps {
   isDirty: boolean
