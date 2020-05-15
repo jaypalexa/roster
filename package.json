@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "amazon-cognito-identity-js": "^4.2.3",
+    "amazon-cognito-identity-js": "^4.2.4",
     "aws-sdk": "^2.677.0",
     "bulma": "^0.8.2",
     "bulma-checkradio": "^1.1.1",
