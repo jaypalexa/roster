@@ -115,7 +115,7 @@ const HoldingTankGraphs: React.FC = () => {
           fontSize: 20
         },
         ticks: {
-          autoSkip: false,
+          autoSkip: true,
           maxRotation: 45,
           minRotation: 45
         }
