@@ -21,6 +21,7 @@ import SeaTurtleModel from 'models/SeaTurtleModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -60,6 +61,7 @@ const SeaTurtles: React.FC = () => {
   const tableColumns = [
     {
       name: '',
+      selector: 'edit',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
@@ -68,6 +70,7 @@ const SeaTurtles: React.FC = () => {
     },
     {
       name: '',
+      selector: 'delete',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
@@ -91,7 +94,8 @@ const SeaTurtles: React.FC = () => {
     },
     {
       name: 'Date Acquired',
-      selector: (row: SeaTurtleModel) => row.dateAcquired ? moment(row.dateAcquired).format('YYYY-MM-DD') : '',
+      selector: 'dateAcquired',
+      cell: (row: SeaTurtleModel) => row.dateAcquired ? moment(row.dateAcquired).format('YYYY-MM-DD') : '',
       sortable: true,
       hide: 599
     },
@@ -115,7 +119,8 @@ const SeaTurtles: React.FC = () => {
     },
     {
       name: 'Date Relinquished',
-      selector: (row: SeaTurtleModel) => row.dateRelinquished ? moment(row.dateRelinquished).format('YYYY-MM-DD') : '',
+      selector: 'dateRelinquished',
+      cell: (row: SeaTurtleModel) => row.dateRelinquished ? moment(row.dateRelinquished).format('YYYY-MM-DD') : '',
       sortable: true,
       hide: 599
     }
@@ -407,17 +412,26 @@ const SeaTurtles: React.FC = () => {
             </div>
           </div>
 
-          <DataTable
-            title='Sea Turtles'
-            columns={tableColumns}
-            data={currentSeaTurtles}
-            keyField='seaTurtleId'
-            defaultSortField='seaTurtleName'
-            noHeader={true}
-            fixedHeader={true}
-            fixedHeaderScrollHeight='9rem'
-            customStyles={tableCustomStyles}
-          />
+          <DataTableExtensions 
+            columns={tableColumns} 
+            data={currentSeaTurtles} 
+            export={false} 
+            print={false}
+          >
+            <DataTable
+              title='Sea Turtles'
+              columns={tableColumns}
+              data={currentSeaTurtles}
+              keyField='seaTurtleId'
+              defaultSortField='seaTurtleName'
+              noHeader={true}
+              fixedHeader={true}
+              fixedHeaderScrollHeight='9rem'
+              customStyles={tableCustomStyles}
+              pagination
+              highlightOnHover
+            />
+          </DataTableExtensions>
 
           <hr />
 
