@@ -245,7 +245,7 @@ const WashbacksEvents: React.FC = () => {
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete event from '${washbacksEvent.eventDate ? moment(washbacksEvent.eventDate).format('YYYY-MM-DD') : ''}' ?`);
+    setDialogBodyText(`Delete '${washbacksEvent.eventType}' event from '${washbacksEvent.eventDate ? moment(washbacksEvent.eventDate).format('YYYY-MM-DD') : ''}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
