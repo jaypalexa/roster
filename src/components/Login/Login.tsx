@@ -88,7 +88,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
                     type='submit'
                     className='button is-success is-fixed-width-medium'
                     value='Log In'
-                    disabled={!(formState.isValid && formState.dirty)}
+                    disabled={!(formState.isValid)}
                   />
                 </p>
               </div>
@@ -97,7 +97,6 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
           </FormContext>
         </div>
       </div>
-
     </div>
   );
 };
