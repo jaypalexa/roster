@@ -140,7 +140,8 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
           autoSkip: true
         }
       }]
-    }
+    },
+    spanGaps: true,
   }
 
   useMount(() => {
@@ -173,7 +174,8 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
       const newDatasets = new Array<GraphDataset>();
       currentGraphTypes.forEach((isChecked: boolean, graphType: string) => {
         if (isChecked) {
-          const newData = currentSeaTurtleMorphometrics.map(x => x[graphType] as number).filter(x => x > 0);
+          //const newData = currentSeaTurtleMorphometrics.map(x => x[graphType] as number).filter(x => x > 0);
+          const newData = currentSeaTurtleMorphometrics.map(x => x[graphType] as number === 0 ? null : x[graphType] as number);
           const newDataset = Object.assign({}, graphTypeSettings?.get(graphType)?.dataset, { data: newData });
           newDatasets.push(newDataset);
         }

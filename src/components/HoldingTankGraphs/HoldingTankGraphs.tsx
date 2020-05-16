@@ -130,7 +130,8 @@ const HoldingTankGraphs: React.FC = () => {
           autoSkip: true
         }
       }]
-    }
+    },
+    spanGaps: true,
   }
 
   useMount(() => {
@@ -161,7 +162,7 @@ const HoldingTankGraphs: React.FC = () => {
 
     const buildNewDatasets = () => {
       const newDatasets = new Array<GraphDataset>();
-      const newData = currentHoldingTankMeasurements.map(x => x[currentGraphType] as number);
+      const newData = currentHoldingTankMeasurements.map(x => x[currentGraphType] as number === 0 ? null : x[currentGraphType] as number);
       const newDataset = Object.assign({}, graphTypeSettings?.get(currentGraphType)?.dataset, { data: newData });
       newDatasets.push(Object.assign({}, newDataset))
       return newDatasets;
