@@ -14,44 +14,49 @@ interface MapDialogProps {
 
 const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) => {
   const [activeMarker, setActiveMarker] = useState<MapPointModel | null>(null);
+  const [centerMapPoint, setCenterMapPoint] = useState<MapPointModel>({latitude: 0, longitude: 0});
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isActive) return;
-    closeButtonRef?.current?.focus();
+
+    // prefer to center on first marker, if present; else, use specified center
+    const firstMarker = (mapData.markers && mapData.markers.length > 0) ? mapData.markers[0] : null;
+    setCenterMapPoint(firstMarker || mapData.center || {latitude: 0, longitude: 0});
+
+    // prevent leaving modal dialog when tabbing around
     document.addEventListener('keydown', handleModalKeyDownEvent);
     return () => {
       document.removeEventListener('keydown', handleModalKeyDownEvent);
     }
-  }, [isActive]);
+  }, [isActive, mapData.center, mapData.markers]);
+
+  useEffect(() => {
+    // prevent map scroll-jump on first click
+    document.getElementById('mapComponent')?.focus();
+  });
 
   const mapIcon = new Icon({
     iconUrl: '/favicon-32x32.png',
     iconSize: [32, 32]
   });
 
-  const center = mapData.center || [{latitude: 0, longitude: 0}];
-
   return (
     isActive ?
-      <div className={`modal ${isActive ? 'is-active' : ''}`}>
+      <div className={`modal ${isActive ? 'is-active' : ''} map-dialog`}>
         <div className='modal-background'></div>
         <div className='modal-card'>
           <header className='modal-card-head'>
             <h2 className='subtitle has-text-centered map-header'>{mapData.title || ''}</h2>
             {mapData.subtitle ? <h3 className='subtitle has-text-centered map-header'>{mapData.subtitle || ''}</h3> : null}
-            {/* {mapData.subtitle ? <><br /><h2 className='subtitle has-text-centered'>{mapData.subtitle || ''}</h2></> : null}
-            <button className='close-icon-button' aria-label='close' onClick={onCloseClick}>
-              <i className='fa fa-window-close'></i>
-            </button> */}
           </header>
           <section className='modal-card-body'>
-            <Map center={[center.latitude, center.longitude]} zoom={mapData.initialZoom || 7}>
+            <Map id='mapComponent' center={[centerMapPoint.latitude, centerMapPoint.longitude]} zoom={mapData.initialZoom || 7}>
               {mapData.markers ? 
                 mapData.markers.map(marker => (
                   <Marker
                     key={`${marker.latitude}${marker.longitude}`}
-                    position={[ marker.latitude, marker.longitude ]}
+                    position={[marker.latitude, marker.longitude]}
                     onClick={() => setActiveMarker(marker)}
                     icon={mapIcon}
                   /> 

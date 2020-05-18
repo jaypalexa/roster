@@ -347,7 +347,7 @@ const SeaTurtles: React.FC = () => {
     const modifiedSeaTurtle: SeaTurtleModel = getValues();
     const data = {} as MapDataModel;
     // data.center = { latitude: 28.681389, longitude: -82.46, description: 'Geographic center of Florida' };
-    data.center = { latitude: 27.25, longitude: -83.25, description: 'Center of Florida (ish)' };
+    data.center = { latitude: 27.25, longitude: -83.25, description: 'Better visual center of Florida (ish)' };
     data.initialZoom = 6;
     const latitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Latitude`] as number;
     const longitude = modifiedSeaTurtle[`${dataType.toLowerCase()}Longitude`] as number;

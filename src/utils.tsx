@@ -19,6 +19,7 @@ export const constants = Object.freeze({
   }),
 });
 
+/* focus trap to prevent leaving modal dialog when tabbing around */
 export const handleModalKeyDownEvent = (e: KeyboardEvent) => {
   if (e.keyCode === 9) { // TAB KEY
     const modalDialog = document.querySelector('.modal') as HTMLElement;

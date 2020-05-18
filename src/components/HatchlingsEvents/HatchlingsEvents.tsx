@@ -237,7 +237,7 @@ const HatchlingsEvents: React.FC = () => {
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete '${hatchlingsEvent.eventType}' event from '${hatchlingsEvent.eventDate ? moment(hatchlingsEvent.eventDate).format('YYYY-MM-DD') : ''}' ?`);
+    setDialogBodyText(`Delete 'Hatchlings ${hatchlingsEvent.eventType}' event from '${hatchlingsEvent.eventDate ? moment(hatchlingsEvent.eventDate).format('YYYY-MM-DD') : ''}'?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
