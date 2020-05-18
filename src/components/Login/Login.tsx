@@ -19,7 +19,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
   const [showSpinner, setShowSpinner] = useState(false);
   const methods = useForm<LoginModel>({ mode: 'onChange' });
-  const { formState, handleSubmit, reset } = methods;
+  const { handleSubmit, reset } = methods;
   const firstEditControlRef = useRef<HTMLInputElement>()
 
   useMount(() => {
@@ -88,7 +88,6 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
                     type='submit'
                     className='button is-success is-fixed-width-medium'
                     value='Log In'
-                    disabled={!(formState.isValid)}
                   />
                 </p>
               </div>
