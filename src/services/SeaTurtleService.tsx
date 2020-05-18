@@ -12,7 +12,7 @@ const RESOURCE_MANY_LIST_ITEMS = '/sea-turtle-list-items';
 const SeaTurtleService = {
 
   async getSeaTurtleListItems(): Promise<NameValuePair[]> {
-    const seaTurtles = await this.getSeaTurtles();
+    const seaTurtles = await this.getSeaTurtleListItemsForTable();
     const seaTurtleListItems = seaTurtles.map(x => ({value: x.seaTurtleId, name: x.seaTurtleName}));
     seaTurtleListItems.sort(sortByProperty('name')); 
 
@@ -20,11 +20,21 @@ const SeaTurtleService = {
   },
 
   async getSeaTurtleListItemsForTable(): Promise<SeaTurtleListItemModel[]> {
-    const apiRequestPayload = {} as ApiRequestPayload;
-    apiRequestPayload.resource = RESOURCE_MANY_LIST_ITEMS;
+    const cachedValue = ApiService.getCacheValue(RESOURCE_MANY_LIST_ITEMS) as SeaTurtleListItemModel[];
+    const needDataRefresh = await ApiService.needDataRefresh();
+    console.log('needDataRefresh', needDataRefresh);
+    console.log('cachedValue', cachedValue);
 
-    const response = await ApiService.getMany<SeaTurtleModel>(apiRequestPayload);
-    return response;
+    if (!cachedValue || needDataRefresh) {
+      const apiRequestPayload = {} as ApiRequestPayload;
+      apiRequestPayload.resource = RESOURCE_MANY_LIST_ITEMS;
+      const response = await ApiService.getMany<SeaTurtleListItemModel>(apiRequestPayload);
+      ApiService.setCacheValue(RESOURCE_MANY_LIST_ITEMS, new Array<SeaTurtleListItemModel>().concat(response));
+      return response;
+    }
+    else {
+      return cachedValue;
+    }
   },
 
   async getSeaTurtles(): Promise<SeaTurtleModel[]> {

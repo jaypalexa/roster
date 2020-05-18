@@ -22,20 +22,42 @@ export interface ApiResponsePayloadBody {
 };
 
 // TODO: CACHING ???
-// interface CACHE_MODEL {
-//   [key: string]: any;
-// }
+interface CACHE_MODEL {
+  [key: string]: any;
+}
 
 export const ApiService = {
 
   // TODO: CACHING ???
-  // CACHE: {} as CACHE_MODEL,
-  // getCacheValue(key: string) {
-  //   return this.CACHE[key];
-  // },
-  // setCacheValue(key: string, value: any) {
-  //   return this.CACHE[key] = value;
-  // },
+  CACHE: {} as CACHE_MODEL,
+  getCacheValue(key: string) {
+    return this.CACHE[key];
+  },
+  setCacheValue(key: string, value: any) {
+    return this.CACHE[key] = value;
+  },
+  RESOURCE_LAST_UPDATE: '/last-update',
+  
+  async needDataRefresh(): Promise<boolean> {
+    const organizationId = AuthenticationService.getOrganizationId();
+
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = this.RESOURCE_LAST_UPDATE;
+    apiRequestPayload.pathParameters = { organizationId: organizationId };
+
+    const localLastUpdate = Number(localStorage.getItem(`${organizationId}#lastUpdate`));
+    const serverLastUpdate = await this.get<number>(apiRequestPayload);
+
+    console.log('localLastUpdate', localLastUpdate);
+    console.log('serverLastUpdate', serverLastUpdate);
+    
+    if (localLastUpdate !== serverLastUpdate) {
+      localStorage.setItem(`${organizationId}#lastUpdate`, serverLastUpdate.toString());
+      return true;
+    }
+
+    return false;
+  },
   
   async wakeup() {
     AWS.config.region = process.env.REACT_APP_AWS_REGION || '';
@@ -54,10 +76,10 @@ export const ApiService = {
     };
 
     console.log('WAKEUP params', params);
-    const result = await (new AWS.Lambda().invoke(params).promise());
-    console.log('WAKEUP result', result);
+    // const result = await (new AWS.Lambda().invoke(params).promise());
+    // console.log('WAKEUP result', result);
 
-    // new AWS.Lambda().invoke(params)
+    new AWS.Lambda().invoke(params);
   },
 
   async execute(apiRequestPayload: ApiRequestPayload): Promise<any> {

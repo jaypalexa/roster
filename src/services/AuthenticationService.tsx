@@ -24,7 +24,7 @@ let sessionStatusPollingTimeout: NodeJS.Timeout;
 export const AuthenticationService = {
   
   resetSessionStatusPolling() {
-    console.log(`In resetSessionStatusPolling() at ${(new Date().toUTCString())} -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
+    // console.log(`In resetSessionStatusPolling() at ${(new Date().toUTCString())} -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
 
     clearTimeout(sessionStatusPollingTimeout);
 
@@ -203,17 +203,17 @@ export const AuthenticationService = {
     const now = (Date.now() / 1000); // seconds
     const exp = decodedIdToken?.exp as number; // seconds
 
-    // if ID token is within expiry threshold
+    /* if ID token is within expiry threshold */
     const diff = Math.floor(exp - now); // seconds
-    console.log('isWithinRefreshWindow()::diff', diff);
+    // console.log('isWithinRefreshWindow()::diff', diff);
     const isLessThanThreshold = (diff <= SESSION_REFRESH_THRESHOLD); // seconds
-    console.log(`isWithinRefreshWindow()::isLessThanThreshold (${diff} <= ${SESSION_REFRESH_THRESHOLD})`, isLessThanThreshold);
+    // console.log(`isWithinRefreshWindow()::isLessThanThreshold (${diff} <= ${SESSION_REFRESH_THRESHOLD})`, isLessThanThreshold);
     return isLessThanThreshold;
   },
 
   updateUserActivity() {
     lastUserActivity = Date.now();
-    console.log(`updateUserActivity -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
+    // console.log(`updateUserActivity -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
   },
 
   userActivityHasTimedOut(): boolean {
@@ -221,16 +221,16 @@ export const AuthenticationService = {
     const SESSION_ACTIVITY_THRESHOLD = 30 * 60 * 1000; // 30 MINUTES
     const now = Date.now(); // milliseconds
 
-    // if user has been inactive for longer than threshold
+    /* if user has been inactive for longer than threshold */
     const diff = Math.floor(now - lastUserActivity); // milliseconds
-    console.log('userActivityHasTimedOut()::diff', diff);
+    // console.log('userActivityHasTimedOut()::diff', diff);
     const isGreaterThanThreshold = (diff > SESSION_ACTIVITY_THRESHOLD);
-    console.log(`userActivityHasTimedOut()::isGreaterThanThreshold (${diff} > ${SESSION_ACTIVITY_THRESHOLD})`, isGreaterThanThreshold);
+    // console.log(`userActivityHasTimedOut()::isGreaterThanThreshold (${diff} > ${SESSION_ACTIVITY_THRESHOLD})`, isGreaterThanThreshold);
     return isGreaterThanThreshold;
   },
 
   async checkSessionStatusAsync(): Promise<void> {
-    console.log(`In checkSessionActivityAsync() at ${(new Date().toUTCString())} -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
+    // console.log(`In checkSessionActivityAsync() at ${(new Date().toUTCString())} -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
 
     if (!this.isUserAuthenticated()) return;
 
@@ -245,27 +245,27 @@ export const AuthenticationService = {
   },
 
   async refreshSessionAsync(): Promise<void> {
-    console.log(`In refreshSessionAsync() at ${(new Date().toUTCString())}...`);
+    // console.log(`In refreshSessionAsync() at ${(new Date().toUTCString())}...`);
 
     const currentCognitoUser = this.fetchCurrentCognitoUser();
-    console.log(`refreshSessionAsync()::currentCognitoUser`, currentCognitoUser);
+    // console.log(`refreshSessionAsync()::currentCognitoUser`, currentCognitoUser);
     if (currentCognitoUser) {
       const currentSession = await this.fetchCurrentSessionPromise(currentCognitoUser);
-      console.log(`refreshSessionAsync()::currentSession`, currentSession);
-      console.log(`refreshSessionAsync()::currentSession?.isValid()`, currentSession?.isValid());
+      // console.log(`refreshSessionAsync()::currentSession`, currentSession);
+      // console.log(`refreshSessionAsync()::currentSession?.isValid()`, currentSession?.isValid());
       if (currentSession?.isValid()) {
-        console.log(`refreshSessionAsync()::CURRENT SESSION EXPIRES at ${this.getSessionExpirationDate(currentSession)}`);
+        // console.log(`refreshSessionAsync()::CURRENT SESSION EXPIRES at ${this.getSessionExpirationDate(currentSession)}`);
         const refreshToken = currentSession.getRefreshToken();
         currentCognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
           if (err) {
             console.log('ERROR in AuthenticationService::refreshSessionAsync()::currentCognitoUser.refreshSession()', err);
           } 
           else {
-            console.log(`refreshSessionAsync()::newSession`, newSession);
-            console.log(`refreshSessionAsync()::newSession?.isValid()`, newSession?.isValid());
+            // console.log(`refreshSessionAsync()::newSession`, newSession);
+            // console.log(`refreshSessionAsync()::newSession?.isValid()`, newSession?.isValid());
             if (newSession?.isValid()) {
-              console.log(`refreshSessionAsync()::NEW SESSION EXPIRES at ${this.getSessionExpirationDate(newSession)}`);
-              console.log('SESSION REFRESHED SUCCESSFULLY');
+              // console.log(`refreshSessionAsync()::NEW SESSION EXPIRES at ${this.getSessionExpirationDate(newSession)}`);
+              // console.log('SESSION REFRESHED SUCCESSFULLY');
               this.setConfigCredentials(newSession.getIdToken().getJwtToken());
             }
           }
@@ -287,12 +287,12 @@ export const AuthenticationService = {
   },  
 
   signOut() {
-    console.log(`In signOut() at ${(new Date().toUTCString())}`);
-    console.log('signOut()::sessionStatusPollingTimeout', sessionStatusPollingTimeout);
+    // console.log(`In signOut() at ${(new Date().toUTCString())}`);
+    // console.log('signOut()::sessionStatusPollingTimeout', sessionStatusPollingTimeout);
     clearTimeout(sessionStatusPollingTimeout);
     this.clearCachedCredentials();
     const currentCognitoUser = this.fetchCurrentCognitoUser();
-    console.log('AuthenticationService::signOut::currentCognitoUser', currentCognitoUser);
+    // console.log('AuthenticationService::signOut::currentCognitoUser', currentCognitoUser);
     if (currentCognitoUser) {
       currentCognitoUser.signOut();
     }

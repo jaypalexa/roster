@@ -136,10 +136,7 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  useMount(() => {
-    window.scrollTo(0, 0)
-  });
-
+  /* fetch listbox data */
   useMount(() => {
     setCaptureProjectTypes(CodeListTableService.getList(CodeTableType.CaptureProjectType, true));
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
@@ -150,8 +147,9 @@ const SeaTurtles: React.FC = () => {
     setYesNoUndetermineds(CodeListTableService.getList(CodeTableType.YesNoUndetermined, true));
   });
 
+  /* fetch table data */
   useMount(() => {
-    const getSeaTurtles = async () => {
+    const getSeaTurtleListItems = async () => {
       try {
         setShowSpinner(true);
         const seaTurtleListItems = await SeaTurtleService.getSeaTurtleListItemsForTable();
@@ -170,7 +168,7 @@ const SeaTurtles: React.FC = () => {
         setShowSpinner(false);
       }
     };
-    getSeaTurtles();
+    getSeaTurtleListItems();
   });
 
   useEffect(() => {

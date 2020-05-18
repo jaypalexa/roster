@@ -14,6 +14,7 @@ import DataTable from 'react-data-table-component';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import AuthenticationService from 'services/AuthenticationService';
 import HoldingTankService from 'services/HoldingTankService';
 import { constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -69,16 +70,12 @@ const HoldingTanks: React.FC = () => {
   };
 
   useMount(() => {
-    window.scrollTo(0, 0)
-  });
-
-  useMount(() => {
     const getHoldingTanks = async () => {
       try {
         setShowSpinner(true);
         const holdingTanks = await HoldingTankService.getHoldingTanks();
         setCurrentHoldingTanks(holdingTanks);
-        if (appContext.holdingTank?.holdingTankId) {
+        if (appContext.holdingTank?.holdingTankId && appContext.holdingTank?.organizationId === AuthenticationService.getOrganizationId()) {
           reset(appContext.holdingTank);
           setCurrentHoldingTank(appContext.holdingTank);
           setIsFormEnabled(true);
