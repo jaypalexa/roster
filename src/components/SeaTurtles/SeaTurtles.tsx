@@ -17,6 +17,7 @@ import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import MapDataModel from 'models/MapDataModel';
 import NameValuePair from 'models/NameValuePair';
+import SeaTurtleListItemModel from 'models/SeaTurtleListItemModel';
 import SeaTurtleModel from 'models/SeaTurtleModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -25,6 +26,7 @@ import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import AuthenticationService from 'services/AuthenticationService';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import SeaTurtleService from 'services/SeaTurtleService';
 import { constants } from 'utils';
@@ -36,7 +38,7 @@ const SeaTurtles: React.FC = () => {
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, getValues, reset } = methods;
-  const [currentSeaTurtles, setCurrentSeaTurtles] = useState([] as Array<SeaTurtleModel>);
+  const [currentSeaTurtleListItems, setCurrentSeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
   const [mapData, setMapData] = useState({} as MapDataModel);
   const [captureProjectTypes, setCaptureProjectTypes] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
@@ -66,7 +68,7 @@ const SeaTurtles: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
@@ -74,7 +76,7 @@ const SeaTurtles: React.FC = () => {
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Name',
@@ -95,7 +97,7 @@ const SeaTurtles: React.FC = () => {
     {
       name: 'Date Acquired',
       selector: 'dateAcquired',
-      cell: (row: SeaTurtleModel) => row.dateAcquired ? moment(row.dateAcquired).format('YYYY-MM-DD') : '',
+      cell: (row: SeaTurtleListItemModel) => row.dateAcquired ? moment(row.dateAcquired).format('YYYY-MM-DD') : '',
       sortable: true,
       hide: 599
     },
@@ -120,7 +122,7 @@ const SeaTurtles: React.FC = () => {
     {
       name: 'Date Relinquished',
       selector: 'dateRelinquished',
-      cell: (row: SeaTurtleModel) => row.dateRelinquished ? moment(row.dateRelinquished).format('YYYY-MM-DD') : '',
+      cell: (row: SeaTurtleListItemModel) => row.dateRelinquished ? moment(row.dateRelinquished).format('YYYY-MM-DD') : '',
       sortable: true,
       hide: 599
     }
@@ -152,9 +154,9 @@ const SeaTurtles: React.FC = () => {
     const getSeaTurtles = async () => {
       try {
         setShowSpinner(true);
-        const seaTurtles = await SeaTurtleService.getSeaTurtles();
-        setCurrentSeaTurtles(seaTurtles);
-        if (appContext.seaTurtle?.seaTurtleId) {
+        const seaTurtleListItems = await SeaTurtleService.getSeaTurtleListItemsForTable();
+        setCurrentSeaTurtleListItems(seaTurtleListItems);
+        if (appContext.seaTurtle?.seaTurtleId && appContext.seaTurtle?.organizationId === AuthenticationService.getOrganizationId()) {
           reset(appContext.seaTurtle);
           setCurrentSeaTurtle(appContext.seaTurtle);
           setIsFormEnabled(true);
@@ -206,11 +208,11 @@ const SeaTurtles: React.FC = () => {
         const seaTurtle = {} as SeaTurtleModel;
         reset(seaTurtle);
         setCurrentSeaTurtle(seaTurtle);
-        const index = currentSeaTurtles.findIndex(x => x.seaTurtleId === seaTurtleId);
+        const index = currentSeaTurtleListItems.findIndex(x => x.seaTurtleId === seaTurtleId);
         if (~index) {
-          var updatedCurrentSeaTurtles = [...currentSeaTurtles];
-          updatedCurrentSeaTurtles.splice(index, 1)
-          setCurrentSeaTurtles(updatedCurrentSeaTurtles);
+          var updatedCurrentSeaTurtleListItems = [...currentSeaTurtleListItems];
+          updatedCurrentSeaTurtleListItems.splice(index, 1)
+          setCurrentSeaTurtleListItems(updatedCurrentSeaTurtleListItems);
         }
       };
       deleteSeaTurtle();
@@ -255,9 +257,9 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onEditSeaTurtleClick = (seaTurtle: SeaTurtleModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditSeaTurtleClick = (seaTurtleListItem: SeaTurtleListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      fetchSeaTurtle(seaTurtle.seaTurtleId);
+      fetchSeaTurtle(seaTurtleListItem.seaTurtleId);
       setIsFormEnabled(true);
     };
 
@@ -282,14 +284,14 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onDeleteSeaTurtleClick = (seaTurtle: SeaTurtleModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteSeaTurtleClick = (seaTurtleListItem: SeaTurtleListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const handleEvent = () => {
-      deleteSeaTurtle(seaTurtle.seaTurtleId);
+      deleteSeaTurtle(seaTurtleListItem.seaTurtleId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete turtle '${seaTurtle.seaTurtleName || seaTurtle.sidNumber}' ?`);
+    setDialogBodyText(`Delete turtle '${seaTurtleListItem.seaTurtleName || seaTurtleListItem.sidNumber}' ?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -314,13 +316,13 @@ const SeaTurtles: React.FC = () => {
       await SeaTurtleService.saveSeaTurtle(patchedSeaTurtle);
       reset(patchedSeaTurtle);
       setCurrentSeaTurtle(patchedSeaTurtle);
-      const index = currentSeaTurtles.findIndex(x => x.seaTurtleId === patchedSeaTurtle.seaTurtleId);
+      const index = currentSeaTurtleListItems.findIndex(x => x.seaTurtleId === patchedSeaTurtle.seaTurtleId);
       if (~index) {
-        currentSeaTurtles[index] = { ...patchedSeaTurtle };
+        currentSeaTurtleListItems[index] = { ...patchedSeaTurtle as SeaTurtleListItemModel };
       } else {
-        currentSeaTurtles.push(patchedSeaTurtle);
+        currentSeaTurtleListItems.push(patchedSeaTurtle as SeaTurtleListItemModel);
       }
-      setCurrentSeaTurtles([...currentSeaTurtles]);
+      setCurrentSeaTurtleListItems([...currentSeaTurtleListItems]);
     } 
     catch (err) {
       console.log(err);
@@ -414,14 +416,14 @@ const SeaTurtles: React.FC = () => {
 
           <DataTableExtensions 
             columns={tableColumns} 
-            data={currentSeaTurtles} 
+            data={currentSeaTurtleListItems} 
             export={false} 
             print={false}
           >
             <DataTable
               title='Sea Turtles'
               columns={tableColumns}
-              data={currentSeaTurtles}
+              data={currentSeaTurtleListItems}
               keyField='seaTurtleId'
               defaultSortField='seaTurtleName'
               noHeader={true}

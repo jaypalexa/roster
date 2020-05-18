@@ -8,7 +8,7 @@ export interface ApiRequestPayload {
   headers: any;                 // { "headerName": "headerValue", ... }
   queryStringParameters?: any;  // { "key": "value", ... }
   pathParameters?: any;         // { "key": "value", ... }
-  body?: string;
+  body?: any;
   // isBase64Encoded: boolean;     // true|false
 };
 
@@ -115,18 +115,18 @@ export const ApiService = {
   async get<T>(apiRequestPayload: ApiRequestPayload): Promise<T> {
     apiRequestPayload.httpMethod = 'GET';
     const response = await this.execute(apiRequestPayload);
-    return JSON.parse(response) as T;
+    return response as T;
   },
 
   async getMany<T>(apiRequestPayload: ApiRequestPayload): Promise<T[]> {
     apiRequestPayload.httpMethod = 'GET';
     const response = (await this.execute(apiRequestPayload)) || [];
-    return (response.length > 0 ? response.map((x: string) => JSON.parse(x) as T) : []);
+    return response as T[];
   },
 
   async save<T>(apiRequestPayload: ApiRequestPayload, body: T): Promise<any> {
     apiRequestPayload.httpMethod = 'PUT';
-    apiRequestPayload.body = JSON.stringify(body);
+    apiRequestPayload.body = body;
 
     const response = await this.execute(apiRequestPayload);
     return response;

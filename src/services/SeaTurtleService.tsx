@@ -1,4 +1,5 @@
 import NameValuePair from 'models/NameValuePair';
+import SeaTurtleListItemModel from 'models/SeaTurtleListItemModel';
 import SeaTurtleModel from 'models/SeaTurtleModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
@@ -6,10 +7,28 @@ import { sortByProperty } from 'utils';
 
 const RESOURCE_SINGLE = '/sea-turtles/{seaTurtleId}';
 const RESOURCE_MANY = '/sea-turtles';
+const RESOURCE_MANY_LIST_ITEMS = '/sea-turtle-list-items';
 
 const SeaTurtleService = {
 
+  async getSeaTurtleListItems(): Promise<NameValuePair[]> {
+    const seaTurtles = await this.getSeaTurtles();
+    const seaTurtleListItems = seaTurtles.map(x => ({value: x.seaTurtleId, name: x.seaTurtleName}));
+    seaTurtleListItems.sort(sortByProperty('name')); 
+
+    return seaTurtleListItems;
+  },
+
+  async getSeaTurtleListItemsForTable(): Promise<SeaTurtleListItemModel[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.resource = RESOURCE_MANY_LIST_ITEMS;
+
+    const response = await ApiService.getMany<SeaTurtleModel>(apiRequestPayload);
+    return response;
+  },
+
   async getSeaTurtles(): Promise<SeaTurtleModel[]> {
+   
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.resource = RESOURCE_MANY;
 
@@ -43,14 +62,6 @@ const SeaTurtleService = {
 
     const response = await ApiService.delete(apiRequestPayload);
     return response;
-  },
-
-  async getSeaTurtleListItems(): Promise<NameValuePair[]> {
-    const seaTurtles = await this.getSeaTurtles();
-    const seaTurtleListItems = seaTurtles.map(x => ({value: x.seaTurtleId, name: x.seaTurtleName}));
-    seaTurtleListItems.sort(sortByProperty('name')); 
-
-    return seaTurtleListItems;
   },
 };
 
