@@ -45,7 +45,7 @@ export const ApiService = {
     AWS.config.credentials = new AWS.Credentials(accessKeyId, secretAccessKey);
 
     const apiRequestPayload = {} as ApiRequestPayload;
-    apiRequestPayload.resource = '/wake-up';
+    apiRequestPayload.resource = '/wakeup';
 
     const params: AWS.Lambda.InvocationRequest = {
       FunctionName: 'roster-api-lambda', 
@@ -53,9 +53,9 @@ export const ApiService = {
       Payload: JSON.stringify(apiRequestPayload),
     };
 
-    console.log('WAKE-UP params', params);
+    console.log('WAKEUP params', params);
     const result = await (new AWS.Lambda().invoke(params).promise());
-    console.log('WAKE-UP result', result);
+    console.log('WAKEUP result', result);
 
     // new AWS.Lambda().invoke(params)
   },
