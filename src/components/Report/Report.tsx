@@ -10,7 +10,8 @@ import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import NameValuePair from 'models/NameValuePair';
 import ReportListItemModel from 'models/ReportListItemModel';
-import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import React, { useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -21,7 +22,8 @@ import SeaTurtleService from 'services/SeaTurtleService';
 import { constants, iOS } from 'utils';
 import './Report.sass';
 
-type TParams =  { reportId: string };
+type TParams ={ reportId: string };
+type DateRangeValues = { dateFrom: string, dateThru: string };
 
 const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
   // console.log('match.params.reportId', match.params.reportId);
@@ -39,6 +41,7 @@ const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
   }
 
   const renderDateRangeControls = () => {
+    
     return (
       <div className='date-range-controls'>
         <DateFormField fieldName='dateFrom' labelText='Date from' />
@@ -53,6 +56,19 @@ const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
         setShowSpinner(true);
         const reportListItem = await ReportService.getReportListItem(match.params.reportId);
         setCurrentReportListItem(reportListItem);
+        
+        if (reportListItem.reportId === 'TaggingDataForm') {
+          setSeaTurtleListItems(await SeaTurtleService.getSeaTurtleListItems());
+        }
+
+        /* set initial (quarterly) date range; last quarter or current quarter */
+        const offset = (reportListItem.reportId === 'TurtleInjuryReport') ? -3 : 0;
+        var seedDate = moment().add(offset, 'month').toDate();
+        var quarter = Math.floor((seedDate.getMonth() / 3));
+        var dateFrom = new Date(seedDate.getFullYear(), quarter * 3, 1);
+        var dateThru = new Date(dateFrom.getFullYear(), dateFrom.getMonth() + 3, 0);
+        const initialDateRangeValues = { dateFrom: convertDateToYyyyMmDdString(dateFrom), dateThru: convertDateToYyyyMmDdString(dateThru) };
+        reset(initialDateRangeValues);
       } 
       catch (err) {
         console.log(err);
@@ -65,30 +81,6 @@ const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
     fetchReportListItem();
   });
 
-  useEffect(() => {
-    if (currentReportListItem.reportId === 'TaggingDataForm') {
-      const fetchSeaTurtleListItems = async () => {
-        try {
-          setShowSpinner(true);
-          setSeaTurtleListItems(await SeaTurtleService.getSeaTurtleListItems());
-        }
-        finally {
-          setShowSpinner(false);
-        }
-      };
-      fetchSeaTurtleListItems();
-    } else {
-      var now = new Date();
-      var quarter = Math.floor((now.getMonth() / 3));
-      var dateFrom = new Date(now.getFullYear(), quarter * 3, 1);
-      var dateFromString = convertDateToYyyyMmDdString(dateFrom);
-      var dateThru = new Date(dateFrom.getFullYear(), dateFrom.getMonth() + 3, 0);
-      var dateThruString = convertDateToYyyyMmDdString(dateThru);
-      const initialValues = { dateFrom: dateFromString, dateThru: dateThruString };
-      reset(initialValues);
-    }
-  }, [currentReportListItem.reportId, reset]);
-
   const clearViewingArea = () => {
     setPdfUrl('');
     setShowHtmlReport(false);
@@ -96,14 +88,7 @@ const Report: React.FC<RouteComponentProps<TParams>> = ({match}) => {
 
   const buildTurtleInjuryReport = async (reportOptions: any) => {
     try {
-      // const report = await ReportService.generateReport(currentReportListItem, reportOptions);
-      // setPdfUrl(report.url);
       const organization = await OrganizationService.getOrganization();
-      
-      // SELECT * FROM turtle
-      // WHERE (date_acquired IS NOT NULL) AND (date_acquired <= @date_thru)
-      // AND ((date_relinquished IS NULL) OR ((date_relinquished IS NOT NULL) AND (@date_from <= date_relinquished)) )
-      // ORDER BY sid_number, date_acquired, turtle_name
       const seaTurtles = (await SeaTurtleService.getSeaTurtles())
         .filter(x => 
           (x.dateAcquired || '0000-00-00') <= reportOptions.dateThru
