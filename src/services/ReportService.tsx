@@ -36,7 +36,7 @@ const ReportService = {
     apiRequestPayload.httpMethod = 'POST';
     apiRequestPayload.resource = '/reports/{reportId}';
     apiRequestPayload.pathParameters = { reportId: reportListItem.reportId };
-    apiRequestPayload.body = JSON.stringify(reportOptions);
+    apiRequestPayload.body = reportOptions;
   
     const response = await ApiService.execute(apiRequestPayload);
     // console.log('ReportService::getReport::response = ', response);
