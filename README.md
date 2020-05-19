@@ -50,8 +50,8 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | &#10065; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
 | &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? Service worker unable to distinguish different payloads when calling AWS Lambda (https://lambda.us-east-2.amazonaws.com/2015-03-31/functions/roster-api-lambda/invocations)? |
 | &#10065; Poor man's caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
-| &#10065; Material-UI instead of Bulma ??? | [Material-UI](https://www.npmjs.com/package/@material-ui/core)|
-
+| &#10065; Material-UI or Ant Design instead of Bulma ??? | [Material-UI](https://www.npmjs.com/package/@material-ui/core) / [Ant Design](https://www.npmjs.com/package/antd) |
+| &#10065; Ability to click/tap to set map marker ??? | |
 
 ### Reports - PDFs for FWC
 

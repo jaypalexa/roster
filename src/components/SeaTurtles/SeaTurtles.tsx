@@ -39,6 +39,7 @@ const SeaTurtles: React.FC = () => {
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, getValues, reset } = methods;
   const [currentSeaTurtleListItems, setCurrentSeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
+  const [displaySeaTurtleListItems, setDisplaySeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
   const [mapData, setMapData] = useState({} as MapDataModel);
   const [captureProjectTypes, setCaptureProjectTypes] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
@@ -57,6 +58,7 @@ const SeaTurtles: React.FC = () => {
   const [onDialogCancel, setOnDialogCancel] = useState<((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined>(() => {});
   const [editingStarted, setEditingStarted] = useState(false);
   const [isMapDialogOpen, setIsMapDialogOpen] = useState(false);
+  const [isCheckedShowRelinquishedTurtles, setIsCheckedShowRelinquishedTurtles] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
@@ -154,6 +156,7 @@ const SeaTurtles: React.FC = () => {
         setShowSpinner(true);
         const seaTurtleListItems = await SeaTurtleService.getSeaTurtleListItemsForTable();
         setCurrentSeaTurtleListItems(seaTurtleListItems);
+        setDisplaySeaTurtleListItems(seaTurtleListItems.filter(x => !x.dateRelinquished));
         if (appContext.seaTurtle?.seaTurtleId && appContext.seaTurtle?.organizationId === AuthenticationService.getOrganizationId()) {
           reset(appContext.seaTurtle);
           setCurrentSeaTurtle(appContext.seaTurtle);
@@ -177,6 +180,16 @@ const SeaTurtles: React.FC = () => {
     }
     setEditingStarted(false);
   }, [editingStarted]);
+
+  const resetDisplaySeaTurtleListItems = (isChecked: boolean) => {
+    setShowSpinner(true);
+    if (isChecked) {
+      setDisplaySeaTurtleListItems([...currentSeaTurtleListItems]);
+    } else {
+      setDisplaySeaTurtleListItems(currentSeaTurtleListItems.filter(x => !x.dateRelinquished));
+    }
+    setShowSpinner(false);
+  };
 
   const setCurrentSeaTurtle = (seaTurtle: SeaTurtleModel) => {
     setAppContext({ ...appContext, seaTurtle: seaTurtle });
@@ -212,6 +225,7 @@ const SeaTurtles: React.FC = () => {
           updatedCurrentSeaTurtleListItems.splice(index, 1)
           setCurrentSeaTurtleListItems(updatedCurrentSeaTurtleListItems);
         }
+        resetDisplaySeaTurtleListItems(isCheckedShowRelinquishedTurtles);
       };
       deleteSeaTurtle();
     } 
@@ -321,6 +335,7 @@ const SeaTurtles: React.FC = () => {
         currentSeaTurtleListItems.push(patchedSeaTurtle as SeaTurtleListItemModel);
       }
       setCurrentSeaTurtleListItems([...currentSeaTurtleListItems]);
+      resetDisplaySeaTurtleListItems(isCheckedShowRelinquishedTurtles);
     } 
     catch (err) {
       console.log(err);
@@ -411,17 +426,17 @@ const SeaTurtles: React.FC = () => {
               </p>
             </div>
           </div>
-
+          
           <DataTableExtensions 
             columns={tableColumns} 
-            data={currentSeaTurtleListItems} 
+            data={displaySeaTurtleListItems} 
             export={false} 
             print={false}
           >
             <DataTable
               title='Sea Turtles'
               columns={tableColumns}
-              data={currentSeaTurtleListItems}
+              data={displaySeaTurtleListItems}
               keyField='seaTurtleId'
               defaultSortField='seaTurtleName'
               noHeader={true}
@@ -432,6 +447,20 @@ const SeaTurtles: React.FC = () => {
               highlightOnHover
             />
           </DataTableExtensions>
+
+          <div className='field show-relinquished-turtles'>
+            <input 
+              id='showRelinquishedTurtles'
+              name='showRelinquishedTurtles' 
+              className='switch is-info'
+              type='checkbox'
+              onChange={() => {
+                resetDisplaySeaTurtleListItems(!isCheckedShowRelinquishedTurtles);
+                setIsCheckedShowRelinquishedTurtles(!isCheckedShowRelinquishedTurtles);
+              }}
+            />
+            <label htmlFor='showRelinquishedTurtles'>Show relinquished turtles?</label>
+          </div>
 
           <hr />
 

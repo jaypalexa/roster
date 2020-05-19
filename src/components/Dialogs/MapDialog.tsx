@@ -20,11 +20,11 @@ const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) 
   useEffect(() => {
     if (!isActive) return;
 
-    // prefer to center on first marker, if present; else, use specified center
+    /* prefer to center on first marker, if present; else, use specified center */
     const firstMarker = (mapData.markers && mapData.markers.length > 0) ? mapData.markers[0] : null;
     setCenterMapPoint(firstMarker || mapData.center || {latitude: 0, longitude: 0});
 
-    // prevent leaving modal dialog when tabbing around
+    /* prevent leaving modal dialog when tabbing around */
     document.addEventListener('keydown', handleModalKeyDownEvent);
     return () => {
       document.removeEventListener('keydown', handleModalKeyDownEvent);
@@ -32,7 +32,7 @@ const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) 
   }, [isActive, mapData.center, mapData.markers]);
 
   useEffect(() => {
-    // prevent map scroll-jump on first click
+    /* prevent map scroll-jump on first click */
     document.getElementById('mapComponent')?.focus();
   });
 
@@ -43,7 +43,7 @@ const MapDialog: React.FC<MapDialogProps> = ({isActive, mapData, onCloseClick}) 
 
   return (
     isActive ?
-      <div className={`modal ${isActive ? 'is-active' : ''} map-dialog`}>
+      <div id='mapDialog' className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className='modal-background'></div>
         <div className='modal-card'>
           <header className='modal-card-head'>

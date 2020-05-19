@@ -108,23 +108,22 @@ export const ApiService = {
         Payload: JSON.stringify(apiRequestPayload),
       };
 
-      console.log('params', params);
-      const result = await (new AWS.Lambda().invoke(params).promise());
-      console.log('result', result);
+      console.log('ApiService.execute()::params', params);
+      const response = await (new AWS.Lambda().invoke(params).promise());
+      console.log('ApiService.execute()::response', response);
 
-      const statusCode = result.StatusCode || 0;
+      const statusCode = response.StatusCode || 0;
       if (statusCode < 200 || 299 < statusCode) {
-        throw new Error(`ERROR: HTTP status code of ${statusCode} indicates an unsuccessful request`);
+        throw new Error(`ERROR: HTTP status code ${statusCode} indicates an unsuccessful request`);
       }
 
-      if (result.FunctionError) {
-        throw new Error(`ERROR: ${result.Payload}`);
+      if (response.FunctionError) {
+        throw new Error(`ERROR: FunctionError '${response.FunctionError}':  ${response.Payload}`);
       }
       
-      // console.log('result.Payload', result.Payload);
-      const payload = JSON.parse(result.Payload?.toString() || '') as ApiResponsePayload;
+      const payload = JSON.parse(response.Payload?.toString() || '') as ApiResponsePayload;
       const data = payload.body?.data;
-      console.log('data', data);
+      console.log('ApiService.execute()::data', data);
       
       return data;
     }
@@ -149,7 +148,6 @@ export const ApiService = {
   async save<T>(apiRequestPayload: ApiRequestPayload, body: T): Promise<any> {
     apiRequestPayload.httpMethod = 'PUT';
     apiRequestPayload.body = body;
-
     const response = await this.execute(apiRequestPayload);
     return response;
   },
