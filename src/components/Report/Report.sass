@@ -1,14 +1,72 @@
-.view-report-button-container
-  margin-bottom: 2rem
+#report
+  h2.subtitle
+    margin-bottom: .5rem
 
-.view-report-button
-  background-color: blue
-  border-radius: 4px
-  display: inline-block
-  padding: 7px
+  .date-range-controls
+    margin: auto
+    width: 40%
 
-a.view-report-button
-  color: white ! important
-  &:hover
-    color:white ! important
-    opacity: .75
+  @media (min-width: 769px) // when NOT mobile
+    .date-range-controls
+      display: flex
+      justify-content: space-evenly
+
+  @media screen
+    .html-report-viewing-area
+      overflow-x: auto
+
+  .html-report-print-button-container
+    margin-bottom: 1.5rem
+
+  .html-report-print-button
+    background-color: blue
+    color: white
+    &:hover
+      opacity: .75
+
+  .html-report-detail-table
+    margin-left: auto
+    margin-right: auto
+
+    th
+      border: 2px solid
+      padding: 6px
+
+    td
+      border: 1px solid
+      padding: 3px
+
+  .html-report-summary-table
+    margin-left: auto
+    margin-right: auto
+    margin-top: 1rem
+    margin-bottom: 1rem
+
+    td
+      padding: 3px 6px
+
+      &.category
+        font-weight: bold
+
+  .view-report-button-container
+    margin-bottom: 2rem
+
+  .view-report-button
+    background-color: blue
+    border-radius: 4px
+    display: inline-block
+    padding: 7px
+
+  a.view-report-button
+    color: white ! important
+    &:hover
+      color:white ! important
+      opacity: .75
+
+  .turtle-injury-report
+    .summary
+      text-align: left
+
+@media print
+	.html-report-print-button-container, .report-options
+		display: none
