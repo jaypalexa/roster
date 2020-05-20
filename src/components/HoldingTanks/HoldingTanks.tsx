@@ -46,14 +46,14 @@ const HoldingTanks: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={() => onEditHoldingTankClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' onClick={() => onDeleteHoldingTankClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Name',
@@ -177,7 +177,7 @@ const HoldingTanks: React.FC = () => {
     }
   };
 
-  const onEditHoldingTankClick = (holdingTank: HoldingTankModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditHoldingTankClick = (holdingTank: HoldingTankModel) => {
     const handleEvent = () => {
       fetchHoldingTank(holdingTank.holdingTankId);
       setIsFormEnabled(true);
@@ -204,14 +204,14 @@ const HoldingTanks: React.FC = () => {
     }
   };
 
-  const onDeleteHoldingTankClick = (holdingTank: HoldingTankModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteHoldingTankClick = (holdingTank: HoldingTankModel) => {
     const handleEvent = () => {
       deleteHoldingTank(holdingTank.holdingTankId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete tank '${holdingTank.holdingTankName}' ?`);
+    setDialogBodyText(`Delete tank '${holdingTank.holdingTankName}'?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -330,6 +330,7 @@ const HoldingTanks: React.FC = () => {
               customStyles={tableCustomStyles}
               pagination
               highlightOnHover
+              onRowClicked={onEditHoldingTankClick}
             />
           </DataTableExtensions>
           <hr />

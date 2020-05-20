@@ -49,14 +49,14 @@ const HatchlingsEvents: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHatchlingsEventClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' onClick={() => onEditHatchlingsEventClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHatchlingsEventClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' onClick={() => onDeleteHatchlingsEventClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Species',
@@ -204,7 +204,7 @@ const HatchlingsEvents: React.FC = () => {
     }
   };
 
-  const onEditHatchlingsEventClick = (hatchlingsEvent: HatchlingsEventModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditHatchlingsEventClick = (hatchlingsEvent: HatchlingsEventModel) => {
     const handleEvent = () => {
       fetchHatchlingsEvent(hatchlingsEvent.hatchlingsEventId);
       setIsFormEnabled(true);
@@ -231,7 +231,7 @@ const HatchlingsEvents: React.FC = () => {
     }
   };
 
-  const onDeleteHatchlingsEventClick = (hatchlingsEvent: HatchlingsEventModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteHatchlingsEventClick = (hatchlingsEvent: HatchlingsEventModel) => {
     const handleEvent = () => {
       deleteHatchlingsEvent(hatchlingsEvent.hatchlingsEventId);
       setIsFormEnabled(false);
@@ -390,6 +390,7 @@ const HatchlingsEvents: React.FC = () => {
               customStyles={tableCustomStyles}
               pagination
               highlightOnHover
+              onRowClicked={onEditHatchlingsEventClick}
             />
           </DataTableExtensions>
           <hr />

@@ -10,9 +10,6 @@ import AuthenticationService from 'services/AuthenticationService';
 import './App.sass';
 
 const App: React.FC = () => {
-  // console.log(`[${Date.now().toString()}] *** APP at ${(new Date().toUTCString())} ***`);
-
-  const [triggerRefresh, setTriggerRefresh] = useState(false);
   const [loggedInUserName, setLoggedInUserName] = useState('');
   const [isOnline, setIsOnline] = useState(true);
 
@@ -41,7 +38,6 @@ const App: React.FC = () => {
     setLoggedInUserName('');
     AuthenticationService.signOut();
     closeMenu();
-    setTriggerRefresh(!triggerRefresh);
   }
 
   /* fetch user name */
@@ -118,7 +114,6 @@ const App: React.FC = () => {
               <span aria-hidden='true'></span>
             </div>
           </div>
-
           <div id='navMenu' className='navbar-menu'>
             <div className='navbar-start'>
               <Link className='navbar-item' to='/sea-turtles' onClick={closeMenu}>Sea Turtles</Link>
@@ -137,6 +132,7 @@ const App: React.FC = () => {
           </div>
         </nav>
         <div className='content-container'>
+          {/* child components are rendered here */}
           {routes(setLoggedInUserName)}
         </div>
       </Router>

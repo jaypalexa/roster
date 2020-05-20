@@ -67,11 +67,6 @@ const AboutRoster: React.FC = () => {
       console.log('checkForUpdate::\'serviceWorker\' NOT in navigator...');
     }
   }, []);
-
-  useMount(() => {
-    window.scrollTo(0, 0)
-  });
-
   
   /* register service worker onUpdate() */
   useMount(() => {
@@ -106,7 +101,6 @@ const AboutRoster: React.FC = () => {
           <li><Link to='/'>&#10094; Home</Link></li>
         </ul>
       </nav>
-      
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>About ROSTER</h1>
@@ -116,11 +110,10 @@ const AboutRoster: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200520.1600
+            &nbsp;|&nbsp;v0.20200520.1700
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onUpdateAvailableClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>
-
         </div>
       </div>
     </div>

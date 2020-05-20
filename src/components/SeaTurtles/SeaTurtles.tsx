@@ -70,7 +70,7 @@ const SeaTurtles: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' onClick={() => onEditSeaTurtleClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
@@ -78,7 +78,7 @@ const SeaTurtles: React.FC = () => {
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' onClick={() => onDeleteSeaTurtleClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Name',
@@ -269,7 +269,7 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onEditSeaTurtleClick = (seaTurtleListItem: SeaTurtleListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditSeaTurtleClick = (seaTurtleListItem: SeaTurtleListItemModel) => {
     const handleEvent = () => {
       fetchSeaTurtle(seaTurtleListItem.seaTurtleId);
       setIsFormEnabled(true);
@@ -296,14 +296,14 @@ const SeaTurtles: React.FC = () => {
     }
   };
 
-  const onDeleteSeaTurtleClick = (seaTurtleListItem: SeaTurtleListItemModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteSeaTurtleClick = (seaTurtleListItem: SeaTurtleListItemModel) => {
     const handleEvent = () => {
       deleteSeaTurtle(seaTurtleListItem.seaTurtleId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete turtle '${seaTurtleListItem.seaTurtleName || seaTurtleListItem.sidNumber}' ?`);
+    setDialogBodyText(`Delete turtle '${seaTurtleListItem.seaTurtleName || seaTurtleListItem.sidNumber}'?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -445,6 +445,7 @@ const SeaTurtles: React.FC = () => {
               customStyles={tableCustomStyles}
               pagination
               highlightOnHover
+              onRowClicked={onEditSeaTurtleClick}
             />
           </DataTableExtensions>
 

@@ -47,14 +47,14 @@ const HoldingTankMeasurements: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditHoldingTankMeasurementClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={() => onEditHoldingTankMeasurementClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteHoldingTankMeasurementClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={() => onDeleteHoldingTankMeasurementClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Date Measured',
@@ -197,7 +197,7 @@ const HoldingTankMeasurements: React.FC = () => {
     }
   };
 
-  const onEditHoldingTankMeasurementClick = (holdingTankMeasurement: HoldingTankMeasurementModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditHoldingTankMeasurementClick = (holdingTankMeasurement: HoldingTankMeasurementModel) => {
     const handleEvent = () => {
       fetchHoldingTankMeasurement(holdingTankMeasurement.holdingTankMeasurementId);
       setIsFormEnabled(true);
@@ -224,14 +224,14 @@ const HoldingTankMeasurements: React.FC = () => {
     }
   };
 
-  const onDeleteHoldingTankMeasurementClick = (holdingTankMeasurement: HoldingTankMeasurementModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteHoldingTankMeasurementClick = (holdingTankMeasurement: HoldingTankMeasurementModel) => {
     const handleEvent = () => {
       deleteHoldingTankMeasurement(holdingTankMeasurement.holdingTankMeasurementId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete measurement '${holdingTankMeasurement.dateMeasured ? moment(holdingTankMeasurement.dateMeasured).format('YYYY-MM-DD') : ''}' ?`);
+    setDialogBodyText(`Delete water measurement for '${holdingTankMeasurement.dateMeasured ? moment(holdingTankMeasurement.dateMeasured).format('YYYY-MM-DD') : ''}'?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -338,6 +338,7 @@ const HoldingTankMeasurements: React.FC = () => {
               customStyles={tableCustomStyles}
               pagination
               highlightOnHover
+              onRowClicked={onEditHoldingTankMeasurementClick}
             />
           </DataTableExtensions>
           <hr />

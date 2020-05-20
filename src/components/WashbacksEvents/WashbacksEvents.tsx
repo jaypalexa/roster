@@ -51,14 +51,14 @@ const WashbacksEvents: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditWashbacksEventClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={() => onEditWashbacksEventClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteWashbacksEventClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={() => onDeleteWashbacksEventClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Species',
@@ -212,7 +212,7 @@ const WashbacksEvents: React.FC = () => {
     }
   };
 
-  const onEditWashbacksEventClick = (washbacksEvent: WashbacksEventModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditWashbacksEventClick = (washbacksEvent: WashbacksEventModel) => {
     const handleEvent = () => {
       fetchWashbacksEvent(washbacksEvent.washbacksEventId);
       setIsFormEnabled(true);
@@ -239,7 +239,7 @@ const WashbacksEvents: React.FC = () => {
     }
   };
 
-  const onDeleteWashbacksEventClick = (washbacksEvent: WashbacksEventModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteWashbacksEventClick = (washbacksEvent: WashbacksEventModel) => {
     const handleEvent = () => {
       deleteWashbacksEvent(washbacksEvent.washbacksEventId);
       setIsFormEnabled(false);
@@ -398,6 +398,7 @@ const WashbacksEvents: React.FC = () => {
               customStyles={tableCustomStyles}
               pagination
               highlightOnHover
+              onRowClicked={onEditWashbacksEventClick}
             />
           </DataTableExtensions>
           <hr />

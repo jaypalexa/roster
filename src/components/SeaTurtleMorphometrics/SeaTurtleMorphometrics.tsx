@@ -55,14 +55,14 @@ const SeaTurtleMorphometrics: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onEditSeaTurtleMorphometricClick(row, event) }}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={() => onEditSeaTurtleMorphometricClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={(event) => { onDeleteSeaTurtleMorphometricClick(row, event) }}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={() => onDeleteSeaTurtleMorphometricClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
     },
     {
       name: 'Date Measured',
@@ -285,7 +285,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     }
   };
 
-  const onEditSeaTurtleMorphometricClick = (seaTurtleMorphometric: SeaTurtleMorphometricModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onEditSeaTurtleMorphometricClick = (seaTurtleMorphometric: SeaTurtleMorphometricModel) => {
     const handleEvent = () => {
       fetchSeaTurtleMorphometric(seaTurtleMorphometric.seaTurtleMorphometricId);
       setIsFormEnabled(true);
@@ -312,14 +312,14 @@ const SeaTurtleMorphometrics: React.FC = () => {
     }
   };
 
-  const onDeleteSeaTurtleMorphometricClick = (seaTurtleMorphometric: SeaTurtleMorphometricModel, event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onDeleteSeaTurtleMorphometricClick = (seaTurtleMorphometric: SeaTurtleMorphometricModel) => {
     const handleEvent = () => {
       deleteSeaTurtleMorphometric(seaTurtleMorphometric.seaTurtleMorphometricId);
       setIsFormEnabled(false);
     };
 
     setDialogTitleText('Confirm Deletion');
-    setDialogBodyText(`Delete morphometric for '${seaTurtleMorphometric.dateMeasured ? moment(seaTurtleMorphometric.dateMeasured).format('YYYY-MM-DD') : ''}' ?`);
+    setDialogBodyText(`Delete morphometric for '${seaTurtleMorphometric.dateMeasured ? moment(seaTurtleMorphometric.dateMeasured).format('YYYY-MM-DD') : ''}'?`);
     setOnDialogYes(() => async () => {
       handleEvent();
       setShowYesNoDialog(false);
@@ -426,6 +426,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
               customStyles={tableCustomStyles}
               pagination
               highlightOnHover
+              onRowClicked={onEditSeaTurtleMorphometricClick}
             />
           </DataTableExtensions>
           <hr />

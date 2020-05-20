@@ -24,6 +24,10 @@ const Report: React.FC<RouteComponentProps<ReportParams>> = ({match}) => {
   const [htmlReportContent, setHtmlReportContent] = useState<JSX.Element>(<></>);
 
   useMount(() => {
+    window.scrollTo(0, 0)
+  });
+
+  useMount(() => {
     const fetchReportListItem = async () => {
       try {
         setShowSpinner(true);
