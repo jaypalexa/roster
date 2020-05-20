@@ -11,6 +11,7 @@ import useMount from 'hooks/UseMount';
 import HoldingTankModel from 'models/HoldingTankModel';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -311,18 +312,26 @@ const HoldingTanks: React.FC = () => {
             </div>
           </div>
 
-          <DataTable
-            title='Holding Tanks'
-            columns={tableColumns}
-            data={currentHoldingTanks}
-            keyField='holdingTankId'
-            defaultSortField='holdingTankName'
-            noHeader={true}
-            fixedHeader={true}
-            fixedHeaderScrollHeight='9rem'
-            customStyles={tableCustomStyles}
-          />
-
+          <DataTableExtensions 
+            columns={tableColumns} 
+            data={currentHoldingTanks} 
+            export={false} 
+            print={false}
+          >
+            <DataTable
+              title='Holding Tanks'
+              columns={tableColumns}
+              data={currentHoldingTanks}
+              keyField='holdingTankId'
+              defaultSortField='holdingTankName'
+              noHeader={true}
+              fixedHeader={true}
+              fixedHeaderScrollHeight='9rem'
+              customStyles={tableCustomStyles}
+              pagination
+              highlightOnHover
+            />
+          </DataTableExtensions>
           <hr />
 
           <h1 className='title has-text-centered'>{appContext.holdingTank?.holdingTankName}</h1>

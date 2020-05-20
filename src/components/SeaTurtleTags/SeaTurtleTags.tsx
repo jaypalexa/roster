@@ -14,6 +14,7 @@ import SeaTurtleTagModel from 'models/SeaTurtleTagModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -331,18 +332,26 @@ const SeaTurtleTags: React.FC = () => {
             </div>
           </div>
 
-          <DataTable
-            title='Tags'
-            columns={tableColumns}
-            data={currentSeaTurtleTags}
-            keyField='seaTurtleTagId'
-            defaultSortField='tagNumber'
-            noHeader={true}
-            fixedHeader={true}
-            fixedHeaderScrollHeight='9rem'
-            customStyles={tableCustomStyles}
-          />
-
+          <DataTableExtensions 
+            columns={tableColumns} 
+            data={currentSeaTurtleTags} 
+            export={false} 
+            print={false}
+          >
+            <DataTable
+              title='Tags'
+              columns={tableColumns}
+              data={currentSeaTurtleTags}
+              keyField='seaTurtleTagId'
+              defaultSortField='tagNumber'
+              noHeader={true}
+              fixedHeader={true}
+              fixedHeaderScrollHeight='9rem'
+              customStyles={tableCustomStyles}
+              pagination
+              highlightOnHover
+            />
+          </DataTableExtensions>
           <hr />
 
           <FormContext {...methods} >

@@ -12,6 +12,7 @@ import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -319,18 +320,26 @@ const HoldingTankMeasurements: React.FC = () => {
             </div>
           </div>
 
-          <DataTable
-            title='Water Measurements'
-            columns={tableColumns}
-            data={currentHoldingTankMeasurements}
-            keyField='holdingTankMeasurementId'
-            defaultSortField='dateMeasured'
-            noHeader={true}
-            fixedHeader={true}
-            fixedHeaderScrollHeight='9rem'
-            customStyles={tableCustomStyles}
-          />
-
+          <DataTableExtensions 
+            columns={tableColumns} 
+            data={currentHoldingTankMeasurements} 
+            export={false} 
+            print={false}
+          >
+            <DataTable
+              title='Water Measurements'
+              columns={tableColumns}
+              data={currentHoldingTankMeasurements}
+              keyField='holdingTankMeasurementId'
+              defaultSortField='dateMeasured'
+              noHeader={true}
+              fixedHeader={true}
+              fixedHeaderScrollHeight='9rem'
+              customStyles={tableCustomStyles}
+              pagination
+              highlightOnHover
+            />
+          </DataTableExtensions>
           <hr />
 
           <FormContext {...methods} >

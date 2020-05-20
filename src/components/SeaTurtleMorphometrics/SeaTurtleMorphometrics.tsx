@@ -15,6 +15,7 @@ import SeaTurtleMorphometricModel from 'models/SeaTurtleMorphometricModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -407,18 +408,26 @@ const SeaTurtleMorphometrics: React.FC = () => {
             </div>
           </div>
 
-          <DataTable
-            title='Morphometrics'
-            columns={tableColumns}
-            data={currentSeaTurtleMorphometrics}
-            keyField='turtleMorphometricId'
-            defaultSortField='dateMeasured'
-            noHeader={true}
-            fixedHeader={true}
-            fixedHeaderScrollHeight='9rem'
-            customStyles={tableCustomStyles}
-          />
-
+          <DataTableExtensions 
+            columns={tableColumns} 
+            data={currentSeaTurtleMorphometrics} 
+            export={false} 
+            print={false}
+          >
+            <DataTable
+              title='Morphometrics'
+              columns={tableColumns}
+              data={currentSeaTurtleMorphometrics}
+              keyField='turtleMorphometricId'
+              defaultSortField='dateMeasured'
+              noHeader={true}
+              fixedHeader={true}
+              fixedHeaderScrollHeight='9rem'
+              customStyles={tableCustomStyles}
+              pagination
+              highlightOnHover
+            />
+          </DataTableExtensions>
           <hr />
 
           <FormContext {...methods} >
