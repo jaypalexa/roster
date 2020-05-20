@@ -2,13 +2,18 @@ import React from 'react';
 import FormFieldProps from './FormFieldProps';
 import InputFormField from './InputFormField';
 
-export const DateFormField: React.FC<FormFieldProps> = ({fieldName, labelText, validationOptions, refObject}) => {
+interface DateFormFieldProps extends FormFieldProps {
+  value?: string | number | string[];
+}
+
+export const DateFormField: React.FC<DateFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, value}) => {
   return (
     <InputFormField 
       fieldName={fieldName} 
       labelText={labelText} 
       validationOptions={validationOptions}
       refObject={refObject}
+      value={value}
       type='date' 
     />
   );

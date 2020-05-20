@@ -14,7 +14,7 @@ interface InputFormFieldProps extends FormFieldProps {
   pattern?: string;
   step?: string;
   disabled?: boolean;
-  value?: string;
+  value?: string | number | string[];
 }
 
 export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, step, disabled, value}) => {
