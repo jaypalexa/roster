@@ -1,3 +1,4 @@
+import AboutRoster from 'components/AboutRoster/AboutRoster'
 import BlankForms from 'components/BlankForms/BlankForms'
 import HatchlingsEvents from 'components/HatchlingsEvents/HatchlingsEvents'
 import HoldingTankGraphs from 'components/HoldingTankGraphs/HoldingTankGraphs'
@@ -34,6 +35,7 @@ const routes = (setLoggedInUserName: React.Dispatch<React.SetStateAction<string>
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/report/:reportId' component={Report} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/blank-forms' component={BlankForms} />
     <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/organization' component={Organization} />
+    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/about-roster' component={AboutRoster} />
     <Route exact path='/login' render={ (routeProps) => <Login {...{setLoggedInUserName, ...routeProps}} /> } />
     <Route component={NotFound} />
   </Switch>
