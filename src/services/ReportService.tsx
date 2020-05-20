@@ -6,7 +6,7 @@ const reports = [
   { reportId: 'DisorientationIncidentForm', reportName: 'Disorientation Incident Form', canGenerate: false, isPdf: true, blankFileName: 'Disorientation Incident Report form.pdf' },
   { reportId: 'DisorientationIncidentFormDirections', reportName: 'Disorientation Incident Form Directions', canGenerate: false, isPdf: true, blankFileName: 'Disorientation Incident Report form directions.pdf' },
   { reportId: 'EducationalPresentationsUsingTurtles', reportName: 'Educational Presentations Using Turtles', canGenerate: false, isPdf: true, blankFileName: 'Educational Presentation form.pdf' },
-  { reportId: 'HatchlingsandWashbacksByCountyReport', reportName: 'Hatchlings and Washbacks by County Report', canGenerate: true, isPdf: false },
+  { reportId: 'HatchlingsAndWashbacksByCountyReport', reportName: 'Hatchlings and Washbacks by County Report', canGenerate: true, isPdf: false },
   { reportId: 'MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings', reportName: 'Marine Turtle Captive Facility Quarterly Report for Hatchlings', canGenerate: true, isPdf: true, blankFileName: 'Marine Turtle Captive Facility Quarterly Report For Hatchlings.pdf' },
   { reportId: 'MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks', reportName: 'Marine Turtle Captive Facility Quarterly Report for Washbacks', canGenerate: true, isPdf: true, blankFileName: 'Marine Turtle Captive Facility Quarterly Report For Washbacks.pdf' },
   { reportId: 'MarineTurtleHoldingFacilityQuarterlyReport', reportName: 'Marine Turtle Holding Facility Quarterly Report', canGenerate: true, isPdf: true, blankFileName: 'Marine Turtle Holding Facility Quarterly Report.pdf' },

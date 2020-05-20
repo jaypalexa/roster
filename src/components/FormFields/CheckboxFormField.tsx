@@ -6,9 +6,10 @@ import FormFieldProps from './FormFieldProps';
 interface CheckboxFormFieldProps extends FormFieldProps {
   disabled?: boolean;
   value?: string;
+  defaultChecked?: boolean | undefined;
 }
 
-export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, labelText, disabled, value, validationOptions}) => {
+export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, labelText, disabled, value, defaultChecked, validationOptions}) => {
   const { errors, formState, register } = useFormContext();
   return (
     <div className='field'>
@@ -20,6 +21,7 @@ export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, 
         ref={register(validationOptions || {})}
         disabled={disabled} 
         value={value}
+        defaultChecked={defaultChecked}
       />
       <label htmlFor={fieldName}>{labelText}</label>
       <ErrorMessage errors={errors} name={fieldName} as='p' className='help has-text-danger' />

@@ -4,7 +4,9 @@ import TaggingDataFormOptions from 'components/ReportOptions/TaggingDataFormOpti
 import TurtleInjuryReportOptions from 'components/ReportOptions/TurtleInjuryReportOptions';
 import ReportListItemModel from 'models/ReportListItemModel';
 import React from 'react';
+import HatchlingsAndWashbacksByCountyReportOptions from './HatchlingsAndWashbacksByCountyReportOptions';
 import './ReportOptions.sass';
+import TurtleTagReportOptions from './TurtleTagReportOptions';
 
 interface ReportOptionsProps {
   currentReportListItem: ReportListItemModel;
@@ -13,15 +15,22 @@ interface ReportOptionsProps {
 
 const ReportOptions: React.FC<ReportOptionsProps> = ({currentReportListItem, setShowSpinner}) => {
   switch (currentReportListItem.reportId) {
-    case 'TurtleInjuryReport':
-      return <TurtleInjuryReportOptions />;
-    case 'MarineTurtleHoldingFacilityQuarterlyReport':
-      return <MarineTurtleHoldingFacilityQuarterlyReportOptions />;
+    /* FWC REPORTS (PDF) */
     case 'MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings':
     case 'MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks':
       return <MarineTurtleCaptiveFacilityQuarterlyReportOptions />;
+    case 'MarineTurtleHoldingFacilityQuarterlyReport':
+      return <MarineTurtleHoldingFacilityQuarterlyReportOptions />;
     case 'TaggingDataForm':
       return <TaggingDataFormOptions setShowSpinner={setShowSpinner} />
+
+    /* OTHER REPORTS (HTML) */
+    case 'HatchlingsAndWashbacksByCountyReport':
+      return <HatchlingsAndWashbacksByCountyReportOptions />;
+    case 'TurtleInjuryReport':
+      return <TurtleInjuryReportOptions />;
+    case 'TurtleTagReport':
+      return <TurtleTagReportOptions />;
     default:
       return <></>;
   }
