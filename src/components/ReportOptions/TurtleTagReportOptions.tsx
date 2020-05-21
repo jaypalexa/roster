@@ -9,7 +9,7 @@ import ReportOptionsDateRange, { ReportQuarter } from './ReportOptionsDateRange'
 
 const TurtleTagReportOptions: React.FC = () => {
   return (
-    <div id='reportOptionsControls'>
+    <div id='reportOptionsControls' className='turtle-tag-report-options'>
       <FormFieldRow>
         <ReportOptionsDateRange reportQuarter={ReportQuarter.Previous} />
       </FormFieldRow>
@@ -20,9 +20,11 @@ const TurtleTagReportOptions: React.FC = () => {
           <RadioButtonFormField fieldName='filterDateType' labelText='Date tagged' value='dateTypeTagged' />
           <br />
           <RadioButtonFormField fieldName='filterDateType' labelText='Date relinquished' value='dateTypeRelinquished' />
+          <div className='include-non-relinquished-turtles'>
+            <CheckboxFormField fieldName='includeNonRelinquishedTurtles' labelText='Include non-relinquished turtles' defaultChecked={true} />
+          </div>
         </RadioButtonGroupFormField>
         <FormFieldGroup fieldClass='checkbox-group checkboxes-2' labelText='Options'>
-          <CheckboxFormField fieldName='includeNonRelinquishedTurtles' labelText='Include non-relinquished turtles' defaultChecked={true} />
           <CheckboxFormField fieldName='includeStrandingIdNumber' labelText='Include Stranding ID number' defaultChecked={true} />
         </FormFieldGroup>
       </FormFieldRow>
