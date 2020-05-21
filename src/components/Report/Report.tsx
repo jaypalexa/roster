@@ -77,7 +77,7 @@ const Report: React.FC = () => {
       </nav>
       <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
         <ul>
-          <li><Link to='/reports'>&#10094; Report Options</Link></li>
+          <li><Link to={`/report-options/${currentReportListItem.reportId}`}>Report Options</Link></li>
         </ul>
       </nav>
       <div className='columns is-centered'>
