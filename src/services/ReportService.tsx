@@ -28,7 +28,7 @@ const reports = [
 
 const ReportService = {
   
-  async generateReport(reportListItem: ReportListItemModel, reportOptions: any): Promise<ReportModel> {
+  async generatePdfReport(reportListItem: ReportListItemModel, reportOptions: any): Promise<ReportModel> {
     
     const report = {} as ReportModel
 
@@ -71,6 +71,18 @@ const ReportService = {
   getBlankFormList(): ReportListItemModel[] {
     const listItems = reports.filter(x => x.isPdf);
     return listItems;
+  },
+
+    
+  async getHtmlReportData<T>(reportId: string, reportOptions: any): Promise<T[]> {
+    const apiRequestPayload = {} as ApiRequestPayload;
+    apiRequestPayload.httpMethod = 'POST';
+    apiRequestPayload.resource = '/reports/{reportId}';
+    apiRequestPayload.pathParameters = { reportId: reportId };
+    apiRequestPayload.body = reportOptions;
+
+    const response = await ApiService.getMany<T>(apiRequestPayload);
+    return response;
   },
   
 }

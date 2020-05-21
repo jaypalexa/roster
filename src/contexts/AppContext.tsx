@@ -1,6 +1,7 @@
 import HoldingTankModel from 'models/HoldingTankModel';
 import SeaTurtleModel from 'models/SeaTurtleModel';
 import React, { createContext, useContext, useState } from 'react';
+import { Dictionary } from 'utils';
 
 interface Props {
   children: React.ReactNode;
@@ -9,9 +10,10 @@ interface Props {
 interface AppContextStore {
   seaTurtle?: SeaTurtleModel;
   holdingTank?: HoldingTankModel;
+  reportOptions: Dictionary<any>;
 };
 
-const initialAppContextStore = {} as AppContextStore;
+const initialAppContextStore = { reportOptions: {} } as AppContextStore;
 
 const AppContext = createContext<[AppContextStore, (appContextStore: AppContextStore) => void]>([initialAppContextStore, () => { }]);
 

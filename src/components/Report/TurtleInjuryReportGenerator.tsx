@@ -111,7 +111,7 @@ const TurtleInjuryReportGenerator = {
             </thead>
             <tbody>
             {
-              seaTurtles.map((seaTurtle) => {
+              seaTurtles.map(seaTurtle => {
                 return <tr key={seaTurtle.seaTurtleId}>
                   <td>{seaTurtle.seaTurtleName || seaTurtle.sidNumber}</td>
                   <td className='has-text-centered'>{seaTurtle.injuryBoatStrike ? 'X' : '' }</td>

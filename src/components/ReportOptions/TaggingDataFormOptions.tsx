@@ -4,19 +4,20 @@ import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormField from 'components/FormFields/ListFormField';
 import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import NameValuePair from 'models/NameValuePair';
 import React, { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import SeaTurtleService from 'services/SeaTurtleService';
 import { constants } from 'utils';
+import { ReportOptionsFormFieldsProps } from './ReportOptionsFormFields';
 import './ReportOptionsFormFields.sass';
 
-interface TaggingDataFormOptionsProps {
-  setShowSpinner: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const TaggingDataFormOptions: React.FC<TaggingDataFormOptionsProps> = ({setShowSpinner}) => {
+const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({currentReportListItem, setShowSpinner}) => {
+  const [appContext] = useAppContext();
+  const { reset } = useFormContext();
   const [seaTurtleListItems, setSeaTurtleListItems] = useState([] as Array<NameValuePair>);
 
   useMount(() => {
@@ -24,6 +25,7 @@ const TaggingDataFormOptions: React.FC<TaggingDataFormOptionsProps> = ({setShowS
       try {
         setShowSpinner(true);
         setSeaTurtleListItems(await SeaTurtleService.getSeaTurtleListItems());
+        reset(appContext.reportOptions[currentReportListItem.reportId]);
       } 
       catch (err) {
         console.log(err);

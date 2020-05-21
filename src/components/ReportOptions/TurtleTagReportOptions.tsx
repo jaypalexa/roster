@@ -3,11 +3,22 @@ import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
+import { useAppContext } from 'contexts/AppContext';
+import useMount from 'hooks/UseMount';
+import ReportListItemModel from 'models/ReportListItemModel';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import ReportOptionsDateRange, { ReportQuarter } from './ReportOptionsDateRange';
 import './ReportOptionsFormFields.sass';
 
-const TurtleTagReportOptions: React.FC = () => {
+const TurtleTagReportOptions: React.FC<{currentReportListItem: ReportListItemModel}> = ({currentReportListItem}) => {
+  const [appContext] = useAppContext();
+  const { reset } = useFormContext();
+    
+  useMount(() => {
+    reset(appContext.reportOptions[currentReportListItem.reportId]);
+  });
+
   return (
     <>
       <FormFieldRow>
@@ -15,11 +26,11 @@ const TurtleTagReportOptions: React.FC = () => {
       </FormFieldRow>
       <FormFieldRow>
         <RadioButtonGroupFormField fieldName='filterDateType' labelText='Date type' >
-          <RadioButtonFormField fieldName='filterDateType' labelText='Date acquired' value='dateTypeAcquired' defaultChecked={true} />
+          <RadioButtonFormField fieldName='filterDateType' labelText='Date acquired' value='dateAcquired' defaultChecked={true} />
           <br />
-          <RadioButtonFormField fieldName='filterDateType' labelText='Date tagged' value='dateTypeTagged' />
+          <RadioButtonFormField fieldName='filterDateType' labelText='Date tagged' value='dateTagged' />
           <br />
-          <RadioButtonFormField fieldName='filterDateType' labelText='Date relinquished' value='dateTypeRelinquished' />
+          <RadioButtonFormField fieldName='filterDateType' labelText='Date relinquished' value='dateRelinquished' />
           <div className='turtle-tag-report-options include-non-relinquished-turtles'>
             <CheckboxFormField fieldName='includeNonRelinquishedTurtles' labelText='Include non-relinquished turtles' defaultChecked={true} />
           </div>

@@ -1,6 +1,7 @@
 import browserHistory from 'browserHistory';
 import ReportOptionsFormFields from 'components/ReportOptions/ReportOptionsFormFields';
 import Spinner from 'components/Spinner/Spinner';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import ReportListItemModel from 'models/ReportListItemModel';
 import ReportRouteStateModel from 'models/ReportRouteStateModel';
@@ -20,6 +21,7 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
   const { handleSubmit } = methods;
   const [currentReportListItem, setCurrentReportListItem] = useState({} as ReportListItemModel);
   const [showSpinner, setShowSpinner] = useState(false);
+  const [appContext, setAppContext] = useAppContext();
 
   useMount(() => {
     window.scrollTo(0, 0);
@@ -45,6 +47,8 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
 
   const onSubmit = handleSubmit(async (reportOptions: any) => {
     AuthenticationService.updateUserActivity();
+    appContext.reportOptions[currentReportListItem.reportId] = reportOptions;
+    setAppContext({ ...appContext, reportOptions: appContext.reportOptions });
     setTimeout(() => {
       const reportRouteState = {} as ReportRouteStateModel;
       reportRouteState.currentReportListItem = currentReportListItem;

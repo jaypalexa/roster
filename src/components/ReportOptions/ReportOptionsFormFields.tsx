@@ -8,7 +8,7 @@ import HatchlingsAndWashbacksByCountyReportOptions from './HatchlingsAndWashback
 import './ReportOptionsFormFields.sass';
 import TurtleTagReportOptions from './TurtleTagReportOptions';
 
-interface ReportOptionsFormFieldsProps {
+export interface ReportOptionsFormFieldsProps {
   currentReportListItem: ReportListItemModel;
   setShowSpinner: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -19,24 +19,24 @@ const ReportOptionsFormFields: React.FC<ReportOptionsFormFieldsProps> = ({curren
     /* FWC REPORTS (PDF) */
     case 'MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings':
     case 'MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks':
-      reportOptionsFormFields = <MarineTurtleCaptiveFacilityQuarterlyReportOptions />;
+      reportOptionsFormFields = <MarineTurtleCaptiveFacilityQuarterlyReportOptions currentReportListItem={currentReportListItem} />;
       break;
     case 'MarineTurtleHoldingFacilityQuarterlyReport':
-      reportOptionsFormFields = <MarineTurtleHoldingFacilityQuarterlyReportOptions />;
+      reportOptionsFormFields = <MarineTurtleHoldingFacilityQuarterlyReportOptions currentReportListItem={currentReportListItem} />;
       break;
     case 'TaggingDataForm':
-      reportOptionsFormFields = <TaggingDataFormOptions setShowSpinner={setShowSpinner} />
+      reportOptionsFormFields = <TaggingDataFormOptions currentReportListItem={currentReportListItem} setShowSpinner={setShowSpinner} />
       break;
 
     /* OTHER REPORTS (HTML) */
     case 'HatchlingsAndWashbacksByCountyReport':
-      reportOptionsFormFields = <HatchlingsAndWashbacksByCountyReportOptions />;
+      reportOptionsFormFields = <HatchlingsAndWashbacksByCountyReportOptions currentReportListItem={currentReportListItem} />;
       break;
     case 'TurtleInjuryReport':
-      reportOptionsFormFields = <TurtleInjuryReportOptions />;
+      reportOptionsFormFields = <TurtleInjuryReportOptions currentReportListItem={currentReportListItem} />;
       break;
     case 'TurtleTagReport':
-      reportOptionsFormFields = <TurtleTagReportOptions />;
+      reportOptionsFormFields = <TurtleTagReportOptions currentReportListItem={currentReportListItem} />;
       break;
     default:
       reportOptionsFormFields = <></>;

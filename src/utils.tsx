@@ -1,3 +1,7 @@
+export interface Dictionary<T> {
+  [key: string]: T;
+};
+
 export const sortByProperty = (propertyName: string) => {
   const value = (x: any) => x[propertyName];
   return (a: any, b: any) => {
@@ -5,7 +9,7 @@ export const sortByProperty = (propertyName: string) => {
     const value_b = value(b);
     return (((value_a > value_b) as any) - ((value_b > value_a) as any));
   }
-}
+};
 
 export const toNumber = (value: any): number => value ? Number(value || 0) : value;
 

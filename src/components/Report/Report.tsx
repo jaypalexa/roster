@@ -35,7 +35,7 @@ const Report: React.FC = () => {
       try {
         setShowSpinner(true)
         if (currentReportListItem.isPdf) {
-          const report = await ReportService.generateReport(currentReportListItem, reportOptions);
+          const report = await ReportService.generatePdfReport(currentReportListItem, reportOptions);
           setPdfReportUrl(report.url);
         } else {
           let content = <></>;
