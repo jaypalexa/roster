@@ -9,7 +9,7 @@ import Spinner from 'components/Spinner/Spinner';
 import TabHelper from 'helpers/TabHelper';
 import useMount from 'hooks/UseMount';
 import OrganizationModel from 'models/OrganizationModel';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -22,15 +22,10 @@ const Organization: React.FC = () => {
   const methods = useForm<OrganizationModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
-  const firstEditControlRef = useRef<HTMLInputElement>(null);
   const [showSpinner, setShowSpinner] = useState(false);
 
   useMount(() => {
     window.scrollTo(0, 0)
-  });
-
-  useMount(() => {
-    firstEditControlRef?.current?.focus();
   });
 
   useMount(() => {
@@ -104,7 +99,7 @@ const Organization: React.FC = () => {
               <div>
                 <section className='tab-content is-active'> {/* General Information */}
                   <FormFieldRow>
-                    <TextFormField fieldName='organizationName' labelText='Organization Name' validationOptions={{ required: 'Organization Name is required' }} refObject={firstEditControlRef} />
+                    <TextFormField fieldName='organizationName' labelText='Organization Name' validationOptions={{ required: 'Organization Name is required' }} />
                     <TextFormField fieldName='permitNumber' labelText='Permit Number' />
                     <TextFormField fieldName='contactName' labelText='Contact Name' />
                   </FormFieldRow>
