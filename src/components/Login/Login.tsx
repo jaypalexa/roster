@@ -23,7 +23,7 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
   const firstEditControlRef = useRef<HTMLInputElement>()
 
   useMount(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   });
 
   useMount(() => {

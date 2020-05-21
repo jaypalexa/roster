@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import SeaTurtleService from 'services/SeaTurtleService';
 import { constants } from 'utils';
-import './ReportOptions.sass';
+import './ReportOptionsFormFields.sass';
 
 interface TaggingDataFormOptionsProps {
   setShowSpinner: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,7 +37,7 @@ const TaggingDataFormOptions: React.FC<TaggingDataFormOptionsProps> = ({setShowS
   });
 
   return (
-    <div id='reportOptionsControls'>
+    <>
       <FormFieldRow>
         <ListFormField fieldName='seaTurtleId' labelText='Choose a turtle to generate the form for' listItems={seaTurtleListItems} />
       </FormFieldRow>
@@ -55,7 +55,7 @@ const TaggingDataFormOptions: React.FC<TaggingDataFormOptionsProps> = ({setShowS
           <RadioButtonFormField fieldName='useMorphometricsClosestTo' labelText='Date relinquished' value='dateRelinquished' />
         </RadioButtonGroupFormField>
       </FormFieldRow>
-    </div>
+    </>
   );
 };
 

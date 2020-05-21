@@ -97,7 +97,7 @@ const HatchlingsEvents: React.FC = () => {
   };
 
   useMount(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   });
 
   useMount(() => {

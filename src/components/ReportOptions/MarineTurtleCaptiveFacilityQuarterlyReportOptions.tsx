@@ -2,12 +2,12 @@ import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import React from 'react';
-import './ReportOptions.sass';
 import ReportOptionsDateRange, { ReportQuarter } from './ReportOptionsDateRange';
+import './ReportOptionsFormFields.sass';
 
 const MarineTurtleCaptiveFacilityQuarterlyReportOptions: React.FC = () => {
   return (
-    <div id='reportOptionsControls'>
+    <>
       <FormFieldRow>
         <ReportOptionsDateRange reportQuarter={ReportQuarter.Current} />
       </FormFieldRow>
@@ -17,7 +17,7 @@ const MarineTurtleCaptiveFacilityQuarterlyReportOptions: React.FC = () => {
       <FormFieldRow>
         <CheckboxFormField fieldName='includeDoaCounts' labelText='Include DOA counts by species for this period' />
       </FormFieldRow>
-    </div>
+    </>
   );
 };
 

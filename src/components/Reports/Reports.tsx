@@ -21,7 +21,7 @@ const Reports: React.FC = () => {
 
   const onChildNavigationClick = (reportListItem: ReportListItemModel) => {
     setTimeout(() => {
-      browserHistory.push(`/report/${reportListItem.reportId}`);
+      browserHistory.push(`/report-options/${reportListItem.reportId}`);
     }, 0);
   };
 

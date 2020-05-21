@@ -4,12 +4,12 @@ import FormFieldRow from 'components/FormFields/FormFieldRow';
 import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
 import React from 'react';
-import './ReportOptions.sass';
 import ReportOptionsDateRange, { ReportQuarter } from './ReportOptionsDateRange';
+import './ReportOptionsFormFields.sass';
 
 const MarineTurtleHoldingFacilityQuarterlyReportOptions: React.FC = () => {
   return (
-    <div id='reportOptionsControls'>
+    <>
       <FormFieldRow>
         <ReportOptionsDateRange reportQuarter={ReportQuarter.Current} />
       </FormFieldRow>
@@ -25,7 +25,7 @@ const MarineTurtleHoldingFacilityQuarterlyReportOptions: React.FC = () => {
           <RadioButtonFormField fieldName='groupTankDataBy' labelText='Date' value='date' />
         </RadioButtonGroupFormField>
       </FormFieldRow>
-    </div>
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ import './Home.sass';
 const Home: React.FC = () => {
 
   useMount(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   });
 
   return (

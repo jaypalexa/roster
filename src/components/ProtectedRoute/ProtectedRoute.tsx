@@ -1,6 +1,6 @@
 import Login from 'components/Login/Login';
 import React from 'react';
-import { Route, RouteProps, useLocation } from 'react-router';
+import { Route, RouteProps, useLocation } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
 
 interface ProtectedRouteProps extends RouteProps {
