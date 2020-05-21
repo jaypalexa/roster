@@ -32,7 +32,7 @@ const TurtleTagReportOptions: React.FC = () => {
         <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Tag type'>
           <CheckboxFormField fieldName='isPit' labelText='PIT' defaultChecked={true} />
         </FormFieldGroup>
-        <FormFieldGroup fieldClass='checkbox-group checkboxes-4' labelText='Flipper tags'>
+        <FormFieldGroup fieldClass='checkbox-group checkboxes-2' labelText='Flipper tags'>
           <CheckboxFormField fieldName='isLff' labelText='LFF' defaultChecked={true} />
           <CheckboxFormField fieldName='isRff' labelText='RFF' defaultChecked={true} />
           <CheckboxFormField fieldName='isLrf' labelText='LRF' defaultChecked={true} />
