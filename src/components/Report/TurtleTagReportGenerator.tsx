@@ -1,5 +1,4 @@
 import TurtleTagReportDetailItem from 'dtos/TurtleTagReportDetailItem';
-import TurtleTagReportDetailItemTag from 'dtos/TurtleTagReportDetailItemTag';
 import ReportListItemModel from 'models/ReportListItemModel';
 import React from 'react';
 import OrganizationService from 'services/OrganizationService';
@@ -9,19 +8,16 @@ import './TurtleTagReport.sass';
 const TurtleTagReportGenerator = {
   
   async generateReport(reportListItem: ReportListItemModel, reportOptions: any): Promise<JSX.Element> {
-    console.log('reportOptions', reportOptions);
-    const includeStrandingIdNumber = reportOptions.includeStrandingIdNumber;
-
     const organization = await OrganizationService.getOrganization();
     const reportData = await ReportService.getHtmlReportData<TurtleTagReportDetailItem>(reportListItem.reportId, reportOptions);
 
     const fetchTagTypeAndNumberValues = (item: TurtleTagReportDetailItem) => {
       if (item.tags.length > 0) {
-        return item.tags.map((x: TurtleTagReportDetailItemTag, index) => {
-          return <div key={`${item.seaTurtleId}-${index}-tag-value`}>
-              <span className='tag-label'>{`${x.label}: `}</span><span>{x.tagNumber}</span>
+        return item.tags.map((tag, index) =>
+            <div key={`${item.seaTurtleId}-${index}-tag-value`}>
+              <span className='tag-label'>{`${tag.label}: `}</span><span>{tag.tagNumber}</span>
             </div>
-          });
+          );
       } else {
         return <></>
       }
@@ -29,11 +25,11 @@ const TurtleTagReportGenerator = {
 
     const fetchDateTaggedValues = (item: TurtleTagReportDetailItem) => {
       if (item.tags.length > 0) {
-        return item.tags.map((x: TurtleTagReportDetailItemTag, index) => {
-          return <div key={`${item.seaTurtleId}-${index}-date-tagged`}>
-              <span>{x.dateTagged}</span>
-            </div>
-          });
+        return item.tags.map((tag, index) => 
+          <div key={`${item.seaTurtleId}-${index}-date-tagged`}>
+            <span>{tag.dateTagged}</span>
+          </div>
+        );
       } else {
         return <></>
       }
@@ -55,7 +51,7 @@ const TurtleTagReportGenerator = {
                 <th>Tag Location/Number</th>
                 <th>Date Tagged</th>
                 <th>Date Released</th>
-                {includeStrandingIdNumber ? <th>Stranding ID</th> : null}
+                {reportOptions.includeStrandingIdNumber ? <th>Stranding ID</th> : null}
               </tr>
             </thead>
             <tbody>
@@ -67,7 +63,7 @@ const TurtleTagReportGenerator = {
                   <td>{fetchTagTypeAndNumberValues(item)}</td>
                   <td className='date-value'>{fetchDateTaggedValues(item)}</td>
                   <td className='date-value'>{item.dateRelinquished}</td>
-                  {includeStrandingIdNumber ? <td>{item.strandingIdNumber}</td> : null}
+                  {reportOptions.includeStrandingIdNumber ? <td>{item.strandingIdNumber}</td> : null}
                 </tr>
               })
             }
