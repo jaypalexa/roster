@@ -58,14 +58,14 @@ const ReportService = {
     return report;
   },
 
-  async getHtmlReportData<T>(reportId: string, reportOptions: any): Promise<T[]> {
+  async getHtmlReportData<T>(reportId: string, reportOptions: any): Promise<T> {
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.httpMethod = 'POST';
     apiRequestPayload.resource = '/reports/{reportId}';
     apiRequestPayload.pathParameters = { reportId: reportId };
     apiRequestPayload.body = reportOptions;
 
-    const response = await ApiService.getMany<T>(apiRequestPayload);
+    const response = await ApiService.get<T>(apiRequestPayload);
     return response;
   },
   

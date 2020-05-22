@@ -40,7 +40,6 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
       const reportRouteState = {} as ReportRouteStateModel;
       reportRouteState.reportDefinition = reportDefinition;
       reportRouteState.reportOptions = reportOptions;
-
       browserHistory.push('/report', reportRouteState);
     }, 0);
   });

@@ -1,3 +1,4 @@
+import TurtleTagReportContent from 'dtos/TurtleTagReportContent';
 import TurtleTagReportDetailItem from 'dtos/TurtleTagReportDetailItem';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
@@ -9,7 +10,7 @@ const TurtleTagReportGenerator = {
   
   async generate(reportDefinition: ReportDefinitionModel, reportOptions: any): Promise<JSX.Element> {
     const organization = await OrganizationService.getOrganization();
-    const reportData = await ReportService.getHtmlReportData<TurtleTagReportDetailItem>(reportDefinition.reportId, reportOptions);
+    const reportData = await ReportService.getHtmlReportData<TurtleTagReportContent>(reportDefinition.reportId, reportOptions);
 
     const fetchTagTypeAndNumberValues = (item: TurtleTagReportDetailItem) => {
       if (item.tags.length > 0) {
@@ -41,7 +42,7 @@ const TurtleTagReportGenerator = {
         <h2 className='subtitle'>{reportOptions.dateFrom} - {reportOptions.dateThru}</h2>
         <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
 
-        {reportData.length === 0 ? <p className='has-text-centered'>No records meet the specified criteria.</p> 
+        {reportData.detailItems.length === 0 ? <p className='has-text-centered'>No records meet the specified criteria.</p> 
         : <>
           <table className='html-report-detail-table'>
             <thead>
@@ -56,7 +57,7 @@ const TurtleTagReportGenerator = {
             </thead>
             <tbody>
             {
-              reportData.map(item => {
+              reportData.detailItems.map(item => {
                 return <tr key={item.seaTurtleId}>
                   <td>{item.sidNumber}</td>
                   <td>{item.seaTurtleName}</td>

@@ -1,4 +1,4 @@
-import TurtleTagReportDetailItemTag from "./TurtleTagReportDetailItemTag";
+import TurtleTagReportDetailItemTag from './TurtleTagReportDetailItemTag';
 
 export default interface TurtleTagReportDetailItem {
   [key: string]: any;
