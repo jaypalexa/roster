@@ -67,7 +67,7 @@ const Report: React.FC = () => {
   return (
     <div id='report'>
       <Spinner isActive={showSpinner} />
-      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/reports'>Reports</Link></li>
@@ -75,9 +75,9 @@ const Report: React.FC = () => {
           <li className='is-active'><a href='/#' aria-current='page'>{currentReportListItem.reportName}</a></li>
         </ul>
       </nav>
-      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
-          <li><Link to={`/report-options/${currentReportListItem.reportId}`}>Report Options</Link></li>
+          <li><Link to={`/report-options/${currentReportListItem.reportId}`}>&#10094; Report Options</Link></li>
         </ul>
       </nav>
       <div className='columns is-centered'>

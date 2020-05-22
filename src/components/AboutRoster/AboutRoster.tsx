@@ -90,13 +90,13 @@ const AboutRoster: React.FC = () => {
 
   return (
     <div id='aboutRoster'>
-      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li className='is-active'><a href='/#' aria-current='page'>About ROSTER</a></li>
         </ul>
       </nav>
-      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>&#10094; Home</Link></li>
         </ul>
@@ -110,7 +110,7 @@ const AboutRoster: React.FC = () => {
             <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
               GitHub
             </a>
-            &nbsp;|&nbsp;v0.20200522.0900 
+            &nbsp;|&nbsp;v0.20200522.0905
             {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onUpdateAvailableClick}>update available</span><span>)</span></p> : null}
             {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
           </div>

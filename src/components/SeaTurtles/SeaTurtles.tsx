@@ -399,13 +399,13 @@ const SeaTurtles: React.FC = () => {
         mapData={mapData} 
         onCloseClick={() => setIsMapDialogOpen(false)} 
       />
-      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li className='is-active'><a href='/#' aria-current='page'>Sea Turtles</a></li>
         </ul>
       </nav>
-      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>&#10094; Home</Link></li>
         </ul>

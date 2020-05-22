@@ -303,14 +303,14 @@ const SeaTurtleTags: React.FC = () => {
         onNo={onDialogNo}
         onCancel={onDialogCancel}
       />
-      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
           <li className='is-active'><a href='/#' aria-current='page'>Tags</a></li>
         </ul>
       </nav>
-      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/sea-turtles'>&#10094; Sea Turtles</Link></li>
         </ul>

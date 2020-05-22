@@ -323,13 +323,13 @@ const HatchlingsEvents: React.FC = () => {
         onNo={onDialogNo}
         onCancel={onDialogCancel}
       />
-      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li className='is-active'><a href='/#' aria-current='page'>Hatchlings Events</a></li>
         </ul>
       </nav>
-      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>&#10094; Home</Link></li>
         </ul>

@@ -61,14 +61,14 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
   return (
     <div id='reportOptions'>
       <Spinner isActive={showSpinner} />
-      <nav className='breadcrumb shown-when-not-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/reports'>Reports</Link></li>
           <li className='is-active'><a href='/#' aria-current='page'>Report Options</a></li>
         </ul>
       </nav>
-      <nav className='breadcrumb shown-when-mobile' aria-label='breadcrumbs'>
+      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
         <ul>
           <li><Link to='/reports'>&#10094; Reports</Link></li>
         </ul>
