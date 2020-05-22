@@ -9,4 +9,5 @@ export default interface HatchlingsAndWashbacksByCountyReportCountyCountDto {
   otherCount: HatchlingsAndWashbacksByCountyReportDetailItemDto;
   unknownCount: HatchlingsAndWashbacksByCountyReportDetailItemDto;
   totalCount: HatchlingsAndWashbacksByCountyReportDetailItemDto;
+  percentageOfGrandTotal : HatchlingsAndWashbacksByCountyReportDetailItemDto;
 };

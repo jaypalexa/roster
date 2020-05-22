@@ -63,8 +63,8 @@ const TurtleTagReportGenerator = {
                   <td>{item.sidNumber}</td>
                   <td>{item.seaTurtleName}</td>
                   <td>{fetchTagTypeAndNumberValues(item)}</td>
-                  <td className='date-value'>{fetchDateTaggedValues(item)}</td>
-                  <td className='date-value'>{item.dateRelinquished}</td>
+                  <td className='white-space-nowrap'>{fetchDateTaggedValues(item)}</td>
+                  <td className='white-space-nowrap'>{item.dateRelinquished}</td>
                   {reportOptions.includeStrandingIdNumber ? <td>{item.strandingIdNumber}</td> : null}
                 </tr>
               })
