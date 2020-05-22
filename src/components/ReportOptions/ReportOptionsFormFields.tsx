@@ -2,41 +2,41 @@ import MarineTurtleCaptiveFacilityQuarterlyReportOptions from 'components/Report
 import MarineTurtleHoldingFacilityQuarterlyReportOptions from 'components/ReportOptions/MarineTurtleHoldingFacilityQuarterlyReportOptions';
 import TaggingDataFormOptions from 'components/ReportOptions/TaggingDataFormOptions';
 import TurtleInjuryReportOptions from 'components/ReportOptions/TurtleInjuryReportOptions';
-import ReportListItemModel from 'models/ReportListItemModel';
+import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import HatchlingsAndWashbacksByCountyReportOptions from './HatchlingsAndWashbacksByCountyReportOptions';
 import './ReportOptionsFormFields.sass';
 import TurtleTagReportOptions from './TurtleTagReportOptions';
 
 export interface ReportOptionsFormFieldsProps {
-  currentReportListItem: ReportListItemModel;
+  reportDefinition: ReportDefinitionModel;
   setShowSpinner: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ReportOptionsFormFields: React.FC<ReportOptionsFormFieldsProps> = ({currentReportListItem, setShowSpinner}) => {
+const ReportOptionsFormFields: React.FC<ReportOptionsFormFieldsProps> = ({reportDefinition, setShowSpinner}) => {
   var reportOptionsFormFields = <></>;
-  switch (currentReportListItem.reportId) {
+  switch (reportDefinition.reportId) {
     /* FWC REPORTS (PDF) */
     case 'MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings':
     case 'MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks':
-      reportOptionsFormFields = <MarineTurtleCaptiveFacilityQuarterlyReportOptions currentReportListItem={currentReportListItem} />;
+      reportOptionsFormFields = <MarineTurtleCaptiveFacilityQuarterlyReportOptions reportDefinition={reportDefinition} />;
       break;
     case 'MarineTurtleHoldingFacilityQuarterlyReport':
-      reportOptionsFormFields = <MarineTurtleHoldingFacilityQuarterlyReportOptions currentReportListItem={currentReportListItem} />;
+      reportOptionsFormFields = <MarineTurtleHoldingFacilityQuarterlyReportOptions reportDefinition={reportDefinition} />;
       break;
     case 'TaggingDataForm':
-      reportOptionsFormFields = <TaggingDataFormOptions currentReportListItem={currentReportListItem} setShowSpinner={setShowSpinner} />
+      reportOptionsFormFields = <TaggingDataFormOptions reportDefinition={reportDefinition} setShowSpinner={setShowSpinner} />
       break;
 
     /* OTHER REPORTS (HTML) */
     case 'HatchlingsAndWashbacksByCountyReport':
-      reportOptionsFormFields = <HatchlingsAndWashbacksByCountyReportOptions currentReportListItem={currentReportListItem} />;
+      reportOptionsFormFields = <HatchlingsAndWashbacksByCountyReportOptions reportDefinition={reportDefinition} />;
       break;
     case 'TurtleInjuryReport':
-      reportOptionsFormFields = <TurtleInjuryReportOptions currentReportListItem={currentReportListItem} />;
+      reportOptionsFormFields = <TurtleInjuryReportOptions reportDefinition={reportDefinition} />;
       break;
     case 'TurtleTagReport':
-      reportOptionsFormFields = <TurtleTagReportOptions currentReportListItem={currentReportListItem} />;
+      reportOptionsFormFields = <TurtleTagReportOptions reportDefinition={reportDefinition} />;
       break;
     default:
       reportOptionsFormFields = <></>;

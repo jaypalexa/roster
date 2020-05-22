@@ -1,8 +1,8 @@
-import ReportListItemModel from 'models/ReportListItemModel';
+import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import ReportModel from 'models/ReportModel';
 import ApiService, { ApiRequestPayload } from 'services/ApiService';
 
-const reports = [
+const reportDefinitions = [
   { reportId: 'DisorientationIncidentForm', reportName: 'Disorientation Incident Form', canGenerate: false, isPdf: true, blankFileName: 'Disorientation Incident Report form.pdf' },
   { reportId: 'DisorientationIncidentFormDirections', reportName: 'Disorientation Incident Form Directions', canGenerate: false, isPdf: true, blankFileName: 'Disorientation Incident Report form directions.pdf' },
   { reportId: 'EducationalPresentationsUsingTurtles', reportName: 'Educational Presentations Using Turtles', canGenerate: false, isPdf: true, blankFileName: 'Educational Presentation form.pdf' },
@@ -28,52 +28,36 @@ const reports = [
 
 const ReportService = {
   
-  async generatePdfReport(reportListItem: ReportListItemModel, reportOptions: any): Promise<ReportModel> {
+  getBlankFormList(): ReportDefinitionModel[] {
+    return reportDefinitions.filter(x => x.isPdf);
+  },
+
+  getReportList(): ReportDefinitionModel[] {
+    return reportDefinitions.filter(x => x.canGenerate);
+  },
+
+  getReportDefinition(reportId: string): ReportDefinitionModel {
+    return reportDefinitions.filter(x => x.reportId === reportId)[0];
+  },
+
+  async generatePdfReport(reportId: string, reportOptions: any): Promise<ReportModel> {
     
     const report = {} as ReportModel
 
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.httpMethod = 'POST';
     apiRequestPayload.resource = '/reports/{reportId}';
-    apiRequestPayload.pathParameters = { reportId: reportListItem.reportId };
+    apiRequestPayload.pathParameters = { reportId: reportId };
     apiRequestPayload.body = reportOptions;
   
-    const response = await ApiService.execute(apiRequestPayload);
-    // console.log('ReportService::getReport::response = ', response);
-    report.data = response;
-
-    const buffer = new Buffer(response, 'base64');
-    // console.log('ReportService::getReport::buffer = ', buffer);
-
-    // const text = buffer.toString('utf8');
-    // console.log('text = ', text);
-
+    report.data = await ApiService.execute(apiRequestPayload);
+    const buffer = new Buffer(report.data, 'base64');
     const blob = new Blob([buffer], { type: 'application/pdf' });
-    // console.log('ReportService::getReport::blob = ', blob);
-  
-    const url = URL.createObjectURL(blob);
-    // console.log('ReportService::getReport::url = ', url);
-    report.url = url;
+    report.url = URL.createObjectURL(blob);
     
     return report;
   },
 
-  getReportList(): ReportListItemModel[] {
-    const listItems = reports.filter(x => x.canGenerate);
-    return listItems;
-  },
-
-  getReportListItem(reportId: string): ReportListItemModel {
-    const listItem = reports.filter(x => x.reportId === reportId)[0];
-    return listItem;
-  },
-
-  getBlankFormList(): ReportListItemModel[] {
-    const listItems = reports.filter(x => x.isPdf);
-    return listItems;
-  },
-
-    
   async getHtmlReportData<T>(reportId: string, reportOptions: any): Promise<T[]> {
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.httpMethod = 'POST';

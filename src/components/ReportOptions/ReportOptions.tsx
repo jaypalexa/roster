@@ -3,15 +3,13 @@ import ReportOptionsFormFields from 'components/ReportOptions/ReportOptionsFormF
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
-import ReportListItemModel from 'models/ReportListItemModel';
+import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import ReportRouteStateModel from 'models/ReportRouteStateModel';
 import React, { useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
-import { constants } from 'utils';
 import './ReportOptions.sass';
 
 type ReportOptionsParams = { reportId: string };
@@ -19,7 +17,7 @@ type ReportOptionsParams = { reportId: string };
 const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({match}) => {
   const methods = useForm<any>({ mode: 'onChange' });
   const { handleSubmit } = methods;
-  const [currentReportListItem, setCurrentReportListItem] = useState({} as ReportListItemModel);
+  const [reportDefinition, setReportDefinition] = useState({} as ReportDefinitionModel);
   const [showSpinner, setShowSpinner] = useState(false);
   const [appContext, setAppContext] = useAppContext();
 
@@ -28,30 +26,19 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
   });
 
   useMount(() => {
-    const fetchReportListItem = async () => {
-      try {
-        setShowSpinner(true);
-        const reportListItem = ReportService.getReportListItem(match.params.reportId);
-        setCurrentReportListItem(reportListItem);
-      } 
-      catch (err) {
-        console.log(err);
-        toast.error(constants.ERROR.GENERIC);
-      }
-      finally {
-        setShowSpinner(false);
-      }
-    };
-    fetchReportListItem();
+    setShowSpinner(true);
+    const definition = ReportService.getReportDefinition(match.params.reportId);
+    setReportDefinition(definition);
+    setShowSpinner(false);
   });
 
   const onSubmit = handleSubmit(async (reportOptions: any) => {
     AuthenticationService.updateUserActivity();
-    appContext.reportOptions[currentReportListItem.reportId] = reportOptions;
+    appContext.reportOptions[reportDefinition.reportId] = reportOptions;
     setAppContext({ ...appContext, reportOptions: appContext.reportOptions });
     setTimeout(() => {
       const reportRouteState = {} as ReportRouteStateModel;
-      reportRouteState.currentReportListItem = currentReportListItem;
+      reportRouteState.reportDefinition = reportDefinition;
       reportRouteState.reportOptions = reportOptions;
 
       browserHistory.push('/report', reportRouteState);
@@ -76,10 +63,10 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
       <div className='columns is-centered'>
         <div className='column is-four-fifths'>
           <div className='report-options'>
-            <h1 className='title has-text-centered'>{currentReportListItem.reportName} Options</h1>
+            <h1 className='title has-text-centered'>{reportDefinition.reportName} Options</h1>
             <FormContext {...methods} >
               <form onSubmit={onSubmit}>
-                <ReportOptionsFormFields currentReportListItem={currentReportListItem} setShowSpinner={setShowSpinner} />
+                <ReportOptionsFormFields reportDefinition={reportDefinition} setShowSpinner={setShowSpinner} />
                 <div className='field is-grouped form-action-buttons'>
                   <p className='control'>
                     <input type='submit' className='button is-success is-fixed-width-medium' value='Generate' />

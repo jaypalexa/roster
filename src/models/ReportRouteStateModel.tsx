@@ -1,7 +1,7 @@
-import ReportListItemModel from "./ReportListItemModel";
+import ReportDefinitionModel from "./ReportDefinitionModel";
 
 export default interface ReportRouteStateModel {
   [key: string]: any;
-  currentReportListItem: ReportListItemModel;
+  reportDefinition: ReportDefinitionModel;
   reportOptions: any;
 };

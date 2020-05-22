@@ -3,9 +3,9 @@ import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import OrganizationService from 'services/OrganizationService';
 import ReportService from 'services/ReportService';
-import './TurtleTagReport.sass';
+import './HatchlingsAndWashbacksByCountyReport.sass';
 
-const TurtleTagReportGenerator = {
+const HatchlingsAndWashbacksByCountyReportGenerator = {
   
   async generate(reportDefinition: ReportDefinitionModel, reportOptions: any): Promise<JSX.Element> {
     const organization = await OrganizationService.getOrganization();
@@ -78,4 +78,4 @@ const TurtleTagReportGenerator = {
  
 }
 
-export default TurtleTagReportGenerator;
+export default HatchlingsAndWashbacksByCountyReportGenerator;

@@ -15,17 +15,17 @@ import { constants } from 'utils';
 import { ReportOptionsFormFieldsProps } from './ReportOptionsFormFields';
 import './ReportOptionsFormFields.sass';
 
-const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({currentReportListItem, setShowSpinner}) => {
+const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportDefinition, setShowSpinner}) => {
   const [appContext] = useAppContext();
   const { reset } = useFormContext();
   const [seaTurtleListItems, setSeaTurtleListItems] = useState([] as Array<NameValuePair>);
 
   useMount(() => {
-    const fetchReportListItem = async () => {
+    const fetchReportDefinition = async () => {
       try {
         setShowSpinner(true);
         setSeaTurtleListItems(await SeaTurtleService.getSeaTurtleListItems());
-        reset(appContext.reportOptions[currentReportListItem.reportId]);
+        reset(appContext.reportOptions[reportDefinition.reportId]);
       } 
       catch (err) {
         console.log(err);
@@ -35,7 +35,7 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({current
         setShowSpinner(false);
       }
     };
-    fetchReportListItem();
+    fetchReportDefinition();
   });
 
   return (

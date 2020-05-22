@@ -1,4 +1,4 @@
-export default interface ReportListItemModel {
+export default interface ReportDefinitionModel {
   [key: string]: any;
   reportId: string;
   reportName: string;

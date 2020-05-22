@@ -105,14 +105,28 @@ const AboutRoster: React.FC = () => {
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>About ROSTER</h1>
           <div className='has-text-centered'>
-            Copyright &copy; 2006-2020 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='TurtleGeek.com'>TurtleGeek.com</a>
-            &nbsp;|&nbsp;
-            <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
-              GitHub
-            </a>
-            &nbsp;|&nbsp;v0.20200522.0905
-            {isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onUpdateAvailableClick}>update available</span><span>)</span></p> : null}
-            {!isShowUpdateAvailable ? <p><span>(</span><span className='span-link' onClick={onCheckForUpdateClick}>check for update</span>{lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}<span>)</span></p> : null}
+            <p>v0.20200522.1015</p>
+            {isShowUpdateAvailable
+              ? <p>
+                  <span>(</span>
+                  <span className='span-link' onClick={onUpdateAvailableClick}>update available</span>
+                  <span>)</span>
+                </p>
+              : <p>
+                  <span>(</span>
+                  <span className='span-link' onClick={onCheckForUpdateClick}>check for update</span>
+                  {lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}
+                  <span>)</span>
+                </p>
+            }
+            <br />
+            <p>
+              Copyright &copy; 2006-2020 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='TurtleGeek.com'>TurtleGeek.com</a>
+              &nbsp;|&nbsp;
+              <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
+                GitHub
+              </a>
+            </p>
           </div>
         </div>
       </div>

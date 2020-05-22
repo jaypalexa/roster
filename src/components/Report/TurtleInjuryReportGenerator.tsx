@@ -1,4 +1,4 @@
-import ReportListItemModel from 'models/ReportListItemModel';
+import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import OrganizationService from 'services/OrganizationService';
 import SeaTurtleService from 'services/SeaTurtleService';
@@ -6,7 +6,7 @@ import './TurtleInjuryReport.sass';
 
 const TurtleInjuryReportGenerator = {
   
-  async generateReport(reportListItem: ReportListItemModel, reportOptions: any): Promise<JSX.Element> {
+  async generate(reportDefinition: ReportDefinitionModel, reportOptions: any): Promise<JSX.Element> {
     const organization = await OrganizationService.getOrganization();
     const seaTurtles = (await SeaTurtleService.getSeaTurtles())
       .filter(x => 
@@ -38,7 +38,7 @@ const TurtleInjuryReportGenerator = {
 
     const contents = <>
       <div id='turtleInjuryReport'>
-        <h1 className='title'>{reportListItem.reportName}</h1>
+        <h1 className='title'>{reportDefinition.reportName}</h1>
         <h2 className='subtitle'>{reportOptions.dateFrom} - {reportOptions.dateThru}</h2>
         <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
 

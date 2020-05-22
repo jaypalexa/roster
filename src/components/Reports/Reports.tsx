@@ -2,34 +2,34 @@ import browserHistory from 'browserHistory';
 import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
-import ReportListItemModel from 'models/ReportListItemModel';
+import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReportService from 'services/ReportService';
 import './Reports.sass';
 
 const Reports: React.FC = () => {
-  const [currentReportListItems, setCurrentReportListItems] = useState([] as Array<ReportListItemModel>);
+  const [reportDefinitions, setReportDefinitions] = useState([] as Array<ReportDefinitionModel>);
   const [showSpinner, setShowSpinner] = useState(false);
 
   useMount(() => {
     setShowSpinner(true);
-    const listItems = ReportService.getReportList();
-    setCurrentReportListItems(listItems);
+    const definitions = ReportService.getReportList();
+    setReportDefinitions(definitions);
     setShowSpinner(false);
   });
 
-  const onChildNavigationClick = (reportListItem: ReportListItemModel) => {
+  const onChildNavigationClick = (reportDefinition: ReportDefinitionModel) => {
     setTimeout(() => {
-      browserHistory.push(`/report-options/${reportListItem.reportId}`);
+      browserHistory.push(`/report-options/${reportDefinition.reportId}`);
     }, 0);
   };
 
-  const renderChildNavigation = (reportListItem: ReportListItemModel) => {
+  const renderChildNavigation = (reportDefinition: ReportDefinitionModel) => {
     return <ChildNavigation 
-              key={reportListItem.reportId} 
-              itemName={reportListItem.reportName} 
-              onClick={() => onChildNavigationClick(reportListItem)}
+              key={reportDefinition.reportId} 
+              itemName={reportDefinition.reportName} 
+              onClick={() => onChildNavigationClick(reportDefinition)}
             />
   };
 
@@ -51,13 +51,13 @@ const Reports: React.FC = () => {
         <div className='column is-four-fifths'>
 
           <h1 className='title has-text-centered'>FWC Reports</h1>
-          {currentReportListItems
+          {reportDefinitions
             .filter(item => item.isPdf)
             .map((item) => renderChildNavigation(item))
           }
 
           <h1 className='title has-text-centered'>Other Reports</h1>
-          {currentReportListItems
+          {reportDefinitions
             .filter(item => !item.isPdf)
             .map((item) => renderChildNavigation(item))
           }
