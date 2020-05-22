@@ -1,5 +1,6 @@
-import TurtleTagReportContent from 'dtos/TurtleTagReportContent';
-import TurtleTagReportDetailItem from 'dtos/TurtleTagReportDetailItem';
+import TurtleTagReportOptionsDto from 'dtos/ReportOptions/TurtleTagReportOptionsDto';
+import TurtleTagReportContentDto from 'dtos/ReportResponses/TurtleTagReportContentDto';
+import TurtleTagReportDetailItemDto from 'dtos/ReportResponses/TurtleTagReportDetailItemDto';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import OrganizationService from 'services/OrganizationService';
@@ -8,11 +9,11 @@ import './TurtleTagReport.sass';
 
 const TurtleTagReportGenerator = {
   
-  async generate(reportDefinition: ReportDefinitionModel, reportOptions: any): Promise<JSX.Element> {
+  async generate(reportDefinition: ReportDefinitionModel, reportOptions: TurtleTagReportOptionsDto): Promise<JSX.Element> {
     const organization = await OrganizationService.getOrganization();
-    const reportData = await ReportService.getHtmlReportData<TurtleTagReportContent>(reportDefinition.reportId, reportOptions);
+    const reportData = await ReportService.getHtmlReportData<TurtleTagReportContentDto>(reportDefinition.reportId, reportOptions);
 
-    const fetchTagTypeAndNumberValues = (item: TurtleTagReportDetailItem) => {
+    const fetchTagTypeAndNumberValues = (item: TurtleTagReportDetailItemDto) => {
       if (item.tags.length > 0) {
         return item.tags.map((tag, index) =>
             <div key={`${item.seaTurtleId}-${index}-tag-value`}>
@@ -24,7 +25,7 @@ const TurtleTagReportGenerator = {
       }
     }
 
-    const fetchDateTaggedValues = (item: TurtleTagReportDetailItem) => {
+    const fetchDateTaggedValues = (item: TurtleTagReportDetailItemDto) => {
       if (item.tags.length > 0) {
         return item.tags.map((tag, index) => 
           <div key={`${item.seaTurtleId}-${index}-date-tagged`}>

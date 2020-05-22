@@ -1,5 +1,5 @@
-import TurtleTagReportContent from 'dtos/TurtleTagReportContent';
-import TurtleTagReportDetailItem from 'dtos/TurtleTagReportDetailItem';
+import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
+import HatchlingsAndWashbacksByCountyReportContentDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReportContentDto';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import OrganizationService from 'services/OrganizationService';
@@ -8,36 +8,12 @@ import './HatchlingsAndWashbacksByCountyReport.sass';
 
 const HatchlingsAndWashbacksByCountyReportGenerator = {
   
-  async generate(reportDefinition: ReportDefinitionModel, reportOptions: any): Promise<JSX.Element> {
+  async generate(reportDefinition: ReportDefinitionModel, reportOptions: ReportOptionsDateRangeDto): Promise<JSX.Element> {
     const organization = await OrganizationService.getOrganization();
-    const reportData = await ReportService.getHtmlReportData<TurtleTagReportContent>(reportDefinition.reportId, reportOptions);
-
-    const fetchTagTypeAndNumberValues = (item: TurtleTagReportDetailItem) => {
-      if (item.tags.length > 0) {
-        return item.tags.map((tag, index) =>
-            <div key={`${item.seaTurtleId}-${index}-tag-value`}>
-              <span className='tag-label'>{`${tag.label}: `}</span><span>{tag.tagNumber}</span>
-            </div>
-          );
-      } else {
-        return <></>
-      }
-    }
-
-    const fetchDateTaggedValues = (item: TurtleTagReportDetailItem) => {
-      if (item.tags.length > 0) {
-        return item.tags.map((tag, index) => 
-          <div key={`${item.seaTurtleId}-${index}-date-tagged`}>
-            <span>{tag.dateTagged}</span>
-          </div>
-        );
-      } else {
-        return <></>
-      }
-    }
+    const reportData = await ReportService.getHtmlReportData<HatchlingsAndWashbacksByCountyReportContentDto>(reportDefinition.reportId, reportOptions);
 
     const contents = <>
-      <div id='turtleTagReport'>
+      <div id='hatchlingsAndWashbacksByCountyReport'>
         <h1 className='title'>{reportDefinition.reportName}</h1>
         <h2 className='subtitle'>{reportOptions.dateFrom} - {reportOptions.dateThru}</h2>
         <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
@@ -47,27 +23,28 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
           <table className='html-report-detail-table'>
             <thead>
               <tr>
-                <th>SID #</th>
-                <th>Turtle Name</th>
-                <th>Tag Location/Number</th>
-                <th>Date Tagged</th>
-                <th>Date Released</th>
-                {reportOptions.includeStrandingIdNumber ? <th>Stranding ID</th> : null}
+                <th>County</th>
+                <th>Hatchlings Acquired</th>
+                <th>Hatchlings DOA</th>
+                <th>{`Washbacks Acquired (< 5cm)`}</th>
+                <th>{`Washbacks Acquired (>= 5cm)`}</th>
+                <th>{`Washbacks DOA (< 5cm)`}</th>
+                <th>{`Washbacks DOA (>= 5cm)`}</th>
               </tr>
             </thead>
             <tbody>
-            {
-              reportData.detailItems.map(item => {
-                return <tr key={item.seaTurtleId}>
-                  <td>{item.sidNumber}</td>
-                  <td>{item.seaTurtleName}</td>
-                  <td>{fetchTagTypeAndNumberValues(item)}</td>
-                  <td className='date-value'>{fetchDateTaggedValues(item)}</td>
-                  <td className='date-value'>{item.dateRelinquished}</td>
-                  {reportOptions.includeStrandingIdNumber ? <td>{item.strandingIdNumber}</td> : null}
+            {/* {
+              reportData.countyCounts.map(item => {
+                return <tr key={item.countyName}>
+                  <td>{item.ccCount}</td>
+                  <td>{item.cmCount}</td>
+                  <td>{item.dcCount}</td>
+                  <td>{item.otherCount}</td>
+                  <td>{item.unknownCount}</td>
+                  <td>{item.totalCount}</td>
                 </tr>
               })
-            }
+            } */}
             </tbody>
           </table>
         </>}
