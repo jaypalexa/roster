@@ -1,6 +1,7 @@
 import browserHistory from 'browserHistory';
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Router } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,8 +11,11 @@ import AuthenticationService from 'services/AuthenticationService';
 import './App.sass';
 
 const App: React.FC = () => {
+
+  const [appContext] = useAppContext();
   const [loggedInUserName, setLoggedInUserName] = useState('');
   const [isOnline, setIsOnline] = useState(true);
+  const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
 
   const onlineOfflineHandler = (event: Event) => {
     setIsOnline(navigator.onLine);
@@ -92,6 +96,10 @@ const App: React.FC = () => {
     }
     startSessionActivityPolling();
   });
+  
+  useEffect(() => {
+    setIsShowUpdateAvailable(appContext.isUpdateAvailable || false);
+  }, [appContext.isUpdateAvailable]);
 
   return (
     <div id='app'>
@@ -123,7 +131,9 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/reports' onClick={closeMenu}>Reports</Link>
               <Link className='navbar-item' to='/blank-forms' onClick={closeMenu}>Blank Forms</Link>
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
-              <Link className='navbar-item' to='/about-roster' onClick={closeMenu}>About ROSTER</Link>
+              <Link className='navbar-item' to='/about-roster' onClick={closeMenu}>
+                {!isShowUpdateAvailable ? <div className='badge' title='Update available'></div> : null}
+                About ROSTER</Link>
             </div>
             <div className='navbar-end'>
               <Link className={`navbar-item ${loggedInUserName ? 'hidden' : ''}`} to='/login' onClick={onLogInClick}>Log In</Link>

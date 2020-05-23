@@ -1,3 +1,4 @@
+import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -6,6 +7,8 @@ import * as serviceWorker from 'serviceWorker';
 import './AboutRoster.sass';
 
 const AboutRoster: React.FC = () => {
+
+  const [appContext, setAppContext] = useAppContext();
   const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
@@ -86,7 +89,8 @@ const AboutRoster: React.FC = () => {
 
   useEffect(() => {
     setIsShowUpdateAvailable(isUpdateAvailable);
-  }, [isUpdateAvailable]);
+    setAppContext({ ...appContext, isUpdateAvailable: isUpdateAvailable });
+  }, [isUpdateAvailable, appContext, setAppContext]);
 
   return (
     <div id='aboutRoster'>
@@ -105,7 +109,7 @@ const AboutRoster: React.FC = () => {
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>About ROSTER</h1>
           <div className='has-text-centered'>
-            <p>v0.20200523.1815</p>
+            <p>v0.20200523.1900</p>
             {isShowUpdateAvailable
               ? <p>
                   <span>(</span>
