@@ -132,7 +132,7 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/blank-forms' onClick={closeMenu}>Blank Forms</Link>
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
               <Link className='navbar-item' to='/about-roster' onClick={closeMenu}>
-                {!isShowUpdateAvailable ? <div className='badge' title='Update available'></div> : null}
+                {isShowUpdateAvailable ? <div className='badge' title='Update available'></div> : null}
                 About ROSTER</Link>
             </div>
             <div className='navbar-end'>
