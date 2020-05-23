@@ -58,8 +58,8 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | Report | Notes |
 |--------|-------|
 | &#10065; Marine Turtle Holding Facility Quarterly Report | [ generate \| blank ]  |
-| &#10065; Marine Turtle Captive Facility Quarterly Report for Hatchlings | [ generate \| blank ]  |
-| &#10065; Marine Turtle Captive Facility Quarterly Report for Washbacks | [ generate \| blank ]  |
+| &check; Marine Turtle Captive Facility Quarterly Report for Hatchlings | [ generate \| blank ]  |
+| &check; Marine Turtle Captive Facility Quarterly Report for Washbacks | [ generate \| blank ]  |
 | &check; Monitoring for Beach Restoration Projects | [ blank ]  |
 | &check; Disorientation Incident Form | [ blank ]  |
 | &check; Disorientation Incident Form Directions | [ blank ]  |
@@ -73,16 +73,16 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | &check; Public Turtle Watch Summary Form | [ blank ]  |
 | &check; Stranding and Salvage Form | [ blank ]  |
 | &check; Tag Request Form | [ blank ]  |
-| &#10065; Tagging Data Form | [ generate \| blank ]  |
+| &check; Tagging Data Form | [ generate \| blank ]  |
 | &check; Turtle Transfer Form | [ blank ]  |
 
 ### Reports - Other
 
 | Report | Notes |
 |--------|-------|
-| &#10065; Turtle Injury Report | [ generate ]  |
-| &#10065; Turtle Tag Report | [ generate ]  |
-| &#10065; Hatchlings and Washbacks by County Report | [ generate ]  |
+| &check; Turtle Injury Report | [ generate ]  |
+| &check; Turtle Tag Report | [ generate ]  |
+| &check; Hatchlings and Washbacks by County Report | [ generate ]  |
 
 ---
 

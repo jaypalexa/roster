@@ -42,6 +42,12 @@ const ReportService = {
 
   async generatePdfReport(reportId: string, reportOptions: any): Promise<ReportModel> {
     
+    if (reportId === 'MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings') {
+      reportOptions.subjectType = 'Hatchlings';
+    } else if (reportId === 'MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks') {
+      reportOptions.subjectType = 'Washbacks';
+    }
+    
     const report = {} as ReportModel
 
     const apiRequestPayload = {} as ApiRequestPayload;

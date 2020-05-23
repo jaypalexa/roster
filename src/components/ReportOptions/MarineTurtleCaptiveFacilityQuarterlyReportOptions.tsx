@@ -20,7 +20,7 @@ const MarineTurtleCaptiveFacilityQuarterlyReportOptions: React.FC<{reportDefinit
   return (
     <>
       <FormFieldRow>
-        <ReportOptionsDateRange reportQuarter={ReportQuarter.Current} />
+        <ReportOptionsDateRange reportQuarter={ReportQuarter.Previous} />
       </FormFieldRow>
       <FormFieldRow>
         <TextareaFormField fieldName='comments' labelText='Comments' />

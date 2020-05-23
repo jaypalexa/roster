@@ -22,7 +22,7 @@ const MarineTurtleHoldingFacilityQuarterlyReportOptions: React.FC<{reportDefinit
   return (
     <>
       <FormFieldRow>
-        <ReportOptionsDateRange reportQuarter={ReportQuarter.Current} />
+        <ReportOptionsDateRange reportQuarter={ReportQuarter.Previous} />
       </FormFieldRow>
       <FormFieldRow>
         <FormFieldGroup fieldClass='checkbox-group checkboxes-3' labelText='Options'>
