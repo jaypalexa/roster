@@ -1,19 +1,21 @@
 import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
-import HatchlingsAndWashbacksByCountyReportContentDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReportContentDto';
-import HatchlingsAndWashbacksByCountyReportDetailItemDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReportDetailItemDto';
+import ContentDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReport/ContentDto';
+import DetailItemDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReport/DetailItemDto';
+import PercentageOfGrandTotalDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReport/PercentageOfGrandTotalDto';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import OrganizationService from 'services/OrganizationService';
 import ReportService from 'services/ReportService';
+import { constants } from 'utils';
 import './HatchlingsAndWashbacksByCountyReport.sass';
 
 const HatchlingsAndWashbacksByCountyReportGenerator = {
   
   async generate(reportDefinition: ReportDefinitionModel, reportOptions: ReportOptionsDateRangeDto): Promise<JSX.Element> {
     const organization = await OrganizationService.getOrganization();
-    const reportData = await ReportService.getHtmlReportData<HatchlingsAndWashbacksByCountyReportContentDto>(reportDefinition.reportId, reportOptions);
+    const reportData = await ReportService.getHtmlReportData<ContentDto>(reportDefinition.reportId, reportOptions);
 
-    const renderCountyCountDetailItem = (countyName: string, detailName: string, detailItem: HatchlingsAndWashbacksByCountyReportDetailItemDto) => {
+    const renderDetailItem = (countyName: string, detailName: string, detailItem: DetailItemDto) => {
       return <tr key={`${countyName}-${detailName}`}>
         <td className='white-space-nowrap'>{detailName}</td>
         <td className='text-align-right'>{detailItem.hatchlingsAcquired}</td>
@@ -25,7 +27,7 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
       </tr>
     }
 
-    const renderPercentageOfGrandTotal = (countyName: string, percentageOfGrandTotal: HatchlingsAndWashbacksByCountyReportDetailItemDto) => {
+    const renderPercentageOfGrandTotal = (countyName: string, percentageOfGrandTotal: PercentageOfGrandTotalDto) => {
       return <tr key={`${countyName}-percentage-of-grand-total`}>
         <td className='white-space-nowrap'>% of Grand Total</td>
         <td className='text-align-right'>{percentageOfGrandTotal.hatchlingsAcquired.toFixed(2)}%</td>
@@ -44,7 +46,7 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
         <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
 
         {reportData.countyCounts.length === 0 
-        ? <p className='has-text-centered'>No records meet the specified criteria.</p> 
+        ? <p className='has-text-centered'>{constants.REPORTS.NO_ITEMS_FOUND}</p> 
         : <>
           {reportData.countyCounts.map(item => {
             return <div key={item.countyName || '(no county)'}>
@@ -61,12 +63,12 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
                   </tr>
                 </thead>
                 <tbody>
-                  {renderCountyCountDetailItem(item.countyName, 'Cc', item.ccCount)}
-                  {renderCountyCountDetailItem(item.countyName, 'Cm', item.cmCount)}
-                  {renderCountyCountDetailItem(item.countyName, 'Dc', item.dcCount)}
-                  {renderCountyCountDetailItem(item.countyName, 'Other', item.otherCount)}
-                  {renderCountyCountDetailItem(item.countyName, 'Unknown', item.unknownCount)}
-                  {renderCountyCountDetailItem(item.countyName, item.countyName === 'ALL COUNTIES' ? 'GRAND TOTAL' : 'SUBTOTAL', item.totalCount)}
+                  {renderDetailItem(item.countyName, 'Cc', item.ccCount)}
+                  {renderDetailItem(item.countyName, 'Cm', item.cmCount)}
+                  {renderDetailItem(item.countyName, 'Dc', item.dcCount)}
+                  {renderDetailItem(item.countyName, 'Other', item.otherCount)}
+                  {renderDetailItem(item.countyName, 'Unknown', item.unknownCount)}
+                  {renderDetailItem(item.countyName, item.countyName === 'ALL COUNTIES' ? 'GRAND TOTAL' : 'SUBTOTAL', item.totalCount)}
                   {item.countyName !== 'ALL COUNTIES' ? renderPercentageOfGrandTotal(item.countyName, item.percentageOfGrandTotal) : null}
                 </tbody>
               </table>

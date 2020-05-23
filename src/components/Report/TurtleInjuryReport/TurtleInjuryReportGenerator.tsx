@@ -1,17 +1,19 @@
+import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import OrganizationService from 'services/OrganizationService';
 import SeaTurtleService from 'services/SeaTurtleService';
+import { constants } from 'utils';
 import './TurtleInjuryReport.sass';
 
 const TurtleInjuryReportGenerator = {
   
-  async generate(reportDefinition: ReportDefinitionModel, reportOptions: any): Promise<JSX.Element> {
+  async generate(reportDefinition: ReportDefinitionModel, reportOptions: ReportOptionsDateRangeDto): Promise<JSX.Element> {
     const organization = await OrganizationService.getOrganization();
     const seaTurtles = (await SeaTurtleService.getSeaTurtles())
       .filter(x => 
-        (x.dateAcquired || '0000-00-00') <= reportOptions.dateThru
-        && reportOptions.dateFrom <= (x.dateRelinquished || '9999-99-99')
+        (x.dateAcquired.toString() || '0000-00-00') <= reportOptions.dateThru
+        && reportOptions.dateFrom <= (x.dateRelinquished.toString() || '9999-99-99')
       ).sort((a, b) => 
         a.sidNumber.localeCompare(b.sidNumber) 
         || a.dateAcquired.toString().localeCompare(b.dateAcquired.toString())
@@ -42,7 +44,8 @@ const TurtleInjuryReportGenerator = {
         <h2 className='subtitle'>{reportOptions.dateFrom} - {reportOptions.dateThru}</h2>
         <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
 
-        {seaTurtles.length === 0 ? <p className='has-text-centered'>No records meet the specified criteria.</p> 
+        {seaTurtles.length === 0 
+        ? <p className='has-text-centered'>{constants.REPORTS.NO_ITEMS_FOUND}</p> 
         : <>
           <p className='has-text-centered'>[Note: A turtle may have more than one injury.]</p>
           <table className='html-report-summary-table'>

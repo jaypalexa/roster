@@ -7,10 +7,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReportService from 'services/ReportService';
 import { constants, iOS } from 'utils';
-import HatchlingsAndWashbacksByCountyReportGenerator from './HatchlingsAndWashbacksByCountyReportGenerator';
+import HatchlingsAndWashbacksByCountyReportGenerator from './HatchlingsAndWashbacksByCountyReport/HatchlingsAndWashbacksByCountyReportGenerator';
 import './Report.sass';
-import TurtleInjuryReportGenerator from './TurtleInjuryReportGenerator';
-import TurtleTagReportGenerator from './TurtleTagReportGenerator';
+import TurtleInjuryReportGenerator from './TurtleInjuryReport/TurtleInjuryReportGenerator';
+import TurtleTagReportGenerator from './TurtleTagReport/TurtleTagReportGenerator';
 
 const Report: React.FC = () => {
   const [reportDefinition, setReportDefinition] = useState({} as ReportDefinitionModel);

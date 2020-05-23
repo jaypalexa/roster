@@ -21,6 +21,9 @@ export const constants = Object.freeze({
     ZERO_DECIMAL_PLACES :'\\d+',
     TWO_DECIMAL_PLACES:'^\\d+\\.?\\d{0,2}$',
   }),
+  REPORTS: Object.freeze({
+    NO_ITEMS_FOUND :'No records meet the specified criteria.',
+  }),
 });
 
 /* focus trap to prevent leaving modal dialog when tabbing around */

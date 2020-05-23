@@ -1,19 +1,20 @@
 import TurtleTagReportOptionsDto from 'dtos/ReportOptions/TurtleTagReportOptionsDto';
-import TurtleTagReportContentDto from 'dtos/ReportResponses/TurtleTagReportContentDto';
-import TurtleTagReportDetailItemDto from 'dtos/ReportResponses/TurtleTagReportDetailItemDto';
+import ContentDto from 'dtos/ReportResponses/TurtleTagReport/ContentDto';
+import DetailItemDto from 'dtos/ReportResponses/TurtleTagReport/DetailItemDto';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import OrganizationService from 'services/OrganizationService';
 import ReportService from 'services/ReportService';
+import { constants } from 'utils';
 import './TurtleTagReport.sass';
 
 const TurtleTagReportGenerator = {
   
   async generate(reportDefinition: ReportDefinitionModel, reportOptions: TurtleTagReportOptionsDto): Promise<JSX.Element> {
     const organization = await OrganizationService.getOrganization();
-    const reportData = await ReportService.getHtmlReportData<TurtleTagReportContentDto>(reportDefinition.reportId, reportOptions);
+    const reportData = await ReportService.getHtmlReportData<ContentDto>(reportDefinition.reportId, reportOptions);
 
-    const fetchTagTypeAndNumberValues = (item: TurtleTagReportDetailItemDto) => {
+    const fetchTagTypeAndNumberValues = (item: DetailItemDto) => {
       if (item.tags.length > 0) {
         return item.tags.map((tag, index) =>
             <div key={`${item.seaTurtleId}-${index}-tag-value`}>
@@ -25,7 +26,7 @@ const TurtleTagReportGenerator = {
       }
     }
 
-    const fetchDateTaggedValues = (item: TurtleTagReportDetailItemDto) => {
+    const fetchDateTaggedValues = (item: DetailItemDto) => {
       if (item.tags.length > 0) {
         return item.tags.map((tag, index) => 
           <div key={`${item.seaTurtleId}-${index}-date-tagged`}>
@@ -43,7 +44,8 @@ const TurtleTagReportGenerator = {
         <h2 className='subtitle'>{reportOptions.dateFrom} - {reportOptions.dateThru}</h2>
         <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
 
-        {reportData.detailItems.length === 0 ? <p className='has-text-centered'>No records meet the specified criteria.</p> 
+        {reportData.detailItems.length === 0 
+        ? <p className='has-text-centered'>{constants.REPORTS.NO_ITEMS_FOUND}</p> 
         : <>
           <table className='html-report-detail-table'>
             <thead>
@@ -76,7 +78,7 @@ const TurtleTagReportGenerator = {
     </>
   
     return contents;
-  },
+  }
  
 }
 

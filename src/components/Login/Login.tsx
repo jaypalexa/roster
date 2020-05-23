@@ -20,7 +20,8 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
   const [showSpinner, setShowSpinner] = useState(false);
   const methods = useForm<LoginModel>({ mode: 'onChange' });
   const { handleSubmit, reset } = methods;
-  const firstEditControlRef = useRef<HTMLInputElement>()
+  const userNameControlRef = useRef<HTMLInputElement>()
+  const passwordControlRef = useRef<HTMLInputElement>()
 
   useMount(() => {
     window.scrollTo(0, 0);
@@ -31,10 +32,12 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
     const initialLogin = { userName: lastUserName, password: '' };
     setCurrentLogin(initialLogin);
     reset(initialLogin);
-  });
 
-  useMount(() => {
-    firstEditControlRef?.current?.focus();
+    if (lastUserName) {
+      passwordControlRef?.current?.focus();
+    } else {
+      userNameControlRef?.current?.focus();
+    }
   });
 
   const getPath = (): string => {
@@ -76,10 +79,10 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
             <form onSubmit={onSubmit}>
 
               <FormFieldRow>
-                <TextFormField fieldName='userName' labelText='User Name' validationOptions={{ required: 'User Name is required' }} refObject={firstEditControlRef} />
+                <TextFormField fieldName='userName' labelText='User Name' validationOptions={{ required: 'User Name is required' }} refObject={userNameControlRef} />
               </FormFieldRow>
               <FormFieldRow>
-                <TextFormField fieldName='password' labelText='Password' type='password' validationOptions={{ required: 'Password is required' }} />
+                <TextFormField fieldName='password' labelText='Password' type='password' validationOptions={{ required: 'Password is required' }} refObject={passwordControlRef} />
               </FormFieldRow>
 
               <div className='field is-grouped form-action-buttons'>

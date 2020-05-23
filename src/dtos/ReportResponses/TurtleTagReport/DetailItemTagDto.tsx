@@ -1,4 +1,4 @@
-export default interface TurtleTagReportTagDto {
+export default interface DetailItemTagDto {
   [key: string]: any;
   label: string;
   tagNumber: string;

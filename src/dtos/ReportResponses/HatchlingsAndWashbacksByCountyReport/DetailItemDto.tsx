@@ -1,4 +1,4 @@
-export default interface HatchlingsAndWashbacksByCountyReportDetailItemDto {
+export default interface DetailItemDto {
   [key: string]: any;
   hatchlingsAcquired: number;
   hatchlingsDoa: number;
