@@ -61,10 +61,10 @@ const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
     
     if (isAuthenticated) {
       const userName = AuthenticationService.getCognitoUserNameFromToken();
-      MessageService.sendUserNameChanged(userName);
+      MessageService.notifyUserNameChanged(userName);
       browserHistory.push(getPath());
     } else {
-      MessageService.sendUserNameChanged('');
+      MessageService.notifyUserNameChanged('');
       toast.error('Invalid login');
     }
   });

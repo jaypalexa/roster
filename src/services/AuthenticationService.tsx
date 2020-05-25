@@ -3,6 +3,7 @@ import AWS from 'aws-sdk';
 import browserHistory from 'browserHistory';
 import jwt_decode from 'jwt-decode';
 import LoginModel from 'models/LoginModel';
+import MessageService from './MessageService';
 
 const CLIENT_ID = process.env.REACT_APP_AWS_COGNITO_CLIENT_ID || '';
 const IDENTITY_POOL_ID = process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '';
@@ -296,6 +297,7 @@ export const AuthenticationService = {
     if (currentCognitoUser) {
       currentCognitoUser.signOut();
     }
+    MessageService.notifyUserNameChanged('');
   },
 }
 

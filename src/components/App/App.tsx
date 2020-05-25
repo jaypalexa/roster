@@ -38,7 +38,6 @@ const App: React.FC = () => {
   }
 
   const onLogOutClick = () => {
-    setLoggedInUserName('');
     AuthenticationService.signOut();
     closeMenu();
   }
@@ -97,7 +96,7 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
-    const subscription = MessageService.getIsUpdateAvailableChanged().subscribe(message => {
+    const subscription = MessageService.observeIsUpdateAvailableChanged().subscribe(message => {
       if (message) {
         setIsUpdateAvailable(message.isUpdateAvailable);
       }
@@ -106,7 +105,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const subscription = MessageService.getUserNameChanged().subscribe(message => {
+    const subscription = MessageService.observeUserNameChanged().subscribe(message => {
       if (message) {
         setLoggedInUserName(message.userName);
       }
@@ -119,6 +118,13 @@ const App: React.FC = () => {
       <Router history={browserHistory}>
         <nav className='navbar is-dark' aria-label='main navigation'>
           <div className='navbar-brand'>
+            {isUpdateAvailable 
+              ? <div 
+                  className='badge update-available' 
+                  title='Update available' 
+                  onClick={() => {browserHistory.push('/about-roster')}}>
+                </div>
+              : null}
             <Link className='navbar-item' to='/' onClick={closeMenu}>
               <span className='icon'>
                 <i className='fa fa-home'></i>
@@ -144,9 +150,7 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/reports' onClick={closeMenu}>Reports</Link>
               <Link className='navbar-item' to='/blank-forms' onClick={closeMenu}>Blank Forms</Link>
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
-              <Link className='navbar-item' to='/about-roster' onClick={closeMenu}>
-                {isUpdateAvailable ? <div className='badge' title='Update available'></div> : null}
-                About ROSTER</Link>
+              <Link className='navbar-item' to='/about-roster' onClick={closeMenu}>About ROSTER</Link>
             </div>
             <div className='navbar-end'>
               <Link className={`navbar-item ${loggedInUserName ? 'hidden' : ''}`} to='/login' onClick={onLogInClick}>Log In</Link>

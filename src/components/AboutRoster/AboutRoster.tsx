@@ -86,7 +86,7 @@ const AboutRoster: React.FC = () => {
   });
 
   useEffect(() => {
-    MessageService.sendIsUpdateAvailableChanged(isUpdateAvailable);
+    MessageService.notifyIsUpdateAvailableChanged(isUpdateAvailable);
   }, [isUpdateAvailable]);
 
   return (
@@ -106,7 +106,7 @@ const AboutRoster: React.FC = () => {
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>About ROSTER</h1>
           <div className='has-text-centered'>
-            <p>v0.20200525.1454</p>
+            <p>v0.20200525.1530</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>

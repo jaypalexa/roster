@@ -212,4 +212,4 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 
 * [Offer a page reload for users](https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users)
 * [Redirecting a user to the page they requested after successful authentication with react-router-dom](https://stackoverflow.com/questions/59422159/redirecting-a-user-to-the-page-they-requested-after-successful-authentication-wi/59423442#59423442)
-
+* [React + RxJS - Communicating Between Components with Observable & Subject](https://jasonwatmore.com/post/2019/02/13/react-rxjs-communicating-between-components-with-observable-subject)

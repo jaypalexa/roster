@@ -24,11 +24,11 @@ export const MessageService = {
     clearMessages: () => subject.next(),
     getMessage: () => subject.asObservable(),
 
-    sendUserNameChanged: (userName: string) => userNameSubject.next({ userName }),
-    getUserNameChanged: () => userNameSubject.asObservable(),
+    notifyUserNameChanged: (userName: string) => userNameSubject.next({ userName }),
+    observeUserNameChanged: () => userNameSubject.asObservable(),
 
-    sendIsUpdateAvailableChanged: (isUpdateAvailable: boolean) => isUpdateAvailableSubject.next({ isUpdateAvailable }),
-    getIsUpdateAvailableChanged: () => isUpdateAvailableSubject.asObservable(),
+    notifyIsUpdateAvailableChanged: (isUpdateAvailable: boolean) => isUpdateAvailableSubject.next({ isUpdateAvailable }),
+    observeIsUpdateAvailableChanged: () => isUpdateAvailableSubject.asObservable(),
 };
 
 export default MessageService;
