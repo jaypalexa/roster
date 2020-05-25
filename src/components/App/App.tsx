@@ -1,5 +1,4 @@
 import browserHistory from 'browserHistory';
-import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import React, { useEffect, useState } from 'react';
 import { Link, Router } from 'react-router-dom';
@@ -8,14 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import routes from 'routes';
 import ApiService from 'services/ApiService';
 import AuthenticationService from 'services/AuthenticationService';
+import MessageService from 'services/MessageService';
 import './App.sass';
 
 const App: React.FC = () => {
 
-  const [appContext] = useAppContext();
   const [loggedInUserName, setLoggedInUserName] = useState('');
   const [isOnline, setIsOnline] = useState(true);
-  const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
+  const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
 
   const onlineOfflineHandler = (event: Event) => {
     setIsOnline(navigator.onLine);
@@ -96,10 +95,24 @@ const App: React.FC = () => {
     }
     startSessionActivityPolling();
   });
-  
+
   useEffect(() => {
-    setIsShowUpdateAvailable(appContext.isUpdateAvailable || false);
-  }, [appContext.isUpdateAvailable]);
+    const subscription = MessageService.getIsUpdateAvailableChanged().subscribe(message => {
+      if (message) {
+        setIsUpdateAvailable(message.isUpdateAvailable);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const subscription = MessageService.getUserNameChanged().subscribe(message => {
+      if (message) {
+        setLoggedInUserName(message.userName);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <div id='app'>
@@ -132,7 +145,7 @@ const App: React.FC = () => {
               <Link className='navbar-item' to='/blank-forms' onClick={closeMenu}>Blank Forms</Link>
               <Link className='navbar-item' to='/organization' onClick={closeMenu}>Organization</Link>
               <Link className='navbar-item' to='/about-roster' onClick={closeMenu}>
-                {isShowUpdateAvailable ? <div className='badge' title='Update available'></div> : null}
+                {isUpdateAvailable ? <div className='badge' title='Update available'></div> : null}
                 About ROSTER</Link>
             </div>
             <div className='navbar-end'>
@@ -143,7 +156,7 @@ const App: React.FC = () => {
         </nav>
         <div className='content-container'>
           {/* child components are rendered here */}
-          {routes(setLoggedInUserName)}
+          {routes()}
         </div>
       </Router>
       <ToastContainer

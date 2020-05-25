@@ -20,25 +20,25 @@ import WashbacksEvents from 'components/WashbacksEvents/WashbacksEvents'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-const routes = (setLoggedInUserName: React.Dispatch<React.SetStateAction<string>>) => 
+const routes = () => 
   <Switch>
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/' component={Home} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtles' component={SeaTurtles} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-tags' component={SeaTurtleTags} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tanks' component={HoldingTanks} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tank-measurements' component={HoldingTankMeasurements} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/holding-tank-graphs' component={HoldingTankGraphs} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/hatchlings-events' component={HatchlingsEvents} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/washbacks-events' component={WashbacksEvents} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/reports' component={Reports} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/report-options/:reportId' component={ReportOptions} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/report' component={Report} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/blank-forms' component={BlankForms} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/organization' component={Organization} />
-    <ProtectedRoute setLoggedInUserName={setLoggedInUserName} exact path='/about-roster' component={AboutRoster} />
-    <Route exact path='/login' render={ (routeProps) => <Login {...{setLoggedInUserName, ...routeProps}} /> } />
+    <ProtectedRoute exact path='/' component={Home} />
+    <ProtectedRoute exact path='/sea-turtles' component={SeaTurtles} />
+    <ProtectedRoute exact path='/sea-turtle-tags' component={SeaTurtleTags} />
+    <ProtectedRoute exact path='/sea-turtle-morphometrics' component={SeaTurtleMorphometrics} />
+    <ProtectedRoute exact path='/sea-turtle-morphometrics-graphs' component={SeaTurtleMorphometricsGraphs} />
+    <ProtectedRoute exact path='/holding-tanks' component={HoldingTanks} />
+    <ProtectedRoute exact path='/holding-tank-measurements' component={HoldingTankMeasurements} />
+    <ProtectedRoute exact path='/holding-tank-graphs' component={HoldingTankGraphs} />
+    <ProtectedRoute exact path='/hatchlings-events' component={HatchlingsEvents} />
+    <ProtectedRoute exact path='/washbacks-events' component={WashbacksEvents} />
+    <ProtectedRoute exact path='/reports' component={Reports} />
+    <ProtectedRoute exact path='/report-options/:reportId' component={ReportOptions} />
+    <ProtectedRoute exact path='/report' component={Report} />
+    <ProtectedRoute exact path='/blank-forms' component={BlankForms} />
+    <ProtectedRoute exact path='/organization' component={Organization} />
+    <ProtectedRoute exact path='/about-roster' component={AboutRoster} />
+    <Route exact path='/login' component={Login} />
     <Route component={NotFound} />
   </Switch>
 

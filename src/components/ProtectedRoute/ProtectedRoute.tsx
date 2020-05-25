@@ -3,15 +3,11 @@ import React from 'react';
 import { Route, RouteProps, useLocation } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
 
-interface ProtectedRouteProps extends RouteProps {
-  setLoggedInUserName: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
+export const ProtectedRoute: React.FC<RouteProps> = (props) => {
   const currentLocation = useLocation();
 
   if (!AuthenticationService.isUserAuthenticated()) {
-    const renderComponent = () => <Login setLoggedInUserName={props.setLoggedInUserName} redirectPathOnAuthentication={currentLocation.pathname} />;
+    const renderComponent = () => <Login redirectPathOnAuthentication={currentLocation.pathname} />;
     return <Route {...props} component={renderComponent} render={undefined} />;
   } else {
     AuthenticationService.updateUserActivity();

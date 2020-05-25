@@ -1,15 +1,13 @@
-import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import MessageService from 'services/MessageService';
 import * as serviceWorker from 'serviceWorker';
 import './AboutRoster.sass';
 
 const AboutRoster: React.FC = () => {
 
-  const [appContext, setAppContext] = useAppContext();
-  const [isShowUpdateAvailable, setIsShowUpdateAvailable] = useState(false);
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
   const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
@@ -88,9 +86,8 @@ const AboutRoster: React.FC = () => {
   });
 
   useEffect(() => {
-    setIsShowUpdateAvailable(isUpdateAvailable);
-    setAppContext({ ...appContext, isUpdateAvailable: isUpdateAvailable });
-  }, [isUpdateAvailable, appContext, setAppContext]);
+    MessageService.sendIsUpdateAvailableChanged(isUpdateAvailable);
+  }, [isUpdateAvailable]);
 
   return (
     <div id='aboutRoster'>
@@ -109,8 +106,8 @@ const AboutRoster: React.FC = () => {
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>About ROSTER</h1>
           <div className='has-text-centered'>
-            <p>v0.20200525.1300</p>
-            {isShowUpdateAvailable
+            <p>v0.20200525.1454</p>
+            {isUpdateAvailable
               ? <p>
                   <span>(</span>
                   <span className='span-link' onClick={onUpdateAvailableClick}>update available</span>

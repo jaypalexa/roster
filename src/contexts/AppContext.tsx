@@ -11,7 +11,6 @@ interface AppContextStore {
   seaTurtle?: SeaTurtleModel;
   holdingTank?: HoldingTankModel;
   reportOptions: Dictionary<any>;
-  isUpdateAvailable?: boolean;
 };
 
 const initialAppContextStore = { reportOptions: {} } as AppContextStore;

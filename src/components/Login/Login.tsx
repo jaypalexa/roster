@@ -8,14 +8,14 @@ import React, { useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
+import MessageService from 'services/MessageService';
 import './Login.sass';
 
 interface LoginProps {
-  setLoggedInUserName: React.Dispatch<React.SetStateAction<string>>;
   redirectPathOnAuthentication?: string;
 }
 
-const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthentication }) => {
+const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
   const [showSpinner, setShowSpinner] = useState(false);
   const methods = useForm<LoginModel>({ mode: 'onChange' });
@@ -60,11 +60,11 @@ const Login: React.FC<LoginProps> = ({ setLoggedInUserName, redirectPathOnAuthen
     setShowSpinner(false);
     
     if (isAuthenticated) {
-      const userName = AuthenticationService.getCognitoUserNameFromToken(); 
-      setLoggedInUserName(userName);
+      const userName = AuthenticationService.getCognitoUserNameFromToken();
+      MessageService.sendUserNameChanged(userName);
       browserHistory.push(getPath());
     } else {
-      setLoggedInUserName('');
+      MessageService.sendUserNameChanged('');
       toast.error('Invalid login');
     }
   });
