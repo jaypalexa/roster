@@ -62,3 +62,5 @@ Lon -80.458796
 
 --------------------------------------------------------------------------
 
+TODO:  standardize date format (pickers mm/dd/yyyy vs display yyyy-mm-dd)
+TODO:  save table search / show relinquished turtles settings when navigating back
