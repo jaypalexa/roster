@@ -11,6 +11,7 @@ import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormField from 'components/FormFields/ListFormField';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import TextFormField from 'components/FormFields/TextFormField';
+import Icon from 'components/Icon/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
@@ -70,7 +71,7 @@ const SeaTurtles: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' onClick={() => onEditSeaTurtleClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditSeaTurtleClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
     },
     {
       name: '',
@@ -78,7 +79,7 @@ const SeaTurtles: React.FC = () => {
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' onClick={() => onDeleteSeaTurtleClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteSeaTurtleClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
     },
     {
       name: 'Name',
@@ -419,7 +420,7 @@ const SeaTurtles: React.FC = () => {
               <p className='level-item'>
                 <button className='button is-link' onClick={onAddSeaTurtleButtonClick}>
                   <span className='icon'>
-                    <i className='fa fa-plus'></i>
+                    <Icon icon='plus' fill='white' height={16} width={16} />
                   </span>
                   &nbsp;&nbsp;&nbsp;Add Sea Turtle
                 </button>
@@ -490,7 +491,7 @@ const SeaTurtles: React.FC = () => {
                   <FormField fieldName='dummy'>
                     <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('Acquired')}>
                       <span className='icon'>
-                        <i className='fa fa-globe'></i>
+                        <Icon icon='location' fill='white' />
                       </span>
                       &nbsp;&nbsp;&nbsp;View on map
                     </button>
@@ -505,7 +506,7 @@ const SeaTurtles: React.FC = () => {
                   <FormField fieldName='dummy'>
                     <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('Relinquished')}>
                       <span className='icon'>
-                        <i className='fa fa-globe'></i>
+                        <Icon icon='location' fill='white' />
                       </span>
                       &nbsp;&nbsp;&nbsp;View on map
                     </button>

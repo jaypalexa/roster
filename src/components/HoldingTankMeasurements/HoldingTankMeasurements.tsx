@@ -4,6 +4,7 @@ import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormField from 'components/FormFields/DateFormField';
 import DecimalFormField from 'components/FormFields/DecimalFormField';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
+import Icon from 'components/Icon/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
@@ -47,14 +48,14 @@ const HoldingTankMeasurements: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={() => onEditHoldingTankMeasurementClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditHoldingTankMeasurementClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' onClick={() => onDeleteHoldingTankMeasurementClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteHoldingTankMeasurementClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
     },
     {
       name: 'Date Measured',
@@ -312,7 +313,7 @@ const HoldingTankMeasurements: React.FC = () => {
               <p className='level-item'>
                 <button className='button is-link' onClick={onAddHoldingTankMeasurementButtonClick}>
                   <span className='icon'>
-                    <i className='fa fa-plus'></i>
+                    <Icon icon='plus' fill='white' height={16} width={16} />
                   </span>
                   &nbsp;&nbsp;&nbsp;Add Water Measurement
                 </button>

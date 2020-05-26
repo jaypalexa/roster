@@ -5,6 +5,7 @@ import DateFormField from 'components/FormFields/DateFormField';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormField from 'components/FormFields/ListFormField';
 import TextFormField from 'components/FormFields/TextFormField';
+import Icon from 'components/Icon/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
@@ -55,14 +56,14 @@ const SeaTurtleMorphometrics: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={() => onEditSeaTurtleMorphometricClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditSeaTurtleMorphometricClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' onClick={() => onDeleteSeaTurtleMorphometricClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteSeaTurtleMorphometricClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
     },
     {
       name: 'Date Measured',
@@ -400,7 +401,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
               <p className='level-item'>
                 <button className='button is-link' onClick={onAddSeaTurtleMorphometricButtonClick}>
                   <span className='icon'>
-                    <i className='fa fa-plus'></i>
+                    <Icon icon='plus' fill='white' height={16} width={16} />
                   </span>
                   &nbsp;&nbsp;&nbsp;Add Morphometric
                 </button>

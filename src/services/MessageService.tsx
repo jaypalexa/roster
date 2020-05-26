@@ -15,9 +15,15 @@ export interface IsUpdateAvailableMessage {
   isUpdateAvailable: boolean;
 };
 
+export interface LastUpdateCheckDateTimeMessage {
+  [key: string]: any;
+  lastUpdateCheckDateTime: string;
+};
+
 const subject = new Subject<TextMessage>();
 const userNameSubject = new Subject<UserNameMessage>();
 const isUpdateAvailableSubject = new Subject<IsUpdateAvailableMessage>();
+const lastUpdateCheckDateTimeSubject = new Subject<LastUpdateCheckDateTimeMessage>();
 
 export const MessageService = {
     sendMessage: (message: string) => subject.next({ text: message }),
@@ -29,6 +35,9 @@ export const MessageService = {
 
     notifyIsUpdateAvailableChanged: (isUpdateAvailable: boolean) => isUpdateAvailableSubject.next({ isUpdateAvailable }),
     observeIsUpdateAvailableChanged: () => isUpdateAvailableSubject.asObservable(),
+
+    notifyLastUpdateCheckDateTimeChanged: (lastUpdateCheckDateTime: string) => lastUpdateCheckDateTimeSubject.next({ lastUpdateCheckDateTime }),
+    observeLastUpdateCheckDateTimeChanged: () => lastUpdateCheckDateTimeSubject.asObservable(),
 };
 
 export default MessageService;

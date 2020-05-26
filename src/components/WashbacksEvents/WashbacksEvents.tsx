@@ -6,6 +6,7 @@ import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import IntegerFormField from 'components/FormFields/IntegerFormField';
 import ListFormField from 'components/FormFields/ListFormField';
+import Icon from 'components/Icon/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
@@ -51,14 +52,14 @@ const WashbacksEvents: React.FC = () => {
       maxWidth: '2rem',
       minWidth: '2rem',
       style: '{padding-left: 1rem}',
-      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={() => onEditWashbacksEventClick(row)}><i className='fa fa-pencil fa-lg' title='Edit'></i></span>,
+      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditWashbacksEventClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
     },
     {
       name: '',
       ignoreRowClick: true,
       maxWidth: '2rem',
       minWidth: '2rem',
-      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' onClick={() => onDeleteWashbacksEventClick(row)}><i className='fa fa-trash fa-lg' title='Delete'></i></span>,
+      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteWashbacksEventClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
     },
     {
       name: 'Species',
@@ -349,7 +350,7 @@ const WashbacksEvents: React.FC = () => {
             <p className='level-item'>
               <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('Acquired')}>
                 <span className='icon'>
-                  <i className='fa fa-plus'></i>
+                  <Icon icon='plus' fill='white' height={16} width={16} />
                 </span>
                 &nbsp;&nbsp;&nbsp;Add Washbacks Acquired Event
               </button>
@@ -357,7 +358,7 @@ const WashbacksEvents: React.FC = () => {
             <p className='level-item'>
               <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('Died')}>
                 <span className='icon'>
-                  <i className='fa fa-plus'></i>
+                  <Icon icon='plus' fill='white' height={16} width={16} />
                 </span>
                 &nbsp;&nbsp;&nbsp;Add Washbacks Died Event
               </button>
@@ -365,7 +366,7 @@ const WashbacksEvents: React.FC = () => {
             <p className='level-item'>
               <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('Released')}>
                 <span className='icon'>
-                  <i className='fa fa-plus'></i>
+                  <Icon icon='plus' fill='white' height={16} width={16} />
                 </span>
                 &nbsp;&nbsp;&nbsp;Add Washbacks Released Event
               </button>
@@ -373,7 +374,7 @@ const WashbacksEvents: React.FC = () => {
             <p className='level-item'>
               <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('DOA')}>
                 <span className='icon'>
-                  <i className='fa fa-plus'></i>
+                  <Icon icon='plus' fill='white' height={16} width={16} />
                 </span>
                 &nbsp;&nbsp;&nbsp;Add Washbacks DOA Event
               </button>

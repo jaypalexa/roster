@@ -1,93 +1,48 @@
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AppService from 'services/AppService';
 import MessageService from 'services/MessageService';
-import * as serviceWorker from 'serviceWorker';
 import './AboutRoster.sass';
 
 const AboutRoster: React.FC = () => {
 
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
-  const [newServiceWorker, setNewServiceWorker] = useState<ServiceWorker | null>(null);
   
-  const onUpdateAvailableClick = () => {
-    console.log('onUpdateAvailableClick::newServiceWorker = ', newServiceWorker);
-    if (newServiceWorker) {
-      newServiceWorker.postMessage({ type: 'SKIP_WAITING' });
-    } else {
-      if ('serviceWorker' in navigator) {
-        console.log('onUpdateAvailableClick::\'serviceWorker\' in navigator...');
-        navigator.serviceWorker.ready.then(registration => {
-          console.log('onUpdateAvailableClick::registration.update().then()::registration = ', registration);
-          const serviceWorker = (registration.installing || registration.waiting);
-          console.log('onUpdateAvailableClick::registration.update().then()::serviceWorker = ', serviceWorker);
-          if (serviceWorker) {
-            serviceWorker.postMessage({ type: 'SKIP_WAITING' });
-          }
-        })
-      } else {
-        console.log('onUpdateAvailableClick::\'serviceWorker\' NOT in navigator...');
-      }
-    }
-    setIsUpdateAvailable(false);
-    window.location.reload(true);
+  const onInstallUpdateClick = () => {
+    AppService.installUpdate();
   };
 
   const onCheckForUpdateClick = () => {
-    setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
-
-    const isIosDevice = /iphone|ipod|ipad/i.test(navigator.userAgent);
-    // const isChromeOnIosDevice = /CriOS/i.test(navigator.userAgent) && isIosDevice;
-
-    if (isIosDevice) {
-      alert(`You must close and re-open the app or browser tab to check for updates when running on an iOS device.\n\n:-(`);
-    } else {
-      checkForUpdate();
-    }
+    AppService.checkForUpdate();
   }
-
-  const checkForUpdate = useCallback(() => {
-    setLastUpdateCheckDateTime(moment().format('YYYY-MM-DD HH:mm:ss'));
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then(registration => {
-        console.log('checkForUpdate::navigator.serviceWorker.ready...');
-        registration.update().then(() => {
-          console.log('checkForUpdate::registration.update().then()::registration = ', registration);
-          const serviceWorker = (registration.installing || registration.waiting);
-          console.log('checkForUpdate::registration.update().then()::serviceWorker = ', serviceWorker);
-          if (serviceWorker) {
-            setNewServiceWorker(serviceWorker);
-            setIsUpdateAvailable(true);
-          }
-        });
-      })
-    }
-    else {
-      console.log('checkForUpdate::\'serviceWorker\' NOT in navigator...');
-    }
-  }, []);
-  
-  /* register service worker onUpdate() */
-  useMount(() => {
-    const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
-      setNewServiceWorker(registration.installing || registration.waiting);
-      setIsUpdateAvailable(true);
-    }
-    serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
-
-    return () => { serviceWorker.unregister() }
-  });
 
   /* check for update */
   useMount(() => {
-    checkForUpdate();
+    AppService.checkForUpdate();
   });
 
-  useEffect(() => {
-    MessageService.notifyIsUpdateAvailableChanged(isUpdateAvailable);
-  }, [isUpdateAvailable]);
+  /* listen for 'is update available' notifications */
+  useMount(() => {
+    const subscription = MessageService.observeIsUpdateAvailableChanged().subscribe(message => {
+      if (message) {
+        setIsUpdateAvailable(message.isUpdateAvailable);
+      }
+    });
+    return () => subscription.unsubscribe();
+  });
+
+  /* listen for 'last update check datetime' notifications */
+  useMount(() => {
+    const subscription = MessageService.observeLastUpdateCheckDateTimeChanged().subscribe(message => {
+      if (message) {
+        setLastUpdateCheckDateTime(message.lastUpdateCheckDateTime);
+      }
+    });
+    return () => subscription.unsubscribe();
+  });
 
   return (
     <div id='aboutRoster'>
@@ -106,11 +61,11 @@ const AboutRoster: React.FC = () => {
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>About ROSTER</h1>
           <div className='has-text-centered'>
-            <p>v0.20200525.1530</p>
+            <p>v0.20200526.1325</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>
-                  <span className='span-link' onClick={onUpdateAvailableClick}>update available</span>
+                  <span className='span-link' onClick={onInstallUpdateClick}>install update</span>
                   <span>)</span>
                 </p>
               : <p>

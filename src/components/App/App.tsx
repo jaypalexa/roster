@@ -1,13 +1,16 @@
 import browserHistory from 'browserHistory';
+import Icon from 'components/Icon/Icon';
 import useMount from 'hooks/UseMount';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, Router } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import routes from 'routes';
 import ApiService from 'services/ApiService';
+import AppService from 'services/AppService';
 import AuthenticationService from 'services/AuthenticationService';
 import MessageService from 'services/MessageService';
+import * as serviceWorker from 'serviceWorker';
 import './App.sass';
 
 const App: React.FC = () => {
@@ -41,6 +44,18 @@ const App: React.FC = () => {
     AuthenticationService.signOut();
     closeMenu();
   }
+
+  /* register service worker onUpdate() */
+  useMount(() => {
+    const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
+      AppService.setNewServiceWorker(registration.installing || registration.waiting);
+      MessageService.notifyIsUpdateAvailableChanged(true);
+    }
+    serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
+
+    // return () => { serviceWorker.unregister() }
+    AppService.checkForUpdate();
+  });
 
   /* fetch user name */
   useMount(() => {
@@ -95,23 +110,25 @@ const App: React.FC = () => {
     startSessionActivityPolling();
   });
 
-  useEffect(() => {
+  /* listen for 'is update available' notifications */
+  useMount(() => {
     const subscription = MessageService.observeIsUpdateAvailableChanged().subscribe(message => {
       if (message) {
         setIsUpdateAvailable(message.isUpdateAvailable);
       }
     });
     return () => subscription.unsubscribe();
-  }, []);
+  });
 
-  useEffect(() => {
+  /* listen for 'user name changed' notifications */
+  useMount(() => {
     const subscription = MessageService.observeUserNameChanged().subscribe(message => {
       if (message) {
         setLoggedInUserName(message.userName);
       }
     });
     return () => subscription.unsubscribe();
-  }, []);
+  });
 
   return (
     <div id='app'>
@@ -126,13 +143,12 @@ const App: React.FC = () => {
                 </div>
               : null}
             <Link className='navbar-item' to='/' onClick={closeMenu}>
-              <span className='icon'>
-                <i className='fa fa-home'></i>
+              <span className='icon' title='Home'>
+                <Icon icon='home' fill='white' />
               </span>
               &nbsp;ROSTER&nbsp;
-              <span className='fa-stack'>
-                <i className='fa fa-wifi fa-stack-1x' title='Online'></i>
-                {!isOnline ? <i className='fa fa-ban fa-stack-2x red' title='Offline'></i> : null}
+              <span className={`icon ${isOnline ? '': 'red-circle-white-x'}`} title={isOnline ? 'Online' : 'Offline'}>
+                <Icon icon='wifi' fill='white' />
               </span>
             </Link>
             <div role='button' className='navbar-burger burger' aria-label='menu' aria-expanded='false' data-target='navMenu'>
