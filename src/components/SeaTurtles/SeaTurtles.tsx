@@ -175,6 +175,11 @@ const SeaTurtles: React.FC = () => {
     getSeaTurtleListItems();
   });
 
+  /* reset previous setting of options */
+  useMount(() => {
+    setIsCheckedShowRelinquishedTurtles(appContext.isCheckedShowRelinquishedTurtles);
+  });
+
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
       firstEditControlRef.current.focus();
@@ -376,6 +381,12 @@ const SeaTurtles: React.FC = () => {
     setIsMapDialogOpen(true);
   };
 
+  const onShowRelinquishedTurtlesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    resetDisplaySeaTurtleListItems(!isCheckedShowRelinquishedTurtles);
+    setIsCheckedShowRelinquishedTurtles(!isCheckedShowRelinquishedTurtles);
+    setAppContext({ ...appContext, isCheckedShowRelinquishedTurtles: !isCheckedShowRelinquishedTurtles });
+  };
+
   return (
     <div id='seaTurtle'>
       <Spinner isActive={showSpinner} />
@@ -454,12 +465,10 @@ const SeaTurtles: React.FC = () => {
             <input 
               id='showRelinquishedTurtles'
               name='showRelinquishedTurtles' 
-              className='switch is-info'
+              className='switch is-success'
               type='checkbox'
-              onChange={() => {
-                resetDisplaySeaTurtleListItems(!isCheckedShowRelinquishedTurtles);
-                setIsCheckedShowRelinquishedTurtles(!isCheckedShowRelinquishedTurtles);
-              }}
+              onChange={onShowRelinquishedTurtlesChange}
+              checked={isCheckedShowRelinquishedTurtles}
             />
             <label htmlFor='showRelinquishedTurtles'>Show relinquished turtles?</label>
           </div>

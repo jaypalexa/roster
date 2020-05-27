@@ -61,7 +61,7 @@ const AboutRoster: React.FC = () => {
         <div className='column is-four-fifths'>
           <h1 className='title has-text-centered'>About ROSTER</h1>
           <div className='has-text-centered'>
-            <p>v0.20200526.1325</p>
+            <p>v2020.05.27.1037</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>

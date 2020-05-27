@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReportService from 'services/ReportService';
-import { constants, iOS } from 'utils';
+import { constants, isIosDevice } from 'utils';
 import HatchlingsAndWashbacksByCountyReportGenerator from './HatchlingsAndWashbacksByCountyReport/HatchlingsAndWashbacksByCountyReportGenerator';
 import './Report.sass';
 import TurtleInjuryReportGenerator from './TurtleInjuryReport/TurtleInjuryReportGenerator';
@@ -92,7 +92,7 @@ const Report: React.FC = () => {
                 <a href={pdfReportUrl} 
                   className='view-report-button is-centered-both' 
                   title={reportDefinition.reportName} 
-                  target={iOS ? '_self' : '_blank'} 
+                  target={isIosDevice ? '_self' : '_blank'} 
                   rel='noopener noreferrer'
                 >
                     <span>View Report</span><br /><span>(opens in new tab)</span>

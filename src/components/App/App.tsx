@@ -11,6 +11,7 @@ import AppService from 'services/AppService';
 import AuthenticationService from 'services/AuthenticationService';
 import MessageService from 'services/MessageService';
 import * as serviceWorker from 'serviceWorker';
+import { isIosDevice } from 'utils';
 import './App.sass';
 
 const App: React.FC = () => {
@@ -53,8 +54,9 @@ const App: React.FC = () => {
     }
     serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
 
-    // return () => { serviceWorker.unregister() }
-    AppService.checkForUpdate();
+    if (!isIosDevice) {
+      AppService.checkForUpdate();
+    }
   });
 
   /* fetch user name */

@@ -12,14 +12,15 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 
 ## Tech Stack
 
-* [React](https://reactjs.org/) for Typescript UI framework
+* [React](https://reactjs.org/) - [Typescript](https://www.typescriptlang.org/) UI framework
   * [react-router](https://www.npmjs.com/package/react-router) for client-side routing
   * [react-hook-form](https://www.npmjs.com/package/react-hook-form) for forms
-  * [react-data-table-component](https://www.npmjs.com/package/react-data-table-component) for tables
+  * [react-data-table-component](https://www.npmjs.com/package/react-data-table-component) and [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) for tables _(not thrilled with these)_
   * [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2) for charts and graphs
   * [leaflet](https://www.npmjs.com/package/leaflet) and [react-leaflet](https://www.npmjs.com/package/react-leaflet) for maps
   * [react-toastify](https://www.npmjs.com/package/react-toastify) for toast popups
-* [Bulma](https://bulma.io/) for CSS framework and components
+  * [rxjs](https://www.npmjs.com/package/rxjs) for reactive programming using Observables
+* [Bulma](https://bulma.io/) - CSS framework and components
 * [Font Awesome](https://fontawesome.com/v4.7.0/icons/) for icons
 * [Amazon Web Services](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=tier%23always-free) ("Always Free" tier *only*)
   * [Amazon Cognito](https://aws.amazon.com/cognito/) for authentication
@@ -43,21 +44,21 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | &check; Add a loading spinner | home-grown |
 | &check; Database (multi-tenant) | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
 | &check; Prevent tabbing outside of modal | [react-modal](https://www.npmjs.com/package/react-modal) |
-| &#10065; Session/Token timeout | ??? auto-refresh |
+| &check; Session/Token timeout | AWS Cognito and refresh tokens (JWT) |
 | &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
-| &#10065; Paging and Filtering (search) of tables | ??? [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) |
+| &#10065; Filtering (search) of tables | ??? [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) |
 | &#10065; Preventing denial-of-service attacks /excessive usage | ??? throttling |
 | &#10065; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
 | &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? Service worker unable to distinguish different payloads when calling AWS Lambda (https://lambda.us-east-2.amazonaws.com/2015-03-31/functions/roster-api-lambda/invocations)? |
 | &#10065; Poor man's caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
 | &#10065; Material-UI or Ant Design instead of Bulma ??? | [Material-UI](https://www.npmjs.com/package/@material-ui/core) / [Ant Design](https://www.npmjs.com/package/antd) |
-| &#10065; Ability to click/tap to set map marker ??? | |
+| &#10065; Ability to click/tap to set map marker ??? | ??? |
 
 ### Reports - PDFs for FWC
 
 | Report | Notes |
 |--------|-------|
-| &#10065; Marine Turtle Holding Facility Quarterly Report | [ generate \| blank ]  |
+| &check; Marine Turtle Holding Facility Quarterly Report | [ generate \| blank ]  |
 | &check; Marine Turtle Captive Facility Quarterly Report for Hatchlings | [ generate \| blank ]  |
 | &check; Marine Turtle Captive Facility Quarterly Report for Washbacks | [ generate \| blank ]  |
 | &check; Monitoring for Beach Restoration Projects | [ blank ]  |
@@ -117,6 +118,14 @@ You may serve it with a static server; available at http://localhost:5000:
 ---
 
 ## Netlify
+
+[Free "starter" plan](https://www.netlify.com/pricing/) for hosting personal projects, hobby sites, or experiments.
+* 1 team member ($15/add’l user)
+* 1 concurrent build
+* 100GB bandwidth/month
+* 300 build minutes/month
+* Continuous deployment
+* Access to add-ons
 
 [Build & deploy > Environment > Environment variables](https://app.netlify.com/sites/roster-turtlegeek/settings/deploys#environment)
 
@@ -184,7 +193,7 @@ https://d1.awsstatic.com/Test%20Images/Kate%20Test%20Images/Serverless_Web_App_L
 * [Identity Management with AWS Cognito in React](https://levelup.gitconnected.com/identity-management-with-aws-cognito-in-react-dc166bd799dc)
 * [Authentication for React apps using AWS Amplify and Cognito](https://blog.logrocket.com/authentication-react-apps-aws-amplify-cognito/)
 
-#### To change a user's password and update status using:
+#### To change a user's password and update status
 
     aws cognito-idp admin-set-user-password --profile roster-admin-user --user-pool-id <USER_POOL_ID> --region <REGION> --username <USER_NAME> --password <PASSWORD> --permanent
 

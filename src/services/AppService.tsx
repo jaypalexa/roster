@@ -1,4 +1,5 @@
 import moment from "moment";
+import { isIosDevice } from "utils";
 import MessageService from "./MessageService";
 
 let _newServiceWorker: ServiceWorker | null = null;
@@ -11,8 +12,6 @@ export const AppService = {
   
   checkForUpdate() {
     MessageService.notifyLastUpdateCheckDateTimeChanged(moment().format('YYYY-MM-DD HH:mm:ss'));
-
-    const isIosDevice = /iphone|ipod|ipad/i.test(navigator.userAgent);
 
     if (isIosDevice) {
       alert(`You must close and re-open the app or browser tab to check for updates when running on an iOS device.\n\n:-(`);

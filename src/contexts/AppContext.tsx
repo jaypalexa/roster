@@ -11,9 +11,10 @@ interface AppContextStore {
   seaTurtle?: SeaTurtleModel;
   holdingTank?: HoldingTankModel;
   reportOptions: Dictionary<any>;
+  isCheckedShowRelinquishedTurtles: boolean;
 };
 
-const initialAppContextStore = { reportOptions: {} } as AppContextStore;
+const initialAppContextStore = { reportOptions: {}, isCheckedShowRelinquishedTurtles: false } as AppContextStore;
 
 const AppContext = createContext<[AppContextStore, (appContextStore: AppContextStore) => void]>([initialAppContextStore, () => { }]);
 
