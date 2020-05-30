@@ -23,10 +23,18 @@ const HoldingTankMeasurementService = {
     apiRequestPayload.pathParameters = { holdingTankId: holdingTankId, holdingTankMeasurementId: holdingTankMeasurementId };
 
     const response = await ApiService.get<HoldingTankMeasurementModel>(apiRequestPayload);
+
+    // kludge because input controls deal only with strings
+    response.temperature = response.temperature.toString();
+    response.salinity = response.salinity.toString();
+    response.ph = response.ph.toString();
+    
     return response;
   },
 
   async saveHoldingTankMeasurement(holdingTankMeasurement: HoldingTankMeasurementModel) {
+
+    // kludge because input controls deal only with strings
     holdingTankMeasurement.temperature = toNumber(holdingTankMeasurement.temperature);
     holdingTankMeasurement.salinity = toNumber(holdingTankMeasurement.salinity);
     holdingTankMeasurement.ph = toNumber(holdingTankMeasurement.ph);

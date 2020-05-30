@@ -1,12 +1,24 @@
+import { Breadcrumbs, Container, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppService from 'services/AppService';
 import MessageService from 'services/MessageService';
-import './AboutRoster.sass';
+import sharedStyles from 'styles/sharedStyles';
 
 const AboutRoster: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({
+      ...sharedStyles(theme), 
+      spanLink: {
+        cursor: 'pointer',
+        color: '#3273dc',
+      },
+    })
+  );
+  const classes = useStyles();
 
   const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
@@ -46,31 +58,27 @@ const AboutRoster: React.FC = () => {
 
   return (
     <div id='aboutRoster'>
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>About ROSTER</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>&#10094; Home</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>About ROSTER</h1>
-          <div className='has-text-centered'>
-            <p>v2020.05.27.1037</p>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Typography color='textPrimary'>About ROSTER</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/'>&#10094; Home</Link>
+      </Breadcrumbs>
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>About ROSTER</Typography>
+          <Container className='page-body-container'>
+            <p>v2020.05.28.0955</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>
-                  <span className='span-link' onClick={onInstallUpdateClick}>install update</span>
+                  <span className={classes.spanLink} onClick={onInstallUpdateClick}>install update</span>
                   <span>)</span>
                 </p>
               : <p>
                   <span>(</span>
-                  <span className='span-link' onClick={onCheckForUpdateClick}>check for update</span>
+                  <span className={classes.spanLink} onClick={onCheckForUpdateClick}>check for update</span>
                   {lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}
                   <span>)</span>
                 </p>
@@ -83,9 +91,9 @@ const AboutRoster: React.FC = () => {
                 GitHub
               </a>
             </p>
-          </div>
-        </div>
-      </div>
+          </Container>
+        </Grid>
+      </Grid>
     </div>
   );
 };

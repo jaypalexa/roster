@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import React from 'react';
 import { ErrorMessage, useFormContext } from 'react-hook-form';
 import './CheckboxFormField.sass';
@@ -12,7 +13,7 @@ interface CheckboxFormFieldProps extends FormFieldProps {
 export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, labelText, disabled, value, defaultChecked, validationOptions}) => {
   const { errors, formState, register } = useFormContext();
   return (
-    <div className='field'>
+    <Grid item xs={12} md>
       <input 
         id={fieldName}
         name={fieldName} 
@@ -25,7 +26,7 @@ export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, 
       />
       <label htmlFor={fieldName}>{labelText}</label>
       <ErrorMessage errors={errors} name={fieldName} as='p' className='help has-text-danger' />
-    </div>
+    </Grid>
   );
 };
 

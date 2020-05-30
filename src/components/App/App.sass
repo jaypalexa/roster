@@ -1,31 +1,9 @@
 #app
 	height: 100%
 
-.bottom-panel
-	align-self: flex-end
-	font-size: small
-	margin-top: auto
-	margin-bottom: 1rem
-	padding-top: .5rem
-	width: 100%
-
-	a
-		&:hover, &:link, &:active, &:visited
-			color: mediumblue
-			text-decoration: underline
-
 @media print
-	.bottom-panel, .breadcrumb, .navbar
+	.breadcrumb, #navBar
 		display: none
-
-.badge
-	display: inline-block
-	width: 12px
-	height: 12px
-	border-radius: 6px
-	background-color: red
-	margin-top: 2px
-	margin-right: 2px
 
 .content-container
 	display: flex
@@ -34,31 +12,6 @@
 	margin-top: 1.5rem
 	margin-right: 1rem
 	margin-left: 1rem
-
-.navbar-burger span:nth-child(1)
-	top: calc(50% - 8px) !important
-
-.navbar-burger span:nth-child(2)
-	top: calc(55% - 3px) !important
-
-.navbar-burger span:nth-child(3)
-	top: calc(55% + 4px) !important
-
-.red
-	color: red
-
-.red-circle-white-x
-  display: block
-  box-sizing :border-box
-  width: 20px
-  height: 20px
-  border-width: 3px
-  border-style: solid
-  border-color: red
-  border-radius: 100%
-  background: -webkit-linear-gradient(-45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, white 46%,  white 56%,transparent 56%, transparent 100%)
-  background-color: red
-  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.5)
 
 .toast-custom
 	border-radius: 4px
@@ -69,10 +22,3 @@
 
 .Toastify__toast--error
 	background: orangered
-
-.update-available
-	position: absolute
-	top: 9px
-	left: 9px
-	z-index: 50
-	cursor: pointer

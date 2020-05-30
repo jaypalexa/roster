@@ -14,15 +14,15 @@ export default interface OrganizationModel {
   contactName: string;
   preferredUnitsType: string;
   hatchlingsBalanceAsOfDate: Date;
-  ccHatchlingsStartingBalance: number;
-  cmHatchlingsStartingBalance: number;
-  dcHatchlingsStartingBalance: number;
-  otherHatchlingsStartingBalance: number;
-  unknownHatchlingsStartingBalance: number;
+  ccHatchlingsStartingBalance: number | string; // kludge because input controls deal only with strings
+  cmHatchlingsStartingBalance: number | string; // kludge because input controls deal only with strings
+  dcHatchlingsStartingBalance: number | string; // kludge because input controls deal only with strings
+  otherHatchlingsStartingBalance: number | string; // kludge because input controls deal only with strings
+  unknownHatchlingsStartingBalance: number | string; // kludge because input controls deal only with strings
   washbacksBalanceAsOfDate: Date;
-  ccWashbacksStartingBalance: number;
-  cmWashbacksStartingBalance: number;
-  dcWashbacksStartingBalance: number;
-  otherWashbacksStartingBalance: number;
-  unknownWashbacksStartingBalance: number;
+  ccWashbacksStartingBalance: number | string; // kludge because input controls deal only with strings
+  cmWashbacksStartingBalance: number | string; // kludge because input controls deal only with strings
+  dcWashbacksStartingBalance: number | string; // kludge because input controls deal only with strings
+  otherWashbacksStartingBalance: number | string; // kludge because input controls deal only with strings
+  unknownWashbacksStartingBalance: number | string; // kludge because input controls deal only with strings
 };

@@ -1,28 +1,35 @@
+import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
+import clsx from 'clsx';
 import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
-import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
-import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
+import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import TextFormField from 'components/FormFields/TextFormField';
-import Icon from 'components/Icon/Icon';
+import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
+import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import MaterialTable from 'material-table';
 import HoldingTankModel from 'models/HoldingTankModel';
 import React, { useEffect, useRef, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
 import HoldingTankService from 'services/HoldingTankService';
-import { constants } from 'utils';
+import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
+import { actionIcons, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import './HoldingTanks.sass';
 
-const HoldingTanks: React.FC = () => {
+const HoldingTanksMui: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<HoldingTankModel>({ mode: 'onChange' });
@@ -40,36 +47,13 @@ const HoldingTanks: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const tableColumns = [
+  const [tableColumns] = useState([
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditHoldingTankClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
+      title: 'Name',
+      field: 'holdingTankName',
+      defaultSort: 'asc' as 'asc'
     },
-    {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: HoldingTankModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteHoldingTankClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
-    },
-    {
-      name: 'Name',
-      selector: 'holdingTankName',
-      sortable: true
-    },
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    }
-  };
+  ]);
 
   useMount(() => {
     const getHoldingTanks = async () => {
@@ -85,7 +69,7 @@ const HoldingTanks: React.FC = () => {
       } 
       catch (err) {
         console.log(err);
-        toast.error(constants.ERROR.GENERIC);
+        ToastService.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -114,7 +98,7 @@ const HoldingTanks: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -130,24 +114,24 @@ const HoldingTanks: React.FC = () => {
         reset(holdingTank);
         setCurrentHoldingTank(holdingTank);
         const index = currentHoldingTanks.findIndex(x => x.holdingTankId === holdingTankId);
-      if (~index) {
+        if (~index) {
           var updatedCurrentHoldingTanks = [...currentHoldingTanks];
           updatedCurrentHoldingTanks.splice(index, 1)
           setCurrentHoldingTanks(updatedCurrentHoldingTanks);
-      }
-    };
+        }
+      };
       deleteHoldingTank();
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
     }
   };
 
-  const onAddButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onAddHoldingTankButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
       const holdingTank = {} as HoldingTankModel;
       holdingTank.holdingTankId = uuidv4().toLowerCase();
@@ -223,9 +207,9 @@ const HoldingTanks: React.FC = () => {
     setShowYesNoDialog(true);
   };
 
-  const onSubmit = handleSubmit((modifiedHoldingTank: HoldingTankModel) => {
-    saveHoldingTank(modifiedHoldingTank);
-    toast.success('Record saved');
+  const onSubmit = handleSubmit(async (modifiedHoldingTank: HoldingTankModel) => {
+    await saveHoldingTank(modifiedHoldingTank);
+    ToastService.success('Record saved');
   });
 
   const saveHoldingTank = async (modifiedHoldingTank: HoldingTankModel) => {
@@ -238,16 +222,16 @@ const HoldingTanks: React.FC = () => {
       reset(patchedHoldingTank);
       setCurrentHoldingTank(patchedHoldingTank);
       const index = currentHoldingTanks.findIndex(x => x.holdingTankId === patchedHoldingTank.holdingTankId);
-    if (~index) {
+      if (~index) {
         currentHoldingTanks[index] = { ...patchedHoldingTank };
-    } else {
+      } else {
         currentHoldingTanks.push(patchedHoldingTank);
       }
       setCurrentHoldingTanks([...currentHoldingTanks]);
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -262,7 +246,7 @@ const HoldingTanks: React.FC = () => {
     }, 0);
   }
 
-  const onCancel = () => {
+  const onCancelClick = () => {
     reset(appContext.holdingTank);
   };
 
@@ -270,80 +254,78 @@ const HoldingTanks: React.FC = () => {
     <div id='holdingTank'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog
-        isActive={showYesNoDialog}
+      <YesNoDialogMui
+        isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
       />
-      <YesNoCancelDialog
-        isActive={showYesNoCancelDialog}
+      <YesNoCancelDialogMui
+        isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
-        onCancel={onDialogCancel}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
+        onCancelClick={onDialogCancel}
       />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Holding Tanks</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>&#10094; Home</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Holding Tanks</h1>
-          <div className='level'>
-            <div className='level-left'></div>
-            <div className='level-right'>
-              <p className='level-item'>
-                <button className='button is-link' onClick={onAddButtonClick}>
-                  <span className='icon'>
-                    <Icon icon='plus' fill='white' height={16} width={16} />
-                  </span>
-                  &nbsp;&nbsp;&nbsp;Add Holding Tank
-                </button>
-              </p>
-            </div>
-          </div>
 
-          <DataTableExtensions 
-            columns={tableColumns} 
-            data={currentHoldingTanks} 
-            export={false} 
-            print={false}
-          >
-            <DataTable
-              title='Holding Tanks'
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Typography color='textPrimary'>Holding Tanks</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/'>&#10094; Home</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>Holding Tanks</Typography>
+
+          <Grid container justify='center' className={classes.formAddButtonsContainer}>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddHoldingTankButtonClick} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Holding Tank
+              </Button>
+            </Grid>
+          </Grid>
+
+          <div className={classes.horizontalScroll}>
+            <MaterialTable
+              icons={tableIcons}
               columns={tableColumns}
               data={currentHoldingTanks}
-              keyField='holdingTankId'
-              defaultSortField='holdingTankName'
-              noHeader={true}
-              fixedHeader={true}
-              fixedHeaderScrollHeight='9rem'
-              customStyles={tableCustomStyles}
-              pagination
-              highlightOnHover
-              onRowClicked={onEditHoldingTankClick}
+              options={{filtering: true, showTitle: false}}
+              onRowClick={(event, data) => onEditHoldingTankClick(data as HoldingTankModel)}
+              actions={[
+                {
+                  icon: actionIcons.EditIcon,
+                  tooltip: 'Edit',
+                  onClick: (event, data) => onEditHoldingTankClick(data as HoldingTankModel)
+                },
+                {
+                  icon: actionIcons.DeleteIcon,
+                  tooltip: 'Delete',
+                  onClick: (event, data) => onDeleteHoldingTankClick(data as HoldingTankModel)
+                },
+              ]}
             />
-          </DataTableExtensions>
+          </div>
           <hr />
 
-          <h1 className='title has-text-centered'>{appContext.holdingTank?.holdingTankName}</h1>
+          <Typography variant='h1' gutterBottom={true} align='center'>
+            {appContext.holdingTank?.holdingTankName}
+          </Typography>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <h2 className='subtitle'>General Information</h2>
+                <Typography variant='h2'>General Information</Typography>
                 <FormFieldRow>
-                  <TextFormField fieldName='holdingTankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
+                  <TextFormFieldMui fieldName='holdingTankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
                 </FormFieldRow>
                 <hr />
 
@@ -355,33 +337,22 @@ const HoldingTanks: React.FC = () => {
                   disabled={!isFormEnabled} 
                   onClick={() => onChildNavigationClick('/holding-tank-graphs')} />
 
-                <div className='field is-grouped form-action-buttons'>
-                  <p className='control'>
-                    <input
-                      type='submit'
-                      className='button is-success is-fixed-width-medium'
-                      value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
-                    />
-                  </p>
-                  <p className='control'>
-                    <input
-                      type='button'
-                      className='button is-danger is-fixed-width-medium'
-                      value='Cancel'
-                      onClick={() => onCancel()}
-                      disabled={!formState.dirty}
-                    />
-                  </p>
+                <div className={classes.formActionButtonsContainer}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                    Save
+                  </Button>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                    Cancel
+                  </Button>
                 </div>
               </fieldset>
             </form>
           </FormContext>
           
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
 
-export default HoldingTanks;
+export default HoldingTanksMui;

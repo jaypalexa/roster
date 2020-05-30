@@ -1,14 +1,36 @@
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import App from 'components/App/App';
 import { AppContextProvider } from 'contexts/AppContext';
 import 'leaflet/dist/leaflet.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'typeface-roboto';
 import './index.sass';
 
+const theme = createMuiTheme({
+  overrides: {
+    MuiTypography: {
+      h1: {
+        fontSize: '2rem',
+      },
+      h2: {
+        fontSize: '1.25rem',
+      },
+    },
+    MuiBreadcrumbs: {
+      root: {
+        marginBottom: '1rem',
+      }
+    },
+  },
+});
+
 ReactDOM.render(
-  <AppContextProvider>
-    <App />
-  </AppContextProvider>
+  <ThemeProvider theme={theme}>
+    <AppContextProvider>
+      <App />
+    </AppContextProvider>
+  </ThemeProvider>
   , document.getElementById('root')
 );
 

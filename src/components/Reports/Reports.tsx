@@ -1,3 +1,4 @@
+import { Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import browserHistory from 'browserHistory';
 import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import Spinner from 'components/Spinner/Spinner';
@@ -6,9 +7,21 @@ import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReportService from 'services/ReportService';
-import './Reports.sass';
+import sharedStyles from 'styles/sharedStyles';
 
 const Reports: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles(
+      {
+        ...sharedStyles(theme),
+        otherReportsHeader: {
+          marginTop: '2rem',
+        },
+      })
+  );
+  const classes = useStyles();
+
   const [reportDefinitions, setReportDefinitions] = useState([] as Array<ReportDefinitionModel>);
   const [showSpinner, setShowSpinner] = useState(false);
 
@@ -36,33 +49,30 @@ const Reports: React.FC = () => {
   return (
     <div id='reports'>
       <Spinner isActive={showSpinner} />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Reports</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>&#10094; Home</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
 
-          <h1 className='title has-text-centered'>FWC Reports</h1>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Typography color='textPrimary'>Reports</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/'>&#10094; Home</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>FWC Reports</Typography>
           {reportDefinitions
             .filter(item => item.isPdf)
             .map((item) => renderChildNavigation(item))
           }
 
-          <h1 className='title has-text-centered'>Other Reports</h1>
+          <Typography variant='h1' align='center' className={classes.otherReportsHeader}>Other Reports</Typography>
           {reportDefinitions
             .filter(item => !item.isPdf)
             .map((item) => renderChildNavigation(item))
           }
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

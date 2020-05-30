@@ -23,11 +23,25 @@ const SeaTurtleMorphometricService = {
     apiRequestPayload.pathParameters = { seaTurtleId: seaTurtleId, seaTurtleMorphometricId: seaTurtleMorphometricId };
 
     const response = await ApiService.get<SeaTurtleMorphometricModel>(apiRequestPayload);
+
+    // kludge because input controls deal only with strings
+    response.sclNotchNotchValue = response.sclNotchNotchValue.toString();
+    response.sclNotchTipValue = response.sclNotchTipValue.toString();
+    response.sclTipTipValue = response.sclTipTipValue.toString();
+    response.scwValue = response.scwValue.toString();
+    response.cclNotchNotchValue = response.cclNotchNotchValue.toString();
+    response.cclNotchTipValue = response.cclNotchTipValue.toString();
+    response.cclTipTipValue = response.cclTipTipValue.toString();
+    response.ccwValue = response.ccwValue.toString();
+    response.weightValue = response.weightValue.toString();
+
     return response;
   },
 
 
   async saveSeaTurtleMorphometric(seaTurtleMorphometric: SeaTurtleMorphometricModel) {
+
+    // kludge because input controls deal only with strings
     seaTurtleMorphometric.sclNotchNotchValue = toNumber(seaTurtleMorphometric.sclNotchNotchValue);
     seaTurtleMorphometric.sclNotchTipValue = toNumber(seaTurtleMorphometric.sclNotchTipValue);
     seaTurtleMorphometric.sclTipTipValue = toNumber(seaTurtleMorphometric.sclTipTipValue);

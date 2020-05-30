@@ -98,7 +98,47 @@ html
   justify-content: center
   margin-bottom: 1rem
   margin-top: 2rem
+
+.form-action-buttons-container
+  display: flex
+  justify-content: center
+  margin-bottom: 1rem
+  margin-top: 2rem
+
+  button
+    margin-left: .5rem
+    margin-right: .5rem
+    text-transform: none
+
+  .save-button
+    background-color: green
+    color: white
+
+    &:hover
+      background-color: darkgreen
   
+.form-add-button-container
+  margin-left: auto
+  margin-right: auto
+  @media (max-width: 768px) // when mobile
+    margin-bottom: 1rem
+    width: 100%
+
+.form-add-buttons-container
+  margin-bottom: 1.5rem
+  margin-top: 1.5rem
+
+  button
+    text-transform: none
+    @media (max-width: 768px) // when mobile
+      width: 100%
+
+  @media (max-width: 768px) // when mobile
+    justify-content: center
+  @media (min-width: 769px) // when not mobile
+    justify-content: space-between
+    // justify-content: flex-end
+
 .hidden
   display: none
 
@@ -111,8 +151,15 @@ html
 .is-fixed-width-medium
   width: 120px
 
+.is-fixed-width-large
+  width: 240px
+
 .modal-card-foot
   justify-content: flex-end !important
+
+.page-body-container
+  margin-top: 1.5rem
+  text-align: center
 
 .radio
   margin-right: .75rem
@@ -121,13 +168,6 @@ html
 
 .select:not(.is-multiple):not(.is-loading)::after
   z-index: inherit ! important
-
-.span-link
-	cursor: pointer
-	color: #3273dc
-
-.span-link.show-underline
-	text-decoration: underline
 
 .tab-content
   display: none

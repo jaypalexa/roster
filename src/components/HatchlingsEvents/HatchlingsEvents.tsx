@@ -1,29 +1,36 @@
-import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
-import YesNoDialog from 'components/Dialogs/YesNoDialog';
-import DateFormField from 'components/FormFields/DateFormField';
+import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
+import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
+import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import IntegerFormField from 'components/FormFields/IntegerFormField';
-import ListFormField from 'components/FormFields/ListFormField';
-import Icon from 'components/Icon/Icon';
+import IntegerFormFieldMui from 'components/FormFields/IntegerFormFieldMui';
+import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
+import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
+import MaterialTable from 'material-table';
 import HatchlingsEventModel from 'models/HatchlingsEventModel';
 import NameValuePair from 'models/NameValuePair';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import HatchlingsEventService from 'services/HatchlingsEventService';
-import { constants } from 'utils';
+import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
+import { actionIcons, constants, tableIcons, toNumber } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import './HatchlingsEvents.sass';
 
 const HatchlingsEvents: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const methods = useForm<HatchlingsEventModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
@@ -43,63 +50,30 @@ const HatchlingsEvents: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const tableColumns = [
+  const [tableColumns] = useState([
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditHatchlingsEventClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
+      title: 'Species',
+      field: 'species',
     },
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: HatchlingsEventModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteHatchlingsEventClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
+      title: 'Event Type',
+      field: 'eventType',
     },
     {
-      name: 'Species',
-      selector: 'species',
-      sortable: true
+      title: 'Event Date',
+      field: 'eventDate',
+      render: (rowData: HatchlingsEventModel) => <span>{rowData.eventDate ? moment(rowData.eventDate).format('YYYY-MM-DD') : ''}</span>,
     },
     {
-      name: 'Event Type',
-      selector: 'eventType',
-      sortable: true
+      title: 'Event Count',
+      field: 'eventCount',
+      render: (rowData: HatchlingsEventModel) => <span>{rowData.eventType === 'Released' ? toNumber(rowData.beachEventCount) + toNumber(rowData.offshoreEventCount) : rowData.eventCount}</span>,
     },
     {
-      name: 'Event Date',
-      selector: (row: HatchlingsEventModel) => row.eventDate ? moment(row.eventDate).format('YYYY-MM-DD') : '',
-      sortable: true,
-    },
-    {
-      name: 'Event Count',
-      selector: 'eventCount',
-      cell: (row: HatchlingsEventModel) => <span>{row.eventType === 'Released' ? row.beachEventCount + row.offshoreEventCount : row.eventCount}</span>,
-      sortable: true,
-      hide: 599
-    },
-    {
-      name: 'County',
-      selector: 'eventCounty',
-      sortable: true,
-      hide: 599
+      title: 'County',
+      field: 'eventCounty',
     }
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    }
-  };
-
-  useMount(() => {
-    window.scrollTo(0, 0);
-  });
+  ]);
 
   useMount(() => {
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
@@ -115,7 +89,7 @@ const HatchlingsEvents: React.FC = () => {
       } 
       catch (err) {
         console.log(err);
-        toast.error(constants.ERROR.GENERIC);
+        ToastService.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -140,7 +114,7 @@ const HatchlingsEvents: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -156,17 +130,17 @@ const HatchlingsEvents: React.FC = () => {
         reset(hatchlingsEvent);
         setCurrentHatchlingsEvent(hatchlingsEvent);
         const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEventId);
-      if (~index) {
+        if (~index) {
           var updatedCurrentHatchlingsEvents = [...currentHatchlingsEvents];
           updatedCurrentHatchlingsEvents.splice(index, 1)
           setCurrentHatchlingsEvents(updatedCurrentHatchlingsEvents);
-      }
-    };
+        }
+      };
       deleteHatchlingsEvent();
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -250,9 +224,9 @@ const HatchlingsEvents: React.FC = () => {
     setShowYesNoDialog(true);
   };
 
-  const onSubmit = handleSubmit((modifiedHatchlingsEvent: HatchlingsEventModel) => {
-    saveHatchlingsEvent(modifiedHatchlingsEvent);
-    toast.success('Record saved');
+  const onSubmit = handleSubmit(async (modifiedHatchlingsEvent: HatchlingsEventModel) => {
+    await saveHatchlingsEvent(modifiedHatchlingsEvent);
+    ToastService.success('Record saved');
   });
 
   const saveHatchlingsEvent = async (modifiedHatchlingsEvent: HatchlingsEventModel) => {
@@ -266,7 +240,7 @@ const HatchlingsEvents: React.FC = () => {
       setCurrentHatchlingsEvent(patchedHatchlingsEvent);
       const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === patchedHatchlingsEvent.hatchlingsEventId);
       if (~index) {
-          currentHatchlingsEvents[index] = { ...patchedHatchlingsEvent };
+        currentHatchlingsEvents[index] = { ...patchedHatchlingsEvent };
       } else {
         currentHatchlingsEvents.push(patchedHatchlingsEvent);
       }
@@ -274,14 +248,14 @@ const HatchlingsEvents: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
     }
   };
 
-  const onCancel = () => {
+  const onCancelClick = () => {
     reset(currentHatchlingsEvent);
   };
 
@@ -303,137 +277,126 @@ const HatchlingsEvents: React.FC = () => {
         return ['species', 'eventDate', 'eventCount', 'eventCounty'].includes(fieldName); 
       } 
    } 
-  }
+  };
 
   return (
     <div id='hatchlingsEvents'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog
-        isActive={showYesNoDialog}
+      <YesNoDialogMui
+        isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
       />
-      <YesNoCancelDialog
-        isActive={showYesNoCancelDialog}
+      <YesNoCancelDialogMui
+        isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
-        onCancel={onDialogCancel}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
+        onCancelClick={onDialogCancel}
       />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Hatchlings Events</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>&#10094; Home</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Hatchlings Events</h1>
-          <div className='level add-hatchlings-event-buttons-container'>
-            <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddHatchlingsEventButtonClick('Acquired')}>
-                <span className='icon'>
-                  <Icon icon='plus' fill='white' height={16} width={16} />
-                </span>
-                &nbsp;&nbsp;&nbsp;Add Hatchlings Acquired Event
-              </button>
-            </p>
-            <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddHatchlingsEventButtonClick('Died')}>
-                <span className='icon'>
-                  <Icon icon='plus' fill='white' height={16} width={16} />
-                </span>
-                &nbsp;&nbsp;&nbsp;Add Hatchlings Died Event
-              </button>
-            </p>
-            <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddHatchlingsEventButtonClick('Released')}>
-                <span className='icon'>
-                  <Icon icon='plus' fill='white' height={16} width={16} />
-                </span>
-                &nbsp;&nbsp;&nbsp;Add Hatchlings Released Event
-              </button>
-            </p>
-            <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddHatchlingsEventButtonClick('DOA')}>
-                <span className='icon'>
-                  <Icon icon='plus' fill='white' height={16} width={16} />
-                </span>
-                &nbsp;&nbsp;&nbsp;Add Hatchlings DOA Event
-              </button>
-            </p>
-          </div>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Typography color='textPrimary'>Hatchling Events</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/'>&#10094; Home</Link>
+      </Breadcrumbs>
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>Hatchling Events</Typography>
 
-          <DataTableExtensions 
-            columns={tableColumns} 
-            data={currentHatchlingsEvents} 
-            export={false} 
-            print={false}
-          >
-            <DataTable
-              title='Hatchlings Events'
+          <Grid container justify='center' className={classes.formAddButtonsContainer}>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddHatchlingsEventButtonClick('Acquired')} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Acquired Event
+              </Button>
+            </Grid>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddHatchlingsEventButtonClick('Died')} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Died Event
+              </Button>
+            </Grid>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddHatchlingsEventButtonClick('Released')} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Released Event
+              </Button>
+            </Grid>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddHatchlingsEventButtonClick('DOA')} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add DOA Event
+              </Button>
+            </Grid>
+          </Grid>
+
+          <div className={classes.horizontalScroll}>
+            <MaterialTable            
+              icons={tableIcons}
               columns={tableColumns}
               data={currentHatchlingsEvents}
-              keyField='hatchlingsEventId'
-              defaultSortField='eventDate'
-              noHeader={true}
-              fixedHeader={true}
-              fixedHeaderScrollHeight='9rem'
-              customStyles={tableCustomStyles}
-              pagination
-              highlightOnHover
-              onRowClicked={onEditHatchlingsEventClick}
+              options={{filtering: true, showTitle: false}}
+              onRowClick={(event, data) => onEditHatchlingsEventClick(data as HatchlingsEventModel)}
+              actions={[
+                {
+                  icon: actionIcons.EditIcon,
+                  tooltip: 'Edit',
+                  onClick: (event, data) => onEditHatchlingsEventClick(data as HatchlingsEventModel)
+                },
+                {
+                  icon: actionIcons.DeleteIcon,
+                  tooltip: 'Delete',
+                  onClick: (event, data) => onDeleteHatchlingsEventClick(data as HatchlingsEventModel)
+                },
+              ]}
             />
-          </DataTableExtensions>
+          </div>
           <hr />
 
-          <h1 className='title has-text-centered'>{currentHatchlingsEvent.eventType ? `Hatchlings ${currentHatchlingsEvent.eventType} Event` : ''} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}</h1>
+          <Typography variant='h1' gutterBottom={true} align='center'>
+            {currentHatchlingsEvent.eventType ? `Hatchlings ${currentHatchlingsEvent.eventType} Event` : ''} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}
+          </Typography>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  {showField('species', currentHatchlingsEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
-                  {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
-                  {showField('eventCount', currentHatchlingsEvent.eventType) ? <IntegerFormField fieldName='eventCount' labelText='Event count' /> : null}
-                  {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormField fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} /> : null}
-                  {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormField fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} /> : null}
-                  {showField('eventCounty', currentHatchlingsEvent.eventType) ? <ListFormField fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
+                  {showField('species', currentHatchlingsEvent.eventType) ? <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
+                  {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormFieldMui fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
+                  {showField('eventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='eventCount' labelText='Event count' /> : null}
+                  {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} /> : null}
+                  {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} /> : null}
+                  {showField('eventCounty', currentHatchlingsEvent.eventType) ? <ListFormFieldMui fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
                 </FormFieldRow>
-                <div className='field is-grouped form-action-buttons'>
-                  <p className='control'>
-                    <input
-                      type='submit'
-                      className='button is-success is-fixed-width-medium'
-                      value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
-                    />
-                  </p>
-                  <p className='control'>
-                    <input
-                      type='button'
-                      className='button is-danger is-fixed-width-medium'
-                      value='Cancel'
-                      onClick={() => onCancel()}
-                      disabled={!formState.dirty}
-                    />
-                  </p>
+
+                <div className={classes.formActionButtonsContainer}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                    Save
+                  </Button>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                    Cancel
+                  </Button>
                 </div>
               </fieldset>
             </form>
           </FormContext>
 
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

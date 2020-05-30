@@ -73,7 +73,7 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
                 </tbody>
               </table>
               <br />
-              </div>
+            </div>
             })
           }
           </>

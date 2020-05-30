@@ -1,31 +1,38 @@
+import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
-import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
-import YesNoDialog from 'components/Dialogs/YesNoDialog';
-import DateFormField from 'components/FormFields/DateFormField';
+import clsx from 'clsx';
+import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
+import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
+import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import ListFormField from 'components/FormFields/ListFormField';
-import TextFormField from 'components/FormFields/TextFormField';
-import Icon from 'components/Icon/Icon';
+import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
+import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
+import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import MaterialTable from 'material-table';
 import NameValuePair from 'models/NameValuePair';
 import SeaTurtleTagModel from 'models/SeaTurtleTagModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import SeaTurtleTagService from 'services/SeaTurtleTagService';
-import { constants } from 'utils';
+import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
+import { actionIcons, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import './SeaTurtleTags.sass';
 
 const SeaTurtleTags: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const [appContext] = useAppContext();
   const methods = useForm<SeaTurtleTagModel>({ mode: 'onChange' });
@@ -46,57 +53,25 @@ const SeaTurtleTags: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const tableColumns = [
+  const [tableColumns] = useState([
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditSeaTurtleTagClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
+      title: 'Tag Number',
+      field: 'tagNumber',
     },
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: SeaTurtleTagModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteSeaTurtleTagClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
+      title: 'Tag Type',
+      field: 'tagType',
     },
     {
-      name: 'Tag Number',
-      selector: 'tagNumber',
-      sortable: true
+      title: 'Location',
+      field: 'location',
     },
     {
-      name: 'Tag Type',
-      selector: 'tagType',
-      sortable: true
+      title: 'Date Tagged',
+      field: 'dateTagged',
+      render: (rowData: SeaTurtleTagModel) => <span>{rowData.dateTagged ? moment(rowData.dateTagged).format('YYYY-MM-DD') : ''}</span>,
     },
-    {
-      name: 'Location',
-      selector: 'location',
-      sortable: true,
-      hide: 599
-    },
-    {
-      name: 'Date Tagged',
-      selector: (row: SeaTurtleTagModel) => row.dateTagged ? moment(row.dateTagged).format('YYYY-MM-DD') : '',
-      sortable: true,
-      hide: 599
-    }
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    }
-  };
-
-  useMount(() => {
-    window.scrollTo(0, 0);
-  });
+  ]);
 
   useMount(() => {
     setTagTypes(CodeListTableService.getList(CodeTableType.TagType, true));
@@ -108,7 +83,7 @@ const SeaTurtleTags: React.FC = () => {
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
-      const getSeaTurtleTagsForTurtle = async () => {
+      const getSeaTurtleTags = async () => {
         try {
           setShowSpinner(true);
           const seaTurtleTags = await SeaTurtleTagService.getSeaTurtleTags(seaTurtleId);
@@ -116,13 +91,13 @@ const SeaTurtleTags: React.FC = () => {
         }
         catch (err) {
           console.log(err);
-          toast.error(constants.ERROR.GENERIC);
+          ToastService.error(constants.ERROR.GENERIC);
         }
         finally {
           setShowSpinner(false);
         }
       };
-      getSeaTurtleTagsForTurtle();
+      getSeaTurtleTags();
     } 
   });
 
@@ -145,7 +120,7 @@ const SeaTurtleTags: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -171,7 +146,7 @@ const SeaTurtleTags: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -270,18 +245,18 @@ const SeaTurtleTags: React.FC = () => {
       }
       setCurrentSeaTurtleTags([...currentSeaTurtleTags]);
 
-      toast.success('Record saved');
+      ToastService.success('Record saved');
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
     }
   });
 
-  const onCancelSeaTurtleTag = () => {
+  const onCancelClick = () => {
     reset(currentSeaTurtleTag);
   };
 
@@ -289,108 +264,93 @@ const SeaTurtleTags: React.FC = () => {
     <div id='seaTurtleTags'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog
-        isActive={showYesNoDialog}
+      <YesNoDialogMui
+        isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
       />
-      <YesNoCancelDialog
-        isActive={showYesNoCancelDialog}
+      <YesNoCancelDialogMui
+        isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
-        onCancel={onDialogCancel}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
+        onCancelClick={onDialogCancel}
       />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Tags</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/sea-turtles'>&#10094; Sea Turtles</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Tags for {appContext.seaTurtle?.seaTurtleName}</h1>
-          <div className='level'>
-            <div className='level-left'></div>
-            <div className='level-right'>
-              <p className='level-item'>
-                <button className='button is-link' onClick={onAddSeaTurtleTagButtonClick}>
-                  <span className='icon'>
-                    <Icon icon='plus' fill='white' height={16} width={16} />
-                  </span>
-                  &nbsp;&nbsp;&nbsp;Add Tag
-                </button>
-              </p>
-            </div>
-          </div>
 
-          <DataTableExtensions 
-            columns={tableColumns} 
-            data={currentSeaTurtleTags} 
-            export={false} 
-            print={false}
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Link to='/sea-turtles'>Sea Turtles</Link>
+        <Typography color='textPrimary'>Tags</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/sea-turtles'>&#10094; Sea Turtles</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>Morphometrics for {appContext.seaTurtle?.seaTurtleName}</Typography>
+
+          <Grid container justify='center' className={classes.formAddButtonsContainer}>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddSeaTurtleTagButtonClick} 
+                startIcon={<IconMui icon='add' />}
           >
-            <DataTable
-              title='Tags'
+                Add Tag
+              </Button>
+            </Grid>
+          </Grid>
+
+          <div className={classes.horizontalScroll}>
+            <MaterialTable
+              icons={tableIcons}
               columns={tableColumns}
               data={currentSeaTurtleTags}
-              keyField='seaTurtleTagId'
-              defaultSortField='tagNumber'
-              noHeader={true}
-              fixedHeader={true}
-              fixedHeaderScrollHeight='9rem'
-              customStyles={tableCustomStyles}
-              pagination
-              highlightOnHover
-              onRowClicked={onEditSeaTurtleTagClick}
+              options={{filtering: true, showTitle: false}}
+              onRowClick={(event, data) => onEditSeaTurtleTagClick(data as SeaTurtleTagModel)}
+              actions={[
+                {
+                  icon: actionIcons.EditIcon,
+                  tooltip: 'Edit',
+                  onClick: (event, data) => onEditSeaTurtleTagClick(data as SeaTurtleTagModel)
+                },
+                {
+                  icon: actionIcons.DeleteIcon,
+                  tooltip: 'Delete',
+                  onClick: (event, data) => onDeleteSeaTurtleTagClick(data as SeaTurtleTagModel)
+                },
+              ]}
             />
-          </DataTableExtensions>
+          </div>
           <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtleTag}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  <TextFormField fieldName='tagNumber' labelText='Tag Number' validationOptions={{ required: 'Tag Number is required' }} refObject={firstEditControlRef} />
-                  <ListFormField fieldName='tagType' labelText='Tag Type' listItems={tagTypes} />
-                  <ListFormField fieldName='location' labelText='Location' listItems={locations} />
-                  <DateFormField fieldName='dateTagged' labelText='Date Tagged' />
+                  <TextFormFieldMui fieldName='tagNumber' labelText='Tag Number' validationOptions={{ required: 'Tag Number is required' }} refObject={firstEditControlRef} />
+                  <ListFormFieldMui fieldName='tagType' labelText='Tag Type' listItems={tagTypes} />
+                  <ListFormFieldMui fieldName='location' labelText='Location' listItems={locations} />
+                  <DateFormFieldMui fieldName='dateTagged' labelText='Date Tagged' />
                 </FormFieldRow>
 
-                <div className='field is-grouped form-action-buttons'>
-                  <p className='control'>
-                    <input
-                      type='submit'
-                      className='button is-success is-fixed-width-medium'
-                      value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
-                    />
-                  </p>
-                  <p className='control'>
-                    <input
-                      type='button'
-                      className='button is-danger is-fixed-width-medium'
-                      value='Cancel'
-                      onClick={() => onCancelSeaTurtleTag()}
-                      disabled={!formState.dirty}
-                    />
-                  </p>
+                <div className={classes.formActionButtonsContainer}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                    Save
+                  </Button>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                    Cancel
+                  </Button>
                 </div>
               </fieldset>
             </form>
           </FormContext>
 
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

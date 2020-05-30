@@ -1,22 +1,29 @@
+import { Breadcrumbs, Container, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import HoldingTankMeasurementService from 'services/HoldingTankMeasurementService';
+import sharedStyles from 'styles/sharedStyles';
 import { constants } from 'utils';
-import './HoldingTankGraphs.sass';
 
 const HoldingTankGraphs: React.FC = () => {
 
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
+
   const [appContext] = useAppContext();
   const [graphTypeSettings, setGraphTypeSettings] = useState<Map<string, GraphTypeSettings>>();
-  const [currentGraphType, setCurrentGraphType] = useState<string>();
+  const [currentGraphTypes, setCurrentGraphTypes] = useState<Map<string, boolean>>();
   const [currentHoldingTankMeasurements, setCurrentHoldingTankMeasurements] = useState([] as Array<HoldingTankMeasurementModel>);
   const [data, setData] = useState<GraphData>({} as GraphData);
   const [showSpinner, setShowSpinner] = useState(false);
@@ -103,7 +110,11 @@ const HoldingTankGraphs: React.FC = () => {
     settings.set('ph', createGraphTypeSetting('pH', 'rgba(0,100,0,1)'));
     setGraphTypeSettings(settings);
 
-    setCurrentGraphType('temperature');
+    const graphTypes = new Map<string, boolean>();
+    settings.forEach((value, key) => {
+      graphTypes.set(key, true);
+    })
+    setCurrentGraphTypes(graphTypes);
   });
 
   const options = {
@@ -139,7 +150,7 @@ const HoldingTankGraphs: React.FC = () => {
     if (!holdingTankId) {
       browserHistory.push('/holding-tanks')
     } else {
-      const getHoldingTankMeasurementsForTank = async () => {
+      const getHoldingTankMeasurements = async () => {
         try {
           setShowSpinner(true);
           const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurements(holdingTankId);
@@ -153,62 +164,51 @@ const HoldingTankGraphs: React.FC = () => {
           setShowSpinner(false);
         }
       };
-      getHoldingTankMeasurementsForTank();
+      getHoldingTankMeasurements();
     }
   });
 
   useEffect(() => {
-    if (!currentGraphType || !currentHoldingTankMeasurements || currentHoldingTankMeasurements.length === 0) return;
+    if (!currentGraphTypes || !currentHoldingTankMeasurements || currentHoldingTankMeasurements.length === 0) return;
 
     const buildNewDatasets = () => {
       const newDatasets = new Array<GraphDataset>();
-      const newData = currentHoldingTankMeasurements.map(x => x[currentGraphType] as number === 0 ? null : x[currentGraphType] as number);
-      const newDataset = Object.assign({}, graphTypeSettings?.get(currentGraphType)?.dataset, { data: newData });
-      newDatasets.push(Object.assign({}, newDataset))
+      currentGraphTypes.forEach((isChecked: boolean, graphType: string) => {
+        if (isChecked) {
+          const newData = currentHoldingTankMeasurements.map(x => x[graphType] as number === 0 ? null : x[graphType] as number);
+          const newDataset = Object.assign({}, graphTypeSettings?.get(graphType)?.dataset, { data: newData });
+          newDatasets.push(newDataset);
+        }
+      });
       return newDatasets;
     }
 
     const newLabels = currentHoldingTankMeasurements.map(x => x.dateMeasured ? moment(x.dateMeasured).format('YYYY-MM-DD') : '');
     setData(data => Object.assign({}, data, { labels: newLabels }, { datasets: buildNewDatasets() }));
-  }, [currentHoldingTankMeasurements, currentGraphType, graphTypeSettings]);
-
-  const onGraphTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCurrentGraphType(event.target.value);
-  }
+  }, [currentHoldingTankMeasurements, currentGraphTypes, graphTypeSettings]);
 
   return (
     <div id='holdingTankGraphs'>
       <Spinner isActive={showSpinner} />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/holding-tanks'>Holding Tanks</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Water Graphs</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/holding-tanks'>&#10094; Holding Tanks</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Water Graphs for {appContext.holdingTank?.holdingTankName}</h1>
 
-          <div className='field has-text-centered'>
-            <input className='is-checkradio is-medium' id='temperature' type='radio' name='graphTypeGroup' value='temperature' checked={currentGraphType === 'temperature'} onChange={onGraphTypeChange} />
-            <label htmlFor='temperature'>Temperature</label>
-            <input className='is-checkradio is-medium' id='salinity' type='radio' name='graphTypeGroup' value='salinity' checked={currentGraphType === 'salinity'} onChange={onGraphTypeChange} />
-            <label htmlFor='salinity'>Salinity</label>
-            <input className='is-checkradio is-medium' id='ph' type='radio' name='graphTypeGroup' value='ph' checked={currentGraphType === 'ph'} onChange={onGraphTypeChange} />
-            <label htmlFor='ph'>pH</label>
-          </div>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Link to='/holding-tanks'>Holding Tanks</Link>
+        <Typography color='textPrimary'>Water Graphs</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/holding-tanks'>&#10094; Holding Tanks</Link>
+      </Breadcrumbs>
 
-          <div className='three-quarters'>
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center' gutterBottom={true}>Water Graphs for {appContext.holdingTank?.holdingTankName}</Typography>
+
+          <Container>
             <Line data={data} options={options} />
-          </div>
-        </div>
-      </div>
+          </Container>
+        </Grid>
+      </Grid>
     </div>
   );
 };

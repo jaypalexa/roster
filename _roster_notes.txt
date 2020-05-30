@@ -64,3 +64,43 @@ Lon -80.458796
 
 TODO:  standardize date format (pickers mm/dd/yyyy vs display yyyy-mm-dd)
 TODO:  save table search / show relinquished turtles settings when navigating back
+
+TODO:  report option pages
+TODO:  report page
+TODO:  sea turtle page
+
+TODO:  redo form row layout into grid layout
+
+TODO:  why does Date Relinquished column on Sea Turtles table _not_ have a filter?
+
+TODO:  styling for checkboxes in forms
+TODO:  right-justify table columns for numbers
+TODO:  disabled styling for form fields
+TODO:  disable listboxes when form is disabled and/or is fieldset disabled not working?
+
+TODO:  get rid of old non-MUI form field components; rename BlahMui to Blah
+
+TODO:  get rid of Icon.tsx
+
+TODO:  try to replace all SASS with JSS
+	-- App.sass --> @media print stuff (re-test that, too)
+	-- Report.sass
+	-- SeaTurtle.sass
+	-- childNavigation
+	-- form field stuff
+	-- spinner
+	-- switch
+	-- map dialog
+
+
+REMOVE:  bulma
+REMOVE:  bulma-checkradio
+REMOVE:  bulma-switch
+REMOVE:  react-data-table-component
+REMOVE:  react-data-table-component-extensions
+REMOVE:  react-toastify
+REMOVE:	 styled-components
+
+REMOVE:  prop-types ???
+
+

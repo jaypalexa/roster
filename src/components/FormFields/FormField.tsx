@@ -7,9 +7,7 @@ export const FormField: React.FC<FormFieldProps> = ({ fieldName, fieldClass, lab
   const { errors } = useFormContext();
   return (
     <div className={`field ${fieldClass || ''}`}>
-      <label className={`label ${labelText ? '' : 'hidden-when-mobile'}`} htmlFor={`${fieldName}`}>
-        {labelText || <span>&nbsp;</span>}
-      </label>
+      <label className={`label ${labelText ? '' : 'hidden-when-mobile'}`}>{labelText || <span>&nbsp;</span>}</label>
       <div className='control is-expanded'>
         {children}
       </div>

@@ -1,33 +1,40 @@
+import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
-import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
-import YesNoDialog from 'components/Dialogs/YesNoDialog';
-import DateFormField from 'components/FormFields/DateFormField';
+import clsx from 'clsx';
+import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
+import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
+import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import ListFormField from 'components/FormFields/ListFormField';
-import TextFormField from 'components/FormFields/TextFormField';
-import Icon from 'components/Icon/Icon';
+import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
+import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
+import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import MaterialTable from 'material-table';
 import NameValuePair from 'models/NameValuePair';
 import OrganizationModel from 'models/OrganizationModel';
 import SeaTurtleMorphometricModel from 'models/SeaTurtleMorphometricModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import OrganizationService from 'services/OrganizationService';
 import SeaTurtleMorphometricService from 'services/SeaTurtleMorphometricService';
-import { constants } from 'utils';
+import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
+import { actionIcons, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import './SeaTurtleMorphometrics.sass';
 
 const SeaTurtleMorphometrics: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const [appContext] = useAppContext();
   const methods = useForm<SeaTurtleMorphometricModel>({ mode: 'onChange' });
@@ -49,101 +56,49 @@ const SeaTurtleMorphometrics: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const tableColumns = [
+  const [tableColumns] = useState([
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditSeaTurtleMorphometricClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
+      title: 'Date Measured',
+      field: 'dateMeasured',
+      render: (rowData: SeaTurtleMorphometricModel) => <span>{rowData.dateMeasured ? moment(rowData.dateMeasured).format('YYYY-MM-DD') : ''}</span>,
     },
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: SeaTurtleMorphometricModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteSeaTurtleMorphometricClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
+      title: 'SCL notch-notch',
+      field: 'sclNotchNotchValue',
     },
     {
-      name: 'Date Measured',
-      selector: (row: SeaTurtleMorphometricModel) => row.dateMeasured ? moment(row.dateMeasured).format('YYYY-MM-DD') : '',
-      sortable: true,
+      title: 'SCL notch-tip',
+      field: 'sclNotchTipValue',
     },
     {
-      name: 'SCL notch-notch',
-      selector: 'sclNotchNotchValue',
-      right: true,
-      sortable: true
+      title: 'SCL tip-tip',
+      field: 'sclTipTipValue',
     },
     {
-      name: 'SCL notch-tip',
-      selector: 'sclNotchTipValue',
-      right: true,
-      sortable: true
+      title: 'SCW',
+      field: 'scwValue',
     },
     {
-      name: 'SCL tip-tip',
-      selector: 'sclTipTipValue',
-      right: true,
-      sortable: true,
-      hide: 599
+      title: 'CCL notch-notch',
+      field: 'cclNotchNotchValue',
     },
     {
-      name: 'SCW',
-      selector: 'scwValue',
-      right: true,
-      sortable: true,
-      hide: 599
+      title: 'CCL notch-tip',
+      field: 'cclNotchTipValue',
     },
     {
-      name: 'CCL notch-notch',
-      selector: 'cclNotchNotchValue',
-      right: true,
-      sortable: true,
-      hide: 599
+      title: 'CCL tip-tip',
+      field: 'cclTipTipValue',
     },
     {
-      name: 'CCL notch-tip',
-      selector: 'cclNotchTipValue',
-      right: true,
-      sortable: true,
-      hide: 599
+      title: 'CCW',
+      field: 'ccwValue',
     },
     {
-      name: 'CCL tip-tip',
-      selector: 'cclTipTipValue',
-      right: true,
-      sortable: true,
-      hide: 599
-    },
-    {
-      name: 'CCW',
-      selector: 'ccwValue',
-      right: true,
-      sortable: true,
-      hide: 599
-    },
-    {
-      name: 'Weight',
-      selector: 'weightValue',
-      right: true,
-      sortable: true,
-      hide: 599
+      title: 'Weight',
+      field: 'weightValue',
     }
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    }
-  };
-
-  useMount(() => {
-    window.scrollTo(0, 0);
-  });
+  ]);
 
   useMount(() => {
     setCmIns(CodeListTableService.getList(CodeTableType.CmIn, true));
@@ -155,7 +110,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
     } else {
-      const getSeaTurtleMorphometricsForTurtle = async () => {
+      const getSeaTurtleMorphometrics = async () => {
         try {
           setShowSpinner(true);
           const seaTurtleMorphometrics = await SeaTurtleMorphometricService.getSeaTurtleMorphometrics(seaTurtleId);
@@ -163,13 +118,13 @@ const SeaTurtleMorphometrics: React.FC = () => {
         }
         catch (err) {
           console.log(err);
-          toast.error(constants.ERROR.GENERIC);
+          ToastService.error(constants.ERROR.GENERIC);
         }
         finally {
           setShowSpinner(false);
         }
       };
-      getSeaTurtleMorphometricsForTurtle();
+      getSeaTurtleMorphometrics();
     }
   });
 
@@ -182,7 +137,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       }
       catch (err) {
         console.log(err);
-        toast.error(constants.ERROR.GENERIC);
+        ToastService.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -210,7 +165,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -236,7 +191,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -346,18 +301,18 @@ const SeaTurtleMorphometrics: React.FC = () => {
     }
       setCurrentSeaTurtleMorphometrics([...currentSeaTurtleMorphometrics]);
 
-    toast.success('Record saved');
+    ToastService.success('Record saved');
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
     }
   });
 
-  const onCancelSeaTurtleMorphometric = () => {
+  const onCancelClick = () => {
     reset(currentSeaTurtleMorphometric);
   };
 
@@ -365,129 +320,114 @@ const SeaTurtleMorphometrics: React.FC = () => {
     <div id='seaTurtleMorphometrics'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog
-        isActive={showYesNoDialog}
+      <YesNoDialogMui
+        isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
       />
-      <YesNoCancelDialog
-        isActive={showYesNoCancelDialog}
+      <YesNoCancelDialogMui
+        isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
-        onCancel={onDialogCancel}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
+        onCancelClick={onDialogCancel}
       />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Morphometrics Measurements</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/sea-turtles'>&#10094; Sea Turtles</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Morphometrics for {appContext.seaTurtle?.seaTurtleName}</h1>
-          <div className='level'>
-            <div className='level-left'></div>
-            <div className='level-right'>
-              <p className='level-item'>
-                <button className='button is-link' onClick={onAddSeaTurtleMorphometricButtonClick}>
-                  <span className='icon'>
-                    <Icon icon='plus' fill='white' height={16} width={16} />
-                  </span>
-                  &nbsp;&nbsp;&nbsp;Add Morphometric
-                </button>
-              </p>
-            </div>
-          </div>
 
-          <DataTableExtensions 
-            columns={tableColumns} 
-            data={currentSeaTurtleMorphometrics} 
-            export={false} 
-            print={false}
-          >
-            <DataTable
-              title='Morphometrics'
-              columns={tableColumns}
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Link to='/sea-turtles'>Sea Turtles</Link>
+        <Typography color='textPrimary'>Morphometric Measurements</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/sea-turtles'>&#10094; Sea Turtles</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>Morphometrics for {appContext.seaTurtle?.seaTurtleName}</Typography>
+
+          <Grid container justify='center' className={classes.formAddButtonsContainer}>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddSeaTurtleMorphometricButtonClick} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Morphometric
+              </Button>
+            </Grid>
+          </Grid>
+
+          <div className={classes.horizontalScroll}>
+            <MaterialTable
+              icons={tableIcons}
+              columns={tableColumns} 
               data={currentSeaTurtleMorphometrics}
-              keyField='turtleMorphometricId'
-              defaultSortField='dateMeasured'
-              noHeader={true}
-              fixedHeader={true}
-              fixedHeaderScrollHeight='9rem'
-              customStyles={tableCustomStyles}
-              pagination
-              highlightOnHover
-              onRowClicked={onEditSeaTurtleMorphometricClick}
+              options={{filtering: true, showTitle: false}}
+              onRowClick={(event, data) => onEditSeaTurtleMorphometricClick(data as SeaTurtleMorphometricModel)}
+              actions={[
+                {
+                  icon: actionIcons.EditIcon,
+                  tooltip: 'Edit',
+                  onClick: (event, data) => onEditSeaTurtleMorphometricClick(data as SeaTurtleMorphometricModel)
+                },
+                {
+                  icon: actionIcons.DeleteIcon,
+                  tooltip: 'Delete',
+                  onClick: (event, data) => onDeleteSeaTurtleMorphometricClick(data as SeaTurtleMorphometricModel)
+                },
+              ]}
             />
-          </DataTableExtensions>
+          </div>
           <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtleMorphometric}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
+                  <DateFormFieldMui fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
                 </FormFieldRow>
                 <FormFieldRow>
-                  <TextFormField fieldName='sclNotchNotchValue' labelText='SCL notch-notch' />
-                  <ListFormField fieldName='sclNotchNotchUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormField fieldName='sclNotchTipValue' labelText='SCL notch-tip' />
-                  <ListFormField fieldName='sclNotchTipUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormField fieldName='sclTipTipValue' labelText='SCL tip-tip' />
-                  <ListFormField fieldName='sclTipTipUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormField fieldName='scwValue' labelText='SCW' />
-                  <ListFormField fieldName='scwUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='sclNotchNotchValue' labelText='SCL notch-notch' />
+                  <ListFormFieldMui fieldName='sclNotchNotchUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='sclNotchTipValue' labelText='SCL notch-tip' />
+                  <ListFormFieldMui fieldName='sclNotchTipUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='sclTipTipValue' labelText='SCL tip-tip' />
+                  <ListFormFieldMui fieldName='sclTipTipUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='scwValue' labelText='SCW' />
+                  <ListFormFieldMui fieldName='scwUnits' labelText='Units' listItems={cmIns} />
                 </FormFieldRow>
                 <FormFieldRow>
-                  <TextFormField fieldName='cclNotchNotchValue' labelText='CCL notch-notch' />
-                  <ListFormField fieldName='cclNotchNotchUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormField fieldName='cclNotchTipValue' labelText='CCL notch-tip' />
-                  <ListFormField fieldName='cclNotchTipUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormField fieldName='cclTipTipValue' labelText='CCL tip-tip' />
-                  <ListFormField fieldName='cclTipTipUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormField fieldName='ccwValue' labelText='CCW' />
-                  <ListFormField fieldName='ccwUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='cclNotchNotchValue' labelText='CCL notch-notch' />
+                  <ListFormFieldMui fieldName='cclNotchNotchUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='cclNotchTipValue' labelText='CCL notch-tip' />
+                  <ListFormFieldMui fieldName='cclNotchTipUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='cclTipTipValue' labelText='CCL tip-tip' />
+                  <ListFormFieldMui fieldName='cclTipTipUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='ccwValue' labelText='CCW' />
+                  <ListFormFieldMui fieldName='ccwUnits' labelText='Units' listItems={cmIns} />
                 </FormFieldRow>
                 <FormFieldRow>
-                  <TextFormField fieldName='weightValue' labelText='Weight' />
-                  <ListFormField fieldName='weightUnits' labelText='Units' listItems={kgLbs} />
+                  <TextFormFieldMui fieldName='weightValue' labelText='Weight' />
+                  <ListFormFieldMui fieldName='weightUnits' labelText='Units' listItems={kgLbs} />
                 </FormFieldRow>
 
-                <div className='field is-grouped form-action-buttons'>
-                  <p className='control'>
-                    <input
-                      type='submit'
-                      className='button is-success is-fixed-width-medium'
-                      value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
-                    />
-                  </p>
-                  <p className='control'>
-                    <input
-                      type='button'
-                      className='button is-danger is-fixed-width-medium'
-                      value='Cancel'
-                      onClick={() => onCancelSeaTurtleMorphometric()}
-                      disabled={!formState.dirty}
-                    />
-                  </p>
+                <div className={classes.formActionButtonsContainer}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                    Save
+                  </Button>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                    Cancel
+                  </Button>
                 </div>
               </fieldset>
             </form>
           </FormContext>
 
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

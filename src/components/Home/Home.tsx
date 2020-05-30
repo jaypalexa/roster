@@ -1,46 +1,48 @@
-import MenuTile from 'components/MenuTile/MenuTile';
+import { Grid } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import HomeTile from 'components/HomeTile/HomeTile';
 import useMount from 'hooks/UseMount';
 import React from 'react';
-import './Home.sass';
 
-const Home: React.FC = () => {
+const HomeMui: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        flexGrow: 1,
+      },
+    }),
+  );
+  const classes = useStyles();
 
   useMount(() => {
     window.scrollTo(0, 0);
   });
 
   return (
-    <div id='home' className='home-component'>
-      <div className='columns'>
-        <div className='column has-text-centered'>
-          <div className='tile is-ancestor'>
-            <div className='tile is-parent is-vertical is-6'>
-              <MenuTile color='darkgreen' title='Sea Turtles' linkTo='/sea-turtles' />
-              <MenuTile color='darkmagenta' title='Holding Tanks' linkTo='/holding-tanks' />
-            </div>
-            <div className='tile is-vertical is-6'>
-              <div className='tile'>
-                <div className='tile is-parent is-6'>
-                  <MenuTile color='hsl(245, 100%, 25%)' title='Hatchlings Events' linkTo='/hatchlings-events' />
-                </div>
-                <div className='tile is-parent is-6'>
-                  <MenuTile color='hsl(245, 100%, 40%)' title='Washbacks Events' linkTo='/washbacks-events' />
-                </div>
-              </div>
-              <div className='tile'>
-                <div className='tile is-parent is-5'>
-                  <MenuTile color='darkred' title='Reports' linkTo='/reports' />
-                </div>
-                <div className='tile is-parent is-7'>
-                  <MenuTile color='firebrick' title='Blank Forms' linkTo='/blank-forms' />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div id='home' className={classes.root}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <HomeTile color='darkgreen' content='Sea Turtles' linkTo='/sea-turtles' />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <HomeTile color='hsl(245, 100%, 25%)' content='Hatchlings Events' linkTo='/hatchlings-events' />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <HomeTile color='hsl(245, 100%, 40%)' content='Washbacks Events' linkTo='/washbacks-events' />
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <HomeTile color='darkmagenta' content='Holding Tanks' linkTo='/holding-tanks' />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <HomeTile color='darkred' content='Reports' linkTo='/reports' />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <HomeTile color='firebrick' content='Blank Forms' linkTo='/blank-forms' />
+        </Grid>
+      </Grid>
     </div>
   );
 };
 
-export default Home;
+export default HomeMui;

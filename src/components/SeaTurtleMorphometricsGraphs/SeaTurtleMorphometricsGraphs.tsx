@@ -1,18 +1,25 @@
+import { Breadcrumbs, Container, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import SeaTurtleMorphometricModel from 'models/SeaTurtleMorphometricModel';
 import moment from 'moment';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SeaTurtleMorphometricService from 'services/SeaTurtleMorphometricService';
+import sharedStyles from 'styles/sharedStyles';
 import { constants } from 'utils';
-import './SeaTurtleMorphometricsGraphs.sass';
 
 const SeaTurtleMorphometricsGraphs: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const [appContext] = useAppContext();
   const [graphTypeSettings, setGraphTypeSettings] = useState<Map<string, GraphTypeSettings>>();
@@ -174,7 +181,6 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
       const newDatasets = new Array<GraphDataset>();
       currentGraphTypes.forEach((isChecked: boolean, graphType: string) => {
         if (isChecked) {
-          //const newData = currentSeaTurtleMorphometrics.map(x => x[graphType] as number).filter(x => x > 0);
           const newData = currentSeaTurtleMorphometrics.map(x => x[graphType] as number === 0 ? null : x[graphType] as number);
           const newDataset = Object.assign({}, graphTypeSettings?.get(graphType)?.dataset, { data: newData });
           newDatasets.push(newDataset);
@@ -187,61 +193,28 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
     setData(data => Object.assign({}, data, { labels: newLabels }, { datasets: buildNewDatasets() }));
   }, [currentSeaTurtleMorphometrics, currentGraphTypes, graphTypeSettings]);
 
-  const onGraphTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const graphTypes = new Map<string, boolean>(currentGraphTypes || new Map<string, boolean>());
-    graphTypes.set(event.target.value, event.target.checked);
-    setCurrentGraphTypes(graphTypes);
-  }
-
   return (
     <div id='seaTurtleMorphometricsGraphs'>
       <Spinner isActive={showSpinner} />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/sea-turtles'>Sea Turtles</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Morphometrics Graphs</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/sea-turtles'>&#10094; Sea Turtles</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Morphometrics Graphs for {appContext.seaTurtle?.seaTurtleName}</h1>
 
-          <div className='field has-text-centered'>
-            <input className='is-checkradio is-black' id='sclNotchNotchValue' type='checkbox' name='sclNotchNotchValue' value='sclNotchNotchValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='sclNotchNotchValue'>SCL notch-notch</label>
-            <input className='is-checkradio is-black' id='sclNotchTipValue' type='checkbox' name='sclNotchTipValue' value='sclNotchTipValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='sclNotchTipValue'>SCL notch-tip</label>
-            <input className='is-checkradio is-black' id='sclTipTipValue' type='checkbox' name='sclTipTipValue' value='sclTipTipValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='sclTipTipValue'>SCL tip-tip</label>
-            <input className='is-checkradio is-black' id='scwValue' type='checkbox' name='scwValue' value='scwValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='scwValue'>SCW</label>
-          </div>
-          <div className='field has-text-centered'>
-            <input className='is-checkradio is-black' id='cclNotchNotchValue' type='checkbox' name='cclNotchNotchValue' value='cclNotchNotchValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='cclNotchNotchValue'>CCL notch-notch</label>
-            <input className='is-checkradio is-black' id='cclNotchTipValue' type='checkbox' name='cclNotchTipValue' value='cclNotchTipValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='cclNotchTipValue'>CCL notch-tip</label>
-            <input className='is-checkradio is-black' id='cclTipTipValue' type='checkbox' name='cclTipTipValue' value='cclTipTipValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='cclTipTipValue'>CCL tip-tip</label>
-            <input className='is-checkradio is-black' id='ccwValue' type='checkbox' name='ccwValue' value='ccwValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='ccwValue'>CCW</label>
-          </div>
-          <div className='field has-text-centered'>
-            <input className='is-checkradio is-black' id='weightValue' type='checkbox' name='weightValue' value='weightValue' defaultChecked={true} onChange={onGraphTypeChange} />
-            <label htmlFor='weightValue'>Weight</label>
-          </div>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Link to='/sea-turtles'>Sea Turtles</Link>
+        <Typography color='textPrimary'>Water Graphs</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/sea-turtles'>&#10094; Sea Turtles</Link>
+      </Breadcrumbs>
 
-          <div className='three-quarters'>
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center' gutterBottom={true}>Morphometrics Graphs for {appContext.seaTurtle?.seaTurtleName}</Typography>
+
+          <Container>
             <Line data={data} options={options} />
-          </div>
-        </div>
-      </div>
+          </Container>
+        </Grid>
+      </Grid>
     </div>
   );
 };

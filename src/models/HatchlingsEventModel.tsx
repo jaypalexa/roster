@@ -5,8 +5,8 @@ export default interface HatchlingsEventModel {
   eventType: string;
   species: string;
   eventDate: Date;
-  eventCount: number;
-  beachEventCount: number;
-  offshoreEventCount: number;
+  eventCount: number | string; // kludge because input controls deal only with strings
+  beachEventCount: number | string; // kludge because input controls deal only with strings
+  offshoreEventCount: number | string; // kludge because input controls deal only with strings
   eventCounty: string;
 };

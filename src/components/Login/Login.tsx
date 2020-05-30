@@ -1,21 +1,21 @@
+import { Button, Grid, Typography } from '@material-ui/core';
 import browserHistory from 'browserHistory';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import TextFormField from 'components/FormFields/TextFormField';
+import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import LoginModel from 'models/LoginModel';
 import React, { useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
 import MessageService from 'services/MessageService';
-import './Login.sass';
+import ToastService from 'services/ToastService';
 
-interface LoginProps {
+interface LoginMuiProps {
   redirectPathOnAuthentication?: string;
 }
 
-const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
+const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => {
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
   const [showSpinner, setShowSpinner] = useState(false);
   const methods = useForm<LoginModel>({ mode: 'onChange' });
@@ -65,42 +65,38 @@ const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
       browserHistory.push(getPath());
     } else {
       MessageService.notifyUserNameChanged('');
-      toast.error('Invalid login');
+      ToastService.error('Invalid login');
     }
   });
 
   return (
     <div id='login'>
       <Spinner isActive={showSpinner} />
-      <div className='columns is-centered'>
-        <div className='column is-two-fifths'>
-          <h1 className='title has-text-centered'>Log In</h1>
+      <Grid container justify='center'>
+        <Grid item md={3}>
+          <Typography variant='h1' align='center' gutterBottom={true}>Log In</Typography>
           <FormContext {...methods}>
             <form onSubmit={onSubmit}>
 
               <FormFieldRow>
-                <TextFormField fieldName='userName' labelText='User Name' validationOptions={{ required: 'User Name is required' }} refObject={userNameControlRef} />
+                <TextFormFieldMui fieldName='userName' labelText='User Name' validationOptions={{ required: 'User Name is required' }} refObject={userNameControlRef} />
               </FormFieldRow>
               <FormFieldRow>
-                <TextFormField fieldName='password' labelText='Password' type='password' validationOptions={{ required: 'Password is required' }} refObject={passwordControlRef} />
+                <TextFormFieldMui fieldName='password' labelText='Password' type='password' validationOptions={{ required: 'Password is required' }} refObject={passwordControlRef} />
               </FormFieldRow>
 
-              <div className='field is-grouped form-action-buttons'>
-                <p className='control'>
-                  <input
-                    type='submit'
-                    className='button is-success is-fixed-width-medium'
-                    value='Log In'
-                  />
-                </p>
+              <div className='form-action-buttons-container'>
+                <Button className='is-fixed-width-medium save-button' variant='contained' type='submit'>
+                  Log In
+                </Button>
               </div>
 
             </form>
           </FormContext>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
 
-export default Login;
+export default LoginMui;

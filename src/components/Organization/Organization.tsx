@@ -1,27 +1,38 @@
-import DateFormField from 'components/FormFields/DateFormField';
+import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import clsx from 'clsx';
+import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import IntegerFormField from 'components/FormFields/IntegerFormField';
-import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
-import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
-import TextFormField from 'components/FormFields/TextFormField';
+import IntegerFormFieldMui from 'components/FormFields/IntegerFormFieldMui';
+import RadioButtonFormFieldMui from 'components/FormFields/RadioButtonFormFieldMui';
+import RadioButtonGroupFormFieldMui from 'components/FormFields/RadioButtonGroupFormFieldMui';
+import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
-import TabHelper from 'helpers/TabHelper';
+import TabPanel, { a11yProps } from 'components/TabPanel/TabPanel';
 import useMount from 'hooks/UseMount';
 import OrganizationModel from 'models/OrganizationModel';
 import React, { useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import OrganizationService from 'services/OrganizationService';
+import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
 import { constants } from 'utils';
-import './Organization.sass';
 
-const Organization: React.FC = () => {
+const OrganizationMui: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const methods = useForm<OrganizationModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
+  const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
   const [showSpinner, setShowSpinner] = useState(false);
 
   useMount(() => {
@@ -29,11 +40,6 @@ const Organization: React.FC = () => {
   });
 
   useMount(() => {
-    // TODO: CACHING ???
-    // const organizationId = auth().getTokenOrganizationId;
-    // const organization = ApiService.getCacheValue(`ORGANIZATION#${organizationId}`);
-    // reset(organization);
-    // setCurrentOrganization(organization);
 
     const fetchOrganization = async () => {
       try {
@@ -44,7 +50,7 @@ const Organization: React.FC = () => {
       } 
       catch (err) {
         console.log(err);
-        toast.error(constants.ERROR.GENERIC);
+        ToastService.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -53,138 +59,128 @@ const Organization: React.FC = () => {
     fetchOrganization();
   });
 
+  const onTabChange = (event: React.ChangeEvent<{}>, newIndex: number) => {
+    setCurrentTabIndex(newIndex);
+  };
+
   const onSubmit = handleSubmit((modifiedOrganization: OrganizationModel) => {
     const patchedOrganization = { ...currentOrganization, ...modifiedOrganization };
     OrganizationService.saveOrganization(patchedOrganization);
     reset(patchedOrganization);
     setCurrentOrganization(patchedOrganization);
-    toast.success('Record saved');
+    ToastService.success('Record saved');
   });
 
-  const onCancel = () => {
+  const onCancelClick = () => {
     reset(currentOrganization);
   };
-
-  new TabHelper().initialize();
 
   return (
     <div id='organization'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Organization</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>&#10094; Home</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Organization</h1>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Typography color='textPrimary'>Organization</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/'>&#10094; Home</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center' gutterBottom={true}>Organization</Typography>
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
 
-              <div className='tabs'>
-                <ul>
-                  <li className='is-active'><span>General Information</span></li>
-                  <li><span>Hatchling and Washback Starting Balances</span></li>
-                  <li><span>Preferences</span></li>
-                </ul>
-              </div>
+              <Tabs
+                value={currentTabIndex}
+                onChange={onTabChange}
+                indicatorColor='primary'
+                textColor='primary'
+                variant='scrollable'
+                scrollButtons='auto'
+                aria-label='Organization Tabs'
+              >
+                <Tab className={classes.tabButton} label='General Information' {...a11yProps(0)} />
+                <Tab className={classes.tabButton} label='Hatchling and Washback Starting Balances' {...a11yProps(1)} />
+                <Tab className={classes.tabButton} label='Preferences' {...a11yProps(2)} />
+              </Tabs>
 
-              <div>
-                <section className='tab-content is-active'> {/* General Information */}
-                  <FormFieldRow>
-                    <TextFormField fieldName='organizationName' labelText='Organization Name' validationOptions={{ required: 'Organization Name is required' }} />
-                    <TextFormField fieldName='permitNumber' labelText='Permit Number' />
-                    <TextFormField fieldName='contactName' labelText='Contact Name' />
-                  </FormFieldRow>
+              <TabPanel value={currentTabIndex} index={0}> {/* General Information */}
+                <FormFieldRow>
+                  <TextFormFieldMui fieldName='organizationName' labelText='Organization Name' validationOptions={{ required: 'Organization Name is required' }} />
+                  <TextFormFieldMui fieldName='permitNumber' labelText='Permit Number' />
+                  <TextFormFieldMui fieldName='contactName' labelText='Contact Name' />
+                </FormFieldRow>
 
-                  <FormFieldRow>
-                    <TextFormField fieldName='address1' labelText='Address Line 1' />
-                    <TextFormField fieldName='address2' labelText='Address Line 2' />
-                  </FormFieldRow>
+                <FormFieldRow>
+                  <TextFormFieldMui fieldName='address1' labelText='Address Line 1' />
+                  <TextFormFieldMui fieldName='address2' labelText='Address Line 2' />
+                </FormFieldRow>
 
-                  <FormFieldRow>
-                    <TextFormField fieldName='city' labelText='City' />
-                    <TextFormField fieldName='state' labelText='State' value='Florida' disabled={true} />
-                    <TextFormField fieldName='zipCode' labelText='ZIP Code' maxLength={10} validationOptions={{ maxLength: { value: 10, message: 'ZIP Code cannot exceed 10 characters' } }} />
-                  </FormFieldRow>
+                <FormFieldRow>
+                  <TextFormFieldMui fieldName='city' labelText='City' />
+                  <TextFormFieldMui fieldName='state' labelText='State' value='Florida' disabled={true} />
+                  <TextFormFieldMui fieldName='zipCode' labelText='ZIP Code' maxLength={10} validationOptions={{ maxLength: { value: 10, message: 'ZIP Code cannot exceed 10 characters' } }} />
+                </FormFieldRow>
 
-                  <FormFieldRow>
-                    <TextFormField fieldName='phone' labelText='Phone' />
-                    <TextFormField fieldName='fax' labelText='Fax' />
-                    <TextFormField fieldName='emailAddress' labelText='Email Address'
-                      validationOptions={{
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                          message: 'Invalid email address'
-                        }
-                      }}
-                    />
-                  </FormFieldRow>
-                </section>
-                <section className='tab-content'> {/* Hatchling and Washback Starting Balances */}
-                  <div className='columns is-centered'>
-                    <div className='column is-half'>
-                      <h2 className='is-size-5 has-text-centered'>Hatchlings</h2>
-                      <DateFormField fieldName='hatchlingsBalanceAsOfDate' labelText='Balance As Of' />
-                      <IntegerFormField fieldName='ccHatchlingsStartingBalance' labelText='Loggerhead (Cc)' />
-                      <IntegerFormField fieldName='cmHatchlingsStartingBalance' labelText='Green (Cm)' />
-                      <IntegerFormField fieldName='dcHatchlingsStartingBalance' labelText='Leatherback (Dc)' />
-                      <IntegerFormField fieldName='otherHatchlingsStartingBalance' labelText='Other' />
-                      <IntegerFormField fieldName='unknownHatchlingsStartingBalance' labelText='Unknown' />
-                    </div>
-                    <div className='column is-half'>
-                      <h2 className='is-size-5 has-text-centered'>Washbacks</h2>
-                      <DateFormField fieldName='washbacksBalanceAsOfDate' labelText='Balance As Of' />
-                      <IntegerFormField fieldName='ccWashbacksStartingBalance' labelText='Loggerhead (Cc)' />
-                      <IntegerFormField fieldName='cmWashbacksStartingBalance' labelText='Green (Cm)' />
-                      <IntegerFormField fieldName='dcWashbacksStartingBalance' labelText='Leatherback (Dc)' />
-                      <IntegerFormField fieldName='otherWashbacksStartingBalance' labelText='Other' />
-                      <IntegerFormField fieldName='unknownWashbacksStartingBalance' labelText='Unknown' />
-                    </div>
-                  </div>
-                </section>
-                <section className='tab-content'> {/* Preferences */}
-                  <RadioButtonGroupFormField fieldName='preferredUnitsType' labelText='Units Type' >
-                    <RadioButtonFormField fieldName='preferredUnitsType' labelText='Metric (cm, kg, etc.)' value='M' />
-                    <br />
-                    <RadioButtonFormField fieldName='preferredUnitsType' labelText='Imperial (in, lbs, etc.)' value='I' />
-                  </RadioButtonGroupFormField>
-                </section>
-              </div>
-
-              <div className='field is-grouped form-action-buttons'>
-                <p className='control'>
-                  <input
-                    type='submit'
-                    className='button is-success is-fixed-width-medium'
-                    value='Save'
-                    disabled={!(formState.isValid && formState.dirty)}
+                <FormFieldRow>
+                  <TextFormFieldMui fieldName='phone' labelText='Phone' />
+                  <TextFormFieldMui fieldName='fax' labelText='Fax' />
+                  <TextFormFieldMui fieldName='emailAddress' labelText='Email Address'
+                    validationOptions={{
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        message: 'Invalid email address'
+                      }
+                    }}
                   />
-                </p>
-                <p className='control'>
-                  <input
-                    type='button'
-                    className='button is-danger is-fixed-width-medium'
-                    value='Cancel'
-                    onClick={() => onCancel()}
-                    disabled={!formState.dirty}
-                  />
-                </p>
-              </div>
+                </FormFieldRow>
+              </TabPanel>
+              <TabPanel value={currentTabIndex} index={1}> {/* Hatchling and Washback Starting Balances */}
+                <Grid container justify='center' spacing={2}>
+                  <Grid item md={6}>
+                    <Typography variant='h2' align='center' gutterBottom={true}>Hatchlings</Typography>
+                    <DateFormFieldMui fieldName='hatchlingsBalanceAsOfDate' labelText='Balance As Of' />
+                    <IntegerFormFieldMui fieldName='ccHatchlingsStartingBalance' labelText='Loggerhead (Cc)' />
+                    <IntegerFormFieldMui fieldName='cmHatchlingsStartingBalance' labelText='Green (Cm)' />
+                    <IntegerFormFieldMui fieldName='dcHatchlingsStartingBalance' labelText='Leatherback (Dc)' />
+                    <IntegerFormFieldMui fieldName='otherHatchlingsStartingBalance' labelText='Other' />
+                    <IntegerFormFieldMui fieldName='unknownHatchlingsStartingBalance' labelText='Unknown' />
+                  </Grid>
+                  <Grid item md={6}>
+                    <Typography variant='h2' align='center' gutterBottom={true}>Washbacks</Typography>
+                    <DateFormFieldMui fieldName='washbacksBalanceAsOfDate' labelText='Balance As Of' />
+                    <IntegerFormFieldMui fieldName='ccWashbacksStartingBalance' labelText='Loggerhead (Cc)' />
+                    <IntegerFormFieldMui fieldName='cmWashbacksStartingBalance' labelText='Green (Cm)' />
+                    <IntegerFormFieldMui fieldName='dcWashbacksStartingBalance' labelText='Leatherback (Dc)' />
+                    <IntegerFormFieldMui fieldName='otherWashbacksStartingBalance' labelText='Other' />
+                    <IntegerFormFieldMui fieldName='unknownWashbacksStartingBalance' labelText='Unknown' />
+                  </Grid>
+                </Grid>
+              </TabPanel>
+              <TabPanel value={currentTabIndex} index={2}> {/* Preferences */}
+                <RadioButtonGroupFormFieldMui fieldName='preferredUnitsType' labelText='Units Type' >
+                  <RadioButtonFormFieldMui fieldName='preferredUnitsType' labelText='Metric (cm, kg, etc.)' value='M' />
+                  <RadioButtonFormFieldMui fieldName='preferredUnitsType' labelText='Imperial (in, lbs, etc.)' value='I' />
+                </RadioButtonGroupFormFieldMui>
+              </TabPanel>
 
+              <div className={classes.formActionButtonsContainer}>
+                <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                  Save
+                </Button>
+                <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                  Cancel
+                </Button>
+              </div>
             </form>
           </FormContext>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
 
-export default Organization;
+export default OrganizationMui;

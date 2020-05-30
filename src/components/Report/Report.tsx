@@ -1,11 +1,13 @@
+import { Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import ReportRouteStateModel from 'models/ReportRouteStateModel';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import ReportService from 'services/ReportService';
+import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
 import { constants, isIosDevice } from 'utils';
 import HatchlingsAndWashbacksByCountyReportGenerator from './HatchlingsAndWashbacksByCountyReport/HatchlingsAndWashbacksByCountyReportGenerator';
 import './Report.sass';
@@ -13,6 +15,18 @@ import TurtleInjuryReportGenerator from './TurtleInjuryReport/TurtleInjuryReport
 import TurtleTagReportGenerator from './TurtleTagReport/TurtleTagReportGenerator';
 
 const Report: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles(
+      {
+        ...sharedStyles(theme),
+        otherReportsHeader: {
+          marginTop: '2rem',
+        },
+      })
+  );
+  const classes = useStyles();
+
   const [reportDefinition, setReportDefinition] = useState({} as ReportDefinitionModel);
   const [reportOptions, setReportOptions] = useState<any>();
   const [pdfReportUrl, setPdfReportUrl] = useState<string>();
@@ -57,7 +71,7 @@ const Report: React.FC = () => {
       }
       catch (err) {
         console.log(err);
-        toast.error(constants.ERROR.GENERIC);
+        ToastService.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -69,21 +83,19 @@ const Report: React.FC = () => {
   return (
     <div id='report'>
       <Spinner isActive={showSpinner} />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/reports'>Reports</Link></li>
-          <li><Link to={`/report-options/${reportDefinition.reportId}`}>Report Options</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>{reportDefinition.reportName}</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to={`/report-options/${reportDefinition.reportId}`}>&#10094; Report Options</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
+     
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Link to='/reports'>Reports</Link>
+        <Link to={`/report-options/${reportDefinition.reportId}`}>Report Options</Link>
+        <Typography color='textPrimary'>{reportDefinition.reportName}</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to={`/report-options/${reportDefinition.reportId}`}>&#10094; Report Options</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
 
           {pdfReportUrl ? 
             <>
@@ -116,8 +128,9 @@ const Report: React.FC = () => {
               </div>
             </>
           : null}
-        </div>
-      </div>
+          
+        </Grid>
+      </Grid>
     </div>
   );
 };

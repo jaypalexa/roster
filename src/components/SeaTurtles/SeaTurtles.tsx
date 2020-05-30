@@ -1,40 +1,48 @@
+import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
+import clsx from 'clsx';
 import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import MapDialog from 'components/Dialogs/MapDialog';
-import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
-import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
+import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
 import CheckboxFormField from 'components/FormFields/CheckboxFormField';
-import DateFormField from 'components/FormFields/DateFormField';
-import FormField from 'components/FormFields/FormField';
+import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
-import ListFormField from 'components/FormFields/ListFormField';
-import TextareaFormField from 'components/FormFields/TextareaFormField';
-import TextFormField from 'components/FormFields/TextFormField';
-import Icon from 'components/Icon/Icon';
+import FormFieldMui from 'components/FormFields/FormFieldMui';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
+import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
+import TextareaFormFieldMui from 'components/FormFields/TextareaFormFieldMui';
+import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
+import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import MaterialTable from 'material-table';
 import MapDataModel from 'models/MapDataModel';
 import NameValuePair from 'models/NameValuePair';
 import SeaTurtleListItemModel from 'models/SeaTurtleListItemModel';
 import SeaTurtleModel from 'models/SeaTurtleModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import AuthenticationService from 'services/AuthenticationService';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import SeaTurtleService from 'services/SeaTurtleService';
-import { constants } from 'utils';
+import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
+import { actionIcons, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 import './SeaTurtles.sass';
 
 const SeaTurtles: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const [appContext, setAppContext] = useAppContext();
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
@@ -63,81 +71,43 @@ const SeaTurtles: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const tableColumns = [
+  const [tableColumns] = useState([
     {
-      name: '',
-      selector: 'edit',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditSeaTurtleClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
+      title: 'Name',
+      field: 'seaTurtleName',
+      defaultSort: 'asc' as 'asc'
     },
     {
-      name: '',
-      selector: 'delete',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: SeaTurtleListItemModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteSeaTurtleClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
+      title: 'SID #',
+      field: 'sidNumber',
     },
     {
-      name: 'Name',
-      selector: 'seaTurtleName',
-      sortable: true
+      title: 'Species',
+      field: 'species',
     },
     {
-      name: 'SID #',
-      selector: 'sidNumber',
-      sortable: true
+      title: 'Date Acquired',
+      field: 'dateAcquired',
+      render: (rowData: SeaTurtleListItemModel) => <span>{rowData.dateAcquired ? moment(rowData.dateAcquired).format('YYYY-MM-DD') : ''}</span>,
     },
     {
-      name: 'Species',
-      selector: 'species',
-      sortable: true,
-      hide: 599
+      title: 'County',
+      field: 'acquiredCounty',
     },
     {
-      name: 'Date Acquired',
-      selector: 'dateAcquired',
-      cell: (row: SeaTurtleListItemModel) => row.dateAcquired ? moment(row.dateAcquired).format('YYYY-MM-DD') : '',
-      sortable: true,
-      hide: 599
+      title: 'Size',
+      field: 'turtleSize',
     },
     {
-      name: 'County',
-      selector: 'acquiredCounty',
-      sortable: true,
-      hide: 599
+      title: 'Status',
+      field: 'status',
     },
     {
-      name: 'Size',
-      selector: 'turtleSize',
-      sortable: true,
-      hide: 599
-    },
-    {
-      name: 'Status',
-      selector: 'status',
-      sortable: true,
-      hide: 599
-    },
-    {
-      name: 'Date Relinquished',
+      title: 'Date Relinquished',
       selector: 'dateRelinquished',
-      cell: (row: SeaTurtleListItemModel) => row.dateRelinquished ? moment(row.dateRelinquished).format('YYYY-MM-DD') : '',
-      sortable: true,
-      hide: 599
+      render: (rowData: SeaTurtleListItemModel) => <span>{rowData.dateRelinquished ? moment(rowData.dateRelinquished).format('YYYY-MM-DD') : ''}</span>,
     }
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    }
-  };
+  ]);
 
   /* fetch listbox data */
   useMount(() => {
@@ -166,7 +136,7 @@ const SeaTurtles: React.FC = () => {
       } 
       catch (err) {
         console.log(err);
-        toast.error(constants.ERROR.GENERIC);
+        ToastService.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -210,7 +180,7 @@ const SeaTurtles: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -237,7 +207,7 @@ const SeaTurtles: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -322,7 +292,7 @@ const SeaTurtles: React.FC = () => {
 
   const onSubmit = handleSubmit((modifiedSeaTurtle: SeaTurtleModel) => {
     saveSeaTurtle(modifiedSeaTurtle);
-    toast.success('Record saved');
+    ToastService.success('Record saved');
   });
 
   const saveSeaTurtle = async (modifiedSeaTurtle: SeaTurtleModel) => {
@@ -345,7 +315,7 @@ const SeaTurtles: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -360,7 +330,7 @@ const SeaTurtles: React.FC = () => {
     }, 0);
   }
 
-  const onCancel = () => {
+  const onCancelClick = () => {
     reset(appContext.seaTurtle);
   };
 
@@ -391,76 +361,72 @@ const SeaTurtles: React.FC = () => {
     <div id='seaTurtle'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog
-        isActive={showYesNoDialog}
+      <YesNoDialogMui
+        isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
       />
-      <YesNoCancelDialog
-        isActive={showYesNoCancelDialog}
+      <YesNoCancelDialogMui
+        isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
-        onCancel={onDialogCancel}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
+        onCancelClick={onDialogCancel}
       />
+
       <MapDialog 
         isActive={isMapDialogOpen} 
         mapData={mapData} 
         onCloseClick={() => setIsMapDialogOpen(false)} 
       />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Sea Turtles</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>&#10094; Home</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Sea Turtles</h1>
-          <div className='level'>
-            <div className='level-left'></div>
-            <div className='level-right'>
-              <p className='level-item'>
-                <button className='button is-link' onClick={onAddSeaTurtleButtonClick}>
-                  <span className='icon'>
-                    <Icon icon='plus' fill='white' height={16} width={16} />
-                  </span>
-                  &nbsp;&nbsp;&nbsp;Add Sea Turtle
-                </button>
-              </p>
-            </div>
-          </div>
+
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Typography color='textPrimary'>Sea Turtles</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/'>&#10094; Home</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>Sea Turtles</Typography>
+
+          <Grid container justify='center' className={classes.formAddButtonsContainer}>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddSeaTurtleButtonClick} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Sea Turtle
+              </Button>
+            </Grid>
+          </Grid>
           
-          <DataTableExtensions 
-            columns={tableColumns} 
-            data={displaySeaTurtleListItems} 
-            export={false} 
-            print={false}
-          >
-            <DataTable
-              title='Sea Turtles'
+          <div className={classes.horizontalScroll}>
+            <MaterialTable
+              icons={tableIcons}
               columns={tableColumns}
               data={displaySeaTurtleListItems}
-              keyField='seaTurtleId'
-              defaultSortField='seaTurtleName'
-              noHeader={true}
-              fixedHeader={true}
-              fixedHeaderScrollHeight='9rem'
-              customStyles={tableCustomStyles}
-              pagination
-              highlightOnHover
-              onRowClicked={onEditSeaTurtleClick}
+              options={{filtering: true, showTitle: false}}
+              onRowClick={(event, data) => onEditSeaTurtleClick(data as SeaTurtleListItemModel)}
+              actions={[
+                {
+                  icon: actionIcons.EditIcon,
+                  tooltip: 'Edit',
+                  onClick: (event, data) => onEditSeaTurtleClick(data as SeaTurtleListItemModel)
+                },
+                {
+                  icon: actionIcons.DeleteIcon,
+                  tooltip: 'Delete',
+                  onClick: (event, data) => onDeleteSeaTurtleClick(data as SeaTurtleListItemModel)
+                },
+              ]}
             />
-          </DataTableExtensions>
-
+          </div>
           <div className='field show-relinquished-turtles'>
             <input 
               id='showRelinquishedTurtles'
@@ -475,54 +441,57 @@ const SeaTurtles: React.FC = () => {
 
           <hr />
 
-          <h1 className='title has-text-centered'>{appContext.seaTurtle?.seaTurtleName || appContext.seaTurtle?.sidNumber}</h1>
+          <Typography variant='h1' gutterBottom={true} align='center'>
+            {appContext.seaTurtle?.seaTurtleName}
+          </Typography>
 
           <FormContext {...methods}>
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <h2 className='subtitle'>General Information</h2>
-                <FormFieldRow>
-                  <TextFormField fieldName='seaTurtleName' labelText='Name' refObject={firstEditControlRef} />
-                  <TextFormField fieldName='sidNumber' labelText='SID number' />
-                  <TextFormField fieldName='strandingIdNumber' labelText='Stranding ID number' />
-                </FormFieldRow>
-                <FormFieldRow>
-                  <ListFormField fieldName='species' labelText='Species' listItems={species} />
-                  <ListFormField fieldName='turtleSize' labelText='Size' listItems={turtleSizes} />
-                  <ListFormField fieldName='status' labelText='Status' listItems={turtleStatuses} />
-                </FormFieldRow>
-                <FormFieldRow>
-                  <DateFormField fieldName='dateAcquired' labelText='Date acquired' />
-                  <TextFormField fieldName='acquiredFrom' labelText='Acquired from' />
-                  <ListFormField fieldName='acquiredCounty' labelText='County' listItems={counties} />
-                  <TextFormField fieldName='acquiredLatitude' labelText='Latitude' />
-                  <TextFormField fieldName='acquiredLongitude' labelText='Longitude' />
-                  <FormField fieldName='dummy'>
+                <Typography variant='h2'>General Information</Typography>
+
+                <FormFieldRowMui>
+                  <TextFormFieldMui fieldName='seaTurtleName' labelText='Name' refObject={firstEditControlRef} />
+                  <TextFormFieldMui fieldName='sidNumber' labelText='SID number' />
+                  <TextFormFieldMui fieldName='strandingIdNumber' labelText='Stranding ID number' />
+                </FormFieldRowMui>
+                <FormFieldRowMui>
+                  <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} />
+                  <ListFormFieldMui fieldName='turtleSize' labelText='Size' listItems={turtleSizes} />
+                  <ListFormFieldMui fieldName='status' labelText='Status' listItems={turtleStatuses} />
+                </FormFieldRowMui>
+                <FormFieldRowMui>
+                  <DateFormFieldMui fieldName='dateAcquired' labelText='Date acquired' />
+                  <TextFormFieldMui fieldName='acquiredFrom' labelText='Acquired from' />
+                  <ListFormFieldMui fieldName='acquiredCounty' labelText='County' listItems={counties} />
+                  <TextFormFieldMui fieldName='acquiredLatitude' labelText='Latitude' />
+                  <TextFormFieldMui fieldName='acquiredLongitude' labelText='Longitude' />
+                  <FormFieldMui fieldName='dummy'>
                     <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('Acquired')}>
                       <span className='icon'>
-                        <Icon icon='location' fill='white' />
+                        <IconMui icon='map' />
                       </span>
                       &nbsp;&nbsp;&nbsp;View on map
                     </button>
-                  </FormField>
-                </FormFieldRow>
-                <FormFieldRow>
-                  <DateFormField fieldName='dateRelinquished' labelText='Date relinquished' />
-                  <TextFormField fieldName='relinquishedTo' labelText='Relinquished to' />
-                  <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} />
-                  <TextFormField fieldName='relinquishedLatitude' labelText='Latitude' />
-                  <TextFormField fieldName='relinquishedLongitude' labelText='Longitude' />
-                  <FormField fieldName='dummy'>
+                  </FormFieldMui>
+                </FormFieldRowMui>
+                <FormFieldRowMui>
+                  <DateFormFieldMui fieldName='dateRelinquished' labelText='Date relinquished' />
+                  <TextFormFieldMui fieldName='relinquishedTo' labelText='Relinquished to' />
+                  <ListFormFieldMui fieldName='relinquishedCounty' labelText='County' listItems={counties} />
+                  <TextFormFieldMui fieldName='relinquishedLatitude' labelText='Latitude' />
+                  <TextFormFieldMui fieldName='relinquishedLongitude' labelText='Longitude' />
+                  <FormFieldMui fieldName='dummy'>
                     <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('Relinquished')}>
                       <span className='icon'>
-                        <Icon icon='location' fill='white' />
+                        <IconMui icon='map' />
                       </span>
                       &nbsp;&nbsp;&nbsp;View on map
                     </button>
-                  </FormField>
-                </FormFieldRow>
-                <FormFieldRow>
-                  <TextareaFormField fieldName='anomalies' labelText='Anomalies' />
+                  </FormFieldMui>
+                </FormFieldRowMui>
+                <FormFieldRowMui>
+                  <TextareaFormFieldMui fieldName='anomalies' labelText='Anomalies' />
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-4' labelText='Injuries'>
                     <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' />
                     <CheckboxFormField fieldName='injuryIntestinalImpaction' labelText='Intestinal impaction' />
@@ -535,45 +504,46 @@ const SeaTurtles: React.FC = () => {
                     <CheckboxFormField fieldName='injuryDoa' labelText='DOA' />
                     <CheckboxFormField fieldName='injuryOther' labelText='Other' />
                   </FormFieldGroup>
-                </FormFieldRow>
+                </FormFieldRowMui>
+
                 <hr />
 
                 <h2 className='subtitle'>Initial Encounter Information</h2>
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Initial encounter'>
                     <CheckboxFormField fieldName='wasCarryingTagsWhenEnc' labelText='Was turtle carrying tags when initially encountered?' />
                   </FormFieldGroup>
-                  <ListFormField fieldName='recaptureType' labelText='If yes, recapture type' listItems={recaptureTypes} />
-                  <TextFormField fieldName='tagReturnAddress' labelText='Tag return address' />
-                </FormFieldRow>
-                <FormFieldRow>
-                  <ListFormField fieldName='captureProjectType' labelText='Project type' listItems={captureProjectTypes} />
-                  <ListFormField fieldName='didTurtleNest' labelText='If "Nesting Beach," did turtle nest?' listItems={yesNoUndetermineds} />
-                  <TextFormField fieldName='captureProjectOther' labelText='If "Other," describe' />
-                </FormFieldRow>
+                  <ListFormFieldMui fieldName='recaptureType' labelText='If yes, recapture type' listItems={recaptureTypes} />
+                  <TextFormFieldMui fieldName='tagReturnAddress' labelText='Tag return address' />
+                </FormFieldRowMui>
+                <FormFieldRowMui>
+                  <ListFormFieldMui fieldName='captureProjectType' labelText='Project type' listItems={captureProjectTypes} />
+                  <ListFormFieldMui fieldName='didTurtleNest' labelText='If "Nesting Beach," did turtle nest?' listItems={yesNoUndetermineds} />
+                  <TextFormFieldMui fieldName='captureProjectOther' labelText='If "Other," describe' />
+                </FormFieldRowMui>
                 <hr />
 
                 <h2 className='subtitle'>Inspected and/or Scanned For</h2>
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Inspected for'>
                     <CheckboxFormField fieldName='inspectedForTagScars' labelText='Tag scars' />
                   </FormFieldGroup>
-                  <TextFormField fieldName='tagScarsLocated' labelText='Located?' />
+                  <TextFormFieldMui fieldName='tagScarsLocated' labelText='Located?' />
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Scanned for'>
                     <CheckboxFormField fieldName='scannedForPitTags' labelText='PIT tags' />
                   </FormFieldGroup>
-                  <TextFormField fieldName='pitTagsScanFrequency' labelText='Frequency?' />
-                </FormFieldRow>
-                <FormFieldRow>
+                  <TextFormFieldMui fieldName='pitTagsScanFrequency' labelText='Frequency?' />
+                </FormFieldRowMui>
+                <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Scanned for'>
                     <CheckboxFormField fieldName='scannedForMagneticWires' labelText='Magnetic wires' />
                   </FormFieldGroup>
-                  <TextFormField fieldName='magneticWiresLocated' labelText='Located?' />
+                  <TextFormFieldMui fieldName='magneticWiresLocated' labelText='Located?' />
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Inspected for'>
                     <CheckboxFormField fieldName='inspectedForLivingTags' labelText='Living tags' />
                   </FormFieldGroup>
-                  <TextFormField fieldName='livingTagsLocated' labelText='Located?' />
-                </FormFieldRow>
+                  <TextFormFieldMui fieldName='livingTagsLocated' labelText='Located?' />
+                </FormFieldRowMui>
                 <hr />
 
                 <ChildNavigation itemName='Tags' 
@@ -588,31 +558,20 @@ const SeaTurtles: React.FC = () => {
                   disabled={!isFormEnabled} 
                   onClick={() => onChildNavigationClick('/sea-turtle-morphometrics-graphs')} />
 
-                <div className='field is-grouped form-action-buttons'>
-                  <p className='control'>
-                    <input
-                      type='submit'
-                      className='button is-success is-fixed-width-medium'
-                      value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
-                    />
-                  </p>
-                  <p className='control'>
-                    <input
-                      type='button'
-                      className='button is-danger is-fixed-width-medium'
-                      value='Cancel'
-                      onClick={() => onCancel()}
-                      disabled={!formState.dirty}
-                    />
-                  </p>
+                <div className={classes.formActionButtonsContainer}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                    Save
+                  </Button>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                    Cancel
+                  </Button>
                 </div>
               </fieldset>
             </form>
           </FormContext>
 
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

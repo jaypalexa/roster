@@ -3,22 +3,22 @@ export default interface SeaTurtleMorphometricModel {
 	seaTurtleMorphometricId: string;
 	seaTurtleId: string;
 	dateMeasured: Date;
-	sclNotchNotchValue: number;
+	sclNotchNotchValue: number | string; // kludge because input controls deal only with strings
 	sclNotchNotchUnits: string;
-	sclNotchTipValue: number;
+	sclNotchTipValue: number | string; // kludge because input controls deal only with strings
 	sclNotchTipUnits: string;
-	sclTipTipValue: number;
+	sclTipTipValue: number | string; // kludge because input controls deal only with strings
 	sclTipTipUnits: string;
-	scwValue: number;
+	scwValue: number | string; // kludge because input controls deal only with strings
 	scwUnits: string;
-	cclNotchNotchValue: number;
+	cclNotchNotchValue: number | string; // kludge because input controls deal only with strings
 	cclNotchNotchUnits: string;
-	cclNotchTipValue: number;
+	cclNotchTipValue: number | string; // kludge because input controls deal only with strings
 	cclNotchTipUnits: string;
-	cclTipTipValue: number;
+	cclTipTipValue: number | string; // kludge because input controls deal only with strings
 	cclTipTipUnits: string;
-	ccwValue: number;
+	ccwValue: number | string; // kludge because input controls deal only with strings
 	ccwUnits: string;
-	weightValue: number;
+	weightValue: number | string; // kludge because input controls deal only with strings
 	weightUnits: string;
 };

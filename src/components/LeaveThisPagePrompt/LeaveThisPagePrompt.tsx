@@ -1,4 +1,4 @@
-import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
 import React from 'react';
 import NavigationPrompt from 'react-router-navigation-prompt';
 
@@ -10,12 +10,12 @@ const LeaveThisPagePrompt: React.FC<LeaveThisPagePromptProps> = ({isDirty}) => {
   return (
     <NavigationPrompt when={isDirty}>
       {({ onConfirm, onCancel }) => (
-        <YesNoDialog 
-          isActive={true}
+        <YesNoDialogMui 
+          isOpen={true}
           titleText='Unsaved Changes'
           bodyText='Leave this page?  Changes you made may not be saved.'
-          onYes={onConfirm} 
-          onNo={onCancel} 
+          onYesClick={onConfirm} 
+          onNoClick={onCancel} 
         />
       )}
     </NavigationPrompt>

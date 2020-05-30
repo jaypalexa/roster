@@ -1,28 +1,35 @@
+import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
-import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
-import YesNoDialog from 'components/Dialogs/YesNoDialog';
-import DateFormField from 'components/FormFields/DateFormField';
-import DecimalFormField from 'components/FormFields/DecimalFormField';
+import clsx from 'clsx';
+import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
+import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
+import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
+import DecimalFormFieldMui from 'components/FormFields/DecimalFormFieldMui';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import Icon from 'components/Icon/Icon';
+import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
+import MaterialTable from 'material-table';
 import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import HoldingTankMeasurementService from 'services/HoldingTankMeasurementService';
-import { constants } from 'utils';
+import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
+import { actionIcons, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import './HoldingTankMeasurements.sass';
 
 const HoldingTankMeasurements: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const [appContext] = useAppContext();
   const methods = useForm<HoldingTankMeasurementModel>({ mode: 'onChange' });
@@ -41,62 +48,32 @@ const HoldingTankMeasurements: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const tableColumns = [
+  const [tableColumns] = useState([
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditHoldingTankMeasurementClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
+      title: 'Date Measured',
+      field: 'dateMeasured',
+      render: (rowData: HoldingTankMeasurementModel) => <span>{rowData.dateMeasured ? moment(rowData.dateMeasured).format('YYYY-MM-DD') : ''}</span>,
     },
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: HoldingTankMeasurementModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteHoldingTankMeasurementClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
+      title: 'Temperature',
+      field: 'temperature'
     },
     {
-      name: 'Date Measured',
-      selector: (row: HoldingTankMeasurementModel) => row.dateMeasured ? moment(row.dateMeasured).format('YYYY-MM-DD') : '',
-      sortable: true
+      title: 'Salinity',
+      field: 'salinity'
     },
     {
-      name: 'Temperature',
-      selector: 'temperature',
-      sortable: true
-    },
-    {
-      name: 'Salinity',
-      selector: 'salinity',
-      sortable: true
-    },
-    {
-      name: 'pH',
-      selector: 'ph',
-      sortable: true
+      title: 'pH',
+      field: 'ph'
     }
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    }
-  };
-
-  useMount(() => {
-    window.scrollTo(0, 0);
-  });
+  ]);
 
   useMount(() => {
     const holdingTankId = appContext.holdingTank?.holdingTankId;
     if (!holdingTankId) {
-      browserHistory.push('/sea-turtles')
+      browserHistory.push('/holding-tanks')
     } else {
-      const getHoldingTankMeasurementsForTurtle = async () => {
+      const getHoldingTankMeasurements = async () => {
         try {
           setShowSpinner(true);
           const holdingTankMeasurements = await HoldingTankMeasurementService.getHoldingTankMeasurements(holdingTankId);
@@ -104,13 +81,13 @@ const HoldingTankMeasurements: React.FC = () => {
         }
         catch (err) {
           console.log(err);
-          toast.error(constants.ERROR.GENERIC);
+          ToastService.error(constants.ERROR.GENERIC);
         }
         finally {
           setShowSpinner(false);
         }
       };
-      getHoldingTankMeasurementsForTurtle();
+      getHoldingTankMeasurements();
     } 
   });
 
@@ -133,7 +110,7 @@ const HoldingTankMeasurements: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -159,12 +136,12 @@ const HoldingTankMeasurements: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
-      }
-    };
+    }
+  };
 
   const onAddHoldingTankMeasurementButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
@@ -251,25 +228,25 @@ const HoldingTankMeasurements: React.FC = () => {
       reset(patchedHoldingTankMeasurement);
       setCurrentHoldingTankMeasurement(patchedHoldingTankMeasurement);
       const index = currentHoldingTankMeasurements.findIndex(x => x.holdingTankMeasurementId === patchedHoldingTankMeasurement.holdingTankMeasurementId);
-    if (~index) {
+      if (~index) {
         currentHoldingTankMeasurements[index] = { ...patchedHoldingTankMeasurement };
-    } else {
+      } else {
         currentHoldingTankMeasurements.push(patchedHoldingTankMeasurement);
-    }
+      }
       setCurrentHoldingTankMeasurements([...currentHoldingTankMeasurements]);
 
-    toast.success('Record saved');
+      ToastService.success('Record saved');
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
     }
   });
 
-  const onCancelHoldingTankMeasurement = () => {
+  const onCancelClick = () => {
     reset(currentHoldingTankMeasurement);
   };
 
@@ -277,108 +254,93 @@ const HoldingTankMeasurements: React.FC = () => {
     <div id='holdingTankMeasurements'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog
-        isActive={showYesNoDialog}
+      <YesNoDialogMui
+        isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
       />
-      <YesNoCancelDialog
-        isActive={showYesNoCancelDialog}
+      <YesNoCancelDialogMui
+        isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
-        onCancel={onDialogCancel}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
+        onCancelClick={onDialogCancel}
       />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/holding-tanks'>Holding Tanks</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Water Measurements</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/holding-tanks'>&#10094; Holding Tanks</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Water Measurements for {appContext.holdingTank?.holdingTankName}</h1>
-          <div className='level'>
-            <div className='level-left'></div>
-            <div className='level-right'>
-              <p className='level-item'>
-                <button className='button is-link' onClick={onAddHoldingTankMeasurementButtonClick}>
-                  <span className='icon'>
-                    <Icon icon='plus' fill='white' height={16} width={16} />
-                  </span>
-                  &nbsp;&nbsp;&nbsp;Add Water Measurement
-                </button>
-              </p>
-            </div>
-          </div>
 
-          <DataTableExtensions 
-            columns={tableColumns} 
-            data={currentHoldingTankMeasurements} 
-            export={false} 
-            print={false}
-          >
-            <DataTable
-              title='Water Measurements'
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Link to='/holding-tanks'>Holding Tanks</Link>
+        <Typography color='textPrimary'>Water Measurements</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/holding-tanks'>&#10094; Holding Tanks</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>Water Measurements for {appContext.holdingTank?.holdingTankName}</Typography>
+
+          <Grid container justify='center' className={classes.formAddButtonsContainer}>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddHoldingTankMeasurementButtonClick} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Water Measurement
+              </Button>
+            </Grid>
+          </Grid>
+
+          <div className={classes.horizontalScroll}>
+            <MaterialTable
+              icons={tableIcons}
               columns={tableColumns}
               data={currentHoldingTankMeasurements}
-              keyField='holdingTankMeasurementId'
-              defaultSortField='dateMeasured'
-              noHeader={true}
-              fixedHeader={true}
-              fixedHeaderScrollHeight='9rem'
-              customStyles={tableCustomStyles}
-              pagination
-              highlightOnHover
-              onRowClicked={onEditHoldingTankMeasurementClick}
+              options={{filtering: true, showTitle: false}}
+              onRowClick={(event, data) => onEditHoldingTankMeasurementClick(data as HoldingTankMeasurementModel)}
+              actions={[
+                {
+                  icon: actionIcons.EditIcon,
+                  tooltip: 'Edit',
+                  onClick: (event, data) => onEditHoldingTankMeasurementClick(data as HoldingTankMeasurementModel)
+                },
+                {
+                  icon: actionIcons.DeleteIcon,
+                  tooltip: 'Delete',
+                  onClick: (event, data) => onDeleteHoldingTankMeasurementClick(data as HoldingTankMeasurementModel)
+                },
+              ]}
             />
-          </DataTableExtensions>
+          </div>
           <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmitHoldingTankMeasurement}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
-                  <DecimalFormField fieldName='temperature' labelText='Temperature' decimalPlaces={2} />
-                  <DecimalFormField fieldName='salinity' labelText='Salinity (in ppt)' decimalPlaces={2} />
-                  <DecimalFormField fieldName='ph' labelText='pH' decimalPlaces={2} />
+                  <DateFormFieldMui fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
+                  <DecimalFormFieldMui fieldName='temperature' labelText='Temperature' decimalPlaces={2} />
+                  <DecimalFormFieldMui fieldName='salinity' labelText='Salinity (in ppt)' decimalPlaces={2} />
+                  <DecimalFormFieldMui fieldName='ph' labelText='pH' decimalPlaces={2} />
                 </FormFieldRow>
 
-                <div className='field is-grouped form-action-buttons'>
-                  <p className='control'>
-                    <input
-                      type='submit'
-                      className='button is-success is-fixed-width-medium'
-                      value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
-                    />
-                  </p>
-                  <p className='control'>
-                    <input
-                      type='button'
-                      className='button is-danger is-fixed-width-medium'
-                      value='Cancel'
-                      onClick={() => onCancelHoldingTankMeasurement()}
-                      disabled={!formState.dirty}
-                    />
-                  </p>
+                <div className={classes.formActionButtonsContainer}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                    Save
+                  </Button>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                    Cancel
+                  </Button>
                 </div>
               </fieldset>
             </form>
           </FormContext>
 
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };

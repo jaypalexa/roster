@@ -1,31 +1,38 @@
-import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
-import YesNoDialog from 'components/Dialogs/YesNoDialog';
+import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
+import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
 import CheckboxFormField from 'components/FormFields/CheckboxFormField';
-import DateFormField from 'components/FormFields/DateFormField';
+import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import IntegerFormField from 'components/FormFields/IntegerFormField';
-import ListFormField from 'components/FormFields/ListFormField';
-import Icon from 'components/Icon/Icon';
+import IntegerFormFieldMui from 'components/FormFields/IntegerFormFieldMui';
+import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
+import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
+import MaterialTable from 'material-table';
 import NameValuePair from 'models/NameValuePair';
 import WashbacksEventModel from 'models/WashbacksEventModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import DataTableExtensions from 'react-data-table-component-extensions';
 import { FormContext, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
+import ToastService from 'services/ToastService';
 import WashbacksEventService from 'services/WashbacksEventService';
-import { constants } from 'utils';
+import sharedStyles from 'styles/sharedStyles';
+import { actionIcons, constants, tableIcons, toNumber } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
-import './WashbacksEvents.sass';
 
 const WashbacksEvents: React.FC = () => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({...sharedStyles(theme)})
+  );
+  const classes = useStyles();
 
   const methods = useForm<WashbacksEventModel>({ mode: 'onChange' });
   const { handleSubmit, formState, reset } = methods;
@@ -45,69 +52,35 @@ const WashbacksEvents: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
 
-  const tableColumns = [
+  const [tableColumns] = useState([
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      style: '{padding-left: 1rem}',
-      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' title='Edit' onClick={() => onEditWashbacksEventClick(row)}><Icon icon='pencil' height={16} width={16} /></span>,
+      title: 'Species',
+      field: 'species',
     },
     {
-      name: '',
-      ignoreRowClick: true,
-      maxWidth: '2rem',
-      minWidth: '2rem',
-      cell: (row: WashbacksEventModel) => <span className='icon cursor-pointer' title='Delete' onClick={() => onDeleteWashbacksEventClick(row)}><Icon icon='trash' height={16} width={16} /></span>,
+      title: 'Event Type',
+      field: 'eventType',
     },
     {
-      name: 'Species',
-      selector: 'species',
-      sortable: true
+      title: 'Event Date',
+      field: 'eventDate',
+      render: (rowData: WashbacksEventModel) => <span>{rowData.eventDate ? moment(rowData.eventDate).format('YYYY-MM-DD') : ''}</span>,
     },
     {
-      name: 'Event Type',
-      selector: 'eventType',
-      sortable: true
+      title: 'Event Count',
+      field: 'eventCount',
+      render: (rowData: WashbacksEventModel) => <span>{rowData.eventType === 'Released' ? toNumber(rowData.beachEventCount) + toNumber(rowData.offshoreEventCount) : rowData.eventCount}</span>,
     },
     {
-      name: 'Event Date',
-      selector: (row: WashbacksEventModel) => row.eventDate ? moment(row.eventDate).format('YYYY-MM-DD') : '',
-      sortable: true,
+      title: 'County',
+      field: 'eventCounty',
     },
     {
-      name: 'Event Count',
-      selector: 'eventCount',
-      cell: (row: WashbacksEventModel) => <span>{row.eventType === 'Released' ? row.beachEventCount + row.offshoreEventCount : row.eventCount}</span>,
-      sortable: true,
-      hide: 599
+      title: 'Under 5cm CLSL?',
+      field: 'under5cmClsl',
+      render: (rowData: WashbacksEventModel) => <span>{rowData.under5cmClsl ? 'Yes' : ''}</span>,
     },
-    {
-      name: 'County',
-      selector: 'eventCounty',
-      sortable: true,
-      hide: 599
-    },
-    {
-      name: 'Under 5cm CLSL?',
-      selector: (row: WashbacksEventModel) => row.under5cmClsl ? 'Yes' : '',
-      sortable: true,
-      hide: 599
-    }
-  ];
-
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        paddingRight: '1.1rem'
-      }
-    }
-  };
-
-  useMount(() => {
-    window.scrollTo(0, 0);
-  });
+  ]);
 
   useMount(() => {
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
@@ -123,7 +96,7 @@ const WashbacksEvents: React.FC = () => {
       } 
       catch (err) {
         console.log(err);
-        toast.error(constants.ERROR.GENERIC);
+        ToastService.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -148,7 +121,7 @@ const WashbacksEvents: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -164,17 +137,17 @@ const WashbacksEvents: React.FC = () => {
         reset(washbacksEvent);
         setCurrentWashbacksEvent(washbacksEvent);
         const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === washbacksEventId);
-      if (~index) {
+        if (~index) {
           var updatedCurrentWashbacksEvents = [...currentWashbacksEvents];
           updatedCurrentWashbacksEvents.splice(index, 1)
           setCurrentWashbacksEvents(updatedCurrentWashbacksEvents);
-      }
-    };
+        }
+      };
       deleteWashbacksEvent();
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
@@ -258,9 +231,9 @@ const WashbacksEvents: React.FC = () => {
     setShowYesNoDialog(true);
   };
 
-  const onSubmit = handleSubmit((modifiedWashbacksEvent: WashbacksEventModel) => {
-    saveWashbacksEvent(modifiedWashbacksEvent);
-    toast.success('Record saved');
+  const onSubmit = handleSubmit(async (modifiedWashbacksEvent: WashbacksEventModel) => {
+    await saveWashbacksEvent(modifiedWashbacksEvent);
+    ToastService.success('Record saved');
   });
 
   const saveWashbacksEvent = async (modifiedWashbacksEvent: WashbacksEventModel) => {
@@ -274,7 +247,7 @@ const WashbacksEvents: React.FC = () => {
       setCurrentWashbacksEvent(patchedWashbacksEvent);
       const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === patchedWashbacksEvent.washbacksEventId);
       if (~index) {
-          currentWashbacksEvents[index] = { ...patchedWashbacksEvent };
+        currentWashbacksEvents[index] = { ...patchedWashbacksEvent };
       } else {
         currentWashbacksEvents.push(patchedWashbacksEvent);
       }
@@ -282,14 +255,14 @@ const WashbacksEvents: React.FC = () => {
     } 
     catch (err) {
       console.log(err);
-      toast.error(constants.ERROR.GENERIC);
+      ToastService.error(constants.ERROR.GENERIC);
     }
     finally {
       setShowSpinner(false);
     }
   };
 
-  const onCancel = () => {
+  const onCancelClick = () => {
     reset(currentWashbacksEvent);
   };
 
@@ -311,142 +284,131 @@ const WashbacksEvents: React.FC = () => {
         return ['species', 'eventDate', 'eventCount', 'eventCounty', 'under5cmClsl'].includes(fieldName); 
       } 
    } 
-  }
+  };
 
   return (
     <div id='washbacksEvents'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialog
-        isActive={showYesNoDialog}
+      <YesNoDialogMui
+        isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
       />
-      <YesNoCancelDialog
-        isActive={showYesNoCancelDialog}
+      <YesNoCancelDialogMui
+        isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
-        onYes={onDialogYes}
-        onNo={onDialogNo}
-        onCancel={onDialogCancel}
+        onYesClick={onDialogYes}
+        onNoClick={onDialogNo}
+        onCancelClick={onDialogCancel}
       />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Washbacks Events</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>&#10094; Home</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <h1 className='title has-text-centered'>Washbacks Events</h1>
-          <div className='level add-washbacks-event-buttons-container'>
-            <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('Acquired')}>
-                <span className='icon'>
-                  <Icon icon='plus' fill='white' height={16} width={16} />
-                </span>
-                &nbsp;&nbsp;&nbsp;Add Washbacks Acquired Event
-              </button>
-            </p>
-            <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('Died')}>
-                <span className='icon'>
-                  <Icon icon='plus' fill='white' height={16} width={16} />
-                </span>
-                &nbsp;&nbsp;&nbsp;Add Washbacks Died Event
-              </button>
-            </p>
-            <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('Released')}>
-                <span className='icon'>
-                  <Icon icon='plus' fill='white' height={16} width={16} />
-                </span>
-                &nbsp;&nbsp;&nbsp;Add Washbacks Released Event
-              </button>
-            </p>
-            <p className='level-item'>
-              <button className='button is-link full-width-when-mobile' onClick={onAddWashbacksEventButtonClick('DOA')}>
-                <span className='icon'>
-                  <Icon icon='plus' fill='white' height={16} width={16} />
-                </span>
-                &nbsp;&nbsp;&nbsp;Add Washbacks DOA Event
-              </button>
-            </p>
-          </div>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Typography color='textPrimary'>Washback Events</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/'>&#10094; Home</Link>
+      </Breadcrumbs>
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center'>Washback Events</Typography>
 
-          <DataTableExtensions 
-            columns={tableColumns} 
-            data={currentWashbacksEvents} 
-            export={false} 
-            print={false}
-          >
-            <DataTable
-              title='Washbacks Events'
+          <Grid container justify='center' className={classes.formAddButtonsContainer}>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddWashbacksEventButtonClick('Acquired')} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Acquired Event
+              </Button>
+            </Grid>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddWashbacksEventButtonClick('Died')} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Died Event
+              </Button>
+            </Grid>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddWashbacksEventButtonClick('Released')} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add Released Event
+              </Button>
+            </Grid>
+            <Grid item className={classes.formAddButtonContainer}>
+              <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
+                onClick={onAddWashbacksEventButtonClick('DOA')} 
+                startIcon={<IconMui icon='add' />}
+              >
+                Add DOA Event
+              </Button>
+            </Grid>
+          </Grid>
+
+          <div className={classes.horizontalScroll}>
+            <MaterialTable            
+              icons={tableIcons}
               columns={tableColumns}
               data={currentWashbacksEvents}
-              keyField='washbacksEventId'
-              defaultSortField='eventDate'
-              noHeader={true}
-              fixedHeader={true}
-              fixedHeaderScrollHeight='9rem'
-              customStyles={tableCustomStyles}
-              pagination
-              highlightOnHover
-              onRowClicked={onEditWashbacksEventClick}
+              options={{filtering: true, showTitle: false}}
+              onRowClick={(event, data) => onEditWashbacksEventClick(data as WashbacksEventModel)}
+              actions={[
+                {
+                  icon: actionIcons.EditIcon,
+                  tooltip: 'Edit',
+                  onClick: (event, data) => onEditWashbacksEventClick(data as WashbacksEventModel)
+                },
+                {
+                  icon: actionIcons.DeleteIcon,
+                  tooltip: 'Delete',
+                  onClick: (event, data) => onDeleteWashbacksEventClick(data as WashbacksEventModel)
+                },
+              ]}
             />
-          </DataTableExtensions>
+          </div>
           <hr />
 
-          <h1 className='title has-text-centered'>{currentWashbacksEvent.eventType ? `Washbacks ${currentWashbacksEvent.eventType} Event` : ''} {currentWashbacksEvent.eventDate ? `on ${moment(currentWashbacksEvent.eventDate).format('YYYY-MM-DD')}` : ''}</h1>
+          <Typography variant='h1' gutterBottom={true} align='center'>
+            {currentWashbacksEvent.eventType ? `Washbacks ${currentWashbacksEvent.eventType} Event` : ''} {currentWashbacksEvent.eventDate ? `on ${moment(currentWashbacksEvent.eventDate).format('YYYY-MM-DD')}` : ''}
+          </Typography>
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  {showField('species', currentWashbacksEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
-                  {showField('eventDate', currentWashbacksEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
-                  {showField('eventCount', currentWashbacksEvent.eventType) ? <IntegerFormField fieldName='eventCount' labelText='Event count' /> : null}
-                  {showField('beachEventCount', currentWashbacksEvent.eventType) ? <IntegerFormField fieldName='beachEventCount' labelText={`${currentWashbacksEvent.eventType} on beach`} /> : null}
-                  {showField('offshoreEventCount', currentWashbacksEvent.eventType) ? <IntegerFormField fieldName='offshoreEventCount' labelText={`${currentWashbacksEvent.eventType} offshore`} /> : null}
-                  {showField('eventCounty', currentWashbacksEvent.eventType) ? <ListFormField fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
+                  {showField('species', currentWashbacksEvent.eventType) ? <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
+                  {showField('eventDate', currentWashbacksEvent.eventType) ? <DateFormFieldMui fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
+                  {showField('eventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='eventCount' labelText='Event count' /> : null}
+                  {showField('beachEventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='beachEventCount' labelText={`${currentWashbacksEvent.eventType} on beach`} /> : null}
+                  {showField('offshoreEventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='offshoreEventCount' labelText={`${currentWashbacksEvent.eventType} offshore`} /> : null}
+                  {showField('eventCounty', currentWashbacksEvent.eventType) ? <ListFormFieldMui fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
                   {showField('under5cmClsl', currentWashbacksEvent.eventType) ? 
                     <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Size'>
                       <CheckboxFormField fieldName='under5cmClsl' labelText='Under 5cm CLSL?' />
                     </FormFieldGroup>
                   : null}
                 </FormFieldRow>
-                <div className='field is-grouped form-action-buttons'>
-                  <p className='control'>
-                    <input
-                      type='submit'
-                      className='button is-success is-fixed-width-medium'
-                      value='Save'
-                      disabled={!(formState.isValid && formState.dirty)}
-                    />
-                  </p>
-                  <p className='control'>
-                    <input
-                      type='button'
-                      className='button is-danger is-fixed-width-medium'
-                      value='Cancel'
-                      onClick={() => onCancel()}
-                      disabled={!formState.dirty}
-                    />
-                  </p>
+
+                <div className={classes.formActionButtonsContainer}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                    Save
+                  </Button>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                    Cancel
+                  </Button>
                 </div>
               </fieldset>
             </form>
           </FormContext>
 
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
