@@ -20,6 +20,9 @@ const NavBar: React.FC = (props: any) => {
     createStyles({
       root: {
         flexGrow: 1,
+        '@media print': {
+          display: 'none',
+        },
       },
       appBar: {
         backgroundColor: 'black',

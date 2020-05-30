@@ -16,11 +16,38 @@ const theme = createMuiTheme({
       h2: {
         fontSize: '1.25rem',
       },
+      h3: {
+        fontSize: '1rem',
+      },
     },
     MuiBreadcrumbs: {
       root: {
         marginBottom: '1rem',
-      }
+        '@media print': {
+          display: 'none',
+        },
+      },
+    },
+    MuiButtonBase: {
+      root: {
+        '&:disabled': {
+          cursor: 'not-allowed',
+          pointerEvents: 'auto',
+        },
+      },
+    },
+    MuiPaper: {
+      elevation1: {
+        '@media print': {
+          boxShadow: 'none',
+        },
+      },
+      root: {
+        '@media print': {
+          background: 'transparent',
+          boxShadow: 'none',
+        },
+      },
     },
   },
 });

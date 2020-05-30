@@ -1,8 +1,8 @@
 import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
-import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
@@ -290,14 +290,14 @@ const WashbacksEvents: React.FC = () => {
     <div id='washbacksEvents'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialogMui
+      <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
         onYesClick={onDialogYes}
         onNoClick={onDialogNo}
       />
-      <YesNoCancelDialogMui
+      <YesNoCancelDialog
         isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}

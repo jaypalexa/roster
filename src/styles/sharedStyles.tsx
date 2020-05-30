@@ -1,6 +1,14 @@
 import { Theme } from '@material-ui/core/styles';
 
 export default (theme: Theme) => ({
+  fixedWidthMedium: {
+    minWidth: '150px',
+    width: '150px',
+  },
+  fixedWidthLarge: {
+    minWidth: '240px',
+    width: '240px',
+  },
   formActionButtonsContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -43,11 +51,10 @@ export default (theme: Theme) => ({
   horizontalScroll: {
     overflowX: 'scroll' as 'scroll',
   },
-  fixedWidthLarge: {
-    width: '240px',
-  },
-  fixedWidthMedium: {
-    width: '120px',
+  htmlReportContainer: {
+    //'@media screen': {
+      overflowX: 'auto' as 'auto',
+    //},
   },
   saveButton: {
     background: 'green',
@@ -59,5 +66,11 @@ export default (theme: Theme) => ({
   tabButton: {
     maxWidth: '100%',
     textTransform: 'none' as 'none',
+  },
+  textTransformNone: {
+    textTransform: 'none' as 'none',
+  },
+  whiteSpaceNoWrap: {
+    whiteSpace: 'nowrap' as 'nowrap',
   },
 });

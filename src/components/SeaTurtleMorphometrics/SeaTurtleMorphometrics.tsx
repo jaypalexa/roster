@@ -2,8 +2,8 @@ import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
-import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
-import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
@@ -320,14 +320,14 @@ const SeaTurtleMorphometrics: React.FC = () => {
     <div id='seaTurtleMorphometrics'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialogMui
+      <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
         onYesClick={onDialogYes}
         onNoClick={onDialogNo}
       />
-      <YesNoCancelDialogMui
+      <YesNoCancelDialog
         isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}

@@ -1,43 +1,37 @@
-import React, { useEffect, useRef } from 'react';
-import { handleModalKeyDownEvent } from 'utils';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import React from 'react';
 
 interface YesNoDialogProps {
-  isActive: boolean,
+  isOpen: boolean,
   titleText?: string,
   bodyText?: string,
-  onYes: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
-  onNo: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
+  onYesClick: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
+  onNoClick: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined,
 }
 
-const YesNoDialog: React.FC<YesNoDialogProps> = ({isActive, titleText, bodyText, onYes, onNo}) => {
-  const yesButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!isActive) return;
-    yesButtonRef?.current?.focus();
-    document.addEventListener('keydown', handleModalKeyDownEvent);
-    return () => {
-      document.removeEventListener('keydown', handleModalKeyDownEvent);
-    }
-  }, [isActive]);
-
+const YesNoDialog: React.FC<YesNoDialogProps> = ({isOpen, titleText, bodyText, onYesClick, onNoClick}) => {
   return (
-    isActive ?
-      <div className={`modal ${isActive ? 'is-active' : ''}`}>
-        <div className='modal-background'></div>
-        <div className='modal-card'>
-          <header className='modal-card-head'>
-            <p className='modal-card-title'>{titleText}</p>
-          </header>
-          <section className='modal-card-body'>
-            <p>{bodyText}</p>
-          </section>
-          <footer className='modal-card-foot'>
-            <button className='button is-success' onClick={onYes} ref={yesButtonRef}>Yes</button>
-            <button className='button is-danger' onClick={onNo}>No</button>
-          </footer>
-        </div>
-      </div>
+    isOpen ? 
+      <Dialog
+        open={isOpen}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+      >
+        <DialogTitle id='alert-dialog-title'>{titleText}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description'>
+            {bodyText}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onYesClick} color='secondary'>
+            Yes
+          </Button>
+          <Button onClick={onNoClick} color='primary' autoFocus>
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
     : null
   );
 };

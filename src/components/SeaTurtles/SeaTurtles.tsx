@@ -4,8 +4,8 @@ import browserHistory from 'browserHistory';
 import clsx from 'clsx';
 import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import MapDialog from 'components/Dialogs/MapDialog';
-import YesNoCancelDialogMui from 'components/Dialogs/YesNoCancelDialogMui';
-import YesNoDialogMui from 'components/Dialogs/YesNoDialogMui';
+import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
+import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
@@ -361,14 +361,14 @@ const SeaTurtles: React.FC = () => {
     <div id='seaTurtle'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
-      <YesNoDialogMui
+      <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
         onYesClick={onDialogYes}
         onNoClick={onDialogNo}
       />
-      <YesNoCancelDialogMui
+      <YesNoCancelDialog
         isOpen={showYesNoCancelDialog}
         titleText={dialogTitleText}
         bodyText={dialogBodyText}
@@ -378,7 +378,7 @@ const SeaTurtles: React.FC = () => {
       />
 
       <MapDialog 
-        isActive={isMapDialogOpen} 
+        isOpen={isMapDialogOpen} 
         mapData={mapData} 
         onCloseClick={() => setIsMapDialogOpen(false)} 
       />
@@ -467,12 +467,13 @@ const SeaTurtles: React.FC = () => {
                   <TextFormFieldMui fieldName='acquiredLatitude' labelText='Latitude' />
                   <TextFormFieldMui fieldName='acquiredLongitude' labelText='Longitude' />
                   <FormFieldMui fieldName='dummy'>
-                    <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('Acquired')}>
-                      <span className='icon'>
-                        <IconMui icon='map' />
-                      </span>
-                      &nbsp;&nbsp;&nbsp;View on map
-                    </button>
+                    <Button variant='contained' color='primary' type='button' disabled={!isFormEnabled}
+                      onClick={onShowMapDialogClick('Acquired')} 
+                      startIcon={<IconMui icon='map' />} 
+                      className={clsx(classes.fixedWidthMedium, classes.textTransformNone, classes.whiteSpaceNoWrap)}
+                    >
+                      View on map
+                    </Button>
                   </FormFieldMui>
                 </FormFieldRowMui>
                 <FormFieldRowMui>
@@ -482,12 +483,13 @@ const SeaTurtles: React.FC = () => {
                   <TextFormFieldMui fieldName='relinquishedLatitude' labelText='Latitude' />
                   <TextFormFieldMui fieldName='relinquishedLongitude' labelText='Longitude' />
                   <FormFieldMui fieldName='dummy'>
-                    <button className='button is-link view-on-map-button' type='button' onClick={onShowMapDialogClick('Relinquished')}>
-                      <span className='icon'>
-                        <IconMui icon='map' />
-                      </span>
-                      &nbsp;&nbsp;&nbsp;View on map
-                    </button>
+                    <Button variant='contained' color='primary' type='button' disabled={!isFormEnabled}
+                      onClick={onShowMapDialogClick('Relinquished')} 
+                      startIcon={<IconMui icon='map' />} 
+                      className={clsx(classes.fixedWidthMedium, classes.textTransformNone, classes.whiteSpaceNoWrap)}
+                    >
+                      View on map
+                    </Button>
                   </FormFieldMui>
                 </FormFieldRowMui>
                 <FormFieldRowMui>
@@ -505,10 +507,9 @@ const SeaTurtles: React.FC = () => {
                     <CheckboxFormField fieldName='injuryOther' labelText='Other' />
                   </FormFieldGroup>
                 </FormFieldRowMui>
-
                 <hr />
 
-                <h2 className='subtitle'>Initial Encounter Information</h2>
+                <Typography variant='h2'>Initial Encounter Information</Typography>
                 <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Initial encounter'>
                     <CheckboxFormField fieldName='wasCarryingTagsWhenEnc' labelText='Was turtle carrying tags when initially encountered?' />
@@ -523,7 +524,7 @@ const SeaTurtles: React.FC = () => {
                 </FormFieldRowMui>
                 <hr />
 
-                <h2 className='subtitle'>Inspected and/or Scanned For</h2>
+                <Typography variant='h2'>Inspected and/or Scanned For</Typography>
                 <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Inspected for'>
                     <CheckboxFormField fieldName='inspectedForTagScars' labelText='Tag scars' />

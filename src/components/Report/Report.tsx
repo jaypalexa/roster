@@ -1,4 +1,5 @@
-import { Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Breadcrumbs, createStyles, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
+import clsx from 'clsx';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
@@ -20,8 +21,8 @@ const Report: React.FC = () => {
     createStyles(
       {
         ...sharedStyles(theme),
-        otherReportsHeader: {
-          marginTop: '2rem',
+        htmlReportViewingArea: {
+          padding: '1.5rem',
         },
       })
   );
@@ -31,7 +32,7 @@ const Report: React.FC = () => {
   const [reportOptions, setReportOptions] = useState<any>();
   const [pdfReportUrl, setPdfReportUrl] = useState<string>();
   const [htmlReportContent, setHtmlReportContent] = useState<JSX.Element>();
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(true);
   const reportRouteState = useLocation().state as ReportRouteStateModel;
 
   useMount(() => {
@@ -47,7 +48,7 @@ const Report: React.FC = () => {
     if (!reportDefinition.reportId || !reportOptions) return;
     const generateReport = async (reportOptions: any) => {
       try {
-        setShowSpinner(true)
+        setShowSpinner(true);
         if (reportDefinition.isPdf) {
           const pdfReport = await ReportService.generatePdfReport(reportDefinition.reportId, reportOptions);
           setPdfReportUrl(pdfReport.url);
@@ -58,7 +59,9 @@ const Report: React.FC = () => {
               content = await HatchlingsAndWashbacksByCountyReportGenerator.generate(reportDefinition, reportOptions);
               break;
             case 'TurtleInjuryReport':
-              content = await TurtleInjuryReportGenerator.generate(reportDefinition, reportOptions);
+              // content = await TurtleInjuryReportGenerator.generate(reportDefinition, reportOptions);
+              content = <TurtleInjuryReportGenerator reportDefinition={reportDefinition} reportOptions={reportOptions} />;
+              // content = await React.createElement('turtleinjuryreportgenerator', {reportdefinition: reportDefinition, reportoptions: reportOptions} );
               break;
             case 'TurtleTagReport':
               content = await TurtleTagReportGenerator.generate(reportDefinition, reportOptions);
@@ -99,7 +102,7 @@ const Report: React.FC = () => {
 
           {pdfReportUrl ? 
             <>
-              <h1 className='title has-text-centered'>{reportDefinition.reportName}</h1>
+              <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
               <div className='view-report-button-container has-text-centered'>
                 <a href={pdfReportUrl} 
                   className='view-report-button is-centered-both' 
@@ -114,7 +117,7 @@ const Report: React.FC = () => {
           : null}
 
           {htmlReportContent ?
-            <>
+            <div>
               <div className='has-text-centered html-report-print-button-container'>
                 <input
                   type='button'
@@ -123,10 +126,10 @@ const Report: React.FC = () => {
                   onClick={() => { window.print() }}
                 />
               </div>
-              <div className='has-text-centered html-report-viewing-area'>
+              <Paper className={clsx(classes.formActionButtonsContainer, classes.htmlReportViewingArea)}>
                 {htmlReportContent}
-              </div>
-            </>
+              </Paper>
+            </div>
           : null}
           
         </Grid>
