@@ -1,5 +1,6 @@
-import { Breadcrumbs, createStyles, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, createStyles, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
 import clsx from 'clsx';
+import IconMui from 'components/Icon/IconMui';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
@@ -11,7 +12,6 @@ import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
 import { constants, isIosDevice } from 'utils';
 import HatchlingsAndWashbacksByCountyReportGenerator from './HatchlingsAndWashbacksByCountyReport/HatchlingsAndWashbacksByCountyReportGenerator';
-import './Report.sass';
 import TurtleInjuryReportGenerator from './TurtleInjuryReport/TurtleInjuryReportGenerator';
 import TurtleTagReportGenerator from './TurtleTagReport/TurtleTagReportGenerator';
 
@@ -23,6 +23,13 @@ const Report: React.FC = () => {
         ...sharedStyles(theme),
         htmlReportViewingArea: {
           padding: '1.5rem',
+        },
+        reportPrintButtonContainer: {
+          marginBottom: '1.5rem',
+        },
+        viewReportButtonContainer: {
+          marginTop: '2rem',
+          height: '100vh',
         },
       })
   );
@@ -59,9 +66,7 @@ const Report: React.FC = () => {
               content = await HatchlingsAndWashbacksByCountyReportGenerator.generate(reportDefinition, reportOptions);
               break;
             case 'TurtleInjuryReport':
-              // content = await TurtleInjuryReportGenerator.generate(reportDefinition, reportOptions);
-              content = <TurtleInjuryReportGenerator reportDefinition={reportDefinition} reportOptions={reportOptions} />;
-              // content = await React.createElement('turtleinjuryreportgenerator', {reportdefinition: reportDefinition, reportoptions: reportOptions} );
+              content = await TurtleInjuryReportGenerator.generate(reportDefinition, reportOptions);
               break;
             case 'TurtleTagReport':
               content = await TurtleTagReportGenerator.generate(reportDefinition, reportOptions);
@@ -103,33 +108,36 @@ const Report: React.FC = () => {
           {pdfReportUrl ? 
             <>
               <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
-              <div className='view-report-button-container has-text-centered'>
-                <a href={pdfReportUrl} 
-                  className='view-report-button is-centered-both' 
-                  title={reportDefinition.reportName} 
+              <Box className={clsx(classes.viewReportButtonContainer, classes.textAlignCenter)}>
+                <Button variant='contained' color='primary' type='button' 
+                  href={pdfReportUrl} 
                   target={isIosDevice ? '_self' : '_blank'} 
                   rel='noopener noreferrer'
+                  startIcon={<IconMui icon='print' />} 
+                  className={clsx(classes.fixedWidthMedium, classes.textTransformNone, classes.hoverTextWhite)}
                 >
-                    <span>View Report</span><br /><span>(opens in new tab)</span>
-                </a>
-              </div>
+                  View Report
+                </Button>
+                <Typography variant='body1' align='center'>(opens in new tab)</Typography>
+              </Box>
             </>
           : null}
 
           {htmlReportContent ?
-            <div>
-              <div className='has-text-centered html-report-print-button-container'>
-                <input
-                  type='button'
-                  className='button is-fixed-width-medium html-report-print-button'
-                  value='Print' 
-                  onClick={() => { window.print() }}
-                />
-              </div>
+            <>
+              <Box className={clsx(classes.reportPrintButtonContainer, classes.textAlignCenter)}>
+                <Button variant='contained' color='primary' type='button' 
+                  onClick={() => { window.print() }} 
+                  startIcon={<IconMui icon='print' />} 
+                  className={clsx(classes.fixedWidthMedium, classes.textTransformNone)}
+                >
+                  Print
+                </Button>
+              </Box>
               <Paper className={clsx(classes.formActionButtonsContainer, classes.htmlReportViewingArea)}>
                 {htmlReportContent}
               </Paper>
-            </div>
+            </>
           : null}
           
         </Grid>

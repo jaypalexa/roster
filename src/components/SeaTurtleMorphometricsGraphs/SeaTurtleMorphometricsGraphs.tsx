@@ -1,4 +1,4 @@
-import { Breadcrumbs, Container, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import Spinner from 'components/Spinner/Spinner';
@@ -210,9 +210,9 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Morphometrics Graphs for {appContext.seaTurtle?.seaTurtleName}</Typography>
 
-          <Container>
+          <Box>
             <Line data={data} options={options} />
-          </Container>
+          </Box>
         </Grid>
       </Grid>
     </div>

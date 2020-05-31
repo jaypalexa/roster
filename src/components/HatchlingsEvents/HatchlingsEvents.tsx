@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import IntegerFormFieldMui from 'components/FormFields/IntegerFormFieldMui';
 import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
 import IconMui from 'components/Icon/IconMui';
@@ -374,14 +374,14 @@ const HatchlingsEvents: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRow>
+                <FormFieldRowMui>
                   {showField('species', currentHatchlingsEvent.eventType) ? <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
                   {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormFieldMui fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
                   {showField('eventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='eventCount' labelText='Event count' /> : null}
                   {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} /> : null}
                   {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} /> : null}
                   {showField('eventCounty', currentHatchlingsEvent.eventType) ? <ListFormFieldMui fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
-                </FormFieldRow>
+                </FormFieldRowMui>
 
                 <div className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>

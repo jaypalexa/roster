@@ -21,9 +21,6 @@ export const FormFieldMui: React.FC<FormFieldMuiProps> = ({ fieldName, fieldClas
       withoutLabel: {
         marginTop: theme.spacing(3),
       },
-      textField: {
-        // width: '25ch',
-      },
     }),
   );
   const classes = useStyles();
@@ -32,7 +29,7 @@ export const FormFieldMui: React.FC<FormFieldMuiProps> = ({ fieldName, fieldClas
   return (
     <Grid item xs={12} md>
       <FormControl 
-        className={clsx(classes.margin, classes.textField, fieldClass)} 
+        className={clsx(classes.margin, fieldClass)} 
         disabled={disabled}
         error={errors[fieldName] && formState.dirty} 
         fullWidth={true}

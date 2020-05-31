@@ -1,5 +1,6 @@
+import { Box, Breadcrumbs, Button, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import browserHistory from 'browserHistory';
-import ReportOptionsFormFields from 'components/ReportOptions/ReportOptionsFormFields';
+import clsx from 'clsx';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
@@ -10,16 +11,23 @@ import { FormContext, useForm } from 'react-hook-form';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
-import './ReportOptions.sass';
+import sharedStyles from 'styles/sharedStyles';
+import ReportOptionsFormFields from './ReportOptionsFormFields';
 
 type ReportOptionsParams = { reportId: string };
 
 const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({match}) => {
-  const methods = useForm<any>({ mode: 'onChange' });
-  const { handleSubmit } = methods;
-  const [reportDefinition, setReportDefinition] = useState({} as ReportDefinitionModel);
-  const [showSpinner, setShowSpinner] = useState(false);
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles(sharedStyles(theme))
+  );
+  const classes = useStyles();
+
   const [appContext, setAppContext] = useAppContext();
+  const [reportDefinition, setReportDefinition] = useState({} as ReportDefinitionModel);
+  const methods = useForm<any>({ mode: 'onChange', defaultValues: appContext.reportOptions[match.params.reportId] });
+  const { handleSubmit } = methods;
+  const [showSpinner, setShowSpinner] = useState(false);
 
   useMount(() => {
     window.scrollTo(0, 0);
@@ -45,38 +53,34 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
   });
 
   return (
-    <div id='reportOptions'>
+    <Box id='reportOptions'>
       <Spinner isActive={showSpinner} />
-      <nav className='breadcrumb hidden-when-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/reports'>Reports</Link></li>
-          <li className='is-active'><a href='/#' aria-current='page'>Report Options</a></li>
-        </ul>
-      </nav>
-      <nav className='breadcrumb hidden-when-not-mobile' aria-label='breadcrumbs'>
-        <ul>
-          <li><Link to='/reports'>&#10094; Reports</Link></li>
-        </ul>
-      </nav>
-      <div className='columns is-centered'>
-        <div className='column is-four-fifths'>
-          <div className='report-options'>
-            <h1 className='title has-text-centered'>{reportDefinition.reportName} Options</h1>
-            <FormContext {...methods} >
-              <form onSubmit={onSubmit}>
-                <ReportOptionsFormFields reportDefinition={reportDefinition} setShowSpinner={setShowSpinner} />
-                <div className='field is-grouped form-action-buttons'>
-                  <p className='control'>
-                    <input type='submit' className='button is-success is-fixed-width-medium' value='Generate' />
-                  </p>
-                </div>
-              </form>
-            </FormContext>
-          </div>
-        </div>
-      </div>
-    </div>
+
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
+        <Link to='/'>Home</Link>
+        <Link to='/reports'>Reports</Link>
+        <Typography color='textPrimary'>Report Options</Typography>
+      </Breadcrumbs>
+      <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
+        <Link to='/reports'>&#10094; Reports</Link>
+      </Breadcrumbs>
+
+      <Grid container justify='center'>
+        <Grid item xs={12} md={8}>
+          <Typography variant='h1' align='center' gutterBottom={true}>{reportDefinition.reportName} Options</Typography>
+          <FormContext {...methods} >
+            <form onSubmit={onSubmit}>
+              <ReportOptionsFormFields reportDefinition={reportDefinition} setShowSpinner={setShowSpinner} />
+              <Box className={classes.formActionButtonsContainer}>
+                <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit'>
+                  Generate
+                </Button>
+              </Box>
+            </form>
+          </FormContext>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 

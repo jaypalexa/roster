@@ -30,8 +30,8 @@ export const FormFieldGroup: React.FC<FormFieldGroupProps> = ({ fieldClass, labe
 
   return (
     // <div className={clsx(classes.root, fieldClass)}>
-    <Grid item xs={12} md>
-      <label className={clsx(`label ${labelText ? '' : 'hidden'}`, classes.formFieldGroupLabel)}>{labelText}</label>
+    <Grid item xs={12} md className={clsx(classes.root, fieldClass)}>
+      <label className={clsx(`label ${labelText ? '' : 'hidden'}`, classes.formFieldGroupLabel)}>{labelText === '&nbsp;' ? '\u00A0' : labelText}</label>
       <div className='control is-expanded'>
         {children}
       </div>

@@ -105,3 +105,18 @@ REMOVE:  prop-types ???
 
 TODO:  play with MUI Paper component
 
+TODO:  Create a data table style:
+    border-color: lightgray;
+    border-style: solid;
+	overflow-x: scroll;
+
+TODO:  ReportOptions.tsx -- set defaultValues per reportId-specific
+	  const methods = useForm<any>({ mode: 'onChange', defaultValues: {filterDateType: 'dateAcquired'} });
+
+	  shove them into:  appContext.reportOptions[reportDefinition.reportId]
+	  
+TurtleInjuryReport			 reportQuarter={ReportQuarter.Previous}
+
+HatchlingsAndWashbacksByCounty	 reportQuarter={ReportQuarter.Previous}
+MarineTurtleCaptive			 reportQuarter={ReportQuarter.Previous}
+MarineTurtleHolding			 reportQuarter={ReportQuarter.Previous}

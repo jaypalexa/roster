@@ -1,4 +1,4 @@
-import { Breadcrumbs, Container, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
@@ -55,11 +55,11 @@ const BlankForms: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center'>Blank Forms</Typography>
           <Typography variant='h2' align='center' gutterBottom={true}>(opens in new tab)</Typography>
-          <Container className='page-body-container'>
+          <Box className='page-body-container'>
             {reportDefinitions
               .map((item) => renderChildNavigation(item))
             }
-          </Container>
+          </Box>
         </Grid>
       </Grid>
     </div>

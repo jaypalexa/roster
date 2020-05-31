@@ -1,6 +1,7 @@
 import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
 import MapIcon from '@material-ui/icons/Map';
+import PrintIcon from '@material-ui/icons/Print';
 import React from 'react';
 
 interface IconProps {
@@ -18,6 +19,8 @@ const IconMui: React.FC<IconProps> = ({icon, htmlColor, height, width}) => {
       return <HomeIcon htmlColor={htmlColor} />;
     case 'map':
       return <MapIcon htmlColor={htmlColor} />;
+    case 'print':
+      return <PrintIcon htmlColor={htmlColor} />;
     default:
       return <></>;
   }

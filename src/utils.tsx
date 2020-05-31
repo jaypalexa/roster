@@ -14,6 +14,8 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
+import moment from 'moment';
 import React, { forwardRef, RefObject } from "react";
 
 export interface Dictionary<T> {
@@ -74,7 +76,7 @@ export const isSafari = !!navigator.userAgent.match(/Version\/[\\d\\.]+.*Safari/
 export const actionIcons = {
   EditIcon: Edit,
   DeleteIcon: Delete,
-}
+};
 
 export const tableIcons = {
   Add: forwardRef((props, ref: ((instance: SVGSVGElement | null) => void) | RefObject<SVGSVGElement> | null | undefined) => <AddBox {...props} ref={ref} />),
@@ -95,3 +97,22 @@ export const tableIcons = {
   ThirdStateCheck: forwardRef((props, ref: ((instance: SVGSVGElement | null) => void) | RefObject<SVGSVGElement> | null | undefined) => <Remove {...props} ref={ref} />),
   ViewColumn: forwardRef((props, ref: ((instance: SVGSVGElement | null) => void) | RefObject<SVGSVGElement> | null | undefined) => <ViewColumn {...props} ref={ref} />)
 };
+
+export enum ReportQuarter {
+  Previous = 1,
+  Current = 2,
+};
+
+export const convertDateToYyyyMmDdString = (dateValue: Date) => {
+  return new Date(dateValue.getTime() - (dateValue.getTimezoneOffset() * 60000 )).toISOString().split('T')[0];
+};
+
+export const getDefaultDateRange = (reportQuarter: ReportQuarter): ReportOptionsDateRangeDto => {
+    /* set initial (quarterly) date range; last quarter or current quarter */
+    const offset = (reportQuarter === ReportQuarter.Previous) ? -3 : 0;
+    var seedDate = moment().add(offset, 'month').toDate();
+    var quarter = Math.floor((seedDate.getMonth() / 3));
+    var dateFrom = new Date(seedDate.getFullYear(), quarter * 3, 1);
+    var dateThru = new Date(dateFrom.getFullYear(), dateFrom.getMonth() + 3, 0);
+    return {dateFrom: convertDateToYyyyMmDdString(dateFrom), dateThru: convertDateToYyyyMmDdString(dateThru)} as ReportOptionsDateRangeDto;
+}

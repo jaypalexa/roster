@@ -22,13 +22,13 @@ const HomeMui: React.FC = () => {
   return (
     <div id='home' className={classes.root}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <HomeTile color='darkgreen' content='Sea Turtles' linkTo='/sea-turtles' />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <HomeTile color='hsl(245, 100%, 25%)' content='Hatchlings Events' linkTo='/hatchlings-events' />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <HomeTile color='hsl(245, 100%, 40%)' content='Washbacks Events' linkTo='/washbacks-events' />
         </Grid>
         <Grid item xs={12} md={5}>

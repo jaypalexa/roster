@@ -34,6 +34,9 @@ const theme = createMuiTheme({
           cursor: 'not-allowed',
           pointerEvents: 'auto',
         },
+        '@media print': {
+          display: 'none',
+        },
       },
     },
     MuiPaper: {
@@ -48,6 +51,12 @@ const theme = createMuiTheme({
           boxShadow: 'none',
         },
       },
+    },
+    MuiRadio: {
+      root: {
+        paddingTop: '3px',
+        paddingBottom: '3px',
+      }
     },
   },
 });

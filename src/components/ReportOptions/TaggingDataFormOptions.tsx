@@ -1,9 +1,9 @@
 import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
-import ListFormField from 'components/FormFields/ListFormField';
-import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
-import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
+import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
+import RadioButtonFormFieldMui from 'components/FormFields/RadioButtonFormFieldMui';
+import RadioButtonGroupFormFieldMui from 'components/FormFields/RadioButtonGroupFormFieldMui';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import NameValuePair from 'models/NameValuePair';
@@ -41,7 +41,7 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportD
   return (
     <>
       <FormFieldRow>
-        <ListFormField fieldName='seaTurtleId' labelText='Choose a turtle to generate the form for' listItems={seaTurtleListItems} />
+        <ListFormFieldMui fieldName='seaTurtleId' labelText='Choose a turtle to generate the form for' listItems={seaTurtleListItems} />
       </FormFieldRow>
       <FormFieldRow>
         <FormFieldGroup fieldClass='checkbox-group checkboxes-3' labelText='Options'>
@@ -51,11 +51,10 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportD
         </FormFieldGroup>
       </FormFieldRow>
       <FormFieldRow>
-        <RadioButtonGroupFormField fieldName='useMorphometricsClosestTo' labelText='Use morphometrics closest to ' >
-          <RadioButtonFormField fieldName='useMorphometricsClosestTo' labelText='Date acquired' value='dateAcquired' defaultChecked={true} />
-          <br />
-          <RadioButtonFormField fieldName='useMorphometricsClosestTo' labelText='Date relinquished' value='dateRelinquished' />
-        </RadioButtonGroupFormField>
+        <RadioButtonGroupFormFieldMui fieldName='useMorphometricsClosestTo' labelText='Use morphometrics closest to' >
+          <RadioButtonFormFieldMui labelText='Date acquired' value='dateAcquired' />
+          <RadioButtonFormFieldMui labelText='Date relinquished' value='dateRelinquished' />
+        </RadioButtonGroupFormFieldMui>
       </FormFieldRow>
     </>
   );

@@ -1,4 +1,4 @@
-import { Breadcrumbs, Container, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import useMount from 'hooks/UseMount';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -68,8 +68,8 @@ const AboutRoster: React.FC = () => {
       <Grid container justify='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center'>About ROSTER</Typography>
-          <Container className='page-body-container'>
-            <p>v2020.05.28.0955</p>
+          <Box className='page-body-container'>
+            <p>v2020.05.31.1600</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>
@@ -91,7 +91,7 @@ const AboutRoster: React.FC = () => {
                 GitHub
               </a>
             </p>
-          </Container>
+          </Box>
         </Grid>
       </Grid>
     </div>

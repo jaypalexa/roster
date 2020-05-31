@@ -4,7 +4,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import clsx from 'clsx';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import IntegerFormFieldMui from 'components/FormFields/IntegerFormFieldMui';
 import RadioButtonFormFieldMui from 'components/FormFields/RadioButtonFormFieldMui';
 import RadioButtonGroupFormFieldMui from 'components/FormFields/RadioButtonGroupFormFieldMui';
@@ -25,12 +25,12 @@ import { constants } from 'utils';
 const OrganizationMui: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
   const methods = useForm<OrganizationModel>({ mode: 'onChange' });
-  const { handleSubmit, formState, reset } = methods;
+  const {  handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState({} as OrganizationModel);
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
   const [showSpinner, setShowSpinner] = useState(false);
@@ -108,24 +108,24 @@ const OrganizationMui: React.FC = () => {
               </Tabs>
 
               <TabPanel value={currentTabIndex} index={0}> {/* General Information */}
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='organizationName' labelText='Organization Name' validationOptions={{ required: 'Organization Name is required' }} />
                   <TextFormFieldMui fieldName='permitNumber' labelText='Permit Number' />
                   <TextFormFieldMui fieldName='contactName' labelText='Contact Name' />
-                </FormFieldRow>
+                </FormFieldRowMui>
 
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='address1' labelText='Address Line 1' />
                   <TextFormFieldMui fieldName='address2' labelText='Address Line 2' />
-                </FormFieldRow>
+                </FormFieldRowMui>
 
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='city' labelText='City' />
                   <TextFormFieldMui fieldName='state' labelText='State' value='Florida' disabled={true} />
                   <TextFormFieldMui fieldName='zipCode' labelText='ZIP Code' maxLength={10} validationOptions={{ maxLength: { value: 10, message: 'ZIP Code cannot exceed 10 characters' } }} />
-                </FormFieldRow>
+                </FormFieldRowMui>
 
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='phone' labelText='Phone' />
                   <TextFormFieldMui fieldName='fax' labelText='Fax' />
                   <TextFormFieldMui fieldName='emailAddress' labelText='Email Address'
@@ -136,7 +136,7 @@ const OrganizationMui: React.FC = () => {
                       }
                     }}
                   />
-                </FormFieldRow>
+                </FormFieldRowMui>
               </TabPanel>
               <TabPanel value={currentTabIndex} index={1}> {/* Hatchling and Washback Starting Balances */}
                 <Grid container justify='center' spacing={2}>
@@ -162,8 +162,8 @@ const OrganizationMui: React.FC = () => {
               </TabPanel>
               <TabPanel value={currentTabIndex} index={2}> {/* Preferences */}
                 <RadioButtonGroupFormFieldMui fieldName='preferredUnitsType' labelText='Units Type' >
-                  <RadioButtonFormFieldMui fieldName='preferredUnitsType' labelText='Metric (cm, kg, etc.)' value='M' />
-                  <RadioButtonFormFieldMui fieldName='preferredUnitsType' labelText='Imperial (in, lbs, etc.)' value='I' />
+                  <RadioButtonFormFieldMui labelText='Metric' value='M' />
+                  <RadioButtonFormFieldMui labelText='Imperial' value='I' />
                 </RadioButtonGroupFormFieldMui>
               </TabPanel>
 

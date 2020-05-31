@@ -8,7 +8,7 @@ import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import ReportOptionsDateRange, { ReportQuarter } from './ReportOptionsDateRange';
+import ReportOptionsDateRange from './ReportOptionsDateRange';
 import './ReportOptionsFormFields.sass';
 
 const MarineTurtleHoldingFacilityQuarterlyReportOptions: React.FC<{reportDefinition: ReportDefinitionModel}> = ({reportDefinition}) => {
@@ -22,7 +22,7 @@ const MarineTurtleHoldingFacilityQuarterlyReportOptions: React.FC<{reportDefinit
   return (
     <>
       <FormFieldRow>
-        <ReportOptionsDateRange reportQuarter={ReportQuarter.Previous} />
+        <ReportOptionsDateRange />
       </FormFieldRow>
       <FormFieldRow>
         <FormFieldGroup fieldClass='checkbox-group checkboxes-3' labelText='Options'>
@@ -31,7 +31,7 @@ const MarineTurtleHoldingFacilityQuarterlyReportOptions: React.FC<{reportDefinit
           <CheckboxFormField fieldName='includeTurtleName' labelText='Include turtle name in SID # box' />
         </FormFieldGroup>
         <RadioButtonGroupFormField fieldName='groupTankDataBy' labelText='Group tank data by' >
-          <RadioButtonFormField fieldName='groupTankDataBy' labelText='Tank' value='tank' defaultChecked={true} />
+          <RadioButtonFormField fieldName='groupTankDataBy' labelText='Tank' value='tank' />
           <br />
           <RadioButtonFormField fieldName='groupTankDataBy' labelText='Date' value='date' />
         </RadioButtonGroupFormField>

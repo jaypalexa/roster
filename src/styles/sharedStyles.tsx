@@ -51,10 +51,10 @@ export default (theme: Theme) => ({
   horizontalScroll: {
     overflowX: 'scroll' as 'scroll',
   },
-  htmlReportContainer: {
-    //'@media screen': {
-      overflowX: 'auto' as 'auto',
-    //},
+  hoverTextWhite: {
+    '&:hover': {
+      color: 'white',
+    }
   },
   saveButton: {
     background: 'green',
@@ -66,6 +66,9 @@ export default (theme: Theme) => ({
   tabButton: {
     maxWidth: '100%',
     textTransform: 'none' as 'none',
+  },
+  textAlignCenter: {
+    textAlign: 'center' as 'center',
   },
   textTransformNone: {
     textTransform: 'none' as 'none',

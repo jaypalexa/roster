@@ -1,5 +1,6 @@
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Box, Button, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import browserHistory from 'browserHistory';
+import clsx from 'clsx';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
 import Spinner from 'components/Spinner/Spinner';
@@ -10,12 +11,19 @@ import { FormContext, useForm } from 'react-hook-form';
 import AuthenticationService from 'services/AuthenticationService';
 import MessageService from 'services/MessageService';
 import ToastService from 'services/ToastService';
+import sharedStyles from 'styles/sharedStyles';
 
 interface LoginMuiProps {
   redirectPathOnAuthentication?: string;
 }
 
 const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles(sharedStyles(theme))
+  );
+  const classes = useStyles();
+
   const [currentLogin, setCurrentLogin] = useState({} as LoginModel);
   const [showSpinner, setShowSpinner] = useState(false);
   const methods = useForm<LoginModel>({ mode: 'onChange' });
@@ -85,11 +93,11 @@ const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => 
                 <TextFormFieldMui fieldName='password' labelText='Password' type='password' validationOptions={{ required: 'Password is required' }} refObject={passwordControlRef} />
               </FormFieldRow>
 
-              <div className='form-action-buttons-container'>
-                <Button className='is-fixed-width-medium save-button' variant='contained' type='submit'>
+              <Box className={classes.formActionButtonsContainer}>
+                <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit'>
                   Log In
                 </Button>
-              </div>
+              </Box>
 
             </form>
           </FormContext>
