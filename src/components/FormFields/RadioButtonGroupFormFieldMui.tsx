@@ -2,8 +2,7 @@ import { createStyles, makeStyles, RadioGroup, Theme } from '@material-ui/core';
 import FormLabel from '@material-ui/core/FormLabel';
 import React from 'react';
 import { Controller, useFormContext } from "react-hook-form";
-import FormFieldMui from './FormFieldMui';
-import FormFieldMuiProps from './FormFieldMuiProps';
+import FormFieldMui, { FormFieldMuiProps } from './FormFieldMui';
 
 export const RadioButtonGroupFormFieldMui: React.FC<FormFieldMuiProps> = ({ fieldName, labelText, children }) => {
 

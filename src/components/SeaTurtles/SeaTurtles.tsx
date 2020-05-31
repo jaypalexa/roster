@@ -448,7 +448,7 @@ const SeaTurtles: React.FC = () => {
           <FormContext {...methods}>
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <Typography variant='h2'>General Information</Typography>
+                <Typography variant='h2' gutterBottom={true}>General Information</Typography>
 
                 <FormFieldRowMui>
                   <TextFormFieldMui fieldName='seaTurtleName' labelText='Name' refObject={firstEditControlRef} />
@@ -493,8 +493,8 @@ const SeaTurtles: React.FC = () => {
                   </FormFieldMui>
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <TextareaFormFieldMui fieldName='anomalies' labelText='Anomalies' />
-                  <FormFieldGroup fieldClass='checkbox-group checkboxes-4' labelText='Injuries'>
+                  <TextareaFormFieldMui fieldName='anomalies' labelText='Anomalies' rows={4} />
+                  <FormFieldGroup fieldClass='checkbox-group checkboxes-5' labelText='Injuries'>
                     <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' />
                     <CheckboxFormField fieldName='injuryIntestinalImpaction' labelText='Intestinal impaction' />
                     <CheckboxFormField fieldName='injuryLineEntanglement' labelText='Line/net entanglement' />
@@ -509,7 +509,7 @@ const SeaTurtles: React.FC = () => {
                 </FormFieldRowMui>
                 <hr />
 
-                <Typography variant='h2'>Initial Encounter Information</Typography>
+                <Typography variant='h2' gutterBottom={true}>Initial Encounter Information</Typography>
                 <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Initial encounter'>
                     <CheckboxFormField fieldName='wasCarryingTagsWhenEnc' labelText='Was turtle carrying tags when initially encountered?' />
@@ -524,7 +524,7 @@ const SeaTurtles: React.FC = () => {
                 </FormFieldRowMui>
                 <hr />
 
-                <Typography variant='h2'>Inspected and/or Scanned For</Typography>
+                <Typography variant='h2' gutterBottom={true}>Inspected and/or Scanned For</Typography>
                 <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Inspected for'>
                     <CheckboxFormField fieldName='inspectedForTagScars' labelText='Tag scars' />

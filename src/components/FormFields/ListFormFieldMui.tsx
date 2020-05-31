@@ -4,8 +4,7 @@ import Select from '@material-ui/core/Select';
 import React from 'react';
 import { Controller, useFormContext } from "react-hook-form";
 import NameValuePair from '../../models/NameValuePair';
-import FormFieldMui from './FormFieldMui';
-import FormFieldMuiProps from './FormFieldMuiProps';
+import FormFieldMui, { FormFieldMuiProps } from './FormFieldMui';
 
 interface ListFormFieldMuiProps extends FormFieldMuiProps {
   listItems: NameValuePair[];

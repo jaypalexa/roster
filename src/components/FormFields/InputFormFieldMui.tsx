@@ -7,10 +7,9 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import useMount from 'hooks/UseMount';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import FormFieldMui from './FormFieldMui';
-import FormFieldProps from './FormFieldProps';
+import FormFieldMui, { FormFieldMuiProps } from './FormFieldMui';
 
-interface InputFormFieldProps extends FormFieldProps {
+interface InputFormFieldProps extends FormFieldMuiProps {
   type: string;
   placeholder?: string;
   maxLength?: number;

@@ -6,7 +6,7 @@ import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import DecimalFormFieldMui from 'components/FormFields/DecimalFormFieldMui';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
@@ -320,12 +320,12 @@ const HoldingTankMeasurements: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmitHoldingTankMeasurement}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <DateFormFieldMui fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
                   <DecimalFormFieldMui fieldName='temperature' labelText='Temperature' decimalPlaces={2} />
                   <DecimalFormFieldMui fieldName='salinity' labelText='Salinity (in ppt)' decimalPlaces={2} />
                   <DecimalFormFieldMui fieldName='ph' labelText='pH' decimalPlaces={2} />
-                </FormFieldRow>
+                </FormFieldRowMui>
 
                 <div className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>

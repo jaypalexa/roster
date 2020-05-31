@@ -1,4 +1,4 @@
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
@@ -16,9 +16,9 @@ const TurtleInjuryReportOptions: React.FC<{reportDefinition: ReportDefinitionMod
   });
 
   return (
-    <FormFieldRow>
+    <FormFieldRowMui>
       <ReportOptionsDateRange />
-    </FormFieldRow>
+    </FormFieldRowMui>
   );
 };
 

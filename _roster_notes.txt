@@ -71,7 +71,9 @@ TODO:  sea turtle page
 
 TODO:  redo form row layout into grid layout
 
-TODO:  why does Date Relinquished column on Sea Turtles table _not_ have a filter?
+TODO:  material-table:  why does Date Relinquished column on Sea Turtles table _not_ have a filter?
+
+TODO:  material-table:  refresh updated row / deleted row
 
 TODO:  styling for checkboxes in forms
 TODO:  right-justify table columns for numbers

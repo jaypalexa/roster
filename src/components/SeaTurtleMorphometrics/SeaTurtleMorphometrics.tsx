@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
 import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
 import IconMui from 'components/Icon/IconMui';
@@ -386,10 +386,10 @@ const SeaTurtleMorphometrics: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtleMorphometric}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <DateFormFieldMui fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
-                </FormFieldRow>
-                <FormFieldRow>
+                </FormFieldRowMui>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='sclNotchNotchValue' labelText='SCL notch-notch' />
                   <ListFormFieldMui fieldName='sclNotchNotchUnits' labelText='Units' listItems={cmIns} />
                   <TextFormFieldMui fieldName='sclNotchTipValue' labelText='SCL notch-tip' />
@@ -398,8 +398,8 @@ const SeaTurtleMorphometrics: React.FC = () => {
                   <ListFormFieldMui fieldName='sclTipTipUnits' labelText='Units' listItems={cmIns} />
                   <TextFormFieldMui fieldName='scwValue' labelText='SCW' />
                   <ListFormFieldMui fieldName='scwUnits' labelText='Units' listItems={cmIns} />
-                </FormFieldRow>
-                <FormFieldRow>
+                </FormFieldRowMui>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='cclNotchNotchValue' labelText='CCL notch-notch' />
                   <ListFormFieldMui fieldName='cclNotchNotchUnits' labelText='Units' listItems={cmIns} />
                   <TextFormFieldMui fieldName='cclNotchTipValue' labelText='CCL notch-tip' />
@@ -408,11 +408,11 @@ const SeaTurtleMorphometrics: React.FC = () => {
                   <ListFormFieldMui fieldName='cclTipTipUnits' labelText='Units' listItems={cmIns} />
                   <TextFormFieldMui fieldName='ccwValue' labelText='CCW' />
                   <ListFormFieldMui fieldName='ccwUnits' labelText='Units' listItems={cmIns} />
-                </FormFieldRow>
-                <FormFieldRow>
+                </FormFieldRowMui>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='weightValue' labelText='Weight' />
                   <ListFormFieldMui fieldName='weightUnits' labelText='Units' listItems={kgLbs} />
-                </FormFieldRow>
+                </FormFieldRowMui>
 
                 <div className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>

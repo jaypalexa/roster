@@ -1,6 +1,6 @@
 import React from 'react';
 import { constants } from 'utils';
-import FormFieldMuiProps from './FormFieldMuiProps';
+import { FormFieldMuiProps } from './FormFieldMui';
 import InputFormFieldMui from './InputFormFieldMui';
 
 interface IntegerFormFieldMuiProps extends FormFieldMuiProps {

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
 import IconMui from 'components/Icon/IconMui';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt/LeaveThisPagePrompt';
@@ -324,9 +324,9 @@ const HoldingTanksMui: React.FC = () => {
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <Typography variant='h2'>General Information</Typography>
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='holdingTankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
-                </FormFieldRow>
+                </FormFieldRowMui>
                 <hr />
 
                 <ChildNavigation itemName='Water Measurements' 

@@ -4,8 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
-import FormFieldMuiProps from './FormFieldMuiProps';
+import { useFormContext, ValidationOptions } from 'react-hook-form';
+
+export interface FormFieldMuiProps {
+  fieldName: string;
+  fieldClass?: string;
+  labelText?: string;
+  validationOptions?: ValidationOptions;
+  refObject?: any;
+  disabled?: boolean;
+};
 
 export const FormFieldMui: React.FC<FormFieldMuiProps> = ({ fieldName, fieldClass, labelText, disabled, children }) => {
 

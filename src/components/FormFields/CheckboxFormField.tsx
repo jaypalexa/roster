@@ -2,9 +2,9 @@ import { Grid } from '@material-ui/core';
 import React from 'react';
 import { ErrorMessage, useFormContext } from 'react-hook-form';
 import './CheckboxFormField.sass';
-import FormFieldProps from './FormFieldProps';
+import { FormFieldMuiProps } from './FormFieldMui';
 
-interface CheckboxFormFieldProps extends FormFieldProps {
+interface CheckboxFormFieldProps extends FormFieldMuiProps {
   disabled?: boolean;
   value?: string;
   defaultChecked?: boolean | undefined;

@@ -1,7 +1,7 @@
 import { Box, Button, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
@@ -86,12 +86,12 @@ const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => 
           <FormContext {...methods}>
             <form onSubmit={onSubmit}>
 
-              <FormFieldRow>
+              <FormFieldRowMui>
                 <TextFormFieldMui fieldName='userName' labelText='User Name' validationOptions={{ required: 'User Name is required' }} refObject={userNameControlRef} />
-              </FormFieldRow>
-              <FormFieldRow>
+              </FormFieldRowMui>
+              <FormFieldRowMui>
                 <TextFormFieldMui fieldName='password' labelText='Password' type='password' validationOptions={{ required: 'Password is required' }} refObject={passwordControlRef} />
-              </FormFieldRow>
+              </FormFieldRowMui>
 
               <Box className={classes.formActionButtonsContainer}>
                 <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit'>

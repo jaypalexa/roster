@@ -6,7 +6,7 @@ import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import IntegerFormFieldMui from 'components/FormFields/IntegerFormFieldMui';
 import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
 import IconMui from 'components/Icon/IconMui';
@@ -381,7 +381,7 @@ const WashbacksEvents: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRow>
+                <FormFieldRowMui>
                   {showField('species', currentWashbacksEvent.eventType) ? <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
                   {showField('eventDate', currentWashbacksEvent.eventType) ? <DateFormFieldMui fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
                   {showField('eventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='eventCount' labelText='Event count' /> : null}
@@ -389,11 +389,11 @@ const WashbacksEvents: React.FC = () => {
                   {showField('offshoreEventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='offshoreEventCount' labelText={`${currentWashbacksEvent.eventType} offshore`} /> : null}
                   {showField('eventCounty', currentWashbacksEvent.eventType) ? <ListFormFieldMui fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
                   {showField('under5cmClsl', currentWashbacksEvent.eventType) ? 
-                    <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Size'>
+                    <FormFieldGroup fieldClass='checkbox-group' labelText='Size'>
                       <CheckboxFormField fieldName='under5cmClsl' labelText='Under 5cm CLSL?' />
                     </FormFieldGroup>
                   : null}
-                </FormFieldRow>
+                </FormFieldRowMui>
 
                 <div className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>

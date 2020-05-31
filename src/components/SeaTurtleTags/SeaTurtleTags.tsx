@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
 import TextFormFieldMui from 'components/FormFields/TextFormFieldMui';
 import IconMui from 'components/Icon/IconMui';
@@ -330,12 +330,12 @@ const SeaTurtleTags: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtleTag}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRow>
+                <FormFieldRowMui>
                   <TextFormFieldMui fieldName='tagNumber' labelText='Tag Number' validationOptions={{ required: 'Tag Number is required' }} refObject={firstEditControlRef} />
                   <ListFormFieldMui fieldName='tagType' labelText='Tag Type' listItems={tagTypes} />
                   <ListFormFieldMui fieldName='location' labelText='Location' listItems={locations} />
                   <DateFormFieldMui fieldName='dateTagged' labelText='Date Tagged' />
-                </FormFieldRow>
+                </FormFieldRowMui>
 
                 <div className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
