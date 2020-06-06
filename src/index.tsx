@@ -1,5 +1,5 @@
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import App from 'components/App/App';
+import App from 'components/App';
 import { AppContextProvider } from 'contexts/AppContext';
 import 'leaflet/dist/leaflet.css';
 import React from 'react';
@@ -27,6 +27,11 @@ const theme = createMuiTheme({
           display: 'none',
         },
       },
+      li: {
+        '& a': {
+          textDecoration: 'none',
+        },
+      }
     },
     MuiButtonBase: {
       root: {

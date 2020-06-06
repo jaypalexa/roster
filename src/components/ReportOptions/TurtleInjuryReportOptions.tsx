@@ -1,4 +1,4 @@
-import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
+import FormFieldRowMui from 'components/FormFields/FormFieldRow';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';

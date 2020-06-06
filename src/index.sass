@@ -1,34 +1,5 @@
 @charset 'utf-8';
 
-// Customization
-
-// You can easily customize Bulma with your own variables.
-// Just uncomment the following block to see the result.
-
-// // 1. Import the initial variables
-// @import '../node_modules/bulma/sass/utilities/initial-variables'
-// // 2. Set your own initial variables
-// // Update the blue shade, used for links
-// $blue: #06bcef;
-// // Add pink and its invert
-// $pink: #ff8080;
-// $pink-invert: #fff;
-// // Update the sans-serif font family
-// $family-sans-serif: 'Helvetica', 'Arial', sans-serif
-// // 3. Set the derived variables
-// // Use the new pink as the primary color
-// $primary: $pink;
-// $primary-invert: $pink-invert;
-// // 4. Import the rest of Bulma
-
-$input-placeholder-color: lightgray;
-$danger: orangered;
-$success: green;
-
-@import '../node_modules/bulma/bulma'
-@import '../node_modules/bulma-checkradio/dist/css/bulma-checkradio'
-@import '../node_modules/bulma-switch/dist/css/bulma-switch'
-
 body
   margin: 0
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
@@ -40,78 +11,18 @@ code
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
 
 fieldset
+  border: none
   min-width: 100%
+  padding: 0
 
 html
-  /* background-color: lightgoldenrodyellow */
-  /* background-color: lightyellow */
-  /* color: black */
   height: 100%
 
 #root
-  /* 85% */
-  height: 100vh 
-
-.cursor-pointer
-  cursor: pointer
-
-.field
-  flex-basis: 0
-
-.hidden
-  display: none
-
-.is-centered-both
-  right: 50%
-  bottom: 50%
-  transform: translate(50%, 50%)
-  position: absolute ! important
-
-.is-fixed-width-medium
-  width: 120px
-
-.is-fixed-width-large
-  width: 240px
-
-.modal-card-foot
-  justify-content: flex-end !important
-
-.page-body-container
-  margin-top: 1.5rem
-  text-align: center
-
-.radio
-  margin-right: .75rem
-  > input
-    margin-right: .25rem
-
-.select:not(.is-multiple):not(.is-loading)::after
-  z-index: inherit ! important
+  height: 100vh
 
 .text-align-right
   text-align: right ! important
 
-.title:not(:last-child)
-  margin-bottom: 2rem
-
-@media (max-width: 768px) // when mobile
-  .title
-    font-size: 1.5rem
-
-.transparent
-  opacity: 0
-
 .white-space-nowrap
   white-space: nowrap ! important
-
-@media (max-width: 768px) // when mobile
-  .full-width-when-mobile
-    width: 100%
-
-@media (min-width: 769px) // when NOT mobile
-  .hidden-when-not-mobile
-    display: none
-
-@media (max-width: 768px) // when mobile
-  .hidden-when-mobile
-    display: none

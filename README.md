@@ -15,12 +15,11 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 * [React](https://reactjs.org/) - [Typescript](https://www.typescriptlang.org/) UI framework
   * [react-router](https://www.npmjs.com/package/react-router) for client-side routing
   * [react-hook-form](https://www.npmjs.com/package/react-hook-form) for forms
-  * [react-data-table-component](https://www.npmjs.com/package/react-data-table-component) and [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) for tables _(not thrilled with these)_
   * [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2) for charts and graphs
   * [leaflet](https://www.npmjs.com/package/leaflet) and [react-leaflet](https://www.npmjs.com/package/react-leaflet) for maps
-  * [react-toastify](https://www.npmjs.com/package/react-toastify) for toast popups
   * [rxjs](https://www.npmjs.com/package/rxjs) for reactive programming using Observables
-* [Bulma](https://bulma.io/) - CSS framework and components
+* [Material-UI](https://material-ui.com/) - React UI framework and components
+  * [material-table](https://material-table.com/) - React data table component that based on material-ui
 * [Font Awesome](https://fontawesome.com/v4.7.0/icons/) for icons
 * [Amazon Web Services](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=tier%23always-free) ("Always Free" tier *only*)
   * [Amazon Cognito](https://aws.amazon.com/cognito/) for authentication
@@ -51,7 +50,7 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | &#10065; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
 | &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? Service worker unable to distinguish different payloads when calling AWS Lambda (https://lambda.us-east-2.amazonaws.com/2015-03-31/functions/roster-api-lambda/invocations)? |
 | &#10065; Poor man's caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
-| &#10065; Material-UI or Ant Design instead of Bulma ??? | [Material-UI](https://www.npmjs.com/package/@material-ui/core) / [Ant Design](https://www.npmjs.com/package/antd) |
+| &check; Material-UI or Ant Design instead of Bulma ??? | [Material-UI](https://www.npmjs.com/package/@material-ui/core) / [Ant Design](https://www.npmjs.com/package/antd) |
 | &#10065; Ability to click/tap to set map marker ??? | ??? |
 
 ### Reports - PDFs for FWC

@@ -1,8 +1,8 @@
-import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
-import FormFieldGroup from 'components/FormFields/FormFieldGroup';
-import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
-import RadioButtonFormFieldMui from 'components/FormFields/RadioButtonFormFieldMui';
-import RadioButtonGroupFormFieldMui from 'components/FormFields/RadioButtonGroupFormFieldMui';
+import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxGroupFormField from 'components/FormFields/CheckboxGroupFormField';
+import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
+import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
@@ -25,17 +25,17 @@ const MarineTurtleHoldingFacilityQuarterlyReportOptions: React.FC<{reportDefinit
         <ReportOptionsDateRange />
       </FormFieldRowMui>
       <FormFieldRowMui>
-        <FormFieldGroup fieldClass='checkbox-group' labelText='Options'>
-          <CheckboxFormFieldMui fieldName='includeAnomalies' labelText='Include anomalies' />
-          <CheckboxFormFieldMui fieldName='includeAcquiredFrom' labelText='Include acquired from' />
-          <CheckboxFormFieldMui fieldName='includeTurtleName' labelText='Include turtle name in SID # box' />
-        </FormFieldGroup>
+        <CheckboxGroupFormField labelText='Options'>
+          <CheckboxFormField fieldName='includeAnomalies' labelText='Include anomalies' />
+          <CheckboxFormField fieldName='includeAcquiredFrom' labelText='Include acquired from' />
+          <CheckboxFormField fieldName='includeTurtleName' labelText='Include turtle name in SID # box' />
+        </CheckboxGroupFormField>
       </FormFieldRowMui>
       <FormFieldRowMui>
-        <RadioButtonGroupFormFieldMui fieldName='groupTankDataBy' labelText='Group tank data by' >
-          <RadioButtonFormFieldMui labelText='Tank' value='tank' />
-          <RadioButtonFormFieldMui labelText='Date' value='date' />
-        </RadioButtonGroupFormFieldMui>
+        <RadioButtonGroupFormField fieldName='groupTankDataBy' labelText='Group tank data by' >
+          <RadioButtonFormField labelText='Tank' value='tank' />
+          <RadioButtonFormField labelText='Date' value='date' />
+        </RadioButtonGroupFormField>
       </FormFieldRowMui>
     </>
   );

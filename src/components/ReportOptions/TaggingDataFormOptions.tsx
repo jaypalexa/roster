@@ -1,16 +1,16 @@
-import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
-import FormFieldGroup from 'components/FormFields/FormFieldGroup';
-import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
-import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
-import RadioButtonFormFieldMui from 'components/FormFields/RadioButtonFormFieldMui';
-import RadioButtonGroupFormFieldMui from 'components/FormFields/RadioButtonGroupFormFieldMui';
+import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxGroupFormField from 'components/FormFields/CheckboxGroupFormField';
+import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import ListFormField from 'components/FormFields/ListFormField';
+import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
+import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import NameValuePair from 'models/NameValuePair';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import SeaTurtleService from 'services/SeaTurtleService';
+import ToastService from 'services/ToastService';
 import { constants } from 'utils';
 import { ReportOptionsFormFieldsProps } from './ReportOptionsFormFields';
 import './ReportOptionsFormFields.sass';
@@ -29,7 +29,7 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportD
       } 
       catch (err) {
         console.log(err);
-        toast.error(constants.ERROR.GENERIC);
+        ToastService.error(constants.ERROR.GENERIC);
       }
       finally {
         setShowSpinner(false);
@@ -41,20 +41,20 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportD
   return (
     <>
       <FormFieldRowMui>
-        <ListFormFieldMui fieldName='seaTurtleId' labelText='Choose a turtle to generate the form for' listItems={seaTurtleListItems} />
+        <ListFormField fieldName='seaTurtleId' labelText='Choose a turtle to generate the form for' listItems={seaTurtleListItems} />
       </FormFieldRowMui>
       <FormFieldRowMui>
-        <FormFieldGroup fieldClass='checkbox-group' labelText='Options'>
-          <CheckboxFormFieldMui fieldName='populateFacilityField' labelText='Populate "Facility where turtle was being held" field' />
-          <CheckboxFormFieldMui fieldName='additionalRemarksOrDataOnBackOfForm' labelText='Additional remarks or data on back of form' />
-          <CheckboxFormFieldMui fieldName='printSidOnForm' labelText='Print SID on form' />
-        </FormFieldGroup>
+        <CheckboxGroupFormField labelText='Options'>
+          <CheckboxFormField fieldName='populateFacilityField' labelText='Populate "Facility where turtle was being held" field' />
+          <CheckboxFormField fieldName='additionalRemarksOrDataOnBackOfForm' labelText='Additional remarks or data on back of form' />
+          <CheckboxFormField fieldName='printSidOnForm' labelText='Print SID on form' />
+        </CheckboxGroupFormField>
       </FormFieldRowMui>
       <FormFieldRowMui>
-        <RadioButtonGroupFormFieldMui fieldName='useMorphometricsClosestTo' labelText='Use morphometrics closest to' >
-          <RadioButtonFormFieldMui labelText='Date acquired' value='dateAcquired' />
-          <RadioButtonFormFieldMui labelText='Date relinquished' value='dateRelinquished' />
-        </RadioButtonGroupFormFieldMui>
+        <RadioButtonGroupFormField fieldName='useMorphometricsClosestTo' labelText='Use morphometrics closest to' >
+          <RadioButtonFormField labelText='Date acquired' value='dateAcquired' />
+          <RadioButtonFormField labelText='Date relinquished' value='dateRelinquished' />
+        </RadioButtonGroupFormField>
       </FormFieldRowMui>
     </>
   );

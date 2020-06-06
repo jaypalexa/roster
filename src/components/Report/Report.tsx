@@ -1,6 +1,6 @@
 import { Box, Breadcrumbs, Button, createStyles, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
 import clsx from 'clsx';
-import IconMui from 'components/Icon/IconMui';
+import Icon from 'components/Icon';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
@@ -113,7 +113,7 @@ const Report: React.FC = () => {
                   href={pdfReportUrl} 
                   target={isIosDevice ? '_self' : '_blank'} 
                   rel='noopener noreferrer'
-                  startIcon={<IconMui icon='print' />} 
+                  startIcon={<Icon icon='print' />} 
                   className={clsx(classes.fixedWidthMedium, classes.textTransformNone, classes.hoverTextWhite)}
                 >
                   View Report
@@ -128,7 +128,7 @@ const Report: React.FC = () => {
               <Box className={clsx(classes.reportPrintButtonContainer, classes.textAlignCenter)}>
                 <Button variant='contained' color='primary' type='button' 
                   onClick={() => { window.print() }} 
-                  startIcon={<IconMui icon='print' />} 
+                  startIcon={<Icon icon='print' />} 
                   className={clsx(classes.fixedWidthMedium, classes.textTransformNone)}
                 >
                   Print

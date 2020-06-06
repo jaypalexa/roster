@@ -43,6 +43,9 @@ export default (theme: Theme) => ({
       },
     }
   },
+  hidden: {
+    display: 'none',
+  },
   hiddenWhenMobile: {
     [theme.breakpoints.down('sm')]: {
       display: 'none',

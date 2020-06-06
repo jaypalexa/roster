@@ -7,9 +7,4 @@ export default class MapDataModel {
   center!: MapPointModel;
   initialZoom?: number;
   markers?: Array<MapPointModel>
-
-  constructor() {
-    // booleans:  need to be initialized to true or false for controlled checkboxes
-    // strings for list items:  need to be initialized to empty string to clear listbox (input select)
-  }
 };

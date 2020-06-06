@@ -66,28 +66,11 @@ TODO:  standardize date format (pickers mm/dd/yyyy vs display yyyy-mm-dd)
 TODO:  save table search / show relinquished turtles settings when navigating back
 
 TODO:  material-table:  why does Date Relinquished column on Sea Turtles table _not_ have a filter?
-
-TODO:  material-table:  refresh updated row / deleted row
-
-TODO:  styling for checkboxes in forms
-TODO:  right-justify table columns for numbers
-
-TODO:  disabled styling for form fields
-TODO:  disable listboxes when form is disabled and/or is fieldset disabled not working?
-
-TODO:  get rid of old non-MUI form field components; rename BlahMui to Blah
-
-TODO:  get rid of Icon.tsx
+BECAUSE THE DATE-RELINQUISHED VALUES ARE ALL BLANK ON FIRST DATA LOAD WHEN TOGGLE IS OFF
 
 TODO:  try to replace all SASS with JSS
-	-- App.sass --> @media print stuff (re-test that, too)
-	-- FormGroup.sass
-	-- Report.sass
-	-- SeaTurtle.sass
-	-- childNavigation
 	-- form field stuff
 	-- spinner
-	-- switch
 	-- map dialog
 
 
@@ -102,23 +85,6 @@ REMOVE:	 styled-components
 REMOVE:  prop-types ???
 
 TODO:  play with MUI Paper component
-
-TODO:  Create a data table style:
-    border-color: lightgray;
-    border-style: solid;
-	overflow-x: scroll;
-
-TODO:  ReportOptions.tsx -- set defaultValues per reportId-specific
-	  const methods = useForm<any>({ mode: 'onChange', defaultValues: {filterDateType: 'dateAcquired'} });
-
-	  shove them into:  appContext.reportOptions[reportDefinition.reportId]
-	  
-TurtleInjuryReport			 reportQuarter={ReportQuarter.Previous}
-
-HatchlingsAndWashbacksByCounty	 reportQuarter={ReportQuarter.Previous}
-MarineTurtleCaptive			 reportQuarter={ReportQuarter.Previous}
-MarineTurtleHolding			 reportQuarter={ReportQuarter.Previous}
-
 
 
 //data={currentHatchlingsEvents.map(item => Object.assign({}, item))}

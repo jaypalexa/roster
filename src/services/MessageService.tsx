@@ -1,4 +1,4 @@
-import { ToastProps } from 'components/Toast/Toast';
+import { ToastProps } from 'components/Toast';
 import { Subject } from 'rxjs';
 
 export interface TextMessage {

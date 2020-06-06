@@ -1,8 +1,8 @@
-import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
-import FormFieldGroup from 'components/FormFields/FormFieldGroup';
-import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
-import RadioButtonFormFieldMui from 'components/FormFields/RadioButtonFormFieldMui';
-import RadioButtonGroupFormFieldMui from 'components/FormFields/RadioButtonGroupFormFieldMui';
+import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxGroupFormField from 'components/FormFields/CheckboxGroupFormField';
+import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
+import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
@@ -25,35 +25,35 @@ const TurtleTagReportOptions: React.FC<{reportDefinition: ReportDefinitionModel}
         <ReportOptionsDateRange />
       </FormFieldRowMui>
       <FormFieldRowMui>
-        <RadioButtonGroupFormFieldMui fieldName='filterDateType' labelText='Date type'>
-          <RadioButtonFormFieldMui labelText='Date acquired' value='dateAcquired' />
-          <RadioButtonFormFieldMui labelText='Date tagged' value='dateTagged' />
-          <RadioButtonFormFieldMui labelText='Date relinquished' value='dateRelinquished' />
+        <RadioButtonGroupFormField fieldName='filterDateType' labelText='Date type'>
+          <RadioButtonFormField labelText='Date acquired' value='dateAcquired' />
+          <RadioButtonFormField labelText='Date tagged' value='dateTagged' />
+          <RadioButtonFormField labelText='Date relinquished' value='dateRelinquished' />
           <div className='turtle-tag-report-options include-non-relinquished-turtles'>
-            <CheckboxFormFieldMui fieldName='includeNonRelinquishedTurtles' labelText='Include non-relinquished turtles' />
+            <CheckboxFormField fieldName='includeNonRelinquishedTurtles' labelText='Include non-relinquished turtles' />
           </div>
-        </RadioButtonGroupFormFieldMui>
+        </RadioButtonGroupFormField>
       </FormFieldRowMui>
       
       <FormFieldRowMui>
-        <FormFieldGroup fieldClass='checkbox-group' labelText='Options'>
-          <CheckboxFormFieldMui fieldName='includeStrandingIdNumber' labelText='Include Stranding ID number' />
-        </FormFieldGroup>
+        <CheckboxGroupFormField labelText='Options'>
+          <CheckboxFormField fieldName='includeStrandingIdNumber' labelText='Include Stranding ID number' />
+        </CheckboxGroupFormField>
       </FormFieldRowMui>
 
       <FormFieldRowMui>
-        <FormFieldGroup fieldClass='checkbox-group' labelText='Tag type'>
-          <CheckboxFormFieldMui fieldName='isPit' labelText='Include PIT?' />
-        </FormFieldGroup>
+        <CheckboxGroupFormField labelText='Tag type'>
+          <CheckboxFormField fieldName='isPit' labelText='Include PIT?' />
+        </CheckboxGroupFormField>
       </FormFieldRowMui>
 
       <FormFieldRowMui>
-        <FormFieldGroup fieldClass='checkbox-group' labelText='Tag location'>
-          <CheckboxFormFieldMui fieldName='isLff' labelText='Include LFF?' />
-          <CheckboxFormFieldMui fieldName='isRff' labelText='Include RFF?' />
-          <CheckboxFormFieldMui fieldName='isLrf' labelText='Include LRF?' />
-          <CheckboxFormFieldMui fieldName='isRrf' labelText='Include RRF?' />
-        </FormFieldGroup>
+        <CheckboxGroupFormField labelText='Tag location'>
+          <CheckboxFormField fieldName='isLff' labelText='Include LFF?' />
+          <CheckboxFormField fieldName='isRff' labelText='Include RFF?' />
+          <CheckboxFormField fieldName='isLrf' labelText='Include LRF?' />
+          <CheckboxFormField fieldName='isRrf' labelText='Include RRF?' />
+        </CheckboxGroupFormField>
       </FormFieldRowMui>
     </>
   );
