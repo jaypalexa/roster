@@ -78,7 +78,7 @@ const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => 
   });
 
   return (
-    <div id='login'>
+    <Box id='login'>
       <Spinner isActive={showSpinner} />
       <Grid container justify='center'>
         <Grid item md={3}>
@@ -103,7 +103,7 @@ const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => 
           </FormContext>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

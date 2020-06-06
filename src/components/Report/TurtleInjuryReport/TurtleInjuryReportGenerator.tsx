@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
 import ContentDto from 'dtos/ReportResponses/TurtleInjuryReport/ContentDto';
 import SummaryItemDto from 'dtos/ReportResponses/TurtleInjuryReport/SummaryItemDto';
@@ -23,7 +23,7 @@ const TurtleInjuryReportGenerator = {
       </tr>
 
     const contents = <>
-      <div id='turtleInjuryReport' className='html-report-container'>
+      <Box id='turtleInjuryReport' className='html-report-container'>
         <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
         <Typography variant='h2' align='center'>{reportOptions.dateFrom} - {reportOptions.dateThru}</Typography>
         <Typography variant='h2' align='center' gutterBottom={true}>{organization.organizationName} - {organization.permitNumber}</Typography>
@@ -74,12 +74,11 @@ const TurtleInjuryReportGenerator = {
             </tbody>
           </table>
         </>}
-      </div>
+      </Box>
     </>
 
     return contents;
   }
- 
 }
 
 export default TurtleInjuryReportGenerator;

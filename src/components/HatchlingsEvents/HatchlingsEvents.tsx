@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
@@ -280,7 +280,7 @@ const HatchlingsEvents: React.FC = () => {
   };
 
   return (
-    <div id='hatchlingsEvents'>
+    <Box id='hatchlingsEvents'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
@@ -344,7 +344,7 @@ const HatchlingsEvents: React.FC = () => {
             </Grid>
           </Grid>
 
-          <div className={classes.horizontalScroll}>
+          <Box className={classes.horizontalScroll}>
             <MaterialTable            
               icons={tableIcons}
               columns={tableColumns}
@@ -364,7 +364,7 @@ const HatchlingsEvents: React.FC = () => {
                 },
               ]}
             />
-          </div>
+          </Box>
           <hr />
 
           <Typography variant='h1' gutterBottom={true} align='center'>
@@ -375,29 +375,29 @@ const HatchlingsEvents: React.FC = () => {
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRowMui>
-                  {showField('species', currentHatchlingsEvent.eventType) ? <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
-                  {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormFieldMui fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
-                  {showField('eventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='eventCount' labelText='Event count' /> : null}
-                  {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} /> : null}
-                  {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} /> : null}
-                  {showField('eventCounty', currentHatchlingsEvent.eventType) ? <ListFormFieldMui fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
+                  {showField('species', currentHatchlingsEvent.eventType) ? <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} /> : null}
+                  {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormFieldMui fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} disabled={!isFormEnabled} /> : null}
+                  {showField('eventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='eventCount' labelText='Event count' disabled={!isFormEnabled} /> : null}
+                  {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} disabled={!isFormEnabled} /> : null}
+                  {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormFieldMui fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} disabled={!isFormEnabled} /> : null}
+                  {showField('eventCounty', currentHatchlingsEvent.eventType) ? <ListFormFieldMui fieldName='eventCounty' labelText='County' listItems={counties} disabled={!isFormEnabled} /> : null}
                 </FormFieldRowMui>
 
-                <div className={classes.formActionButtonsContainer}>
+                <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
                     Save
                   </Button>
                   <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
                     Cancel
                   </Button>
-                </div>
+                </Box>
               </fieldset>
             </form>
           </FormContext>
 
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

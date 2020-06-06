@@ -1,9 +1,9 @@
-import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
-import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
@@ -34,7 +34,7 @@ const WashbacksEvents: React.FC = () => {
   );
   const classes = useStyles();
 
-  const methods = useForm<WashbacksEventModel>({ mode: 'onChange' });
+  const methods = useForm<WashbacksEventModel>({ mode: 'onChange', defaultValues: new WashbacksEventModel() });
   const { handleSubmit, formState, reset } = methods;
   const [currentWashbacksEvent, setCurrentWashbacksEvent] = useState({} as WashbacksEventModel);
   const [currentWashbacksEvents, setCurrentWashbacksEvents] = useState([] as Array<WashbacksEventModel>);
@@ -287,7 +287,7 @@ const WashbacksEvents: React.FC = () => {
   };
 
   return (
-    <div id='washbacksEvents'>
+    <Box id='washbacksEvents'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
@@ -351,7 +351,7 @@ const WashbacksEvents: React.FC = () => {
             </Grid>
           </Grid>
 
-          <div className={classes.horizontalScroll}>
+          <Box className={classes.horizontalScroll}>
             <MaterialTable            
               icons={tableIcons}
               columns={tableColumns}
@@ -371,7 +371,7 @@ const WashbacksEvents: React.FC = () => {
                 },
               ]}
             />
-          </div>
+          </Box>
           <hr />
 
           <Typography variant='h1' gutterBottom={true} align='center'>
@@ -382,34 +382,34 @@ const WashbacksEvents: React.FC = () => {
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRowMui>
-                  {showField('species', currentWashbacksEvent.eventType) ? <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} /> : null}
-                  {showField('eventDate', currentWashbacksEvent.eventType) ? <DateFormFieldMui fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} /> : null}
-                  {showField('eventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='eventCount' labelText='Event count' /> : null}
-                  {showField('beachEventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='beachEventCount' labelText={`${currentWashbacksEvent.eventType} on beach`} /> : null}
-                  {showField('offshoreEventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='offshoreEventCount' labelText={`${currentWashbacksEvent.eventType} offshore`} /> : null}
-                  {showField('eventCounty', currentWashbacksEvent.eventType) ? <ListFormFieldMui fieldName='eventCounty' labelText='County' listItems={counties} /> : null}
+                  {showField('species', currentWashbacksEvent.eventType) ? <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} /> : null}
+                  {showField('eventDate', currentWashbacksEvent.eventType) ? <DateFormFieldMui fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} disabled={!isFormEnabled} /> : null}
+                  {showField('eventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='eventCount' labelText='Event count' disabled={!isFormEnabled} /> : null}
+                  {showField('beachEventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='beachEventCount' labelText={`${currentWashbacksEvent.eventType} on beach`} disabled={!isFormEnabled} /> : null}
+                  {showField('offshoreEventCount', currentWashbacksEvent.eventType) ? <IntegerFormFieldMui fieldName='offshoreEventCount' labelText={`${currentWashbacksEvent.eventType} offshore`} disabled={!isFormEnabled} /> : null}
+                  {showField('eventCounty', currentWashbacksEvent.eventType) ? <ListFormFieldMui fieldName='eventCounty' labelText='County' listItems={counties} disabled={!isFormEnabled} /> : null}
                   {showField('under5cmClsl', currentWashbacksEvent.eventType) ? 
                     <FormFieldGroup fieldClass='checkbox-group' labelText='Size'>
-                      <CheckboxFormField fieldName='under5cmClsl' labelText='Under 5cm CLSL?' />
+                      <CheckboxFormFieldMui fieldName='under5cmClsl' labelText='Under 5cm CLSL?' disabled={!isFormEnabled} />
                     </FormFieldGroup>
                   : null}
                 </FormFieldRowMui>
 
-                <div className={classes.formActionButtonsContainer}>
+                <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
                     Save
                   </Button>
                   <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
                     Cancel
                   </Button>
-                </div>
+                </Box>
               </fieldset>
             </form>
           </FormContext>
 
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

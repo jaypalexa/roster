@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -251,7 +251,7 @@ const HoldingTankMeasurements: React.FC = () => {
   };
 
   return (
-    <div id='holdingTankMeasurements'>
+    <Box id='holdingTankMeasurements'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
@@ -294,7 +294,7 @@ const HoldingTankMeasurements: React.FC = () => {
             </Grid>
           </Grid>
 
-          <div className={classes.horizontalScroll}>
+          <Box className={classes.horizontalScroll}>
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
@@ -314,34 +314,34 @@ const HoldingTankMeasurements: React.FC = () => {
                 },
               ]}
             />
-          </div>
+          </Box>
           <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmitHoldingTankMeasurement}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRowMui>
-                  <DateFormFieldMui fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
-                  <DecimalFormFieldMui fieldName='temperature' labelText='Temperature' decimalPlaces={2} />
-                  <DecimalFormFieldMui fieldName='salinity' labelText='Salinity (in ppt)' decimalPlaces={2} />
-                  <DecimalFormFieldMui fieldName='ph' labelText='pH' decimalPlaces={2} />
+                  <DateFormFieldMui fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
+                  <DecimalFormFieldMui fieldName='temperature' labelText='Temperature' decimalPlaces={2} disabled={!isFormEnabled} />
+                  <DecimalFormFieldMui fieldName='salinity' labelText='Salinity (in ppt)' decimalPlaces={2} disabled={!isFormEnabled} />
+                  <DecimalFormFieldMui fieldName='ph' labelText='pH' decimalPlaces={2} disabled={!isFormEnabled} />
                 </FormFieldRowMui>
 
-                <div className={classes.formActionButtonsContainer}>
+                <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
                     Save
                   </Button>
                   <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
                     Cancel
                   </Button>
-                </div>
+                </Box>
               </fieldset>
             </form>
           </FormContext>
 
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

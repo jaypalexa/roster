@@ -1,4 +1,4 @@
-import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import RadioButtonFormFieldMui from 'components/FormFields/RadioButtonFormFieldMui';
@@ -26,9 +26,9 @@ const MarineTurtleHoldingFacilityQuarterlyReportOptions: React.FC<{reportDefinit
       </FormFieldRowMui>
       <FormFieldRowMui>
         <FormFieldGroup fieldClass='checkbox-group' labelText='Options'>
-          <CheckboxFormField fieldName='includeAnomalies' labelText='Include anomalies' />
-          <CheckboxFormField fieldName='includeAcquiredFrom' labelText='Include acquired from' />
-          <CheckboxFormField fieldName='includeTurtleName' labelText='Include turtle name in SID # box' />
+          <CheckboxFormFieldMui fieldName='includeAnomalies' labelText='Include anomalies' />
+          <CheckboxFormFieldMui fieldName='includeAcquiredFrom' labelText='Include acquired from' />
+          <CheckboxFormFieldMui fieldName='includeTurtleName' labelText='Include turtle name in SID # box' />
         </FormFieldGroup>
       </FormFieldRowMui>
       <FormFieldRowMui>

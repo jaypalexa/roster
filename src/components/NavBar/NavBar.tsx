@@ -1,4 +1,4 @@
-import { AppBar, Badge, Button, Drawer, IconButton, Menu, MenuItem, MenuList, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Badge, Box, Button, Drawer, IconButton, Menu, MenuItem, MenuList, Toolbar, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -152,8 +152,8 @@ const NavBar: React.FC = (props: any) => {
   });
 
   return (
-    <div id='navBar'>
-      <div className={classes.root}>
+    <Box id='navBar'>
+      <Box className={classes.root}>
         <AppBar position='static' className={classes.appBar}>
           <Toolbar>
             <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu' onClick={toggleDrawer(true)}>
@@ -172,7 +172,7 @@ const NavBar: React.FC = (props: any) => {
             </Typography>
 
             {loggedInUserName ?
-              <div>
+              <Box>
                 <IconButton
                   aria-label='User Account'
                   aria-controls='navbar-account-menu'
@@ -200,15 +200,15 @@ const NavBar: React.FC = (props: any) => {
                 >
                   <MenuItem onClick={onLogOutClick}>Log Out</MenuItem>
                 </Menu>
-              </div>
+              </Box>
             : <Button className={classes.logInButton} color='inherit' onClick={onLogInClick}>Log In</Button>
             }
           </Toolbar>
         </AppBar>
-      </div>
+      </Box>
 
       <Drawer classes={{ paper: classes.drawer }} open={isDrawerOpen} onClose={toggleDrawer(false)}>
-        <div className={classes.fullList} role='presentation' onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)} >
+        <Box className={classes.fullList} role='presentation' onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)} >
           <MenuList>
             <IconButton onClick={toggleDrawer(false)}>
               <ChevronLeftIcon />
@@ -237,9 +237,9 @@ const NavBar: React.FC = (props: any) => {
             <hr className={classes.menuSeparator} />
             <MenuItem onClick={onLogOutClick}>Log Out</MenuItem>
           </MenuList>
-        </div>
+        </Box>
       </Drawer>
-    </div>
+    </Box>
   );
 };
 

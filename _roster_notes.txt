@@ -65,12 +65,6 @@ Lon -80.458796
 TODO:  standardize date format (pickers mm/dd/yyyy vs display yyyy-mm-dd)
 TODO:  save table search / show relinquished turtles settings when navigating back
 
-TODO:  report option pages
-TODO:  report page
-TODO:  sea turtle page
-
-TODO:  redo form row layout into grid layout
-
 TODO:  material-table:  why does Date Relinquished column on Sea Turtles table _not_ have a filter?
 
 TODO:  material-table:  refresh updated row / deleted row
@@ -87,6 +81,7 @@ TODO:  get rid of Icon.tsx
 
 TODO:  try to replace all SASS with JSS
 	-- App.sass --> @media print stuff (re-test that, too)
+	-- FormGroup.sass
 	-- Report.sass
 	-- SeaTurtle.sass
 	-- childNavigation

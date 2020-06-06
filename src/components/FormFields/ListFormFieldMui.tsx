@@ -10,21 +10,22 @@ interface ListFormFieldMuiProps extends FormFieldMuiProps {
   listItems: NameValuePair[];
 }
 
-export const ListFormFieldMui: React.FC<ListFormFieldMuiProps> = ({fieldName, labelText, listItems, validationOptions}) => {
+export const ListFormFieldMui: React.FC<ListFormFieldMuiProps> = ({fieldName, labelText, listItems, disabled, validationOptions}) => {
   const { control } = useFormContext();
   return (
     <FormFieldMui fieldName={fieldName} labelText={labelText}>
       <InputLabel htmlFor={fieldName} shrink={true}>{labelText}</InputLabel>
       <Controller
         as={
-          <Select>
+          <Select disabled={disabled}>
             {listItems.map((e, key) => {
-              return <MenuItem key={key} value={e.value}>{e.name}</MenuItem>;
+              return <MenuItem key={key} value={e.value} disabled={disabled}>{e.name}</MenuItem>;
             })}
           </Select>
         }
         name={fieldName}
         control={control}
+        rules={validationOptions}
         defaultValue=''
       />
     </FormFieldMui>

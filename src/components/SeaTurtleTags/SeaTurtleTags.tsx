@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -151,7 +151,7 @@ const SeaTurtleTags: React.FC = () => {
     finally {
       setShowSpinner(false);
     }
-};
+  };
 
   const onAddSeaTurtleTagButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
@@ -261,7 +261,7 @@ const SeaTurtleTags: React.FC = () => {
   };
 
   return (
-    <div id='seaTurtleTags'>
+    <Box id='seaTurtleTags'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
@@ -304,7 +304,7 @@ const SeaTurtleTags: React.FC = () => {
             </Grid>
           </Grid>
 
-          <div className={classes.horizontalScroll}>
+          <Box className={classes.horizontalScroll}>
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
@@ -324,34 +324,34 @@ const SeaTurtleTags: React.FC = () => {
                 },
               ]}
             />
-          </div>
+          </Box>
           <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtleTag}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRowMui>
-                  <TextFormFieldMui fieldName='tagNumber' labelText='Tag Number' validationOptions={{ required: 'Tag Number is required' }} refObject={firstEditControlRef} />
-                  <ListFormFieldMui fieldName='tagType' labelText='Tag Type' listItems={tagTypes} />
-                  <ListFormFieldMui fieldName='location' labelText='Location' listItems={locations} />
-                  <DateFormFieldMui fieldName='dateTagged' labelText='Date Tagged' />
+                  <TextFormFieldMui fieldName='tagNumber' labelText='Tag Number' validationOptions={{ required: 'Tag Number is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='tagType' labelText='Tag Type' listItems={tagTypes} disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='location' labelText='Location' listItems={locations} disabled={!isFormEnabled} />
+                  <DateFormFieldMui fieldName='dateTagged' labelText='Date Tagged' disabled={!isFormEnabled} />
                 </FormFieldRowMui>
 
-                <div className={classes.formActionButtonsContainer}>
+                <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
                     Save
                   </Button>
                   <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
                     Cancel
                   </Button>
-                </div>
+                </Box>
               </fieldset>
             </form>
           </FormContext>
 
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

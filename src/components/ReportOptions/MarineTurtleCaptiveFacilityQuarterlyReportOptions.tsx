@@ -1,4 +1,4 @@
-import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
 import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import TextareaFormFieldMui from 'components/FormFields/TextareaFormFieldMui';
 import { useAppContext } from 'contexts/AppContext';
@@ -26,7 +26,7 @@ const MarineTurtleCaptiveFacilityQuarterlyReportOptions: React.FC<{reportDefinit
         <TextareaFormFieldMui fieldName='comments' labelText='Comments' />
       </FormFieldRowMui>
       <FormFieldRowMui>
-        <CheckboxFormField fieldName='includeDoaCounts' labelText='Include DOA counts by species for this period' />
+        <CheckboxFormFieldMui fieldName='includeDoaCounts' labelText='Include DOA counts by species for this period' />
       </FormFieldRowMui>
     </>
   );

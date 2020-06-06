@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import HomeTile from 'components/HomeTile/HomeTile';
 import useMount from 'hooks/UseMount';
@@ -20,7 +20,7 @@ const HomeMui: React.FC = () => {
   });
 
   return (
-    <div id='home' className={classes.root}>
+    <Box id='home' className={classes.root}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <HomeTile color='darkgreen' content='Sea Turtles' linkTo='/sea-turtles' />
@@ -41,7 +41,7 @@ const HomeMui: React.FC = () => {
           <HomeTile color='firebrick' content='Blank Forms' linkTo='/blank-forms' />
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

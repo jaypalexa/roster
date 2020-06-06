@@ -1,4 +1,4 @@
-import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
+import { Box, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import clsx from 'clsx';
 import React from 'react';
 import './FormFieldGroup.sass';
@@ -12,9 +12,9 @@ export const FormFieldGroup: React.FC<FormFieldGroupProps> = ({ fieldClass, labe
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-      root: {
-        margin: '8px',
-      },
+      // root: {
+      //   margin: '8px',
+      // },
       formFieldGroupLabel: {
         color: 'rgba(0, 0, 0, 0.54)',
         padding: 0,
@@ -23,17 +23,23 @@ export const FormFieldGroup: React.FC<FormFieldGroupProps> = ({ fieldClass, labe
         fontWeight: 400,
         lineHeight: 1,
         letterSpacing: '0.00938em',
+        marginBottom: '0.5em',
+      },
+      gridItemContents: {
+        // margin: '8px',
       },
     })
   );
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} md className={clsx(classes.root, fieldClass)}>
-      <label className={clsx(`label ${labelText ? '' : 'hidden'}`, classes.formFieldGroupLabel)}>{labelText === '&nbsp;' ? '\u00A0' : labelText}</label>
-      <div className='control is-expanded'>
-        {children}
-      </div>
+    <Grid item xs={12} md className={clsx(fieldClass)}>
+      <Box className={clsx(classes.gridItemContents)}>
+        <label className={clsx(`${labelText ? '' : 'hidden'}`, classes.formFieldGroupLabel)}>{labelText === '&nbsp;' ? '\u00A0' : labelText}</label>
+        <Box className={'grid-item-contents-children'}>
+          {children}
+        </Box>
+      </Box>
     </Grid>
   );
 };

@@ -188,7 +188,7 @@ const HoldingTankGraphs: React.FC = () => {
   }, [currentHoldingTankMeasurements, currentGraphTypes, graphTypeSettings]);
 
   return (
-    <div id='holdingTankGraphs'>
+    <Box id='holdingTankGraphs'>
       <Spinner isActive={showSpinner} />
 
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
@@ -209,7 +209,7 @@ const HoldingTankGraphs: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

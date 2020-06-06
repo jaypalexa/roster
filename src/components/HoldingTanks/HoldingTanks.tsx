@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -251,7 +251,7 @@ const HoldingTanksMui: React.FC = () => {
   };
 
   return (
-    <div id='holdingTank'>
+    <Box id='holdingTank'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
@@ -293,7 +293,7 @@ const HoldingTanksMui: React.FC = () => {
             </Grid>
           </Grid>
 
-          <div className={classes.horizontalScroll}>
+          <Box className={classes.horizontalScroll}>
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
@@ -313,7 +313,7 @@ const HoldingTanksMui: React.FC = () => {
                 },
               ]}
             />
-          </div>
+          </Box>
           <hr />
 
           <Typography variant='h1' gutterBottom={true} align='center'>
@@ -325,7 +325,7 @@ const HoldingTanksMui: React.FC = () => {
               <fieldset disabled={!isFormEnabled}>
                 <Typography variant='h2'>General Information</Typography>
                 <FormFieldRowMui>
-                  <TextFormFieldMui fieldName='holdingTankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} />
+                  <TextFormFieldMui fieldName='holdingTankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <hr />
 
@@ -337,21 +337,21 @@ const HoldingTanksMui: React.FC = () => {
                   disabled={!isFormEnabled} 
                   onClick={() => onChildNavigationClick('/holding-tank-graphs')} />
 
-                <div className={classes.formActionButtonsContainer}>
+                <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
                     Save
                   </Button>
                   <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
                     Cancel
                   </Button>
-                </div>
+                </Box>
               </fieldset>
             </form>
           </FormContext>
           
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

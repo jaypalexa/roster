@@ -1,4 +1,4 @@
-import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import ListFormFieldMui from 'components/FormFields/ListFormFieldMui';
@@ -45,9 +45,9 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportD
       </FormFieldRowMui>
       <FormFieldRowMui>
         <FormFieldGroup fieldClass='checkbox-group' labelText='Options'>
-          <CheckboxFormField fieldName='populateFacilityField' labelText='Populate "Facility where turtle was being held" field' />
-          <CheckboxFormField fieldName='additionalRemarksOrDataOnBackOfForm' labelText='Additional remarks or data on back of form' />
-          <CheckboxFormField fieldName='printSidOnForm' labelText='Print SID on form' />
+          <CheckboxFormFieldMui fieldName='populateFacilityField' labelText='Populate "Facility where turtle was being held" field' />
+          <CheckboxFormFieldMui fieldName='additionalRemarksOrDataOnBackOfForm' labelText='Additional remarks or data on back of form' />
+          <CheckboxFormFieldMui fieldName='printSidOnForm' labelText='Print SID on form' />
         </FormFieldGroup>
       </FormFieldRowMui>
       <FormFieldRowMui>

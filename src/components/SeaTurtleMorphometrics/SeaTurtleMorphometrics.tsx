@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -317,7 +317,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   };
 
   return (
-    <div id='seaTurtleMorphometrics'>
+    <Box id='seaTurtleMorphometrics'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
@@ -360,7 +360,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
             </Grid>
           </Grid>
 
-          <div className={classes.horizontalScroll}>
+          <Box className={classes.horizontalScroll}>
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns} 
@@ -380,55 +380,55 @@ const SeaTurtleMorphometrics: React.FC = () => {
                 },
               ]}
             />
-          </div>
+          </Box>
           <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmitSeaTurtleMorphometric}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRowMui>
-                  <DateFormFieldMui fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} />
+                  <DateFormFieldMui fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <TextFormFieldMui fieldName='sclNotchNotchValue' labelText='SCL notch-notch' />
-                  <ListFormFieldMui fieldName='sclNotchNotchUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormFieldMui fieldName='sclNotchTipValue' labelText='SCL notch-tip' />
-                  <ListFormFieldMui fieldName='sclNotchTipUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormFieldMui fieldName='sclTipTipValue' labelText='SCL tip-tip' />
-                  <ListFormFieldMui fieldName='sclTipTipUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormFieldMui fieldName='scwValue' labelText='SCW' />
-                  <ListFormFieldMui fieldName='scwUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='sclNotchNotchValue' labelText='SCL notch-notch' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='sclNotchNotchUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='sclNotchTipValue' labelText='SCL notch-tip' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='sclNotchTipUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='sclTipTipValue' labelText='SCL tip-tip' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='sclTipTipUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='scwValue' labelText='SCW' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='scwUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <TextFormFieldMui fieldName='cclNotchNotchValue' labelText='CCL notch-notch' />
-                  <ListFormFieldMui fieldName='cclNotchNotchUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormFieldMui fieldName='cclNotchTipValue' labelText='CCL notch-tip' />
-                  <ListFormFieldMui fieldName='cclNotchTipUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormFieldMui fieldName='cclTipTipValue' labelText='CCL tip-tip' />
-                  <ListFormFieldMui fieldName='cclTipTipUnits' labelText='Units' listItems={cmIns} />
-                  <TextFormFieldMui fieldName='ccwValue' labelText='CCW' />
-                  <ListFormFieldMui fieldName='ccwUnits' labelText='Units' listItems={cmIns} />
+                  <TextFormFieldMui fieldName='cclNotchNotchValue' labelText='CCL notch-notch' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='cclNotchNotchUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='cclNotchTipValue' labelText='CCL notch-tip' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='cclNotchTipUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='cclTipTipValue' labelText='CCL tip-tip' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='cclTipTipUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='ccwValue' labelText='CCW' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='ccwUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <TextFormFieldMui fieldName='weightValue' labelText='Weight' />
-                  <ListFormFieldMui fieldName='weightUnits' labelText='Units' listItems={kgLbs} />
+                  <TextFormFieldMui fieldName='weightValue' labelText='Weight' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='weightUnits' labelText='Units' listItems={kgLbs} disabled={!isFormEnabled} />
                 </FormFieldRowMui>
 
-                <div className={classes.formActionButtonsContainer}>
+                <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
                     Save
                   </Button>
                   <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
                     Cancel
                   </Button>
-                </div>
+                </Box>
               </fieldset>
             </form>
           </FormContext>
 
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

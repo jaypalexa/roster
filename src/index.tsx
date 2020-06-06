@@ -39,6 +39,12 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiCheckbox: {
+      root: {
+        paddingTop: '0px',
+        paddingBottom: '0px',
+      }
+    },
     MuiPaper: {
       elevation1: {
         '@media print': {

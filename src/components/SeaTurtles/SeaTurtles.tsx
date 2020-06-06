@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -6,7 +6,7 @@ import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import MapDialog from 'components/Dialogs/MapDialog';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
-import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
 import DateFormFieldMui from 'components/FormFields/DateFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldMui from 'components/FormFields/FormFieldMui';
@@ -45,7 +45,7 @@ const SeaTurtles: React.FC = () => {
   const classes = useStyles();
 
   const [appContext, setAppContext] = useAppContext();
-  const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
+  const methods = useForm<SeaTurtleModel>({ mode: 'onChange', defaultValues: new SeaTurtleModel() });
   const { handleSubmit, formState, getValues, reset } = methods;
   const [currentSeaTurtleListItems, setCurrentSeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
   const [filteredSeaTurtleListItems, setFilteredSeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
@@ -216,8 +216,9 @@ const SeaTurtles: React.FC = () => {
 
   const onAddSeaTurtleButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const handleEvent = () => {
-      const seaTurtle = {} as SeaTurtleModel;
+      const seaTurtle = new SeaTurtleModel();
       seaTurtle.seaTurtleId = uuidv4().toLowerCase();
+      console.log('seaTurtle', seaTurtle);
       reset(seaTurtle);
       setCurrentSeaTurtle(seaTurtle);
       setIsFormEnabled(true);
@@ -358,7 +359,7 @@ const SeaTurtles: React.FC = () => {
   };
 
   return (
-    <div id='seaTurtle'>
+    <Box id='seaTurtle'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <YesNoDialog
@@ -406,7 +407,7 @@ const SeaTurtles: React.FC = () => {
             </Grid>
           </Grid>
           
-          <div className={classes.horizontalScroll}>
+          <Box className={classes.horizontalScroll}>
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
@@ -426,8 +427,8 @@ const SeaTurtles: React.FC = () => {
                 },
               ]}
             />
-          </div>
-          <div className='field show-relinquished-turtles'>
+          </Box>
+          <Box className='field show-relinquished-turtles'>
             <input 
               id='showRelinquishedTurtles'
               name='showRelinquishedTurtles' 
@@ -437,7 +438,7 @@ const SeaTurtles: React.FC = () => {
               checked={isCheckedShowRelinquishedTurtles}
             />
             <label htmlFor='showRelinquishedTurtles'>Show relinquished turtles?</label>
-          </div>
+          </Box>
 
           <hr />
 
@@ -451,21 +452,21 @@ const SeaTurtles: React.FC = () => {
                 <Typography variant='h2' gutterBottom={true}>General Information</Typography>
 
                 <FormFieldRowMui>
-                  <TextFormFieldMui fieldName='seaTurtleName' labelText='Name' refObject={firstEditControlRef} />
-                  <TextFormFieldMui fieldName='sidNumber' labelText='SID number' />
-                  <TextFormFieldMui fieldName='strandingIdNumber' labelText='Stranding ID number' />
+                  <TextFormFieldMui fieldName='seaTurtleName' labelText='Name' refObject={firstEditControlRef} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='sidNumber' labelText='SID number' disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='strandingIdNumber' labelText='Stranding ID number' disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} />
-                  <ListFormFieldMui fieldName='turtleSize' labelText='Size' listItems={turtleSizes} />
-                  <ListFormFieldMui fieldName='status' labelText='Status' listItems={turtleStatuses} />
+                  <ListFormFieldMui fieldName='species' labelText='Species' listItems={species} disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='turtleSize' labelText='Size' listItems={turtleSizes} disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='status' labelText='Status' listItems={turtleStatuses} disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <DateFormFieldMui fieldName='dateAcquired' labelText='Date acquired' />
-                  <TextFormFieldMui fieldName='acquiredFrom' labelText='Acquired from' />
-                  <ListFormFieldMui fieldName='acquiredCounty' labelText='County' listItems={counties} />
-                  <TextFormFieldMui fieldName='acquiredLatitude' labelText='Latitude' />
-                  <TextFormFieldMui fieldName='acquiredLongitude' labelText='Longitude' />
+                  <DateFormFieldMui fieldName='dateAcquired' labelText='Date acquired' disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='acquiredFrom' labelText='Acquired from' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='acquiredCounty' labelText='County' listItems={counties} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='acquiredLatitude' labelText='Latitude' disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='acquiredLongitude' labelText='Longitude' disabled={!isFormEnabled} />
                   <FormFieldMui fieldName='dummy'>
                     <Button variant='contained' color='primary' type='button' disabled={!isFormEnabled}
                       onClick={onShowMapDialogClick('Acquired')} 
@@ -477,11 +478,11 @@ const SeaTurtles: React.FC = () => {
                   </FormFieldMui>
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <DateFormFieldMui fieldName='dateRelinquished' labelText='Date relinquished' />
-                  <TextFormFieldMui fieldName='relinquishedTo' labelText='Relinquished to' />
-                  <ListFormFieldMui fieldName='relinquishedCounty' labelText='County' listItems={counties} />
-                  <TextFormFieldMui fieldName='relinquishedLatitude' labelText='Latitude' />
-                  <TextFormFieldMui fieldName='relinquishedLongitude' labelText='Longitude' />
+                  <DateFormFieldMui fieldName='dateRelinquished' labelText='Date relinquished' disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='relinquishedTo' labelText='Relinquished to' disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='relinquishedCounty' labelText='County' listItems={counties} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='relinquishedLatitude' labelText='Latitude' disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='relinquishedLongitude' labelText='Longitude' disabled={!isFormEnabled} />
                   <FormFieldMui fieldName='dummy'>
                     <Button variant='contained' color='primary' type='button' disabled={!isFormEnabled}
                       onClick={onShowMapDialogClick('Relinquished')} 
@@ -493,18 +494,18 @@ const SeaTurtles: React.FC = () => {
                   </FormFieldMui>
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <TextareaFormFieldMui fieldName='anomalies' labelText='Anomalies' rows={4} />
+                  <TextareaFormFieldMui fieldName='anomalies' labelText='Anomalies' rows={4} disabled={!isFormEnabled} />
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-5' labelText='Injuries'>
-                    <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' />
-                    <CheckboxFormField fieldName='injuryIntestinalImpaction' labelText='Intestinal impaction' />
-                    <CheckboxFormField fieldName='injuryLineEntanglement' labelText='Line/net entanglement' />
-                    <CheckboxFormField fieldName='injuryFishHook' labelText='Fish hook' />
-                    <CheckboxFormField fieldName='injuryUpperRespiratory' labelText='Upper respiratory' />
-                    <CheckboxFormField fieldName='injuryAnimalBite' labelText='Animal bite' />
-                    <CheckboxFormField fieldName='injuryFibropapilloma' labelText='Fibropapilloma' />
-                    <CheckboxFormField fieldName='injuryMiscEpidemic' labelText='Misc. epidemic' />
-                    <CheckboxFormField fieldName='injuryDoa' labelText='DOA' />
-                    <CheckboxFormField fieldName='injuryOther' labelText='Other' />
+                    <CheckboxFormFieldMui fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryIntestinalImpaction' labelText='Intestinal impaction' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryLineEntanglement' labelText='Line/net entanglement' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryFishHook' labelText='Fish hook' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryUpperRespiratory' labelText='Upper respiratory' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryAnimalBite' labelText='Animal bite' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryFibropapilloma' labelText='Fibropapilloma' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryMiscEpidemic' labelText='Misc. epidemic' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryDoa' labelText='DOA' disabled={!isFormEnabled} />
+                    <CheckboxFormFieldMui fieldName='injuryOther' labelText='Other' disabled={!isFormEnabled} />
                   </FormFieldGroup>
                 </FormFieldRowMui>
                 <hr />
@@ -512,38 +513,38 @@ const SeaTurtles: React.FC = () => {
                 <Typography variant='h2' gutterBottom={true}>Initial Encounter Information</Typography>
                 <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Initial encounter'>
-                    <CheckboxFormField fieldName='wasCarryingTagsWhenEnc' labelText='Was turtle carrying tags when initially encountered?' />
+                    <CheckboxFormFieldMui fieldName='wasCarryingTagsWhenEnc' labelText='Was turtle carrying tags when initially encountered?' disabled={!isFormEnabled} />
                   </FormFieldGroup>
-                  <ListFormFieldMui fieldName='recaptureType' labelText='If yes, recapture type' listItems={recaptureTypes} />
-                  <TextFormFieldMui fieldName='tagReturnAddress' labelText='Tag return address' />
+                  <ListFormFieldMui fieldName='recaptureType' labelText='If yes, recapture type' listItems={recaptureTypes} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='tagReturnAddress' labelText='Tag return address' disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <FormFieldRowMui>
-                  <ListFormFieldMui fieldName='captureProjectType' labelText='Project type' listItems={captureProjectTypes} />
-                  <ListFormFieldMui fieldName='didTurtleNest' labelText='If "Nesting Beach," did turtle nest?' listItems={yesNoUndetermineds} />
-                  <TextFormFieldMui fieldName='captureProjectOther' labelText='If "Other," describe' />
+                  <ListFormFieldMui fieldName='captureProjectType' labelText='Project type' listItems={captureProjectTypes} disabled={!isFormEnabled} />
+                  <ListFormFieldMui fieldName='didTurtleNest' labelText='If "Nesting Beach," did turtle nest?' listItems={yesNoUndetermineds} disabled={!isFormEnabled} />
+                  <TextFormFieldMui fieldName='captureProjectOther' labelText='If "Other," describe' disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <hr />
 
                 <Typography variant='h2' gutterBottom={true}>Inspected and/or Scanned For</Typography>
                 <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Inspected for'>
-                    <CheckboxFormField fieldName='inspectedForTagScars' labelText='Tag scars' />
+                    <CheckboxFormFieldMui fieldName='inspectedForTagScars' labelText='Tag scars' disabled={!isFormEnabled} />
                   </FormFieldGroup>
-                  <TextFormFieldMui fieldName='tagScarsLocated' labelText='Located?' />
+                  <TextFormFieldMui fieldName='tagScarsLocated' labelText='Located?' disabled={!isFormEnabled} />
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Scanned for'>
-                    <CheckboxFormField fieldName='scannedForPitTags' labelText='PIT tags' />
+                    <CheckboxFormFieldMui fieldName='scannedForPitTags' labelText='PIT tags'  disabled={!isFormEnabled}/>
                   </FormFieldGroup>
-                  <TextFormFieldMui fieldName='pitTagsScanFrequency' labelText='Frequency?' />
+                  <TextFormFieldMui fieldName='pitTagsScanFrequency' labelText='Frequency?' disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <FormFieldRowMui>
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Scanned for'>
-                    <CheckboxFormField fieldName='scannedForMagneticWires' labelText='Magnetic wires' />
+                    <CheckboxFormFieldMui fieldName='scannedForMagneticWires' labelText='Magnetic wires' disabled={!isFormEnabled} />
                   </FormFieldGroup>
-                  <TextFormFieldMui fieldName='magneticWiresLocated' labelText='Located?' />
+                  <TextFormFieldMui fieldName='magneticWiresLocated' labelText='Located?' disabled={!isFormEnabled} />
                   <FormFieldGroup fieldClass='checkbox-group checkboxes-1' labelText='Inspected for'>
-                    <CheckboxFormField fieldName='inspectedForLivingTags' labelText='Living tags' />
+                    <CheckboxFormFieldMui fieldName='inspectedForLivingTags' labelText='Living tags' disabled={!isFormEnabled} />
                   </FormFieldGroup>
-                  <TextFormFieldMui fieldName='livingTagsLocated' labelText='Located?' />
+                  <TextFormFieldMui fieldName='livingTagsLocated' labelText='Located?' disabled={!isFormEnabled} />
                 </FormFieldRowMui>
                 <hr />
 
@@ -559,21 +560,21 @@ const SeaTurtles: React.FC = () => {
                   disabled={!isFormEnabled} 
                   onClick={() => onChildNavigationClick('/sea-turtle-morphometrics-graphs')} />
 
-                <div className={classes.formActionButtonsContainer}>
+                <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
                     Save
                   </Button>
                   <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
                     Cancel
                   </Button>
-                </div>
+                </Box>
               </fieldset>
             </form>
           </FormContext>
 
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

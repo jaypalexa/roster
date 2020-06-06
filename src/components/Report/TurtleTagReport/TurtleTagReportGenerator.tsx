@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import TurtleTagReportOptionsDto from 'dtos/ReportOptions/TurtleTagReportOptionsDto';
 import ContentDto from 'dtos/ReportResponses/TurtleTagReport/ContentDto';
 import DetailItemDto from 'dtos/ReportResponses/TurtleTagReport/DetailItemDto';
@@ -18,9 +18,9 @@ const TurtleTagReportGenerator = {
     const fetchTagTypeAndNumberValues = (item: DetailItemDto) => {
       if (item.tags.length > 0) {
         return item.tags.map((tag, index) =>
-            <div key={`${item.seaTurtleId}-${index}-tag-value`}>
+            <Box key={`${item.seaTurtleId}-${index}-tag-value`}>
               <span className='tag-label'>{`${tag.label}: `}</span><span>{tag.tagNumber}</span>
-            </div>
+            </Box>
           );
       } else {
         return <></>
@@ -30,9 +30,9 @@ const TurtleTagReportGenerator = {
     const fetchDateTaggedValues = (item: DetailItemDto) => {
       if (item.tags.length > 0) {
         return item.tags.map((tag, index) => 
-          <div key={`${item.seaTurtleId}-${index}-date-tagged`}>
+          <Box key={`${item.seaTurtleId}-${index}-date-tagged`}>
             <span>{tag.dateTagged}</span>
-          </div>
+          </Box>
         );
       } else {
         return <></>
@@ -40,7 +40,7 @@ const TurtleTagReportGenerator = {
     }
 
     const contents = <>
-      <div id='turtleTagReport' className='html-report-container'>
+      <Box id='turtleTagReport' className='html-report-container'>
         <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
         <Typography variant='h2' align='center'>{reportOptions.dateFrom} - {reportOptions.dateThru}</Typography>
         <Typography variant='h2' align='center' gutterBottom={true}>{organization.organizationName} - {organization.permitNumber}</Typography>
@@ -75,7 +75,7 @@ const TurtleTagReportGenerator = {
             </tbody>
           </table>
         </>}
-      </div>
+      </Box>
     </>
 
     return contents;

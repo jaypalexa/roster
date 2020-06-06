@@ -89,7 +89,7 @@ const Report: React.FC = () => {
   }, [reportOptions, reportDefinition]);
 
   return (
-    <div id='report'>
+    <Box id='report'>
       <Spinner isActive={showSpinner} />
      
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
@@ -142,7 +142,7 @@ const Report: React.FC = () => {
           
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

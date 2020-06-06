@@ -194,7 +194,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
   }, [currentSeaTurtleMorphometrics, currentGraphTypes, graphTypeSettings]);
 
   return (
-    <div id='seaTurtleMorphometricsGraphs'>
+    <Box id='seaTurtleMorphometricsGraphs'>
       <Spinner isActive={showSpinner} />
 
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
@@ -215,7 +215,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

@@ -1,4 +1,4 @@
-import CheckboxFormField from 'components/FormFields/CheckboxFormField';
+import CheckboxFormFieldMui from 'components/FormFields/CheckboxFormFieldMui';
 import FormFieldGroup from 'components/FormFields/FormFieldGroup';
 import FormFieldRowMui from 'components/FormFields/FormFieldRowMui';
 import RadioButtonFormFieldMui from 'components/FormFields/RadioButtonFormFieldMui';
@@ -30,29 +30,29 @@ const TurtleTagReportOptions: React.FC<{reportDefinition: ReportDefinitionModel}
           <RadioButtonFormFieldMui labelText='Date tagged' value='dateTagged' />
           <RadioButtonFormFieldMui labelText='Date relinquished' value='dateRelinquished' />
           <div className='turtle-tag-report-options include-non-relinquished-turtles'>
-            <CheckboxFormField fieldName='includeNonRelinquishedTurtles' labelText='Include non-relinquished turtles' defaultChecked={true} />
+            <CheckboxFormFieldMui fieldName='includeNonRelinquishedTurtles' labelText='Include non-relinquished turtles' />
           </div>
         </RadioButtonGroupFormFieldMui>
       </FormFieldRowMui>
       
       <FormFieldRowMui>
         <FormFieldGroup fieldClass='checkbox-group' labelText='Options'>
-          <CheckboxFormField fieldName='includeStrandingIdNumber' labelText='Include Stranding ID number' defaultChecked={true} />
+          <CheckboxFormFieldMui fieldName='includeStrandingIdNumber' labelText='Include Stranding ID number' />
         </FormFieldGroup>
       </FormFieldRowMui>
 
       <FormFieldRowMui>
         <FormFieldGroup fieldClass='checkbox-group' labelText='Tag type'>
-          <CheckboxFormField fieldName='isPit' labelText='Include PIT?' defaultChecked={true} />
+          <CheckboxFormFieldMui fieldName='isPit' labelText='Include PIT?' />
         </FormFieldGroup>
       </FormFieldRowMui>
 
       <FormFieldRowMui>
         <FormFieldGroup fieldClass='checkbox-group' labelText='Tag location'>
-          <CheckboxFormField fieldName='isLff' labelText='Include LFF?' defaultChecked={true} />
-          <CheckboxFormField fieldName='isRff' labelText='Include RFF?' defaultChecked={true} />
-          <CheckboxFormField fieldName='isLrf' labelText='Include LRF?' defaultChecked={true} />
-          <CheckboxFormField fieldName='isRrf' labelText='Include RRF?' defaultChecked={true} />
+          <CheckboxFormFieldMui fieldName='isLff' labelText='Include LFF?' />
+          <CheckboxFormFieldMui fieldName='isRff' labelText='Include RFF?' />
+          <CheckboxFormFieldMui fieldName='isLrf' labelText='Include LRF?' />
+          <CheckboxFormFieldMui fieldName='isRrf' labelText='Include RRF?' />
         </FormFieldGroup>
       </FormFieldRowMui>
     </>

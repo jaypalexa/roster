@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
 import ContentDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReport/ContentDto';
 import DetailItemDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReport/DetailItemDto';
@@ -42,7 +42,7 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
     }
 
     const contents = <>
-      <div id='hatchlingsAndWashbacksByCountyReport' className='html-report-container'>
+      <Box id='hatchlingsAndWashbacksByCountyReport' className='html-report-container'>
         <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
         <Typography variant='h2' align='center'>{reportOptions.dateFrom} - {reportOptions.dateThru}</Typography>
         <Typography variant='h2' align='center' gutterBottom={true}>{organization.organizationName} - {organization.permitNumber}</Typography>
@@ -51,7 +51,7 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
         ? <Typography variant='h3' align='center'>{constants.REPORTS.NO_ITEMS_FOUND}</Typography>
         : <>
           {reportData.countyCounts.map(item => {
-            return <div key={item.countyName || '(no county)'}>
+            return <Box key={item.countyName || '(no county)'}>
               <table className='html-report-detail-table'>
                 <thead>
                   <tr>
@@ -75,12 +75,12 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
                 </tbody>
               </table>
               <br />
-            </div>
+            </Box>
             })
           }
           </>
         }
-      </div>
+      </Box>
     </>
 
     return contents;

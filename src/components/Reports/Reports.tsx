@@ -1,4 +1,4 @@
-import { Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import browserHistory from 'browserHistory';
 import ChildNavigation from 'components/ChildNavigation/ChildNavigation';
 import Spinner from 'components/Spinner/Spinner';
@@ -47,7 +47,7 @@ const Reports: React.FC = () => {
   };
 
   return (
-    <div id='reports'>
+    <Box id='reports'>
       <Spinner isActive={showSpinner} />
 
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
@@ -73,7 +73,7 @@ const Reports: React.FC = () => {
           }
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

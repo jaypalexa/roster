@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -76,7 +76,7 @@ const OrganizationMui: React.FC = () => {
   };
 
   return (
-    <div id='organization'>
+    <Box id='organization'>
       <Spinner isActive={showSpinner} />
       <LeaveThisPagePrompt isDirty={formState.dirty} />
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
@@ -167,19 +167,19 @@ const OrganizationMui: React.FC = () => {
                 </RadioButtonGroupFormFieldMui>
               </TabPanel>
 
-              <div className={classes.formActionButtonsContainer}>
+              <Box className={classes.formActionButtonsContainer}>
                 <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
                   Save
                 </Button>
                 <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
                   Cancel
                 </Button>
-              </div>
+              </Box>
             </form>
           </FormContext>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

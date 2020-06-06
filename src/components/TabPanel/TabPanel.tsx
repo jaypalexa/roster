@@ -28,7 +28,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other })
   const classes = useStyles();
 
   return (
-    <div
+    <Box
       role='tabpanel'
       hidden={value !== index}
       id={`tabpanel-${index}`}
@@ -40,7 +40,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other })
           <Typography component='div'>{children}</Typography>
         </Box>
       )}
-    </div>
+    </Box>
   );
 };
 

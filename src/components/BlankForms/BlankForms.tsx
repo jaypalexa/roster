@@ -12,7 +12,7 @@ import sharedStyles from 'styles/sharedStyles';
 const BlankForms: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
@@ -41,7 +41,7 @@ const BlankForms: React.FC = () => {
   };
 
   return (
-    <div id='blankForms'>
+    <Box id='blankForms'>
       <Spinner isActive={showSpinner} />
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
         <Link to='/'>Home</Link>
@@ -62,7 +62,7 @@ const BlankForms: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 
