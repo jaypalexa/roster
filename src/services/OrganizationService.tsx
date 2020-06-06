@@ -21,11 +21,25 @@ const OrganizationService = {
     // TODO: CACHING ???
     // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
     
+    // kludge because input controls deal only with strings
+    response.ccHatchlingsStartingBalance = response.ccHatchlingsStartingBalance.toString();
+    response.cmHatchlingsStartingBalance = response.cmHatchlingsStartingBalance.toString();
+    response.dcHatchlingsStartingBalance = response.dcHatchlingsStartingBalance.toString();
+    response.otherHatchlingsStartingBalance = response.otherHatchlingsStartingBalance.toString();
+    response.unknownHatchlingsStartingBalance = response.unknownHatchlingsStartingBalance.toString();
+    response.ccWashbacksStartingBalance = response.ccWashbacksStartingBalance.toString();
+    response.cmWashbacksStartingBalance = response.cmWashbacksStartingBalance.toString();
+    response.dcWashbacksStartingBalance = response.dcWashbacksStartingBalance.toString();
+    response.otherWashbacksStartingBalance = response.otherWashbacksStartingBalance.toString();
+    response.unknownWashbacksStartingBalance = response.unknownWashbacksStartingBalance.toString();
+
     return response;
   },
 
   async saveOrganization(organization: OrganizationModel) {
     organization.organizationId = AuthenticationService.getOrganizationId();
+
+    // kludge because input controls deal only with strings
     organization.ccHatchlingsStartingBalance = toNumber(organization.ccHatchlingsStartingBalance);
     organization.cmHatchlingsStartingBalance = toNumber(organization.cmHatchlingsStartingBalance);
     organization.dcHatchlingsStartingBalance = toNumber(organization.dcHatchlingsStartingBalance);

@@ -1,10 +1,10 @@
-import FormFieldRow from 'components/FormFields/FormFieldRow';
+import FormFieldRowMui from 'components/FormFields/FormFieldRow';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import ReportOptionsDateRange, { ReportQuarter } from './ReportOptionsDateRange';
+import ReportOptionsDateRange from './ReportOptionsDateRange';
 import './ReportOptionsFormFields.sass';
 
 const HatchlingsAndWashbacksByCountyReportOptions: React.FC<{reportDefinition: ReportDefinitionModel}> = ({reportDefinition}) => {
@@ -16,11 +16,9 @@ const HatchlingsAndWashbacksByCountyReportOptions: React.FC<{reportDefinition: R
   });
 
   return (
-    <>
-      <FormFieldRow>
-        <ReportOptionsDateRange reportQuarter={ReportQuarter.Previous} />
-      </FormFieldRow>
-    </>
+    <FormFieldRowMui>
+      <ReportOptionsDateRange />
+    </FormFieldRowMui>
   );
 };
 

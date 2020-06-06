@@ -1,3 +1,4 @@
+import { ToastProps } from 'components/Toast';
 import { Subject } from 'rxjs';
 
 export interface TextMessage {
@@ -21,6 +22,7 @@ export interface LastUpdateCheckDateTimeMessage {
 };
 
 const subject = new Subject<TextMessage>();
+const toastSubject = new Subject<ToastProps>();
 const userNameSubject = new Subject<UserNameMessage>();
 const isUpdateAvailableSubject = new Subject<IsUpdateAvailableMessage>();
 const lastUpdateCheckDateTimeSubject = new Subject<LastUpdateCheckDateTimeMessage>();
@@ -29,6 +31,9 @@ export const MessageService = {
     sendMessage: (message: string) => subject.next({ text: message }),
     clearMessages: () => subject.next(),
     getMessage: () => subject.asObservable(),
+
+    notifyToastRequest: (toastProps: ToastProps) => toastSubject.next(toastProps),
+    observeToastRequest: () => toastSubject.asObservable(),
 
     notifyUserNameChanged: (userName: string) => userNameSubject.next({ userName }),
     observeUserNameChanged: () => userNameSubject.asObservable(),

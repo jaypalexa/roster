@@ -1,5 +1,5 @@
-export default interface LoginModel {
+export default class LoginModel {
   [key: string]: any;
-  userName: string;
-  password: string;
+  userName!: string;
+  password!: string;
 };

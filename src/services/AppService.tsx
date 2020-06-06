@@ -59,7 +59,8 @@ export const AppService = {
     }
     MessageService.notifyIsUpdateAvailableChanged(false);
     window.location.reload(true);
-  }
+  },
+
 }
 
 export default AppService;

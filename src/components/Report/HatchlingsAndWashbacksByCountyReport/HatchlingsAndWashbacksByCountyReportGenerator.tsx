@@ -1,3 +1,4 @@
+import { Box, Typography } from '@material-ui/core';
 import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
 import ContentDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReport/ContentDto';
 import DetailItemDto from 'dtos/ReportResponses/HatchlingsAndWashbacksByCountyReport/DetailItemDto';
@@ -12,6 +13,7 @@ import './HatchlingsAndWashbacksByCountyReport.sass';
 const HatchlingsAndWashbacksByCountyReportGenerator = {
   
   async generate(reportDefinition: ReportDefinitionModel, reportOptions: ReportOptionsDateRangeDto): Promise<JSX.Element> {
+
     const organization = await OrganizationService.getOrganization();
     const reportData = await ReportService.getHtmlReportData<ContentDto>(reportDefinition.reportId, reportOptions);
 
@@ -40,16 +42,16 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
     }
 
     const contents = <>
-      <div id='hatchlingsAndWashbacksByCountyReport'>
-        <h1 className='title'>{reportDefinition.reportName}</h1>
-        <h2 className='subtitle'>{reportOptions.dateFrom} - {reportOptions.dateThru}</h2>
-        <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
+      <Box id='hatchlingsAndWashbacksByCountyReport' className='html-report-container'>
+        <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
+        <Typography variant='h2' align='center'>{reportOptions.dateFrom} - {reportOptions.dateThru}</Typography>
+        <Typography variant='h2' align='center' gutterBottom={true}>{organization.organizationName} - {organization.permitNumber}</Typography>
 
         {reportData.countyCounts.length === 0 
-        ? <p className='has-text-centered'>{constants.REPORTS.NO_ITEMS_FOUND}</p> 
+        ? <Typography variant='h3' align='center'>{constants.REPORTS.NO_ITEMS_FOUND}</Typography>
         : <>
           {reportData.countyCounts.map(item => {
-            return <div key={item.countyName || '(no county)'}>
+            return <Box key={item.countyName || '(no county)'}>
               <table className='html-report-detail-table'>
                 <thead>
                   <tr>
@@ -73,15 +75,16 @@ const HatchlingsAndWashbacksByCountyReportGenerator = {
                 </tbody>
               </table>
               <br />
-              </div>
+            </Box>
             })
           }
           </>
         }
-      </div>
+      </Box>
     </>
+
     return contents;
-  },
+  }
  
 }
 

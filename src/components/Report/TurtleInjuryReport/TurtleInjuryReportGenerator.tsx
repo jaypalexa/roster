@@ -1,3 +1,4 @@
+import { Box, Typography } from '@material-ui/core';
 import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
 import ContentDto from 'dtos/ReportResponses/TurtleInjuryReport/ContentDto';
 import SummaryItemDto from 'dtos/ReportResponses/TurtleInjuryReport/SummaryItemDto';
@@ -11,6 +12,7 @@ import './TurtleInjuryReport.sass';
 const TurtleInjuryReportGenerator = {
   
   async generate(reportDefinition: ReportDefinitionModel, reportOptions: ReportOptionsDateRangeDto): Promise<JSX.Element> {
+
     const organization = await OrganizationService.getOrganization();
     const reportData = await ReportService.getHtmlReportData<ContentDto>(reportDefinition.reportId, reportOptions);
 
@@ -21,15 +23,15 @@ const TurtleInjuryReportGenerator = {
       </tr>
 
     const contents = <>
-      <div id='turtleInjuryReport'>
-        <h1 className='title'>{reportDefinition.reportName}</h1>
-        <h2 className='subtitle'>{reportOptions.dateFrom} - {reportOptions.dateThru}</h2>
-        <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
+      <Box id='turtleInjuryReport' className='html-report-container'>
+        <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
+        <Typography variant='h2' align='center'>{reportOptions.dateFrom} - {reportOptions.dateThru}</Typography>
+        <Typography variant='h2' align='center' gutterBottom={true}>{organization.organizationName} - {organization.permitNumber}</Typography>
 
         {reportData.detailItems.length === 0 
-        ? <p className='has-text-centered'>{constants.REPORTS.NO_ITEMS_FOUND}</p> 
+        ? <Typography variant='h3' align='center'>{constants.REPORTS.NO_ITEMS_FOUND}</Typography>
         : <>
-          <p className='has-text-centered'>[Note: A turtle may have more than one injury.]</p>
+          <Typography variant='h3' align='center'>[Note: A turtle may have more than one injury.]</Typography>
           <table className='html-report-summary-table'>
             <tbody>
               {reportData.summaryItems.map((item, index) => renderSummaryItem(item, index, reportData.totalCount))}
@@ -72,12 +74,11 @@ const TurtleInjuryReportGenerator = {
             </tbody>
           </table>
         </>}
-      </div>
+      </Box>
     </>
-  
+
     return contents;
-  },
- 
+  }
 }
 
 export default TurtleInjuryReportGenerator;

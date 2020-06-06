@@ -23,12 +23,22 @@ const HatchlingsEventService = {
     apiRequestPayload.pathParameters = { hatchlingsEventId: hatchlingsEventId };
 
     const response = await ApiService.get<HatchlingsEventModel>(apiRequestPayload);
+    
+    // kludge because input controls deal only with strings
+    if (response.eventType === 'Released') {
+      response.beachEventCount = response.beachEventCount.toString();
+      response.offshoreEventCount = response.offshoreEventCount.toString();
+    } else {
+      response.eventCount = response.eventCount.toString();
+    }
+
     return response;
   },
 
   async saveHatchlingsEvent(hatchlingsEvent: HatchlingsEventModel) {
     hatchlingsEvent.organizationId = AuthenticationService.getOrganizationId();
 
+    // kludge because input controls deal only with strings
     if (hatchlingsEvent.eventType === 'Released') {
       hatchlingsEvent.beachEventCount = toNumber(hatchlingsEvent.beachEventCount);
       hatchlingsEvent.offshoreEventCount = toNumber(hatchlingsEvent.offshoreEventCount);

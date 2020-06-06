@@ -1,19 +1,15 @@
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
-import FormFieldProps from './FormFieldProps';
 
-interface RadioButtonFormFieldProps extends FormFieldProps {
-  value?: string | number | string[] | undefined;
-  defaultChecked?: boolean | undefined;
+interface RadioButtonFormFieldProps {
+  labelText?: string;
+  value?: string;
 }
 
-export const RadioButtonFormField: React.FC<RadioButtonFormFieldProps> = ({ fieldName, labelText, value, defaultChecked }) => {
-  const { register } = useFormContext();
+export const RadioButtonFormField: React.FC<RadioButtonFormFieldProps> = ({ labelText, value }) => {
   return (
-    <label className='radio'>
-      <input type='radio' name={fieldName} value={value} ref={register({})} defaultChecked={defaultChecked} />
-      {labelText}
-    </label>
+    <FormControlLabel label={labelText} value={value} control={<Radio color='primary' />} />
   );
 };
 

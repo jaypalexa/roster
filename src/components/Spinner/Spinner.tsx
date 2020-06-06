@@ -1,3 +1,4 @@
+import { Box } from '@material-ui/core';
 import spinnerImage from 'assets/images/spinner-image.png';
 import React from 'react';
 import './Spinner.sass';
@@ -9,9 +10,9 @@ interface SpinnerProps {
 const Spinner: React.FC<SpinnerProps> = ({isActive}) => {
   return (
     isActive 
-      ? <div className='spinner-container'>
+      ? <Box className='spinner-container'>
           <img src={spinnerImage} className='rotating' alt='spinner' />
-        </div> 
+        </Box> 
       : null
   );
 };

@@ -1,31 +1,36 @@
+import { Checkbox, FormControlLabel, FormHelperText, Grid } from '@material-ui/core';
 import React from 'react';
-import { ErrorMessage, useFormContext } from 'react-hook-form';
-import './CheckboxFormField.sass';
-import FormFieldProps from './FormFieldProps';
+import { Controller, useFormContext } from 'react-hook-form';
+import { FormFieldProps } from './FormField';
 
 interface CheckboxFormFieldProps extends FormFieldProps {
   disabled?: boolean;
   value?: string;
-  defaultChecked?: boolean | undefined;
 }
 
-export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, labelText, disabled, value, defaultChecked, validationOptions}) => {
-  const { errors, formState, register } = useFormContext();
+export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, labelText, disabled, value, validationOptions}) => {
+  const { control, errors } = useFormContext();
   return (
-    <div className='field'>
-      <input 
-        id={fieldName}
+    <Grid item xs={12} md>
+      <Controller 
         name={fieldName} 
-        className={`checkbox ${validationOptions ? (errors[fieldName] && formState.dirty ? 'is-danger' : '') : ''}`}
-        type='checkbox'
-        ref={register(validationOptions || {})}
-        disabled={disabled} 
-        value={value}
-        defaultChecked={defaultChecked}
+        control={control}
+        rules={validationOptions}
+        as={
+          <FormControlLabel
+            label={labelText}
+            control={<Checkbox
+              id={fieldName}
+              name={fieldName} 
+              color='primary'
+              disabled={disabled}
+              value={value}
+            />}
+          />
+        }
       />
-      <label htmlFor={fieldName}>{labelText}</label>
-      <ErrorMessage errors={errors} name={fieldName} as='p' className='help has-text-danger' />
-    </div>
+      <FormHelperText id={`${fieldName}-helper-text`}>{errors[fieldName]?.message}</FormHelperText>
+    </Grid>
   );
 };
 

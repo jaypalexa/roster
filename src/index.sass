@@ -1,37 +1,8 @@
 @charset 'utf-8';
 
-// Customization
-
-// You can easily customize Bulma with your own variables.
-// Just uncomment the following block to see the result.
-
-// // 1. Import the initial variables
-// @import '../node_modules/bulma/sass/utilities/initial-variables'
-// // 2. Set your own initial variables
-// // Update the blue shade, used for links
-// $blue: #06bcef;
-// // Add pink and its invert
-// $pink: #ff8080;
-// $pink-invert: #fff;
-// // Update the sans-serif font family
-// $family-sans-serif: 'Helvetica', 'Arial', sans-serif
-// // 3. Set the derived variables
-// // Use the new pink as the primary color
-// $primary: $pink;
-// $primary-invert: $pink-invert;
-// // 4. Import the rest of Bulma
-
-$input-placeholder-color: lightgray;
-$danger: orangered;
-$success: green;
-
-@import '../node_modules/bulma/bulma'
-@import '../node_modules/bulma-checkradio/dist/css/bulma-checkradio'
-@import '../node_modules/bulma-switch/dist/css/bulma-switch'
-
 body
   margin: 0
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
   height: 100%
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
@@ -40,149 +11,18 @@ code
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
 
 fieldset
+  border: none
   min-width: 100%
-
-footer.modal-card-foot
-  justify-content: center ! important
-
-header.modal-card-head
-  text-align: center ! important
+  padding: 0
 
 html
-  /* background-color: lightgoldenrodyellow */
-  background-color: lightyellow
-  color: black
   height: 100%
 
 #root
-  height: 85%
-
-.breadcrumb:not(:last-child)
-  margin-bottom: .5rem
-
-.cursor-pointer
-  cursor: pointer
-
-.data-table-extensions
-  padding-left: 0
-  padding-right: 0
-
-  .data-table-extensions-filter
-    background-color: white
-    float: none
-    line-height: 3rem
-    margin-left: auto
-    margin-right: auto
-
-    input
-      width: 90%
-
-    label
-      margin-left: 3px
-      margin-top: .75rem
-
-@media (min-width: 769px) // when NOT mobile
-  .data-table-extensions
-    .data-table-extensions-filter
-      width: 45%
-
-@media (max-width: 768px) // when mobile
-  .data-table-extensions
-    .data-table-extensions-filter
-      width: 100%
-
-.field
-  flex-basis: 0
-
-.field.is-grouped.form-action-buttons
-  justify-content: center
-  margin-bottom: 1rem
-  margin-top: 2rem
-  
-.hidden
-  display: none
-
-.is-centered-both
-  right: 50%
-  bottom: 50%
-  transform: translate(50%, 50%)
-  position: absolute ! important
-
-.is-fixed-width-medium
-  width: 120px
-
-.modal-card-foot
-  justify-content: flex-end !important
-
-.radio
-  margin-right: .75rem
-  > input
-    margin-right: .25rem
-
-.select:not(.is-multiple):not(.is-loading)::after
-  z-index: inherit ! important
-
-.span-link
-	cursor: pointer
-	color: #3273dc
-
-.span-link.show-underline
-	text-decoration: underline
-
-.tab-content
-  display: none
-  /* min-height: 24rem */
-  padding: 1rem
-
-.tab-content.is-active
-  display: block
-
-.tabs:not(:last-child)
-  font-size: 1.25rem
-  margin-bottom: 0 !important
-
-.tabs span
-  align-items: center
-  border-bottom-color: #dbdbdb
-  border-bottom-style: solid
-  border-bottom-width: 1px
-  color: #4a4a4a
-  display: flex
-  justify-content: center
-  margin-bottom: -1px
-  padding: 0.5em 1em
-  vertical-align: top
-  cursor: pointer
-  text-decoration: none
-
-  &:hover
-    border-bottom-color: #363636
-    color: #363636
+  height: 100vh
 
 .text-align-right
   text-align: right ! important
 
-.title:not(:last-child)
-  margin-bottom: 2rem
-
-@media (max-width: 768px) // when mobile
-  .title
-    font-size: 1.5rem
-
-.transparent
-  opacity: 0
-
 .white-space-nowrap
   white-space: nowrap ! important
-
-@media (max-width: 768px) // when mobile
-  .full-width-when-mobile
-    width: 100%
-
-@media (min-width: 769px) // when NOT mobile
-  .hidden-when-not-mobile
-    display: none
-
-@media (max-width: 768px) // when mobile
-  .hidden-when-mobile
-    display: none

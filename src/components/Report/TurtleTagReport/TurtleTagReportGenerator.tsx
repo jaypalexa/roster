@@ -1,3 +1,4 @@
+import { Box, Typography } from '@material-ui/core';
 import TurtleTagReportOptionsDto from 'dtos/ReportOptions/TurtleTagReportOptionsDto';
 import ContentDto from 'dtos/ReportResponses/TurtleTagReport/ContentDto';
 import DetailItemDto from 'dtos/ReportResponses/TurtleTagReport/DetailItemDto';
@@ -17,9 +18,9 @@ const TurtleTagReportGenerator = {
     const fetchTagTypeAndNumberValues = (item: DetailItemDto) => {
       if (item.tags.length > 0) {
         return item.tags.map((tag, index) =>
-            <div key={`${item.seaTurtleId}-${index}-tag-value`}>
+            <Box key={`${item.seaTurtleId}-${index}-tag-value`}>
               <span className='tag-label'>{`${tag.label}: `}</span><span>{tag.tagNumber}</span>
-            </div>
+            </Box>
           );
       } else {
         return <></>
@@ -29,9 +30,9 @@ const TurtleTagReportGenerator = {
     const fetchDateTaggedValues = (item: DetailItemDto) => {
       if (item.tags.length > 0) {
         return item.tags.map((tag, index) => 
-          <div key={`${item.seaTurtleId}-${index}-date-tagged`}>
+          <Box key={`${item.seaTurtleId}-${index}-date-tagged`}>
             <span>{tag.dateTagged}</span>
-          </div>
+          </Box>
         );
       } else {
         return <></>
@@ -39,13 +40,13 @@ const TurtleTagReportGenerator = {
     }
 
     const contents = <>
-      <div id='turtleTagReport'>
-        <h1 className='title'>{reportDefinition.reportName}</h1>
-        <h2 className='subtitle'>{reportOptions.dateFrom} - {reportOptions.dateThru}</h2>
-        <h2 className='subtitle'>{organization.organizationName} - {organization.permitNumber}</h2>
+      <Box id='turtleTagReport' className='html-report-container'>
+        <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
+        <Typography variant='h2' align='center'>{reportOptions.dateFrom} - {reportOptions.dateThru}</Typography>
+        <Typography variant='h2' align='center' gutterBottom={true}>{organization.organizationName} - {organization.permitNumber}</Typography>
 
         {reportData.detailItems.length === 0 
-        ? <p className='has-text-centered'>{constants.REPORTS.NO_ITEMS_FOUND}</p> 
+        ? <Typography variant='h3' align='center'>{constants.REPORTS.NO_ITEMS_FOUND}</Typography>
         : <>
           <table className='html-report-detail-table'>
             <thead>
@@ -74,9 +75,9 @@ const TurtleTagReportGenerator = {
             </tbody>
           </table>
         </>}
-      </div>
+      </Box>
     </>
-  
+
     return contents;
   }
  

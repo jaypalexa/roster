@@ -23,6 +23,15 @@ const WashbacksEventService = {
     apiRequestPayload.pathParameters = { washbacksEventId: washbacksEventId };
 
     const response = await ApiService.get<WashbacksEventModel>(apiRequestPayload);
+    
+    // kludge because input controls deal only with strings
+    if (response.eventType === 'Released') {
+      response.beachEventCount = response.beachEventCount.toString();
+      response.offshoreEventCount = response.offshoreEventCount.toString();
+    } else {
+      response.eventCount = response.eventCount.toString();
+    }
+
     return response;
   },
 

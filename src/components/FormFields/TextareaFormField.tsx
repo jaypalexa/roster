@@ -1,33 +1,28 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
-import FormField from './FormField';
-import FormFieldProps from './FormFieldProps';
+import { FormFieldProps } from './FormField';
+import TextFormField from './TextFormField';
 
 interface TextareaFormFieldProps extends FormFieldProps {
   placeholder?: string;
-  minLength?: number;
   maxLength?: number;
-  rows?: number;
+  rows?: string | number | undefined;
   disabled?: boolean;
   value?: string;
 }
 
-export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({fieldName, labelText, validationOptions, placeholder, minLength, maxLength, rows, disabled, value}) => {
-  const { errors, formState, register } = useFormContext();
+export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({fieldName, labelText, validationOptions, placeholder, maxLength, rows, disabled, value}) => {
   return (
-    <FormField fieldName={fieldName} labelText={labelText}>
-      <textarea 
-        name={fieldName} 
-        className={`textarea ${validationOptions ? (errors[fieldName] && formState.dirty ? 'is-danger' : '') : ''}`}
-        ref={register(validationOptions || {})}
-        minLength={minLength} 
-        maxLength={maxLength || 255}
-        placeholder={placeholder || labelText} 
-        rows={rows || 3} 
-        disabled={disabled} 
-        value={value}
+    <TextFormField 
+      fieldName={fieldName} 
+      labelText={labelText} 
+      multiline={true} 
+      validationOptions={validationOptions} 
+      placeholder={placeholder} 
+      maxLength={maxLength} 
+      rows={rows} 
+      disabled={disabled}
+      value={value}
       />
-    </FormField>
   );
 };
 

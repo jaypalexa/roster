@@ -1,7 +1,9 @@
+import TaggingDataFormReportOptionsDto from 'dtos/ReportOptions/TaggingDataFormReportOptionsDto';
+import TurtleTagReportOptionsDto from 'dtos/ReportOptions/TurtleTagReportOptionsDto';
 import HoldingTankModel from 'models/HoldingTankModel';
 import SeaTurtleModel from 'models/SeaTurtleModel';
 import React, { createContext, useContext, useState } from 'react';
-import { Dictionary } from 'utils';
+import { Dictionary, getDefaultDateRange, ReportQuarter } from 'utils';
 
 interface Props {
   children: React.ReactNode;
@@ -14,7 +16,41 @@ interface AppContextStore {
   isCheckedShowRelinquishedTurtles: boolean;
 };
 
-const initialAppContextStore = { reportOptions: {}, isCheckedShowRelinquishedTurtles: false } as AppContextStore;
+const previousQuarterDateRange = getDefaultDateRange(ReportQuarter.Previous);
+const defaultReportOptions = {
+    
+  HatchlingsAndWashbacksByCountyReport: previousQuarterDateRange,
+
+  MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings: previousQuarterDateRange,
+  MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks: previousQuarterDateRange,
+  MarineTurtleHoldingFacilityQuarterlyReport: {
+    ...previousQuarterDateRange,
+    groupTankDataBy: 'tank',
+  },
+  
+  TaggingDataForm: {
+    seaTurtleId: '',
+    populateFacilityField: false,
+    printSidOnForm: false,
+    additionalRemarksOrDataOnBackOfForm: false,
+    useMorphometricsClosestTo: 'dateAcquired',
+  } as TaggingDataFormReportOptionsDto,
+
+  TurtleInjuryReport: previousQuarterDateRange,
+
+  TurtleTagReport: {
+    ...getDefaultDateRange(ReportQuarter.Previous),
+    filterDateType: 'dateAcquired',
+    includeNonRelinquishedTurtles: true,
+    includeStrandingIdNumber: false,
+    isPit: true,
+    isLff: true,
+    isRff: true,
+    isLrf: true,
+    isRrf: true,
+  } as TurtleTagReportOptionsDto,
+}
+const initialAppContextStore = { reportOptions: defaultReportOptions, isCheckedShowRelinquishedTurtles: false } as AppContextStore;
 
 const AppContext = createContext<[AppContextStore, (appContextStore: AppContextStore) => void]>([initialAppContextStore, () => { }]);
 

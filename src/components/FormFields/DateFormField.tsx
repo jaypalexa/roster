@@ -1,5 +1,5 @@
 import React from 'react';
-import FormFieldProps from './FormFieldProps';
+import { FormFieldProps } from './FormField';
 import InputFormField from './InputFormField';
 
 interface DateFormFieldProps extends FormFieldProps {

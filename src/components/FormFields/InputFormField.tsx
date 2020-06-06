@@ -1,10 +1,13 @@
-import Icon from 'components/Icon/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import useMount from 'hooks/UseMount';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import FormField from './FormField';
-import FormFieldProps from './FormFieldProps';
-import './InputFormField.sass';
+import FormField, { FormFieldProps } from './FormField';
 
 interface InputFormFieldProps extends FormFieldProps {
   type: string;
@@ -16,10 +19,12 @@ interface InputFormFieldProps extends FormFieldProps {
   step?: string;
   disabled?: boolean;
   value?: string | number | string[];
+  multiline?: boolean;
+  rows?: string | number | undefined;
 }
 
-export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, step, disabled, value}) => {
-  const { errors, formState, register } = useFormContext();
+export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, step, disabled, value, multiline, rows}) => {
+  const { register } = useFormContext();
   const [isPasswordType, setIsPasswordType] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -33,12 +38,15 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
 
   return (
     <FormField fieldName={fieldName} labelText={labelText}>
-      <input 
+      <InputLabel htmlFor={fieldName} shrink={true}>{labelText}</InputLabel>
+      <Input 
         id={fieldName} 
-        name={fieldName} 
-        className={`input ${validationOptions ? (errors[fieldName] && formState.dirty ? 'is-danger' : '') : ''}`}
+        name={fieldName}
         type={isPasswordType ? (isPasswordVisible ? 'text' : 'password') : type}
-        ref={(e) => {
+        defaultValue={value}
+        multiline={multiline}
+        rows={rows || 3}
+        inputRef={(e) => {
           if (e) {
             register(e, validationOptions || {});
             if (refObject) {
@@ -46,19 +54,27 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
             }
           }
         }}
-        maxLength={maxLength || 255}
-        placeholder={placeholder || labelText} 
-        min={min} 
-        max={max || 255} 
-        pattern={pattern} 
-        step={step} 
-        disabled={disabled} 
-        value={value} 
+        inputProps={{
+          min: min,
+          max: max || 255,
+          maxLength: maxLength,
+          pattern: pattern,
+          step: step,
+        }}
+        endAdornment={
+          isPasswordType
+            ? <InputAdornment position="end">
+                <IconButton
+                  aria-label="Password Visibility Toggle"
+                  onClick={togglePasswordVisiblity}
+                  onMouseDown={togglePasswordVisiblity}
+                >
+                  {isPasswordVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+              </InputAdornment>
+            : null
+        }
       />
-      {isPasswordType 
-        ? <span className='input-visibility-toggle-icon' onClick={togglePasswordVisiblity} title='Toggle visibility'><Icon icon='eye'/></span>
-        : null
-      }
     </FormField>
   );
 };
