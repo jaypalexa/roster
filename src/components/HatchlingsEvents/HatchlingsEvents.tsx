@@ -344,8 +344,8 @@ const HatchlingsEvents: React.FC = () => {
             </Grid>
           </Grid>
 
-          <Box className={classes.horizontalScroll}>
-            <MaterialTable            
+          <Box className={classes.dataTableContainer}>
+            <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
               data={[...currentHatchlingsEvents]}

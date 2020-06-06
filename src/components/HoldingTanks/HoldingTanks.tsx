@@ -293,7 +293,7 @@ const HoldingTanksMui: React.FC = () => {
             </Grid>
           </Grid>
 
-          <Box className={classes.horizontalScroll}>
+          <Box className={classes.dataTableContainer}>
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}

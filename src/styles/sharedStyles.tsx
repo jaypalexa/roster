@@ -1,6 +1,11 @@
 import { Theme } from '@material-ui/core/styles';
 
 export default (theme: Theme) => ({
+  dataTableContainer: {
+    borderColor: 'lightgray',
+    borderStyle: 'solid',
+    overflowX: 'scroll' as 'scroll',
+  },
   fixedWidthMedium: {
     minWidth: '150px',
     width: '150px',
