@@ -298,7 +298,7 @@ const HoldingTankMeasurements: React.FC = () => {
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
-              data={currentHoldingTankMeasurements}
+              data={[...currentHoldingTankMeasurements]}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditHoldingTankMeasurementClick(data as HoldingTankMeasurementModel)}
               actions={[

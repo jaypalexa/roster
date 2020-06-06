@@ -364,7 +364,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns} 
-              data={currentSeaTurtleMorphometrics}
+              data={[...currentSeaTurtleMorphometrics]}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditSeaTurtleMorphometricClick(data as SeaTurtleMorphometricModel)}
               actions={[

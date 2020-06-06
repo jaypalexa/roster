@@ -355,7 +355,7 @@ const WashbacksEvents: React.FC = () => {
             <MaterialTable            
               icons={tableIcons}
               columns={tableColumns}
-              data={currentWashbacksEvents}
+              data={[...currentWashbacksEvents]}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditWashbacksEventClick(data as WashbacksEventModel)}
               actions={[

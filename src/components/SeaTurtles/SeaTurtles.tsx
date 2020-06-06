@@ -48,7 +48,7 @@ const SeaTurtles: React.FC = () => {
   const methods = useForm<SeaTurtleModel>({ mode: 'onChange' });
   const { handleSubmit, formState, getValues, reset } = methods;
   const [currentSeaTurtleListItems, setCurrentSeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
-  const [displaySeaTurtleListItems, setDisplaySeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
+  const [filteredSeaTurtleListItems, setFilteredSeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
   const [mapData, setMapData] = useState({} as MapDataModel);
   const [captureProjectTypes, setCaptureProjectTypes] = useState([] as Array<NameValuePair>);
   const [counties, setCounties] = useState([] as Array<NameValuePair>);
@@ -127,7 +127,7 @@ const SeaTurtles: React.FC = () => {
         setShowSpinner(true);
         const seaTurtleListItems = await SeaTurtleService.getSeaTurtleListItemsForTable();
         setCurrentSeaTurtleListItems(seaTurtleListItems);
-        setDisplaySeaTurtleListItems(seaTurtleListItems.filter(x => !x.dateRelinquished));
+        setFilteredSeaTurtleListItems(seaTurtleListItems.filter(x => !x.dateRelinquished));
         if (appContext.seaTurtle?.seaTurtleId && appContext.seaTurtle?.organizationId === AuthenticationService.getOrganizationId()) {
           reset(appContext.seaTurtle);
           setCurrentSeaTurtle(appContext.seaTurtle);
@@ -160,9 +160,9 @@ const SeaTurtles: React.FC = () => {
   const resetDisplaySeaTurtleListItems = (isChecked: boolean) => {
     setShowSpinner(true);
     if (isChecked) {
-      setDisplaySeaTurtleListItems([...currentSeaTurtleListItems]);
+      setFilteredSeaTurtleListItems([...currentSeaTurtleListItems]);
     } else {
-      setDisplaySeaTurtleListItems(currentSeaTurtleListItems.filter(x => !x.dateRelinquished));
+      setFilteredSeaTurtleListItems(currentSeaTurtleListItems.filter(x => !x.dateRelinquished));
     }
     setShowSpinner(false);
   };
@@ -410,7 +410,7 @@ const SeaTurtles: React.FC = () => {
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
-              data={displaySeaTurtleListItems}
+              data={[...filteredSeaTurtleListItems]}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditSeaTurtleClick(data as SeaTurtleListItemModel)}
               actions={[

@@ -297,7 +297,7 @@ const HoldingTanksMui: React.FC = () => {
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
-              data={currentHoldingTanks}
+              data={[...currentHoldingTanks]}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditHoldingTankClick(data as HoldingTankModel)}
               actions={[

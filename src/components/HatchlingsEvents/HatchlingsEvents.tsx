@@ -348,7 +348,7 @@ const HatchlingsEvents: React.FC = () => {
             <MaterialTable            
               icons={tableIcons}
               columns={tableColumns}
-              data={currentHatchlingsEvents}
+              data={[...currentHatchlingsEvents]}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditHatchlingsEventClick(data as HatchlingsEventModel)}
               actions={[

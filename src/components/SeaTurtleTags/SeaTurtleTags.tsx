@@ -308,7 +308,7 @@ const SeaTurtleTags: React.FC = () => {
             <MaterialTable
               icons={tableIcons}
               columns={tableColumns}
-              data={currentSeaTurtleTags}
+              data={[...currentSeaTurtleTags]}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditSeaTurtleTagClick(data as SeaTurtleTagModel)}
               actions={[

@@ -69,7 +69,7 @@ const AboutRoster: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center'>About ROSTER</Typography>
           <Box className='page-body-container'>
-            <p>v2020.05.31.1953</p>
+            <p>v2020.06.06.0800</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>
