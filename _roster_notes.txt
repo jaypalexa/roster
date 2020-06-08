@@ -62,29 +62,18 @@ Lon -80.458796
 
 --------------------------------------------------------------------------
 
+TODO:  logging:  local storage / indexeddb?  admin > logs && /logging endpoint / dynamodb table
+
 TODO:  standardize date format (pickers mm/dd/yyyy vs display yyyy-mm-dd)
 TODO:  save table search / show relinquished turtles settings when navigating back
 
 TODO:  material-table:  why does Date Relinquished column on Sea Turtles table _not_ have a filter?
-BECAUSE THE DATE-RELINQUISHED VALUES ARE ALL BLANK ON FIRST DATA LOAD WHEN TOGGLE IS OFF
+	!!! BECAUSE THE DATE-RELINQUISHED VALUES ARE ALL BLANK ON FIRST DATA LOAD WHEN TOGGLE IS OFF
 
 TODO:  try to replace all SASS with JSS
-	-- form field stuff
 	-- spinner
 	-- map dialog
-
-
-REMOVE:  bulma
-REMOVE:  bulma-checkradio
-REMOVE:  bulma-switch
-REMOVE:  react-data-table-component
-REMOVE:  react-data-table-component-extensions
-REMOVE:  react-toastify
-REMOVE:	 styled-components
 
 REMOVE:  prop-types ???
 
 TODO:  play with MUI Paper component
-
-
-//data={currentHatchlingsEvents.map(item => Object.assign({}, item))}
