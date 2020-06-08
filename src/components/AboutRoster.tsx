@@ -31,6 +31,11 @@ const AboutRoster: React.FC = () => {
     AppService.checkForUpdate();
   }
 
+  /* scroll to top */
+  useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
   /* check for update */
   useMount(() => {
     AppService.checkForUpdate();
@@ -69,7 +74,7 @@ const AboutRoster: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>About ROSTER</Typography>
           <Box textAlign='center'>
-            <p>v2020.06.08.1900</p>
+            <p>v2020.06.08.1920</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>

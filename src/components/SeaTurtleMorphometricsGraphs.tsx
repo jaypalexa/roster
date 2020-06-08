@@ -28,6 +28,11 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
   const [data, setData] = useState<GraphData>({} as GraphData);
   const [showSpinner, setShowSpinner] = useState(false);
 
+  /* scroll to top */
+  useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
   interface GraphDataset {
     label: string;
     fill: boolean;

@@ -76,6 +76,11 @@ const HatchlingsEvents: React.FC = () => {
     }
   ]);
 
+  /* scroll to top */
+  useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
   useMount(() => {
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setSpecies(CodeListTableService.getList(CodeTableType.Species, true));

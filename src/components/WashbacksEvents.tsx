@@ -83,11 +83,18 @@ const WashbacksEvents: React.FC = () => {
     },
   ]);
 
+  /* scroll to top */
+  useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
+  /* fetch listbox data */
   useMount(() => {
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setSpecies(CodeListTableService.getList(CodeTableType.Species, true));
   });
 
+  /* fetch table data */
   useMount(() => {
     const getWashbacksEvents = async () => {
       try {

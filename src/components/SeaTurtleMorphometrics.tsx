@@ -110,11 +110,19 @@ const SeaTurtleMorphometrics: React.FC = () => {
     }
   ]);
 
+  
+  /* scroll to top */
+  useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
+  /* fetch listbox data */
   useMount(() => {
     setCmIns(CodeListTableService.getList(CodeTableType.CmIn, true));
     setKgLbs(CodeListTableService.getList(CodeTableType.KgLb, true));
   });
 
+  /* fetch table data */
   useMount(() => {
     const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
     if (!seaTurtleId) {

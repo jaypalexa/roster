@@ -72,6 +72,12 @@ const HoldingTankMeasurements: React.FC = () => {
     }
   ]);
 
+  /* scroll to top */
+  useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
+  /* fetch table data */
   useMount(() => {
     const holdingTankId = appContext.holdingTank?.holdingTankId;
     if (!holdingTankId) {

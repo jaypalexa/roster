@@ -15,6 +15,7 @@ const HomeMui: React.FC = () => {
   );
   const classes = useStyles();
 
+  /* scroll to top */
   useMount(() => {
     window.scrollTo(0, 0);
   });

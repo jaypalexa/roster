@@ -19,6 +19,12 @@ const BlankForms: React.FC = () => {
   const [reportDefinitions, setReportDefinitions] = useState([] as Array<ReportDefinitionModel>);
   const [showSpinner, setShowSpinner] = useState(false);
 
+  /* scroll to top */
+  useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
+  /* load blank form definitions */
   useMount(() => {
     setShowSpinner(true);
     const definitions = ReportService.getBlankFormList();

@@ -75,11 +75,18 @@ const SeaTurtleTags: React.FC = () => {
     },
   ]);
 
+  /* scroll to top */
+  useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
+  /* fetch listbox data */
   useMount(() => {
     setTagTypes(CodeListTableService.getList(CodeTableType.TagType, true));
     setLocations(CodeListTableService.getList(CodeTableType.TagLocation, true));
   });
 
+  /* fetch table data */
   useMount(() => {
     const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
     if (!seaTurtleId) {
@@ -307,7 +314,7 @@ const SeaTurtleTags: React.FC = () => {
 
       <Grid container justify='center'>
         <Grid item xs={12} md={8}>
-          <Typography variant='h1' align='center'>Morphometrics for {appContext.seaTurtle?.seaTurtleName}</Typography>
+          <Typography variant='h1' align='center'>Tags for {appContext.seaTurtle?.seaTurtleName}</Typography>
 
           <Grid container justify='center' className={classes.formAddButtonsContainer}>
             <Grid item className={classes.formAddButtonContainer}>

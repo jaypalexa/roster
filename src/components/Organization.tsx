@@ -35,10 +35,12 @@ const OrganizationMui: React.FC = () => {
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
   const [showSpinner, setShowSpinner] = useState(false);
 
+  /* scroll to top */
   useMount(() => {
     window.scrollTo(0, 0);
   });
 
+  /* fetch table data */
   useMount(() => {
 
     const fetchOrganization = async () => {
