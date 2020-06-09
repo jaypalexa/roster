@@ -39,14 +39,14 @@ ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/
 | &check; Graphs for Sea Turtle > Morphometrics (temperature, salinity, pH) | ??? holding-tank-temperature-graph, etc. |
 | &check; Mapping | &bull; [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/) ([article](https://blog.logrocket.com/how-to-use-react-leaflet/))<br /> ~~&bull; [Mapbox](https://www.mapbox.com/)~~ |
 | &check; Data tables | [material-table](https://material-table.com/) |
+| &check;  Filtering (search) of tables | [material-table](https://material-table.com/) |
 | &check; Prompt to save changes if form is dirty and user clicks Edit/Delete or Add button | ~~Make Yes/No into Yes/No/Cancel~~ |
 | &check; Add a loading spinner | home-grown |
 | &check; Database (multi-tenant) | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
 | &check; Prevent tabbing outside of modal | [Material-UI](https://material-ui.com/) |
-| &check; Session/Token timeout | AWS Cognito and refresh tokens (JWT) |
+| &check; Session / Token timeout | AWS Cognito and refresh tokens (JWT) |
 | &check; Material-UI or ~~Ant Design~~ instead of Bulma | [Material-UI](https://www.npmjs.com/package/@material-ui/core) / ~~[Ant Design](https://www.npmjs.com/package/antd)~~ |
 | &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
-| &check;  Filtering (search) of tables | [material-table](https://material-table.com/) |
 | &#10065; Preventing denial-of-service attacks /excessive usage | ??? throttling |
 | &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? Service worker unable to distinguish different payloads when calling AWS Lambda (https://lambda.us-east-2.amazonaws.com/2015-03-31/functions/roster-api-lambda/invocations)? |
 | &#10065; Poor man's caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
