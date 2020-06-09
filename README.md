@@ -1,5 +1,5 @@
 # ROSTER (Record Of Sea Turtles Electronic Reports) 
-ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) for collecting and reporting on marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
+ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) for collecting and reporting on marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
 
 ---
 
@@ -20,7 +20,6 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
   * [rxjs](https://www.npmjs.com/package/rxjs) for reactive programming using Observables
 * [Material-UI](https://material-ui.com/) - React UI framework and components
   * [material-table](https://material-table.com/) - React data table component that based on material-ui
-* [Font Awesome](https://fontawesome.com/v4.7.0/icons/) for icons
 * [Amazon Web Services](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=tier%23always-free) ("Always Free" tier *only*)
   * [Amazon Cognito](https://aws.amazon.com/cognito/) for authentication
   * ~~[Amazon S3](https://aws.amazon.com/s3/)~~ (not "Always Free" tier), 
@@ -36,21 +35,21 @@ ROSTER is a PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) f
 | Item | Notes |
 |------|-------|
 | &check; User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
+| &check; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
 | &check; Graphs for Sea Turtle > Morphometrics (temperature, salinity, pH) | ??? holding-tank-temperature-graph, etc. |
 | &check; Mapping | &bull; [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/) ([article](https://blog.logrocket.com/how-to-use-react-leaflet/))<br /> ~~&bull; [Mapbox](https://www.mapbox.com/)~~ |
-| &check; Data tables | https://www.npmjs.com/package/react-data-table-component |
+| &check; Data tables | [material-table](https://material-table.com/) |
 | &check; Prompt to save changes if form is dirty and user clicks Edit/Delete or Add button | ~~Make Yes/No into Yes/No/Cancel~~ |
 | &check; Add a loading spinner | home-grown |
 | &check; Database (multi-tenant) | &bull; [Amazon DynamoDB](https://aws.amazon.com/dynamodb)<br /> &bull; [Building a Multitenant Storage Model on AWS (PDF)](https://d0.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)<br />&bull; [Best Practices for Designing and Architecting with DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html) |
-| &check; Prevent tabbing outside of modal | [react-modal](https://www.npmjs.com/package/react-modal) |
+| &check; Prevent tabbing outside of modal | [Material-UI](https://material-ui.com/) |
 | &check; Session/Token timeout | AWS Cognito and refresh tokens (JWT) |
+| &check; Material-UI or ~~Ant Design~~ instead of Bulma | [Material-UI](https://www.npmjs.com/package/@material-ui/core) / ~~[Ant Design](https://www.npmjs.com/package/antd)~~ |
 | &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
-| &#10065; Filtering (search) of tables | ??? [react-data-table-component-extensions](https://www.npmjs.com/package/react-data-table-component-extensions) |
+| &check;  Filtering (search) of tables | [material-table](https://material-table.com/) |
 | &#10065; Preventing denial-of-service attacks /excessive usage | ??? throttling |
-| &#10065; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
 | &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? Service worker unable to distinguish different payloads when calling AWS Lambda (https://lambda.us-east-2.amazonaws.com/2015-03-31/functions/roster-api-lambda/invocations)? |
 | &#10065; Poor man's caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
-| &check; Material-UI or Ant Design instead of Bulma ??? | [Material-UI](https://www.npmjs.com/package/@material-ui/core) / [Ant Design](https://www.npmjs.com/package/antd) |
 | &#10065; Ability to click/tap to set map marker ??? | ??? |
 
 ### Reports - PDFs for FWC
