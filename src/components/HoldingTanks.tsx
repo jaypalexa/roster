@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import ChildNavigation from 'components/ChildNavigation';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextFormField from 'components/FormFields/TextFormField';
 import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
@@ -24,10 +24,10 @@ import sharedStyles from 'styles/sharedStyles';
 import { actionIcons, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 
-const HoldingTanksMui: React.FC = () => {
+const HoldingTanks: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
@@ -337,9 +337,9 @@ const HoldingTanksMui: React.FC = () => {
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <Typography variant='h2'>General Information</Typography>
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <TextFormField fieldName='holdingTankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
-                </FormFieldRowMui>
+                </FormFieldRow>
                 <hr />
 
                 <ChildNavigation itemName='Water Measurements' 
@@ -368,4 +368,4 @@ const HoldingTanksMui: React.FC = () => {
   );
 };
 
-export default HoldingTanksMui;
+export default HoldingTanks;

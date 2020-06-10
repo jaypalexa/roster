@@ -4,7 +4,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import clsx from 'clsx';
 import DateFormField from 'components/FormFields/DateFormField';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import IntegerFormField from 'components/FormFields/IntegerFormField';
 import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
@@ -22,7 +22,7 @@ import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
 import { constants } from 'utils';
 
-const OrganizationMui: React.FC = () => {
+const Organization: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles(sharedStyles(theme))
@@ -126,24 +126,24 @@ const OrganizationMui: React.FC = () => {
               </Tabs>
 
               <TabPanel value={currentTabIndex} index={0}> {/* General Information */}
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <TextFormField fieldName='organizationName' labelText='Organization Name' validationOptions={{ required: 'Organization Name is required' }} />
                   <TextFormField fieldName='permitNumber' labelText='Permit Number' />
                   <TextFormField fieldName='contactName' labelText='Contact Name' />
-                </FormFieldRowMui>
+                </FormFieldRow>
 
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <TextFormField fieldName='address1' labelText='Address Line 1' />
                   <TextFormField fieldName='address2' labelText='Address Line 2' />
-                </FormFieldRowMui>
+                </FormFieldRow>
 
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <TextFormField fieldName='city' labelText='City' />
                   <TextFormField fieldName='state' labelText='State' value='Florida' disabled={true} />
                   <TextFormField fieldName='zipCode' labelText='ZIP Code' maxLength={10} validationOptions={{ maxLength: { value: 10, message: 'ZIP Code cannot exceed 10 characters' } }} />
-                </FormFieldRowMui>
+                </FormFieldRow>
 
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <TextFormField fieldName='phone' labelText='Phone' />
                   <TextFormField fieldName='fax' labelText='Fax' />
                   <TextFormField fieldName='emailAddress' labelText='Email Address'
@@ -154,7 +154,7 @@ const OrganizationMui: React.FC = () => {
                       }
                     }}
                   />
-                </FormFieldRowMui>
+                </FormFieldRow>
               </TabPanel>
               <TabPanel value={currentTabIndex} index={1}> {/* Hatchling and Washback Starting Balances */}
                 <Grid container justify='center' spacing={2}>
@@ -201,4 +201,4 @@ const OrganizationMui: React.FC = () => {
   );
 };
 
-export default OrganizationMui;
+export default Organization;

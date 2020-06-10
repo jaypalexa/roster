@@ -10,7 +10,7 @@ import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import CheckboxGroupFormField from 'components/FormFields/CheckboxGroupFormField';
 import DateFormField from 'components/FormFields/DateFormField';
 import FormField from 'components/FormFields/FormField';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormField from 'components/FormFields/ListFormField';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import TextFormField from 'components/FormFields/TextFormField';
@@ -40,7 +40,7 @@ import { v4 as uuidv4 } from 'uuid';
 const SeaTurtles: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
@@ -465,17 +465,17 @@ const SeaTurtles: React.FC = () => {
               <fieldset disabled={!isFormEnabled}>
                 <Typography variant='h2' gutterBottom={true}>General Information</Typography>
 
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <TextFormField fieldName='seaTurtleName' labelText='Name' refObject={firstEditControlRef} disabled={!isFormEnabled} />
                   <TextFormField fieldName='sidNumber' labelText='SID number' disabled={!isFormEnabled} />
                   <TextFormField fieldName='strandingIdNumber' labelText='Stranding ID number' disabled={!isFormEnabled} />
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <ListFormField fieldName='species' labelText='Species' listItems={species} disabled={!isFormEnabled} />
                   <ListFormField fieldName='turtleSize' labelText='Size' listItems={turtleSizes} disabled={!isFormEnabled} />
                   <ListFormField fieldName='status' labelText='Status' listItems={turtleStatuses} disabled={!isFormEnabled} />
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <DateFormField fieldName='dateAcquired' labelText='Date acquired' disabled={!isFormEnabled} />
                   <TextFormField fieldName='acquiredFrom' labelText='Acquired from' disabled={!isFormEnabled} />
                   <ListFormField fieldName='acquiredCounty' labelText='County' listItems={counties} disabled={!isFormEnabled} />
@@ -490,8 +490,8 @@ const SeaTurtles: React.FC = () => {
                       View on map
                     </Button>
                   </FormField>
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <DateFormField fieldName='dateRelinquished' labelText='Date relinquished' disabled={!isFormEnabled} />
                   <TextFormField fieldName='relinquishedTo' labelText='Relinquished to' disabled={!isFormEnabled} />
                   <ListFormField fieldName='relinquishedCounty' labelText='County' listItems={counties} disabled={!isFormEnabled} />
@@ -506,8 +506,8 @@ const SeaTurtles: React.FC = () => {
                       View on map
                     </Button>
                   </FormField>
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <TextareaFormField fieldName='anomalies' labelText='Anomalies' rows={4} disabled={!isFormEnabled} />
                   <CheckboxGroupFormField labelText='Injuries' itemsPerColumn={5}>
                     <CheckboxFormField fieldName='injuryBoatStrike' labelText='Boat/Propeller strike' disabled={!isFormEnabled} />
@@ -521,26 +521,26 @@ const SeaTurtles: React.FC = () => {
                     <CheckboxFormField fieldName='injuryDoa' labelText='DOA' disabled={!isFormEnabled} />
                     <CheckboxFormField fieldName='injuryOther' labelText='Other' disabled={!isFormEnabled} />
                   </CheckboxGroupFormField>
-                </FormFieldRowMui>
+                </FormFieldRow>
                 <hr />
 
                 <Typography variant='h2' gutterBottom={true}>Initial Encounter Information</Typography>
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <CheckboxGroupFormField labelText='Initial encounter' itemsPerColumn={1}>
                     <CheckboxFormField fieldName='wasCarryingTagsWhenEnc' labelText='Was turtle carrying tags when initially encountered?' disabled={!isFormEnabled} />
                   </CheckboxGroupFormField>
                   <ListFormField fieldName='recaptureType' labelText='If yes, recapture type' listItems={recaptureTypes} disabled={!isFormEnabled} />
                   <TextFormField fieldName='tagReturnAddress' labelText='Tag return address' disabled={!isFormEnabled} />
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <ListFormField fieldName='captureProjectType' labelText='Project type' listItems={captureProjectTypes} disabled={!isFormEnabled} />
                   <ListFormField fieldName='didTurtleNest' labelText='If "Nesting Beach," did turtle nest?' listItems={yesNoUndetermineds} disabled={!isFormEnabled} />
                   <TextFormField fieldName='captureProjectOther' labelText='If "Other," describe' disabled={!isFormEnabled} />
-                </FormFieldRowMui>
+                </FormFieldRow>
                 <hr />
 
                 <Typography variant='h2' gutterBottom={true}>Inspected and/or Scanned For</Typography>
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <CheckboxGroupFormField labelText='Inspected for' itemsPerColumn={1}>
                     <CheckboxFormField fieldName='inspectedForTagScars' labelText='Tag scars' disabled={!isFormEnabled} />
                   </CheckboxGroupFormField>
@@ -549,8 +549,8 @@ const SeaTurtles: React.FC = () => {
                     <CheckboxFormField fieldName='scannedForPitTags' labelText='PIT tags'  disabled={!isFormEnabled}/>
                   </CheckboxGroupFormField>
                   <TextFormField fieldName='pitTagsScanFrequency' labelText='Frequency?' disabled={!isFormEnabled} />
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <CheckboxGroupFormField labelText='Scanned for' itemsPerColumn={1}>
                     <CheckboxFormField fieldName='scannedForMagneticWires' labelText='Magnetic wires' disabled={!isFormEnabled} />
                   </CheckboxGroupFormField>
@@ -559,7 +559,7 @@ const SeaTurtles: React.FC = () => {
                     <CheckboxFormField fieldName='inspectedForLivingTags' labelText='Living tags' disabled={!isFormEnabled} />
                   </CheckboxGroupFormField>
                   <TextFormField fieldName='livingTagsLocated' labelText='Located?' disabled={!isFormEnabled} />
-                </FormFieldRowMui>
+                </FormFieldRow>
                 <hr />
 
                 <ChildNavigation itemName='Tags' 

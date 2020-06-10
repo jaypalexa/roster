@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormField from 'components/FormFields/DateFormField';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormField from 'components/FormFields/ListFormField';
 import TextFormField from 'components/FormFields/TextFormField';
 import Icon from 'components/Icon';
@@ -32,7 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
 const SeaTurtleMorphometrics: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
@@ -418,10 +418,10 @@ const SeaTurtleMorphometrics: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <TextFormField fieldName='sclNotchNotchValue' labelText='SCL notch-notch' disabled={!isFormEnabled} />
                   <ListFormField fieldName='sclNotchNotchUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
                   <TextFormField fieldName='sclNotchTipValue' labelText='SCL notch-tip' disabled={!isFormEnabled} />
@@ -430,8 +430,8 @@ const SeaTurtleMorphometrics: React.FC = () => {
                   <ListFormField fieldName='sclTipTipUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
                   <TextFormField fieldName='scwValue' labelText='SCW' disabled={!isFormEnabled} />
                   <ListFormField fieldName='scwUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <TextFormField fieldName='cclNotchNotchValue' labelText='CCL notch-notch' disabled={!isFormEnabled} />
                   <ListFormField fieldName='cclNotchNotchUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
                   <TextFormField fieldName='cclNotchTipValue' labelText='CCL notch-tip' disabled={!isFormEnabled} />
@@ -440,11 +440,11 @@ const SeaTurtleMorphometrics: React.FC = () => {
                   <ListFormField fieldName='cclTipTipUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
                   <TextFormField fieldName='ccwValue' labelText='CCW' disabled={!isFormEnabled} />
                   <ListFormField fieldName='ccwUnits' labelText='Units' listItems={cmIns} disabled={!isFormEnabled} />
-                </FormFieldRowMui>
-                <FormFieldRowMui>
+                </FormFieldRow>
+                <FormFieldRow>
                   <TextFormField fieldName='weightValue' labelText='Weight' disabled={!isFormEnabled} />
                   <ListFormField fieldName='weightUnits' labelText='Units' listItems={kgLbs} disabled={!isFormEnabled} />
-                </FormFieldRowMui>
+                </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>

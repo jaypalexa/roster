@@ -4,7 +4,7 @@ import HomeTile from 'components/HomeTile';
 import useMount from 'hooks/UseMount';
 import React from 'react';
 
-const HomeMui: React.FC = () => {
+const Home: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,4 +46,4 @@ const HomeMui: React.FC = () => {
   );
 };
 
-export default HomeMui;
+export default Home;

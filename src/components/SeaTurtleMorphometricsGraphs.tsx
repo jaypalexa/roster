@@ -17,7 +17,7 @@ import { constants } from 'utils';
 const SeaTurtleMorphometricsGraphs: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 

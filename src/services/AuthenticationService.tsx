@@ -4,6 +4,7 @@ import browserHistory from 'browserHistory';
 import jwt_decode from 'jwt-decode';
 import LoginModel from 'models/LoginModel';
 import MessageService from './MessageService';
+import OrganizationService from './OrganizationService';
 
 const CLIENT_ID = process.env.REACT_APP_AWS_COGNITO_CLIENT_ID || '';
 const IDENTITY_POOL_ID = process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID || '';
@@ -54,8 +55,10 @@ export const AuthenticationService = {
     
       await new Promise<CognitoUserSession | any>((resolve, reject) => {
         cognitoUser.authenticateUser(authenticationDetails, {
-          onSuccess: (session: CognitoUserSession) => {
+          onSuccess: async (session: CognitoUserSession) => {
             this.setConfigCredentials(session.getIdToken().getJwtToken());
+            const organization = await OrganizationService.getOrganization();
+            MessageService.notifyOrganizationNameChanged(organization.organizationName);
             resolve();
           },
           onFailure: (err: any) => {
@@ -298,6 +301,8 @@ export const AuthenticationService = {
       currentCognitoUser.signOut();
     }
     MessageService.notifyUserNameChanged('');
+    MessageService.notifyOrganizationNameChanged('');
+    localStorage.setItem('lastOrganizationName', '');
   },
 }
 

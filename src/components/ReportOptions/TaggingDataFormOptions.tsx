@@ -1,6 +1,6 @@
 import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import CheckboxGroupFormField from 'components/FormFields/CheckboxGroupFormField';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormField from 'components/FormFields/ListFormField';
 import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
@@ -13,7 +13,6 @@ import SeaTurtleService from 'services/SeaTurtleService';
 import ToastService from 'services/ToastService';
 import { constants } from 'utils';
 import { ReportOptionsFormFieldsProps } from './ReportOptionsFormFields';
-import './ReportOptionsFormFields.sass';
 
 const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportDefinition, setShowSpinner}) => {
   const [appContext] = useAppContext();
@@ -40,22 +39,22 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportD
 
   return (
     <>
-      <FormFieldRowMui>
+      <FormFieldRow>
         <ListFormField fieldName='seaTurtleId' labelText='Choose a turtle to generate the form for' listItems={seaTurtleListItems} />
-      </FormFieldRowMui>
-      <FormFieldRowMui>
+      </FormFieldRow>
+      <FormFieldRow>
         <CheckboxGroupFormField labelText='Options'>
           <CheckboxFormField fieldName='populateFacilityField' labelText='Populate "Facility where turtle was being held" field' />
           <CheckboxFormField fieldName='additionalRemarksOrDataOnBackOfForm' labelText='Additional remarks or data on back of form' />
           <CheckboxFormField fieldName='printSidOnForm' labelText='Print SID on form' />
         </CheckboxGroupFormField>
-      </FormFieldRowMui>
-      <FormFieldRowMui>
+      </FormFieldRow>
+      <FormFieldRow>
         <RadioButtonGroupFormField fieldName='useMorphometricsClosestTo' labelText='Use morphometrics closest to' >
           <RadioButtonFormField labelText='Date acquired' value='dateAcquired' />
           <RadioButtonFormField labelText='Date relinquished' value='dateRelinquished' />
         </RadioButtonGroupFormField>
-      </FormFieldRowMui>
+      </FormFieldRow>
     </>
   );
 };

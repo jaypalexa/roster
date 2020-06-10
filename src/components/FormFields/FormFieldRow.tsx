@@ -2,7 +2,7 @@ import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
 import sharedStyles from 'styles/sharedStyles';
 
-export const FormFieldRowMui: React.FC = (props) => {
+export const FormFieldRow: React.FC = (props) => {
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles(
@@ -22,4 +22,4 @@ export const FormFieldRowMui: React.FC = (props) => {
   );
 };
 
-export default FormFieldRowMui;
+export default FormFieldRow;

@@ -6,7 +6,7 @@ import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormField from 'components/FormFields/DateFormField';
 import DecimalFormField from 'components/FormFields/DecimalFormField';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
@@ -27,7 +27,7 @@ import { v4 as uuidv4 } from 'uuid';
 const HoldingTankMeasurements: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
@@ -346,12 +346,12 @@ const HoldingTankMeasurements: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
                   <DecimalFormField fieldName='temperature' labelText='Temperature' decimalPlaces={2} disabled={!isFormEnabled} />
                   <DecimalFormField fieldName='salinity' labelText='Salinity (in ppt)' decimalPlaces={2} disabled={!isFormEnabled} />
                   <DecimalFormField fieldName='ph' labelText='pH' decimalPlaces={2} disabled={!isFormEnabled} />
-                </FormFieldRowMui>
+                </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>

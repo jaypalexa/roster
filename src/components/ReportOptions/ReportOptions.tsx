@@ -66,7 +66,7 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
       </Breadcrumbs>
 
       <Grid container justify='center'>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={4}>
           <Typography variant='h1' align='center' gutterBottom={true}>{reportDefinition.reportName} Options</Typography>
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>

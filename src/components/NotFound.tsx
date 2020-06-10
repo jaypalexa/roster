@@ -6,7 +6,7 @@ import browserHistory from '../browserHistory';
 const NotFound: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 

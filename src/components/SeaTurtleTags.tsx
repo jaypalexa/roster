@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
 import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import DateFormField from 'components/FormFields/DateFormField';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import ListFormField from 'components/FormFields/ListFormField';
 import TextFormField from 'components/FormFields/TextFormField';
 import Icon from 'components/Icon';
@@ -30,7 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 const SeaTurtleTags: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
@@ -353,12 +353,12 @@ const SeaTurtleTags: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRowMui>
+                <FormFieldRow>
                   <TextFormField fieldName='tagNumber' labelText='Tag Number' validationOptions={{ required: 'Tag Number is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
                   <ListFormField fieldName='tagType' labelText='Tag Type' listItems={tagTypes} disabled={!isFormEnabled} />
                   <ListFormField fieldName='location' labelText='Location' listItems={locations} disabled={!isFormEnabled} />
                   <DateFormField fieldName='dateTagged' labelText='Date Tagged' disabled={!isFormEnabled} />
-                </FormFieldRowMui>
+                </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>

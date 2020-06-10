@@ -50,11 +50,19 @@ const NavBar: React.FC = (props: any) => {
         marginTop: '.5rem',
         marginBottom: '.5rem',
       },
+      organizationName: {
+        cursor: 'pointer',
+        fontWeight: 300,
+        '@media (max-width: 768px)': { // hide when mobile
+          display: 'none',
+        }
+      },
       title: {
         flexGrow: 1,
       },
       titleText: {
         cursor: 'pointer',
+        fontWeight: 300,
       },
       wifiIcon: {
         paddingTop: '14px',
@@ -69,6 +77,7 @@ const NavBar: React.FC = (props: any) => {
   const classes = useStyles();
 
   const [loggedInUserName, setLoggedInUserName] = useState('');
+  const [loggedInOrganizationName, setLoggedInOrganizationName] = useState(localStorage.getItem('lastOrganizationName'));
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -131,6 +140,17 @@ const NavBar: React.FC = (props: any) => {
     return () => subscription.unsubscribe();
   });
 
+  /* listen for 'organization name changed' notifications */
+  useMount(() => {
+    const subscription = MessageService.observeOrganizationNameChanged().subscribe(message => {
+      if (message) {
+        setLoggedInOrganizationName(message.organizationName);
+        localStorage.setItem('lastOrganizationName', message.organizationName);
+      }
+    });
+    return () => subscription.unsubscribe();
+  });
+
   /* listen for 'is update available' notifications */
   useMount(() => {
     const subscription = MessageService.observeIsUpdateAvailableChanged().subscribe(message => {
@@ -169,6 +189,7 @@ const NavBar: React.FC = (props: any) => {
             </IconButton>
             <Typography variant='h6' className={classes.title}>
               <span className={classes.titleText} onClick={() => browserHistory.push('/')}>ROSTER</span>
+              { loggedInOrganizationName ? <span className={classes.organizationName} onClick={() => browserHistory.push('/')}> ({loggedInOrganizationName})</span> : null }
             </Typography>
 
             {loggedInUserName ?

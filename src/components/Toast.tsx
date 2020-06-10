@@ -1,5 +1,5 @@
 import { Snackbar } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
+import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 
 export interface ToastProps {
@@ -13,9 +13,9 @@ export interface ToastProps {
 export const Toast: React.FC<ToastProps> = ({ isOpen, message, severity, onClose }) => {
   return (
     <Snackbar open={isOpen} autoHideDuration={2000} onClose={onClose}>
-      <MuiAlert elevation={6} variant='filled' severity={severity || 'info'} onClose={onClose}>
+      <Alert elevation={6} variant='filled' severity={severity || 'info'} onClose={onClose}>
         {message}
-      </MuiAlert>
+      </Alert>
     </Snackbar>
   );
 };

@@ -1,7 +1,7 @@
 import { Box, Button, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextFormField from 'components/FormFields/TextFormField';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
@@ -13,11 +13,11 @@ import MessageService from 'services/MessageService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
 
-interface LoginMuiProps {
+interface LoginProps {
   redirectPathOnAuthentication?: string;
 }
 
-const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => {
+const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles(sharedStyles(theme))
@@ -86,12 +86,12 @@ const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => 
           <FormContext {...methods}>
             <form onSubmit={onSubmit}>
 
-              <FormFieldRowMui>
+              <FormFieldRow>
                 <TextFormField fieldName='userName' labelText='User Name' validationOptions={{ required: 'User Name is required' }} refObject={userNameControlRef} />
-              </FormFieldRowMui>
-              <FormFieldRowMui>
+              </FormFieldRow>
+              <FormFieldRow>
                 <TextFormField fieldName='password' labelText='Password' type='password' validationOptions={{ required: 'Password is required' }} refObject={passwordControlRef} />
-              </FormFieldRowMui>
+              </FormFieldRow>
 
               <Box className={classes.formActionButtonsContainer}>
                 <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit'>
@@ -107,4 +107,4 @@ const LoginMui: React.FC<LoginMuiProps> = ({ redirectPathOnAuthentication }) => 
   );
 };
 
-export default LoginMui;
+export default Login;

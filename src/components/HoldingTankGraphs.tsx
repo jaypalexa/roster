@@ -17,7 +17,7 @@ import { constants } from 'utils';
 const HoldingTankGraphs: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 

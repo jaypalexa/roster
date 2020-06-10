@@ -11,6 +11,11 @@ export interface UserNameMessage {
   userName: string;
 };
 
+export interface OrganizationNameMessage {
+  [key: string]: any;
+  organizationName: string;
+};
+
 export interface IsUpdateAvailableMessage {
   [key: string]: any;
   isUpdateAvailable: boolean;
@@ -24,6 +29,7 @@ export interface LastUpdateCheckDateTimeMessage {
 const subject = new Subject<TextMessage>();
 const toastSubject = new Subject<ToastProps>();
 const userNameSubject = new Subject<UserNameMessage>();
+const organizationNameSubject = new Subject<OrganizationNameMessage>();
 const isUpdateAvailableSubject = new Subject<IsUpdateAvailableMessage>();
 const lastUpdateCheckDateTimeSubject = new Subject<LastUpdateCheckDateTimeMessage>();
 
@@ -37,6 +43,9 @@ export const MessageService = {
 
     notifyUserNameChanged: (userName: string) => userNameSubject.next({ userName }),
     observeUserNameChanged: () => userNameSubject.asObservable(),
+
+    notifyOrganizationNameChanged: (organizationName: string) => organizationNameSubject.next({ organizationName }),
+    observeOrganizationNameChanged: () => organizationNameSubject.asObservable(),
 
     notifyIsUpdateAvailableChanged: (isUpdateAvailable: boolean) => isUpdateAvailableSubject.next({ isUpdateAvailable }),
     observeIsUpdateAvailableChanged: () => isUpdateAvailableSubject.asObservable(),

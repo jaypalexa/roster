@@ -5,7 +5,6 @@ import TurtleInjuryReportOptions from 'components/ReportOptions/TurtleInjuryRepo
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import React from 'react';
 import HatchlingsAndWashbacksByCountyReportOptions from './HatchlingsAndWashbacksByCountyReportOptions';
-import './ReportOptionsFormFields.sass';
 import TurtleTagReportOptions from './TurtleTagReportOptions';
 
 export interface ReportOptionsFormFieldsProps {

@@ -6,7 +6,7 @@ import YesNoDialog from 'components/Dialogs/YesNoDialog';
 import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import CheckboxGroupFormField from 'components/FormFields/CheckboxGroupFormField';
 import DateFormField from 'components/FormFields/DateFormField';
-import FormFieldRowMui from 'components/FormFields/FormFieldRow';
+import FormFieldRow from 'components/FormFields/FormFieldRow';
 import IntegerFormField from 'components/FormFields/IntegerFormField';
 import ListFormField from 'components/FormFields/ListFormField';
 import Icon from 'components/Icon';
@@ -30,7 +30,7 @@ import { v4 as uuidv4 } from 'uuid';
 const WashbacksEvents: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles({...sharedStyles(theme)})
+    createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
@@ -395,7 +395,7 @@ const WashbacksEvents: React.FC = () => {
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
-                <FormFieldRowMui>
+                <FormFieldRow>
                   {showField('species', currentWashbacksEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} /> : null}
                   {showField('eventDate', currentWashbacksEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} disabled={!isFormEnabled} /> : null}
                   {showField('eventCount', currentWashbacksEvent.eventType) ? <IntegerFormField fieldName='eventCount' labelText='Event count' disabled={!isFormEnabled} /> : null}
@@ -407,7 +407,7 @@ const WashbacksEvents: React.FC = () => {
                       <CheckboxFormField fieldName='under5cmClsl' labelText='Under 5cm CLSL?' disabled={!isFormEnabled} />
                     </CheckboxGroupFormField>
                   : null}
-                </FormFieldRowMui>
+                </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
                   <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>

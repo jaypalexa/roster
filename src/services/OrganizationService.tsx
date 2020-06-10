@@ -5,7 +5,6 @@ import { toNumber } from 'utils';
 
 const RESOURCE_SINGLE = '/organizations/{organizationId}';
 // const RESOURCE_MANY = '/organizations';
-const RESOURCE_LAST_UPDATE = '/organizations/{organizationId}/last-update';
 
 const OrganizationService = {
   
@@ -17,9 +16,6 @@ const OrganizationService = {
     apiRequestPayload.pathParameters = { organizationId: organizationId };
 
     const response = await ApiService.get<OrganizationModel>(apiRequestPayload);
-
-    // TODO: CACHING ???
-    // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
     
     // kludge because input controls deal only with strings
     response.ccHatchlingsStartingBalance = response.ccHatchlingsStartingBalance.toString();
@@ -55,25 +51,7 @@ const OrganizationService = {
     apiRequestPayload.resource = RESOURCE_SINGLE;
     apiRequestPayload.pathParameters = { organizationId: AuthenticationService.getOrganizationId() };
 
-    // TODO: CACHING ???
-    // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
-
     const response = await ApiService.save<OrganizationModel>(apiRequestPayload, organization);
-    return response;
-  },
-  
-  async getLastUpdate(): Promise<number> {
-    const organizationId = AuthenticationService.getOrganizationId();
-
-    const apiRequestPayload = {} as ApiRequestPayload;
-    apiRequestPayload.resource = RESOURCE_LAST_UPDATE;
-    apiRequestPayload.pathParameters = { organizationId: organizationId };
-
-    const response = await ApiService.get<number>(apiRequestPayload);
-
-    // TODO: CACHING ???
-    // ApiService.setCacheValue(`ORGANIZATION#${organization.organizationId}`, Object.assign({}, organization));
-    
     return response;
   },
 
