@@ -248,8 +248,8 @@ const NavBar: React.FC = (props: any) => {
             <MenuItemLink href='/about-roster' 
               content={<>
                 <span>About ROSTER</span>
-                <span className={classes.badgeMenuItem}>
-                  <Badge variant='dot' color='error' invisible={!isUpdateAvailable}>
+                <span>
+                  <Badge variant='dot' color='error' invisible={!isUpdateAvailable} className={classes.badgeMenuItem}>
                   </Badge>
                 </span>
                 </>}
