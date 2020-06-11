@@ -58,29 +58,6 @@ export const ApiService = {
 
     return false;
   },
-  
-  async wakeup() {
-    AWS.config.region = process.env.REACT_APP_AWS_REGION || '';
-
-    const accessKeyId = process.env.REACT_APP_AWS_USER_ACCESS_KEY_ID_FOR_ROSTER_WAKEUP_USER || '';
-    const secretAccessKey = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY_FOR_ROSTER_WAKEUP_USER || '';
-    AWS.config.credentials = new AWS.Credentials(accessKeyId, secretAccessKey);
-
-    const apiRequestPayload = {} as ApiRequestPayload;
-    apiRequestPayload.resource = '/wakeup';
-
-    const params: AWS.Lambda.InvocationRequest = {
-      FunctionName: 'roster-api-lambda', 
-      InvocationType: 'RequestResponse',
-      Payload: JSON.stringify(apiRequestPayload),
-    };
-
-    console.log('WAKEUP params', params);
-    // const result = await (new AWS.Lambda().invoke(params).promise());
-    // console.log('WAKEUP result', result);
-
-    new AWS.Lambda().invoke(params);
-  },
 
   async execute(apiRequestPayload: ApiRequestPayload): Promise<any> {
 
@@ -89,7 +66,6 @@ export const ApiService = {
         browserHistory.push('/login');
         console.log('ERROR: User not authenticated');
         Promise.reject({});
-        //throw new Error('ERROR: User not authenticated');
       }
 
       AuthenticationService.updateUserActivity();

@@ -6,7 +6,6 @@ import useMount from 'hooks/UseMount';
 import React, { useState } from 'react';
 import { Router } from 'react-router-dom';
 import routes from 'routes';
-import ApiService from 'services/ApiService';
 import AppService from 'services/AppService';
 import AuthenticationService from 'services/AuthenticationService';
 import MessageService from 'services/MessageService';
@@ -52,19 +51,6 @@ const App: React.FC = () => {
     if (!isIosDevice) {
       AppService.checkForUpdate();
     }
-  });
-
-  /* wake up lambda */
-  useMount(() => {
-    const tryWakeup = async () => {
-      try {
-        await ApiService.wakeup();
-      }
-      catch(err) {
-        console.log(err);
-      }
-    }
-    tryWakeup();
   });
 
   /* start the session activity polling */
