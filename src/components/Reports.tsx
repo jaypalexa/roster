@@ -26,6 +26,10 @@ const Reports: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   useMount(() => {
+    window.scrollTo(0, 0);
+  });
+
+  useMount(() => {
     setShowSpinner(true);
     const definitions = ReportService.getReportList();
     setReportDefinitions(definitions);
