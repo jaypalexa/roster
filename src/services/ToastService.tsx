@@ -1,5 +1,6 @@
 import { ToastProps } from 'components/Toast';
 import { v4 as uuidv4 } from 'uuid';
+import LogEntryService from './LogEntryService';
 import MessageService from './MessageService';
   
 const onToastClose = (toastProps: ToastProps) => {
@@ -33,6 +34,7 @@ export const ToastService = {
 
   error(message: string) {
     showToast(message, 'error');
+    LogEntryService.saveLogEntry(`ERROR: ${message}`);
   },
 
 }

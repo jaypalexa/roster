@@ -9,6 +9,7 @@ import LoginModel from 'models/LoginModel';
 import React, { useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import AuthenticationService from 'services/AuthenticationService';
+import LogEntryService from 'services/LogEntryService';
 import MessageService from 'services/MessageService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
@@ -71,9 +72,13 @@ const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
       const userName = AuthenticationService.getCognitoUserNameFromToken();
       MessageService.notifyUserNameChanged(userName);
       browserHistory.push(getPath());
+      LogEntryService.saveLogEntry(`LOG IN: ${userName}`);
     } else {
       MessageService.notifyUserNameChanged('');
       ToastService.error('Invalid login');
+
+      // CANNOT WRITE TO DB BEFORE AUTHENTICATING  :-/
+      // LogEntryService.saveLogEntry(`Invalid login: ${modifiedLogin.userName}`);
     }
   });
 

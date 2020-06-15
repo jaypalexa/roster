@@ -1,6 +1,7 @@
-import AWS from 'aws-sdk';
+import Lambda from 'aws-sdk/clients/lambda';
 import browserHistory from 'browserHistory';
 import AuthenticationService from 'services/AuthenticationService';
+import LogEntryService from './LogEntryService';
 
 export interface ApiRequestPayload {
   resource: string;             // ??? /root/child
@@ -78,14 +79,14 @@ export const ApiService = {
 
       apiRequestPayload.headers = { ...apiRequestPayload.headers, ...headers };
 
-      const params: AWS.Lambda.InvocationRequest = {
+      const params: Lambda.InvocationRequest = {
         FunctionName: 'roster-api-lambda', 
         InvocationType: 'RequestResponse',
         Payload: JSON.stringify(apiRequestPayload),
       };
 
       console.log('ApiService.execute()::params', params);
-      const response = await (new AWS.Lambda().invoke(params).promise());
+      const response = await (new Lambda().invoke(params).promise());
       console.log('ApiService.execute()::response', response);
 
       const statusCode = response.StatusCode || 0;
@@ -105,6 +106,7 @@ export const ApiService = {
     }
     catch (err) {
       console.log(err, err.stack);
+      LogEntryService.saveLogEntry(`ERROR: ${err}`);
       throw err;
     }
   },

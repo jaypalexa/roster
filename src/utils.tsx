@@ -31,6 +31,15 @@ export const sortByProperty = (propertyName: string) => {
   }
 };
 
+export const sortByPropertyDesc = (propertyName: string) => {
+  const value = (x: any) => x[propertyName];
+  return (a: any, b: any) => {
+    const value_a = value(a);
+    const value_b = value(b);
+    return (((value_b > value_a) as any) - ((value_a > value_b) as any));
+  }
+};
+
 export const toNumber = (value: any): number => value ? Number(value || 0) : value;
 
 export const constants = Object.freeze({

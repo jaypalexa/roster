@@ -3,6 +3,7 @@ import AWS from 'aws-sdk';
 import browserHistory from 'browserHistory';
 import jwt_decode from 'jwt-decode';
 import LoginModel from 'models/LoginModel';
+import LogEntryService from './LogEntryService';
 import MessageService from './MessageService';
 import OrganizationService from './OrganizationService';
 
@@ -291,6 +292,8 @@ export const AuthenticationService = {
   },  
 
   signOut() {
+    LogEntryService.saveLogEntry(`LOG OUT: ${localStorage.getItem('lastUserName')}`);
+
     // console.log(`In signOut() at ${(new Date().toUTCString())}`);
     // console.log('signOut()::sessionStatusPollingTimeout', sessionStatusPollingTimeout);
     clearTimeout(sessionStatusPollingTimeout);
