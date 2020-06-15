@@ -12,7 +12,7 @@ ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/
 
 ## Tech Stack
 
-* [React](https://reactjs.org/) - [Typescript](https://www.typescriptlang.org/) UI framework
+* [React](https://reactjs.org/) - [Typescript](https://www.typescriptlang.org/) UI library
   * [react-router](https://www.npmjs.com/package/react-router) for client-side routing
   * [react-hook-form](https://www.npmjs.com/package/react-hook-form) for forms
   * [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2) for charts and graphs
