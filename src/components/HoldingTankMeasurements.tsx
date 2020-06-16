@@ -307,7 +307,7 @@ const HoldingTankMeasurements: React.FC = () => {
 
       <Grid container justify='center'>
         <Grid item xs={12} md={8}>
-          <Typography variant='h1' align='center'>Water Measurements for {appContext.holdingTank?.holdingTankName}</Typography>
+          <Typography variant='h1' align='center' gutterBottom={true}>Water Measurements for {appContext.holdingTank?.holdingTankName}</Typography>
 
           <Grid container justify='center' className={classes.formAddButtonsContainer}>
             <Grid item className={classes.formAddButtonContainer}>

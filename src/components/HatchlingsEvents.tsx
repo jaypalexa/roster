@@ -319,7 +319,7 @@ const HatchlingsEvents: React.FC = () => {
       </Breadcrumbs>
       <Grid container justify='center'>
         <Grid item xs={12} md={8}>
-          <Typography variant='h1' align='center'>Hatchling Events</Typography>
+          <Typography variant='h1' align='center' gutterBottom={true}>Hatchling Events</Typography>
 
           <Grid container justify='center' className={classes.formAddButtonsContainer}>
             <Grid item className={classes.formAddButtonContainer}>
@@ -379,7 +379,7 @@ const HatchlingsEvents: React.FC = () => {
           </Box>
           <hr />
 
-          <Typography variant='h1' gutterBottom={true} align='center'>
+          <Typography variant='h1' align='center' gutterBottom={true}>
             {currentHatchlingsEvent.eventType ? `Hatchlings ${currentHatchlingsEvent.eventType} Event` : ''} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}
           </Typography>
 

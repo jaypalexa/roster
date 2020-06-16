@@ -7,10 +7,11 @@ interface TextareaFormFieldProps extends FormFieldProps {
   maxLength?: number;
   rows?: string | number | undefined;
   disabled?: boolean;
+  readonly?: boolean;
   value?: string;
 }
 
-export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({fieldName, labelText, validationOptions, placeholder, maxLength, rows, disabled, value}) => {
+export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({fieldName, labelText, validationOptions, placeholder, maxLength, rows, disabled, readonly, value}) => {
   return (
     <TextFormField 
       fieldName={fieldName} 
@@ -21,6 +22,7 @@ export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({fieldName, 
       maxLength={maxLength} 
       rows={rows} 
       disabled={disabled}
+      readonly={readonly}
       value={value}
       />
   );

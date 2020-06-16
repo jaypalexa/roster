@@ -18,12 +18,13 @@ interface InputFormFieldProps extends FormFieldProps {
   pattern?: string;
   step?: string;
   disabled?: boolean;
+  readonly?: boolean;
   value?: string | number | string[];
   multiline?: boolean;
   rows?: string | number | undefined;
 }
 
-export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, step, disabled, value, multiline, rows}) => {
+export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, step, disabled, readonly, value, multiline, rows}) => {
   const { register } = useFormContext();
   const [isPasswordType, setIsPasswordType] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -46,6 +47,7 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
         defaultValue={value}
         multiline={multiline}
         rows={rows || 3}
+        readOnly={readonly}
         inputRef={(e) => {
           if (e) {
             register(e, validationOptions || {});

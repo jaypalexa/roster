@@ -107,7 +107,7 @@ const Report: React.FC = () => {
 
           {pdfReportUrl ? 
             <>
-              <Typography variant='h1' align='center'>{reportDefinition.reportName}</Typography>
+              <Typography variant='h1' align='center' gutterBottom={true}>{reportDefinition.reportName}</Typography>
               <Box className={clsx(classes.viewReportButtonContainer, classes.textAlignCenter)}>
                 <Button variant='contained' color='primary' type='button' 
                   href={pdfReportUrl} 

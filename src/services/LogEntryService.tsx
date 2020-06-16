@@ -22,6 +22,7 @@ const LogEntryService = {
     
     const logEntry = new LogEntryModel();
     logEntry.organizationId = AuthenticationService.getOrganizationId();
+    logEntry.userName = AuthenticationService.getLastAuthUser();
     logEntry.message = message;
 
     const apiRequestPayload = {} as ApiRequestPayload;

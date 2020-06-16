@@ -293,7 +293,7 @@ const HoldingTanks: React.FC = () => {
 
       <Grid container justify='center'>
         <Grid item xs={12} md={8}>
-          <Typography variant='h1' align='center'>Holding Tanks</Typography>
+          <Typography variant='h1' align='center' gutterBottom={true}>Holding Tanks</Typography>
 
           <Grid container justify='center' className={classes.formAddButtonsContainer}>
             <Grid item className={classes.formAddButtonContainer}>
@@ -329,8 +329,8 @@ const HoldingTanks: React.FC = () => {
           </Box>
           <hr />
 
-          <Typography variant='h1' gutterBottom={true} align='center'>
-            {appContext.holdingTank?.holdingTankName}
+          <Typography variant='h1' align='center' gutterBottom={true}>
+            {appContext.holdingTank?.holdingTankName || 'Holding Tank'}
           </Typography>
 
           <FormContext {...methods} >

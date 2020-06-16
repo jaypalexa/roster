@@ -12,6 +12,7 @@ import useMount from 'hooks/UseMount';
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
+import LogEntryService from 'services/LogEntryService';
 import MessageService from 'services/MessageService';
 
 const NavBar: React.FC = (props: any) => {
@@ -107,6 +108,7 @@ const NavBar: React.FC = (props: any) => {
   };
 
   const onLogOutClick = () => {
+    LogEntryService.saveLogEntry(`LOG OUT: ${AuthenticationService.getLastAuthUser()}`);
     AuthenticationService.signOut();
     onCloseAccountMenu();
     browserHistory.push('/login');
@@ -244,6 +246,7 @@ const NavBar: React.FC = (props: any) => {
             <MenuItemLink href='/reports' content='Reports' />
             <MenuItemLink href='/blank-forms' content='Blank Forms' />
             <MenuItemLink href='/organization' content='Organization' />
+            <MenuItemLink href='/log-entries' content='Log Entries' />
             <hr className={classes.menuSeparator} />
             <MenuItemLink href='/about-roster' 
               content={<>

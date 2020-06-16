@@ -70,7 +70,7 @@ const Reports: React.FC = () => {
             .map((item) => renderChildNavigation(item))
           }
 
-          <Typography variant='h1' align='center' className={classes.otherReportsHeader}>Other Reports</Typography>
+          <Typography variant='h1' align='center' gutterBottom={true} className={classes.otherReportsHeader}>Other Reports</Typography>
           {reportDefinitions
             .filter(item => !item.isPdf)
             .map((item) => renderChildNavigation(item))

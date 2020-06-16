@@ -40,7 +40,18 @@ import { v4 as uuidv4 } from 'uuid';
 const SeaTurtles: React.FC = () => {
 
   const useStyles = makeStyles((theme: Theme) => 
-    createStyles(sharedStyles(theme))
+    createStyles({
+      ...sharedStyles(theme),
+      mapButton: {
+        [theme.breakpoints.down('sm')]: {
+          width: '100%',
+        },
+        [theme.breakpoints.up('sm')]: {
+          minWidth: '150px',
+          width: '150px',
+        },        
+      }
+    })
   );
   const classes = useStyles();
 
@@ -405,7 +416,7 @@ const SeaTurtles: React.FC = () => {
 
       <Grid container justify='center'>
         <Grid item xs={12} md={8}>
-          <Typography variant='h1' align='center'>Sea Turtles</Typography>
+          <Typography variant='h1' align='center' gutterBottom={true}>Sea Turtles</Typography>
 
           <Grid container justify='center' className={classes.formAddButtonsContainer}>
             <Grid item className={classes.formAddButtonContainer}>
@@ -456,8 +467,8 @@ const SeaTurtles: React.FC = () => {
           </Box>
           <hr />
 
-          <Typography variant='h1' gutterBottom={true} align='center'>
-            {appContext.seaTurtle?.seaTurtleName}
+          <Typography variant='h1' align='center' gutterBottom={true}>
+            {appContext.seaTurtle?.seaTurtleName || 'Sea Turtle'}
           </Typography>
 
           <FormContext {...methods}>
@@ -485,7 +496,7 @@ const SeaTurtles: React.FC = () => {
                     <Button variant='contained' color='primary' type='button' disabled={!isFormEnabled}
                       onClick={onShowMapDialogClick('Acquired')} 
                       startIcon={<Icon icon='map' />} 
-                      className={clsx(classes.fixedWidthMedium, classes.textTransformNone, classes.whiteSpaceNoWrap)}
+                      className={clsx(classes.mapButton, classes.textTransformNone, classes.whiteSpaceNoWrap)}
                     >
                       View on map
                     </Button>
@@ -501,7 +512,7 @@ const SeaTurtles: React.FC = () => {
                     <Button variant='contained' color='primary' type='button' disabled={!isFormEnabled}
                       onClick={onShowMapDialogClick('Relinquished')} 
                       startIcon={<Icon icon='map' />} 
-                      className={clsx(classes.fixedWidthMedium, classes.textTransformNone, classes.whiteSpaceNoWrap)}
+                      className={clsx(classes.mapButton, classes.textTransformNone, classes.whiteSpaceNoWrap)}
                     >
                       View on map
                     </Button>

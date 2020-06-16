@@ -59,7 +59,7 @@ const BlankForms: React.FC = () => {
 
       <Grid container justify='center'>
         <Grid item xs={12} md={6}>
-          <Typography variant='h1' align='center'>Blank Forms</Typography>
+          <Typography variant='h1' align='center' gutterBottom={true}>Blank Forms</Typography>
           <Typography variant='h2' align='center' gutterBottom={true}>(opens in new tab)</Typography>
           <Box>
             {reportDefinitions

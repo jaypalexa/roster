@@ -10,6 +10,7 @@ import Edit from '@material-ui/icons/Edit';
 import FilterList from '@material-ui/icons/FilterList';
 import FirstPage from '@material-ui/icons/FirstPage';
 import LastPage from '@material-ui/icons/LastPage';
+import Pageview from '@material-ui/icons/Pageview';
 import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
@@ -85,6 +86,7 @@ export const isSafari = !!navigator.userAgent.match(/Version\/[\\d\\.]+.*Safari/
 export const actionIcons = {
   EditIcon: Edit,
   DeleteIcon: Delete,
+  ViewIcon: Pageview,
 };
 
 export const tableIcons = {

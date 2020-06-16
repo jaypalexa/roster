@@ -5,6 +5,7 @@ import HoldingTankGraphs from 'components/HoldingTankGraphs'
 import HoldingTankMeasurements from 'components/HoldingTankMeasurements'
 import HoldingTanks from 'components/HoldingTanks'
 import Home from 'components/Home'
+import LogEntries from 'components/LogEntries'
 import Login from 'components/Login'
 import NotFound from 'components/NotFound'
 import Organization from 'components/Organization'
@@ -37,6 +38,7 @@ const routes = () =>
     <ProtectedRoute exact path='/report' component={Report} />
     <ProtectedRoute exact path='/blank-forms' component={BlankForms} />
     <ProtectedRoute exact path='/organization' component={Organization} />
+    <ProtectedRoute exact path='/log-entries' component={LogEntries} />
     <ProtectedRoute exact path='/about-roster' component={AboutRoster} />
     <Route exact path='/login' component={Login} />
     <Route component={NotFound} />
