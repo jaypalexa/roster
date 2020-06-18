@@ -106,7 +106,6 @@ const LogEntries: React.FC = () => {
               ]}
             />
           </Box>
-          <hr />
 
           <Typography variant='h2' align='center' gutterBottom={true}>
             {currentLogEntry.entryDateTime || 'Log Entry'}

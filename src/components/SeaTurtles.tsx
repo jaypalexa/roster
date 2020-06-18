@@ -465,7 +465,6 @@ const SeaTurtles: React.FC = () => {
               }}
             />
           </Box>
-          <hr />
 
           <Typography variant='h1' align='center' gutterBottom={true}>
             {appContext.seaTurtle?.seaTurtleName || 'Sea Turtle'}

@@ -377,7 +377,6 @@ const HatchlingsEvents: React.FC = () => {
               ]}
             />
           </Box>
-          <hr />
 
           <Typography variant='h1' align='center' gutterBottom={true}>
             {currentHatchlingsEvent.eventType ? `Hatchlings ${currentHatchlingsEvent.eventType} Event` : ''} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}

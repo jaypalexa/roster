@@ -348,7 +348,6 @@ const SeaTurtleTags: React.FC = () => {
               ]}
             />
           </Box>
-          <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>

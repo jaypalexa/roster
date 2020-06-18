@@ -327,7 +327,6 @@ const HoldingTanks: React.FC = () => {
               ]}
             />
           </Box>
-          <hr />
 
           <Typography variant='h1' align='center' gutterBottom={true}>
             {appContext.holdingTank?.holdingTankName || 'Holding Tank'}
@@ -340,7 +339,6 @@ const HoldingTanks: React.FC = () => {
                 <FormFieldRow>
                   <TextFormField fieldName='holdingTankName' labelText='Name' validationOptions={{ required: 'Name is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
                 </FormFieldRow>
-                <hr />
 
                 <ChildNavigation itemName='Water Measurements' 
                   disabled={!isFormEnabled} 

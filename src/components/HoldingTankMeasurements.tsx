@@ -341,7 +341,6 @@ const HoldingTankMeasurements: React.FC = () => {
               ]}
             />
           </Box>
-          <hr />
 
           <FormContext {...methods} >
             <form onSubmit={onSubmit}>

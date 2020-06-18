@@ -4,6 +4,7 @@ export default (theme: Theme) => ({
   dataTableContainer: {
     borderColor: 'lightgray',
     borderStyle: 'solid',
+    marginBottom: '2rem',
     overflowX: 'scroll' as 'scroll',
   },
   fixedWidthMedium: {

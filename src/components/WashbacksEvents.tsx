@@ -386,7 +386,6 @@ const WashbacksEvents: React.FC = () => {
               ]}
             />
           </Box>
-          <hr />
 
           <Typography variant='h1' align='center' gutterBottom={true}>
             {currentWashbacksEvent.eventType ? `Washbacks ${currentWashbacksEvent.eventType} Event` : ''} {currentWashbacksEvent.eventDate ? `on ${moment(currentWashbacksEvent.eventDate).format('YYYY-MM-DD')}` : ''}
