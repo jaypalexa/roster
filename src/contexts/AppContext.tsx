@@ -21,10 +21,21 @@ const defaultReportOptions = {
     
   HatchlingsAndWashbacksByCountyReport: previousQuarterDateRange,
 
-  MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings: previousQuarterDateRange,
-  MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks: previousQuarterDateRange,
+  MarineTurtleCaptiveFacilityQuarterlyReportForHatchlings: {
+    ...previousQuarterDateRange,
+    comments: '',
+    includeDoaCounts: false,
+  },
+  MarineTurtleCaptiveFacilityQuarterlyReportForWashbacks: {
+    ...previousQuarterDateRange,
+    comments: '',
+    includeDoaCounts: false,
+  },
   MarineTurtleHoldingFacilityQuarterlyReport: {
     ...previousQuarterDateRange,
+    includeAnomalies: false,
+    includeAcquiredFrom: false,
+    includeTurtleName: false,
     groupTankDataBy: 'tank',
   },
   
