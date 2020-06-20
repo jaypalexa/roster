@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import AppService from 'services/AppService';
 import MessageService from 'services/MessageService';
 import sharedStyles from 'styles/sharedStyles';
-import { isIosDevice } from 'utils';
 
 const AboutRoster: React.FC = () => {
 
@@ -39,9 +38,9 @@ const AboutRoster: React.FC = () => {
 
   /* check for update */
   useMount(() => {
-    if (!isIosDevice) {
+    // if (!isIosDevice) {
       AppService.checkForUpdate();
-    }
+    // }
   });
 
   /* listen for 'is update available' notifications */
@@ -77,7 +76,7 @@ const AboutRoster: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>About ROSTER</Typography>
           <Box textAlign='center'>
-            <p>v2020.06.20.0700</p>
+            <p>v2020.06.20.0815</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>

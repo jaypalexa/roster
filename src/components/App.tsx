@@ -11,7 +11,6 @@ import AuthenticationService from 'services/AuthenticationService';
 import MessageService from 'services/MessageService';
 import * as serviceWorker from 'serviceWorker';
 import sharedStyles from 'styles/sharedStyles';
-import { isIosDevice } from 'utils';
 
 const App: React.FC = () => {
 
@@ -48,9 +47,9 @@ const App: React.FC = () => {
     }
     serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
 
-    if (!isIosDevice) {
+    // if (!isIosDevice) {
       AppService.checkForUpdate();
-    }
+    // }
   });
 
   /* start the session activity polling */

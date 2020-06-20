@@ -1,5 +1,4 @@
 import moment from "moment";
-import { isIosDevice } from "utils";
 import MessageService from "./MessageService";
 
 let _newServiceWorker: ServiceWorker | null = null;
@@ -13,9 +12,9 @@ export const AppService = {
   checkForUpdate() {
     MessageService.notifyLastUpdateCheckDateTimeChanged(moment().format('YYYY-MM-DD HH:mm:ss'));
 
-    if (isIosDevice) {
-      alert(`You must close and re-open the app or browser tab to check for updates when running on an iOS device.\n\n:-(`);
-    } else {
+    // if (isIosDevice) {
+    //   alert(`You must close and re-open the app or browser tab to check for updates when running on an iOS device.\n\n:-(`);
+    // } else {
       if ('serviceWorker' in navigator) {
         console.log('checkForUpdate::\'serviceWorker\' in navigator = true');
         navigator.serviceWorker.ready.then(registration => {
@@ -35,7 +34,7 @@ export const AppService = {
       else {
         console.log('checkForUpdate::\'serviceWorker\' NOT in navigator...');
       }
-    }
+    // }
   },
 
   installUpdate() {
