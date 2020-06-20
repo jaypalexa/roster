@@ -41,7 +41,7 @@ const NavBar: React.FC = (props: any) => {
       homeButton: {
         marginRight: theme.spacing(0),
       },
-      logInButton: {
+      signInButton: {
         textTransform: 'none',
       },
       menuButton: {
@@ -102,16 +102,16 @@ const NavBar: React.FC = (props: any) => {
     setMenuAnchorElement(null);
   };
   
-  const onLogInClick = () => {
+  const onSignInClick = () => {
     onCloseAccountMenu();
-    browserHistory.push('/login');
+    browserHistory.push('/sign-in');
   };
 
-  const onLogOutClick = () => {
-    LogEntryService.saveLogEntry(`LOG OUT: ${AuthenticationService.getLastAuthUser()}`);
+  const onSignOutClick = () => {
+    LogEntryService.saveLogEntry(`SIGN OUT: ${AuthenticationService.getLastAuthUser()}`);
     AuthenticationService.signOut();
     onCloseAccountMenu();
-    browserHistory.push('/login');
+    browserHistory.push('/sign-in');
   };
   
   const onlineOfflineHandler = (event: Event) => {
@@ -221,10 +221,10 @@ const NavBar: React.FC = (props: any) => {
                   open={isAccountMenuOpen}
                   onClose={onCloseAccountMenu}
                 >
-                  <MenuItem onClick={onLogOutClick}>Log Out</MenuItem>
+                  <MenuItem onClick={onSignOutClick}>Sign Out</MenuItem>
                 </Menu>
               </Box>
-            : <Button className={classes.logInButton} color='inherit' onClick={onLogInClick}>Log In</Button>
+            : <Button className={classes.signInButton} color='inherit' onClick={onSignInClick}>Sign In</Button>
             }
           </Toolbar>
         </AppBar>
@@ -259,7 +259,7 @@ const NavBar: React.FC = (props: any) => {
             >
             </MenuItemLink>
             <hr className={classes.menuSeparator} />
-            <MenuItem onClick={onLogOutClick}>Log Out</MenuItem>
+            <MenuItem onClick={onSignOutClick}>Sign Out</MenuItem>
           </MenuList>
         </Box>
       </Drawer>

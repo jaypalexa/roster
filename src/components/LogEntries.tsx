@@ -116,7 +116,7 @@ const LogEntries: React.FC = () => {
               <TextFormField fieldName='userName' labelText='User name' readonly={true} />
             </FormFieldRow>
             <FormFieldRow>
-              <TextareaFormField fieldName='message' labelText='Message' rows={4} readonly={true} />
+              <TextareaFormField fieldName='message' labelText='Message' rows={12} readonly={true} />
             </FormFieldRow>
           </FormContext>
           

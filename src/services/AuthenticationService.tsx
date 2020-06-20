@@ -2,7 +2,7 @@ import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession
 import AWS from 'aws-sdk';
 import browserHistory from 'browserHistory';
 import jwt_decode from 'jwt-decode';
-import LoginModel from 'models/LoginModel';
+import SignInModel from 'models/SignInModel';
 import MessageService from './MessageService';
 import OrganizationService from './OrganizationService';
 
@@ -39,16 +39,16 @@ export const AuthenticationService = {
     }, POLLING_INTERVAL);
   },
 
-  async authenticateUserAsync(login: LoginModel): Promise<boolean> {
+  async authenticateUserAsync(signIn: SignInModel): Promise<boolean> {
     try {
       const authenticationDetailsData: IAuthenticationDetailsData = {
-        Username: login.userName,
-        Password: login.password
+        Username: signIn.userName,
+        Password: signIn.password
       };
       const authenticationDetails = new AuthenticationDetails(authenticationDetailsData);
 
       const cognitoUserData: ICognitoUserData = { 
-        Username: login.userName, 
+        Username: signIn.userName, 
         Pool: USER_POOL 
       };
       const cognitoUser = new CognitoUser(cognitoUserData);
@@ -209,15 +209,15 @@ export const AuthenticationService = {
 
     /* if ID token is within expiry threshold */
     const diff = Math.floor(exp - now); // seconds
-    // console.log('isWithinRefreshWindow()::diff', diff);
+    console.log('isWithinRefreshWindow()::diff', diff);
     const isLessThanThreshold = (diff <= SESSION_REFRESH_THRESHOLD); // seconds
-    // console.log(`isWithinRefreshWindow()::isLessThanThreshold (${diff} <= ${SESSION_REFRESH_THRESHOLD})`, isLessThanThreshold);
+    console.log(`isWithinRefreshWindow()::isLessThanThreshold (${diff} <= ${SESSION_REFRESH_THRESHOLD})`, isLessThanThreshold);
     return isLessThanThreshold;
   },
 
   updateUserActivity() {
     lastUserActivity = Date.now();
-    // console.log(`updateUserActivity -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
+    console.log(`updateUserActivity -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
   },
 
   userActivityHasTimedOut(): boolean {
@@ -227,20 +227,20 @@ export const AuthenticationService = {
 
     /* if user has been inactive for longer than threshold */
     const diff = Math.floor(now - lastUserActivity); // milliseconds
-    // console.log('userActivityHasTimedOut()::diff', diff);
+    console.log('userActivityHasTimedOut()::diff', diff);
     const isGreaterThanThreshold = (diff > SESSION_ACTIVITY_THRESHOLD);
-    // console.log(`userActivityHasTimedOut()::isGreaterThanThreshold (${diff} > ${SESSION_ACTIVITY_THRESHOLD})`, isGreaterThanThreshold);
+    console.log(`userActivityHasTimedOut()::isGreaterThanThreshold (${diff} > ${SESSION_ACTIVITY_THRESHOLD})`, isGreaterThanThreshold);
     return isGreaterThanThreshold;
   },
 
   async checkSessionStatusAsync(): Promise<void> {
-    // console.log(`In checkSessionActivityAsync() at ${(new Date().toUTCString())} -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
+    console.log(`In checkSessionActivityAsync() at ${(new Date().toUTCString())} -- lastActivity = ${(new Date(lastUserActivity).toUTCString())}`);
 
     if (!this.isUserAuthenticated()) return;
 
     if (this.userActivityHasTimedOut()) {
       this.signOut();
-      browserHistory.push('/login');
+      browserHistory.push('/sign-in');
     } else {
       if (this.isWithinSessionRefreshWindow()) {
         await this.refreshSessionAsync();
@@ -258,7 +258,7 @@ export const AuthenticationService = {
       // console.log(`refreshSessionAsync()::currentSession`, currentSession);
       // console.log(`refreshSessionAsync()::currentSession?.isValid()`, currentSession?.isValid());
       if (currentSession?.isValid()) {
-        // console.log(`refreshSessionAsync()::CURRENT SESSION EXPIRES at ${this.getSessionExpirationDate(currentSession)}`);
+        console.log(`refreshSessionAsync()::CURRENT SESSION EXPIRES at ${this.getSessionExpirationDate(currentSession)}`);
         const refreshToken = currentSession.getRefreshToken();
         currentCognitoUser.refreshSession(refreshToken, (err: any, newSession: CognitoUserSession) => {
           if (err) {
@@ -268,8 +268,8 @@ export const AuthenticationService = {
             // console.log(`refreshSessionAsync()::newSession`, newSession);
             // console.log(`refreshSessionAsync()::newSession?.isValid()`, newSession?.isValid());
             if (newSession?.isValid()) {
-              // console.log(`refreshSessionAsync()::NEW SESSION EXPIRES at ${this.getSessionExpirationDate(newSession)}`);
-              // console.log('SESSION REFRESHED SUCCESSFULLY');
+              console.log(`refreshSessionAsync()::NEW SESSION EXPIRES at ${this.getSessionExpirationDate(newSession)}`);
+              console.log('SESSION REFRESHED SUCCESSFULLY');
               this.setConfigCredentials(newSession.getIdToken().getJwtToken());
             }
           }

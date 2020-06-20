@@ -83,6 +83,9 @@ ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/
 | &check; Turtle Tag Report | [ generate ]  |
 | &check; Hatchlings and Washbacks by County Report | [ generate ]  |
 
+### Reports - Online PDF Editor
+* [PDFescape Online PDF Editor](https://www.pdfescape.com/windows/)
+
 ---
 
 ## Available Scripts

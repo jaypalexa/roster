@@ -5,7 +5,7 @@ import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextFormField from 'components/FormFields/TextFormField';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
-import LoginModel from 'models/LoginModel';
+import SignInModel from 'models/SignInModel';
 import React, { useRef, useState } from 'react';
 import { FormContext, useForm } from 'react-hook-form';
 import AuthenticationService from 'services/AuthenticationService';
@@ -14,20 +14,20 @@ import MessageService from 'services/MessageService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
 
-interface LoginProps {
+interface SignInProps {
   redirectPathOnAuthentication?: string;
 }
 
-const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
+const SignIn: React.FC<SignInProps> = ({ redirectPathOnAuthentication }) => {
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles(sharedStyles(theme))
   );
   const classes = useStyles();
 
-  const methods = useForm<LoginModel>({ mode: 'onChange', defaultValues: new LoginModel() });
+  const methods = useForm<SignInModel>({ mode: 'onChange', defaultValues: new SignInModel() });
   const { handleSubmit, reset } = methods;
-  const [currentLogin, setCurrentLogin] = useState(new LoginModel());
+  const [currentLogin, setCurrentLogin] = useState(new SignInModel());
   const [showSpinner, setShowSpinner] = useState(false);
   const userNameControlRef = useRef<HTMLInputElement>()
   const passwordControlRef = useRef<HTMLInputElement>()
@@ -57,7 +57,7 @@ const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
     }
   };
 
-  const onSubmit = handleSubmit(async (modifiedLogin: LoginModel) => {
+  const onSubmit = handleSubmit(async (modifiedLogin: SignInModel) => {
     setShowSpinner(true);
     const patchedLogin = { ...currentLogin, ...modifiedLogin };
     reset(patchedLogin);
@@ -72,10 +72,10 @@ const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
       const userName = AuthenticationService.getCognitoUserNameFromToken();
       MessageService.notifyUserNameChanged(userName);
       browserHistory.push(getPath());
-      LogEntryService.saveLogEntry(`LOG IN: ${userName}`);
+      LogEntryService.saveLogEntry(`SIGN IN: ${userName}`);
     } else {
       MessageService.notifyUserNameChanged('');
-      ToastService.error('Invalid login');
+      ToastService.error('Invalid sign-in');
 
       // CANNOT WRITE TO DB BEFORE AUTHENTICATING  :-/
       // LogEntryService.saveLogEntry(`Invalid login: ${modifiedLogin.userName}`);
@@ -87,7 +87,7 @@ const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
       <Spinner isActive={showSpinner} />
       <Grid container justify='center'>
         <Grid item md={3}>
-          <Typography variant='h1' align='center' gutterBottom={true}>Log In</Typography>
+          <Typography variant='h1' align='center' gutterBottom={true}>Sign In</Typography>
           <FormContext {...methods}>
             <form onSubmit={onSubmit}>
 
@@ -100,7 +100,7 @@ const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
 
               <Box className={classes.formActionButtonsContainer}>
                 <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit'>
-                  Log In
+                  Sign In
                 </Button>
               </Box>
 
@@ -112,4 +112,4 @@ const Login: React.FC<LoginProps> = ({ redirectPathOnAuthentication }) => {
   );
 };
 
-export default Login;
+export default SignIn;

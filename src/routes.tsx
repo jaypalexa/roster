@@ -6,7 +6,6 @@ import HoldingTankMeasurements from 'components/HoldingTankMeasurements'
 import HoldingTanks from 'components/HoldingTanks'
 import Home from 'components/Home'
 import LogEntries from 'components/LogEntries'
-import Login from 'components/Login'
 import NotFound from 'components/NotFound'
 import Organization from 'components/Organization'
 import ProtectedRoute from 'components/ProtectedRoute'
@@ -17,6 +16,7 @@ import SeaTurtleMorphometrics from 'components/SeaTurtleMorphometrics'
 import SeaTurtleMorphometricsGraphs from 'components/SeaTurtleMorphometricsGraphs'
 import SeaTurtles from 'components/SeaTurtles'
 import SeaTurtleTags from 'components/SeaTurtleTags'
+import SignIn from 'components/SignIn'
 import WashbacksEvents from 'components/WashbacksEvents'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
@@ -40,7 +40,7 @@ const routes = () =>
     <ProtectedRoute exact path='/organization' component={Organization} />
     <ProtectedRoute exact path='/log-entries' component={LogEntries} />
     <ProtectedRoute exact path='/about-roster' component={AboutRoster} />
-    <Route exact path='/login' component={Login} />
+    <Route exact path='/sign-in' component={SignIn} />
     <Route component={NotFound} />
   </Switch>
 

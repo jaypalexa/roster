@@ -64,7 +64,7 @@ export const ApiService = {
 
     try {
       if (!AuthenticationService.isUserAuthenticated()) {
-        browserHistory.push('/login');
+        browserHistory.push('/sign-in');
         console.log('ERROR: User not authenticated');
         Promise.reject({});
       }
