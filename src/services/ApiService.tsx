@@ -106,7 +106,7 @@ export const ApiService = {
     }
     catch (err) {
       console.log(err, err.stack);
-      LogEntryService.saveLogEntry(`ERROR: ${err}`);
+      LogEntryService.saveLogEntry(`ERROR accessing API (${apiRequestPayload.httpMethod} ${apiRequestPayload.resource}): ${err}`);
       throw err;
     }
   },
