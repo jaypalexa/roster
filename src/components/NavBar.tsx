@@ -86,6 +86,7 @@ const NavBar: React.FC = (props: any) => {
   const isAccountMenuOpen = Boolean(menuAnchorElement);
 
   const toggleDrawer = (isOpen: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (!AuthenticationService.isUserAuthenticated()) return;
     if (event.type === 'keydown' 
       && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) 
     {
