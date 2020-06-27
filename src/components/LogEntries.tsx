@@ -1,5 +1,7 @@
-import { Box, Breadcrumbs, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import copy from 'clipboard-copy';
+import clsx from 'clsx';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import TextFormField from 'components/FormFields/TextFormField';
@@ -74,6 +76,15 @@ const LogEntries: React.FC = () => {
     setCurrentLogEntry(logEntry);
   };
 
+  const onCopyToClipboardClick = (logEntry: LogEntryModel) => {
+    copy(JSON.stringify(logEntry));
+    ToastService.info(constants.COPIED_TO_CLIPBOARD);
+  };
+
+  const onCopyCurrentToClipboardClick = () => {
+    onCopyToClipboardClick(currentLogEntry);
+  };
+
   return (
     <Box id='logEntry'>
       <Spinner isActive={showSpinner} />
@@ -103,6 +114,11 @@ const LogEntries: React.FC = () => {
                   tooltip: 'View',
                   onClick: (event, data) => onViewLogEntryClick(data as LogEntryModel)
                 },
+                {
+                  icon: actionIcons.CopyToClipboardIcon,
+                  tooltip: 'Copy to clipboard',
+                  onClick: (event, data) => onCopyToClipboardClick(data as LogEntryModel)
+                },
               ]}
             />
           </Box>
@@ -118,6 +134,17 @@ const LogEntries: React.FC = () => {
             <FormFieldRow>
               <TextareaFormField fieldName='message' labelText='Message' rows={12} readonly={true} />
             </FormFieldRow>
+            
+            <Box className={classes.formActionButtonsContainer}>
+              <Button className={clsx(classes.fixedWidthLarge)} 
+                color='primary' 
+                variant='contained' 
+                type='button' 
+                disabled={!currentLogEntry.logEntryId}
+                onClick={onCopyCurrentToClipboardClick}>
+                Copy to Clipboard
+              </Button>
+            </Box>
           </FormContext>
           
         </Grid>

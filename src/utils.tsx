@@ -1,5 +1,6 @@
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Assignment from '@material-ui/icons/Assignment';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
@@ -44,6 +45,7 @@ export const sortByPropertyDesc = (propertyName: string) => {
 export const toNumber = (value: any): number => value ? Number(value || 0) : value;
 
 export const constants = Object.freeze({
+  COPIED_TO_CLIPBOARD: 'Copied to clipboard',
   ERROR: Object.freeze({
     GENERIC :'ERROR (see browser console for details)',
   }),
@@ -84,6 +86,7 @@ export const isIosDevice = /(iPad|iPhone|iPod)/g.test(navigator.userAgent) && !w
 export const isSafari = !!navigator.userAgent.match(/Version\/[\\d\\.]+.*Safari/);
 
 export const actionIcons = {
+  CopyToClipboardIcon: Assignment,
   EditIcon: Edit,
   DeleteIcon: Delete,
   ViewIcon: Pageview,
