@@ -92,6 +92,18 @@ ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/
 
 In the project directory, you can run:
 
+### `npm install`
+
+Runs the initial installation of npm packages.
+
+### `npm outdated`
+
+Lists npm packages that are not the latest allowable version as per the `package.json` file.
+
+### `npm update`
+
+Updates npm packages (top-level only) to the latest allowable version as per the `package.json` file.
+
 ### `npm start`
 
 Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
