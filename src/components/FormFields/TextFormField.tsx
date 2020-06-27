@@ -13,7 +13,7 @@ interface TextFormFieldProps extends FormFieldProps {
   rows?: string | number | undefined;
 }
 
-export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, disabled, readonly, value, type, multiline, rows, validationOptions, refObject}) => {
+export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, disabled, readonly, value, type, multiline, rows, fieldClass, validationOptions, refObject}) => {
   return (
     <InputFormField 
       fieldName={fieldName} 
@@ -28,6 +28,7 @@ export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelTex
       value={value}
       multiline={multiline}
       rows={rows}
+      fieldClass={fieldClass}
     />
   );
 };

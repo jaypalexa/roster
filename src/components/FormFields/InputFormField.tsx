@@ -1,12 +1,15 @@
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import clsx from 'clsx';
 import useMount from 'hooks/UseMount';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import sharedStyles from 'styles/sharedStyles';
 import FormField, { FormFieldProps } from './FormField';
 
 interface InputFormFieldProps extends FormFieldProps {
@@ -24,7 +27,19 @@ interface InputFormFieldProps extends FormFieldProps {
   rows?: string | number | undefined;
 }
 
-export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, step, disabled, readonly, value, multiline, rows}) => {
+export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, step, disabled, readonly, value, multiline, rows, fieldClass}) => {
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({
+      ...sharedStyles(theme),
+      readOnlyField: {
+        backgroundColor: 'whitesmoke',
+        paddingLeft: '.25rem',
+      },
+    })
+  );
+  const classes = useStyles();
+
   const { register } = useFormContext();
   const [isPasswordType, setIsPasswordType] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -48,6 +63,8 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
         multiline={multiline}
         rows={rows || 3}
         readOnly={readonly}
+        disabled={disabled}
+        placeholder={placeholder}
         inputRef={(e) => {
           if (e) {
             register(e, validationOptions || {});
@@ -76,6 +93,7 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
               </InputAdornment>
             : null
         }
+        className={clsx(fieldClass, (readonly ? classes.readOnlyField : ''))} 
       />
     </FormField>
   );
