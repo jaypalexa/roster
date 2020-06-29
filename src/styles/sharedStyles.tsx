@@ -5,7 +5,6 @@ export default (theme: Theme) => ({
     borderColor: 'lightgray',
     borderStyle: 'solid',
     marginBottom: '2rem',
-    overflowX: 'scroll' as 'scroll',
   },
   fixedWidthMedium: {
     minWidth: '150px',

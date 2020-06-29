@@ -70,7 +70,8 @@ const WashbacksEvents: React.FC = () => {
     {
       title: 'Event Count',
       field: 'eventCount',
-      render: (rowData: WashbacksEventModel) => <div style={{textAlign: 'right'}}><span>{rowData.eventType === 'Released' ? toNumber(rowData.beachEventCount) + toNumber(rowData.offshoreEventCount) : rowData.eventCount}</span></div>,
+      align: 'right' as const,
+      render: (rowData: WashbacksEventModel) => <span>{rowData.eventType === 'Released' ? toNumber(rowData.beachEventCount) + toNumber(rowData.offshoreEventCount) : rowData.eventCount}</span>,
     },
     {
       title: 'County',

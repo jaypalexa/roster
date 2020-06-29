@@ -66,47 +66,47 @@ const SeaTurtleMorphometrics: React.FC = () => {
     {
       title: 'SCL notch-notch',
       field: 'sclNotchNotchValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.sclNotchNotchValue}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'SCL notch-tip',
       field: 'sclNotchTipValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.sclNotchTipValue}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'SCL tip-tip',
       field: 'sclTipTipValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.sclTipTipValue}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'SCW',
       field: 'scwValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.scwValue}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'CCL notch-notch',
       field: 'cclNotchNotchValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.cclNotchNotchValue}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'CCL notch-tip',
       field: 'cclNotchTipValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.cclNotchTipValue}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'CCL tip-tip',
       field: 'cclTipTipValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.cclTipTipValue}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'CCW',
       field: 'ccwValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.ccwValue}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'Weight',
       field: 'weightValue',
-      render: (rowData: SeaTurtleMorphometricModel) => <div style={{textAlign: 'right'}}><span>{rowData.weightValue}</span></div>,
+      align: 'right' as const,
     }
   ]);
 

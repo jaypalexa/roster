@@ -68,7 +68,8 @@ const HatchlingsEvents: React.FC = () => {
     {
       title: 'Event Count',
       field: 'eventCount',
-      render: (rowData: HatchlingsEventModel) => <div style={{textAlign: 'right'}}><span>{rowData.eventType === 'Released' ? toNumber(rowData.beachEventCount) + toNumber(rowData.offshoreEventCount) : rowData.eventCount}</span></div>,
+      align: 'right' as const,
+      render: (rowData: HatchlingsEventModel) => <span>{rowData.eventType === 'Released' ? toNumber(rowData.beachEventCount) + toNumber(rowData.offshoreEventCount) : rowData.eventCount}</span>,
     },
     {
       title: 'County',

@@ -29,6 +29,7 @@ const theme = createMuiTheme({
       },
       li: {
         '& a': {
+          color: 'blue',
           textDecoration: 'none',
         },
       }

@@ -58,17 +58,17 @@ const HoldingTankMeasurements: React.FC = () => {
     {
       title: 'Temperature',
       field: 'temperature',
-      render: (rowData: HoldingTankMeasurementModel) => <div style={{textAlign: 'right'}}><span>{rowData.temperature}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'Salinity',
       field: 'salinity',
-      render: (rowData: HoldingTankMeasurementModel) => <div style={{textAlign: 'right'}}><span>{rowData.salinity}</span></div>,
+      align: 'right' as const,
     },
     {
       title: 'pH',
       field: 'ph',
-      render: (rowData: HoldingTankMeasurementModel) => <div style={{textAlign: 'right'}}><span>{rowData.ph}</span></div>,
+      align: 'right' as const,
     }
   ]);
 
