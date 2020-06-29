@@ -116,7 +116,7 @@ const SeaTurtles: React.FC = () => {
     },
     {
       title: 'Date Relinquished',
-      selector: 'dateRelinquished',
+      field: 'dateRelinquished',
       render: (rowData: SeaTurtleListItemModel) => <span>{rowData.dateRelinquished ? moment(rowData.dateRelinquished).format('YYYY-MM-DD') : ''}</span>,
     }
   ]);
