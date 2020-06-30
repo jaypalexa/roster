@@ -142,7 +142,7 @@ const LogEntries: React.FC = () => {
                 type='button' 
                 disabled={!currentLogEntry.logEntryId}
                 onClick={onCopyCurrentToClipboardClick}>
-                Copy to Clipboard
+                Copy to clipboard
               </Button>
             </Box>
           </FormContext>
