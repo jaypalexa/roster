@@ -28,6 +28,7 @@ const LogEntries: React.FC = () => {
   const { reset } = methods;
   const [currentLogEntries, setCurrentLogEntries] = useState([] as Array<LogEntryModel>);
   const [currentLogEntry, setCurrentLogEntry] = useState(new LogEntryModel());
+  const [isFormEnabled, setIsFormEnabled] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const tableRef = useRef<any>(null);
 
@@ -74,6 +75,7 @@ const LogEntries: React.FC = () => {
   const onViewLogEntryClick = (logEntry: LogEntryModel) => {
     reset(logEntry);
     setCurrentLogEntry(logEntry);
+    setIsFormEnabled(true);
   };
 
   const onCopyToClipboardClick = (logEntry: LogEntryModel) => {
@@ -129,10 +131,10 @@ const LogEntries: React.FC = () => {
 
           <FormProvider {...methods} >
             <FormFieldRow>
-              <TextFormField fieldName='userName' labelText='User name' readonly={true} />
+              <TextFormField fieldName='userName' labelText='User name' readonly={true} disabled={!isFormEnabled} />
             </FormFieldRow>
             <FormFieldRow>
-              <TextareaFormField fieldName='message' labelText='Message' rows={12} readonly={true} />
+              <TextareaFormField fieldName='message' labelText='Message' rows={12} readonly={true} disabled={!isFormEnabled} />
             </FormFieldRow>
             
             <Box className={classes.formActionButtonsContainer}>
