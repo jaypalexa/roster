@@ -18,7 +18,7 @@ import NameValuePair from 'models/NameValuePair';
 import WashbacksEventModel from 'models/WashbacksEventModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import ToastService from 'services/ToastService';
@@ -34,7 +34,7 @@ const WashbacksEvents: React.FC = () => {
   );
   const classes = useStyles();
 
-  const methods = useForm<WashbacksEventModel>({ mode: 'onChange', defaultValues: new WashbacksEventModel() });
+  const methods = useForm<WashbacksEventModel>({ mode: 'onChange', defaultValues: new WashbacksEventModel(), shouldUnregister: false });
   const { handleSubmit, formState, reset } = methods;
   const [currentWashbacksEvent, setCurrentWashbacksEvent] = useState(new WashbacksEventModel());
   const [currentWashbacksEvents, setCurrentWashbacksEvents] = useState([] as Array<WashbacksEventModel>);
@@ -180,7 +180,7 @@ const WashbacksEvents: React.FC = () => {
       setEditingStarted(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -207,7 +207,7 @@ const WashbacksEvents: React.FC = () => {
       setIsFormEnabled(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -247,7 +247,7 @@ const WashbacksEvents: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (modifiedWashbacksEvent: WashbacksEventModel) => {
-    if (!formState.dirty) return;
+    if (!formState.isDirty) return;
 
     await saveWashbacksEvent(modifiedWashbacksEvent);
     ToastService.success('Record saved');
@@ -304,7 +304,7 @@ const WashbacksEvents: React.FC = () => {
   return (
     <Box id='washbacksEvents'>
       <Spinner isActive={showSpinner} />
-      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formState.isDirty} />
       <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
@@ -392,12 +392,12 @@ const WashbacksEvents: React.FC = () => {
             {currentWashbacksEvent.eventType ? `Washbacks ${currentWashbacksEvent.eventType} Event` : ''} {currentWashbacksEvent.eventDate ? `on ${moment(currentWashbacksEvent.eventDate).format('YYYY-MM-DD')}` : ''}
           </Typography>
 
-          <FormContext {...methods} >
+          <FormProvider {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  {showField('species', currentWashbacksEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} /> : null}
-                  {showField('eventDate', currentWashbacksEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} disabled={!isFormEnabled} /> : null}
+                  {showField('species', currentWashbacksEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationRules={{ required: 'Species is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} /> : null}
+                  {showField('eventDate', currentWashbacksEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationRules={{ required: 'Event date is required' }} disabled={!isFormEnabled} /> : null}
                   {showField('eventCount', currentWashbacksEvent.eventType) ? <IntegerFormField fieldName='eventCount' labelText='Event count' disabled={!isFormEnabled} /> : null}
                   {showField('beachEventCount', currentWashbacksEvent.eventType) ? <IntegerFormField fieldName='beachEventCount' labelText={`${currentWashbacksEvent.eventType} on beach`} disabled={!isFormEnabled} /> : null}
                   {showField('offshoreEventCount', currentWashbacksEvent.eventType) ? <IntegerFormField fieldName='offshoreEventCount' labelText={`${currentWashbacksEvent.eventType} offshore`} disabled={!isFormEnabled} /> : null}
@@ -410,16 +410,16 @@ const WashbacksEvents: React.FC = () => {
                 </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
-                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.isDirty)}>
                     Save
                   </Button>
-                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.isDirty}>
                     Cancel
                   </Button>
                 </Box>
               </fieldset>
             </form>
-          </FormContext>
+          </FormProvider>
 
         </Grid>
       </Grid>

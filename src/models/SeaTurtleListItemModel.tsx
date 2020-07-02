@@ -5,11 +5,11 @@ export default class SeaTurtleListItemModel {
   seaTurtleName!: string;
   sidNumber!: string;
   species!: string;
-  dateAcquired!: Date;
+  dateAcquired!: string;
   acquiredCounty!: string;
   turtleSize!: string;
   status!: string;
-  dateRelinquished!: Date;
+  dateRelinquished!: string;
 
   constructor() {
     // booleans:  need to be initialized to true or false for controlled checkboxes

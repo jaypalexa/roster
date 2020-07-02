@@ -27,7 +27,7 @@ import SeaTurtleListItemModel from 'models/SeaTurtleListItemModel';
 import SeaTurtleModel from 'models/SeaTurtleModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
@@ -56,7 +56,7 @@ const SeaTurtles: React.FC = () => {
   const classes = useStyles();
 
   const [appContext, setAppContext] = useAppContext();
-  const methods = useForm<SeaTurtleModel>({ mode: 'onChange', defaultValues: new SeaTurtleModel() });
+  const methods = useForm<SeaTurtleModel>({ mode: 'onChange', defaultValues: new SeaTurtleModel(), shouldUnregister: false });
   const { handleSubmit, formState, getValues, reset } = methods;
   const [currentSeaTurtleListItems, setCurrentSeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
   const [filteredSeaTurtleListItems, setFilteredSeaTurtleListItems] = useState([] as Array<SeaTurtleListItemModel>);
@@ -247,7 +247,7 @@ const SeaTurtles: React.FC = () => {
       setEditingStarted(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -274,7 +274,7 @@ const SeaTurtles: React.FC = () => {
       setIsFormEnabled(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -314,7 +314,7 @@ const SeaTurtles: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (modifiedSeaTurtle: SeaTurtleModel) => {
-    if (!formState.dirty) return;
+    if (!formState.isDirty) return;
 
     await saveSeaTurtle(modifiedSeaTurtle);
     ToastService.success('Record saved');
@@ -383,7 +383,7 @@ const SeaTurtles: React.FC = () => {
   return (
     <Box id='seaTurtle'>
       <Spinner isActive={showSpinner} />
-      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formState.isDirty} />
       <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
@@ -470,7 +470,7 @@ const SeaTurtles: React.FC = () => {
             {appContext.seaTurtle?.seaTurtleName || 'Sea Turtle'}
           </Typography>
 
-          <FormContext {...methods}>
+          <FormProvider {...methods}>
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <Typography variant='h2' gutterBottom={true}>General Information</Typography>
@@ -585,16 +585,16 @@ const SeaTurtles: React.FC = () => {
                   onClick={() => onChildNavigationClick('/sea-turtle-morphometrics-graphs')} />
 
                 <Box className={classes.formActionButtonsContainer}>
-                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.isDirty)}>
                     Save
                   </Button>
-                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.isDirty}>
                     Cancel
                   </Button>
                 </Box>
               </fieldset>
             </form>
-          </FormContext>
+          </FormProvider>
 
         </Grid>
       </Grid>

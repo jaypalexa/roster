@@ -9,17 +9,6 @@ import './index.sass';
 
 const theme = createMuiTheme({
   overrides: {
-    MuiTypography: {
-      h1: {
-        fontSize: '2rem',
-      },
-      h2: {
-        fontSize: '1.25rem',
-      },
-      h3: {
-        fontSize: '1rem',
-      },
-    },
     MuiBreadcrumbs: {
       root: {
         marginBottom: '1rem',
@@ -51,6 +40,20 @@ const theme = createMuiTheme({
         paddingBottom: '0px',
       }
     },
+    MuiInputBase: {
+      input: {
+        '&$disabled': {
+          cursor: 'not-allowed',
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      root: {
+        '&$disabled': {
+          cursor: 'not-allowed',
+        },
+      },
+    },
     MuiPaper: {
       elevation1: {
         '@media print': {
@@ -69,6 +72,24 @@ const theme = createMuiTheme({
         paddingTop: '3px',
         paddingBottom: '3px',
       }
+    },
+    MuiSelect: {
+      select: {
+        '&$disabled': {
+          cursor: 'not-allowed',
+        },
+      },
+    },
+    MuiTypography: {
+      h1: {
+        fontSize: '2rem',
+      },
+      h2: {
+        fontSize: '1.25rem',
+      },
+      h3: {
+        fontSize: '1rem',
+      },
     },
   },
 });

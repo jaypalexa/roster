@@ -5,7 +5,7 @@ export default class SeaTurtleTagModel {
   tagNumber!: string;
   tagType!: string;
   location!: string;
-  dateTagged!: Date;
+  dateTagged!: string;
   
   constructor() {
     // booleans:  need to be initialized to true or false for controlled checkboxes

@@ -15,7 +15,7 @@ import TabPanel, { a11yProps } from 'components/TabPanel';
 import useMount from 'hooks/UseMount';
 import OrganizationModel from 'models/OrganizationModel';
 import React, { useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import OrganizationService from 'services/OrganizationService';
 import ToastService from 'services/ToastService';
@@ -29,7 +29,7 @@ const Organization: React.FC = () => {
   );
   const classes = useStyles();
 
-  const methods = useForm<OrganizationModel>({ mode: 'onChange', defaultValues: new OrganizationModel() });
+  const methods = useForm<OrganizationModel>({ mode: 'onChange', defaultValues: new OrganizationModel(), shouldUnregister: false });
   const {  handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState(new OrganizationModel());
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
@@ -66,7 +66,7 @@ const Organization: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (modifiedOrganization: OrganizationModel) => {
-    if (!formState.dirty) return;
+    if (!formState.isDirty) return;
 
     await saveOrganization(modifiedOrganization);
     ToastService.success('Record saved');
@@ -96,7 +96,7 @@ const Organization: React.FC = () => {
   return (
     <Box id='organization'>
       <Spinner isActive={showSpinner} />
-      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formState.isDirty} />
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
         <Link to='/'>Home</Link>
         <Typography color='textPrimary'>Organization</Typography>
@@ -108,7 +108,7 @@ const Organization: React.FC = () => {
       <Grid container justify='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Organization</Typography>
-          <FormContext {...methods} >
+          <FormProvider {...methods} >
             <form onSubmit={onSubmit}>
 
               <Tabs
@@ -127,7 +127,7 @@ const Organization: React.FC = () => {
 
               <TabPanel value={currentTabIndex} index={0}> {/* General Information */}
                 <FormFieldRow>
-                  <TextFormField fieldName='organizationName' labelText='Organization Name' validationOptions={{ required: 'Organization Name is required' }} />
+                  <TextFormField fieldName='organizationName' labelText='Organization Name' validationRules={{ required: 'Organization Name is required' }} />
                   <TextFormField fieldName='permitNumber' labelText='Permit Number' />
                   <TextFormField fieldName='contactName' labelText='Contact Name' />
                 </FormFieldRow>
@@ -140,14 +140,14 @@ const Organization: React.FC = () => {
                 <FormFieldRow>
                   <TextFormField fieldName='city' labelText='City' />
                   <TextFormField fieldName='state' labelText='State' value='Florida' disabled={true} />
-                  <TextFormField fieldName='zipCode' labelText='ZIP Code' maxLength={10} validationOptions={{ maxLength: { value: 10, message: 'ZIP Code cannot exceed 10 characters' } }} />
+                  <TextFormField fieldName='zipCode' labelText='ZIP Code' maxLength={10} validationRules={{ maxLength: { value: 10, message: 'ZIP Code cannot exceed 10 characters' } }} />
                 </FormFieldRow>
 
                 <FormFieldRow>
                   <TextFormField fieldName='phone' labelText='Phone' />
                   <TextFormField fieldName='fax' labelText='Fax' />
                   <TextFormField fieldName='emailAddress' labelText='Email Address'
-                    validationOptions={{
+                    validationRules={{
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                         message: 'Invalid email address'
@@ -186,15 +186,15 @@ const Organization: React.FC = () => {
               </TabPanel>
 
               <Box className={classes.formActionButtonsContainer}>
-                <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.isDirty)}>
                   Save
                 </Button>
-                <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.isDirty}>
                   Cancel
                 </Button>
               </Box>
             </form>
-          </FormContext>
+          </FormProvider>
         </Grid>
       </Grid>
     </Box>

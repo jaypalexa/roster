@@ -4,11 +4,11 @@ import React from 'react';
 import sharedStyles from 'styles/sharedStyles';
 
 interface CheckboxGroupFormFieldProps {
-  labelText?: string;
   itemsPerColumn?: number;
+  labelText?: string;
 }
 
-export const CheckboxGroupFormField: React.FC<CheckboxGroupFormFieldProps> = ({ labelText, itemsPerColumn, children }) => {
+export const CheckboxGroupFormField: React.FC<CheckboxGroupFormFieldProps> = ({ children, itemsPerColumn, labelText }) => {
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles({

@@ -16,7 +16,7 @@ import MaterialTable from 'material-table';
 import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import HoldingTankMeasurementService from 'services/HoldingTankMeasurementService';
 import ToastService from 'services/ToastService';
@@ -32,7 +32,7 @@ const HoldingTankMeasurements: React.FC = () => {
   const classes = useStyles();
 
   const [appContext] = useAppContext();
-  const methods = useForm<HoldingTankMeasurementModel>({ mode: 'onChange', defaultValues: new HoldingTankMeasurementModel() });
+  const methods = useForm<HoldingTankMeasurementModel>({ mode: 'onChange', defaultValues: new HoldingTankMeasurementModel(), shouldUnregister: false });
   const { handleSubmit, formState, reset } = methods;
   const [currentHoldingTankMeasurement, setCurrentHoldingTankMeasurement] = useState(new HoldingTankMeasurementModel());
   const [currentHoldingTankMeasurements, setCurrentHoldingTankMeasurements] = useState([] as Array<HoldingTankMeasurementModel>);
@@ -173,7 +173,7 @@ const HoldingTankMeasurements: React.FC = () => {
       setEditingStarted(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -200,7 +200,7 @@ const HoldingTankMeasurements: React.FC = () => {
       setIsFormEnabled(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -240,7 +240,7 @@ const HoldingTankMeasurements: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (modifiedHoldingTankMeasurement: HoldingTankMeasurementModel) => {
-    if (!formState.dirty) return;
+    if (!formState.isDirty) return;
 
     await saveHoldingTankMeasurement(modifiedHoldingTankMeasurement);
     ToastService.success('Record saved');
@@ -279,7 +279,7 @@ const HoldingTankMeasurements: React.FC = () => {
   return (
     <Box id='holdingTankMeasurements'>
       <Spinner isActive={showSpinner} />
-      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formState.isDirty} />
       <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
@@ -342,27 +342,27 @@ const HoldingTankMeasurements: React.FC = () => {
             />
           </Box>
 
-          <FormContext {...methods} >
+          <FormProvider {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
+                  <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationRules={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
                   <DecimalFormField fieldName='temperature' labelText='Temperature' decimalPlaces={2} disabled={!isFormEnabled} />
                   <DecimalFormField fieldName='salinity' labelText='Salinity (in ppt)' decimalPlaces={2} disabled={!isFormEnabled} />
                   <DecimalFormField fieldName='ph' labelText='pH' decimalPlaces={2} disabled={!isFormEnabled} />
                 </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
-                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.isDirty)}>
                     Save
                   </Button>
-                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.isDirty}>
                     Cancel
                   </Button>
                 </Box>
               </fieldset>
             </form>
-          </FormContext>
+          </FormProvider>
 
         </Grid>
       </Grid>

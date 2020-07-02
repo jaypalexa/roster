@@ -7,7 +7,7 @@ import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import ReportRouteStateModel from 'models/ReportRouteStateModel';
 import React, { useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
@@ -25,7 +25,7 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
 
   const [appContext, setAppContext] = useAppContext();
   const [reportDefinition, setReportDefinition] = useState({} as ReportDefinitionModel);
-  const methods = useForm<any>({ mode: 'onChange', defaultValues: appContext.reportOptions[match.params.reportId] });
+  const methods = useForm<any>({ mode: 'onChange', defaultValues: appContext.reportOptions[match.params.reportId], shouldUnregister: false });
   const { handleSubmit } = methods;
   const [showSpinner, setShowSpinner] = useState(false);
 
@@ -68,7 +68,7 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
       <Grid container justify='center'>
         <Grid item xs={12} md={4}>
           <Typography variant='h1' align='center' gutterBottom={true}>{reportDefinition.reportName} Options</Typography>
-          <FormContext {...methods} >
+          <FormProvider {...methods} >
             <form onSubmit={onSubmit}>
               <ReportOptionsFormFields reportDefinition={reportDefinition} setShowSpinner={setShowSpinner} />
               <Box className={classes.formActionButtonsContainer}>
@@ -77,7 +77,7 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
                 </Button>
               </Box>
             </form>
-          </FormContext>
+          </FormProvider>
         </Grid>
       </Grid>
     </Box>

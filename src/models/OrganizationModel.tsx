@@ -13,13 +13,13 @@ export default class OrganizationModel {
   permitNumber?: string;
   contactName?: string;
   preferredUnitsType!: string;
-  hatchlingsBalanceAsOfDate?: Date;
+  hatchlingsBalanceAsOfDate?: string;
   ccHatchlingsStartingBalance!: number | string; // kludge because input controls deal only with strings
   cmHatchlingsStartingBalance!: number | string; // kludge because input controls deal only with strings
   dcHatchlingsStartingBalance!: number | string; // kludge because input controls deal only with strings
   otherHatchlingsStartingBalance!: number | string; // kludge because input controls deal only with strings
   unknownHatchlingsStartingBalance!: number | string; // kludge because input controls deal only with strings
-  washbacksBalanceAsOfDate!: Date;
+  washbacksBalanceAsOfDate!: string;
   ccWashbacksStartingBalance!: number | string; // kludge because input controls deal only with strings
   cmWashbacksStartingBalance!: number | string; // kludge because input controls deal only with strings
   dcWashbacksStartingBalance!: number | string; // kludge because input controls deal only with strings

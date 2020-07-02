@@ -18,7 +18,7 @@ import NameValuePair from 'models/NameValuePair';
 import SeaTurtleTagModel from 'models/SeaTurtleTagModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import SeaTurtleTagService from 'services/SeaTurtleTagService';
@@ -35,7 +35,7 @@ const SeaTurtleTags: React.FC = () => {
   const classes = useStyles();
 
   const [appContext] = useAppContext();
-  const methods = useForm<SeaTurtleTagModel>({ mode: 'onChange', defaultValues: new SeaTurtleTagModel() });
+  const methods = useForm<SeaTurtleTagModel>({ mode: 'onChange', defaultValues: new SeaTurtleTagModel(), shouldUnregister: false });
   const { handleSubmit, formState, reset } = methods;
   const [currentSeaTurtleTag, setCurrentSeaTurtleTag] = useState(new SeaTurtleTagModel());
   const [currentSeaTurtleTags, setCurrentSeaTurtleTags] = useState([] as Array<SeaTurtleTagModel>);
@@ -182,7 +182,7 @@ const SeaTurtleTags: React.FC = () => {
       setEditingStarted(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -209,7 +209,7 @@ const SeaTurtleTags: React.FC = () => {
       setIsFormEnabled(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -249,7 +249,7 @@ const SeaTurtleTags: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (modifiedSeaTurtleTag: SeaTurtleTagModel) => {
-    if (!formState.dirty) return;
+    if (!formState.isDirty) return;
 
     await saveSeaTurtleTag(modifiedSeaTurtleTag);
     ToastService.success('Record saved');
@@ -286,7 +286,7 @@ const SeaTurtleTags: React.FC = () => {
   return (
     <Box id='seaTurtleTags'>
       <Spinner isActive={showSpinner} />
-      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formState.isDirty} />
       <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
@@ -349,27 +349,27 @@ const SeaTurtleTags: React.FC = () => {
             />
           </Box>
 
-          <FormContext {...methods} >
+          <FormProvider {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  <TextFormField fieldName='tagNumber' labelText='Tag Number' validationOptions={{ required: 'Tag Number is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
+                  <TextFormField fieldName='tagNumber' labelText='Tag Number' validationRules={{ required: 'Tag Number is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
                   <ListFormField fieldName='tagType' labelText='Tag Type' listItems={tagTypes} disabled={!isFormEnabled} />
                   <ListFormField fieldName='location' labelText='Location' listItems={locations} disabled={!isFormEnabled} />
                   <DateFormField fieldName='dateTagged' labelText='Date Tagged' disabled={!isFormEnabled} />
                 </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
-                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.isDirty)}>
                     Save
                   </Button>
-                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.isDirty}>
                     Cancel
                   </Button>
                 </Box>
               </fieldset>
             </form>
-          </FormContext>
+          </FormProvider>
 
         </Grid>
       </Grid>
