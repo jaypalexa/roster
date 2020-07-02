@@ -2,7 +2,8 @@ import { Theme } from '@material-ui/core/styles';
 
 export default (theme: Theme) => ({
   dataTableContainer: {
-    borderColor: 'lightgray',
+    borderColor: '#EFEFEF',
+    borderRadius: '.5rem',
     borderStyle: 'solid',
     marginBottom: '2rem',
   },
