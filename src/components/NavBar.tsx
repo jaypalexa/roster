@@ -109,6 +109,7 @@ const NavBar: React.FC = (props: any) => {
   };
 
   const onSignOutClick = () => {
+    setIsDrawerOpen(false);
     LogEntryService.saveLogEntry(`SIGN OUT: ${AuthenticationService.getLastAuthUser()}`);
     AuthenticationService.signOut();
     onCloseAccountMenu();
