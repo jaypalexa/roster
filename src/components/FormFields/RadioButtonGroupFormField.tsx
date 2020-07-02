@@ -4,7 +4,11 @@ import React from 'react';
 import { Controller, useFormContext } from "react-hook-form";
 import FormField, { FormFieldProps } from './FormField';
 
-export const RadioButtonGroupFormField: React.FC<FormFieldProps> = ({ fieldName, labelText, children }) => {
+interface RadioButtonGroupFormFieldProps extends FormFieldProps {
+  labelText?: string;
+}
+
+export const RadioButtonGroupFormField: React.FC<RadioButtonGroupFormFieldProps> = ({ children, fieldName, labelText }) => {
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -18,16 +22,16 @@ export const RadioButtonGroupFormField: React.FC<FormFieldProps> = ({ fieldName,
   const { control } = useFormContext();
 
   return (
-    <FormField fieldName={fieldName} labelText={labelText}>
-      <FormLabel component='legend' className={classes.formLabel}>{labelText}</FormLabel>
+    <FormField fieldName={fieldName}>
+      <FormLabel className={classes.formLabel} component='legend'>{labelText}</FormLabel>
       <Controller 
-        name={fieldName} 
-        control={control}
         as={
           <RadioGroup aria-label={`${fieldName}-label`} name={fieldName}>
             {children}
           </RadioGroup>
         }
+        control={control}
+        name={fieldName} 
       />
     </FormField>
   );

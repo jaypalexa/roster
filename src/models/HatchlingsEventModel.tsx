@@ -4,7 +4,7 @@ export default class HatchlingsEventModel {
   organizationId!: string;
   eventType!: string;
   speciesCode!: string;
-  eventDate?: Date;
+  eventDate?: string;
   eventCount!:  number | string; // kludge because input controls deal only with strings
   beachEventCount!:  number | string; // kludge because input controls deal only with strings
   offshoreEventCount!:  number | string; // kludge because input controls deal only with strings

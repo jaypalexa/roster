@@ -3,32 +3,33 @@ import { FormFieldProps } from './FormField';
 import InputFormField from './InputFormField';
 
 interface TextFormFieldProps extends FormFieldProps {
-  placeholder?: string;
+  labelText?: string;
   maxLength?: number;
-  disabled?: boolean;
-  readonly?: boolean;
-  value?: string;
-  type?: string;
   multiline?: boolean;
+  placeholder?: string;
+  readonly?: boolean;
+  refObject?: any;
   rows?: string | number | undefined;
+  type?: string;
+  value?: string;
 }
 
-export const TextFormField: React.FC<TextFormFieldProps> = ({fieldName, labelText, placeholder, maxLength, disabled, readonly, value, type, multiline, rows, fieldClass, validationOptions, refObject}) => {
+export const TextFormField: React.FC<TextFormFieldProps> = ({disabled, fieldClass, fieldName, labelText, maxLength, multiline, placeholder, readonly, refObject, rows, type, validationRules, value}) => {
   return (
     <InputFormField 
+      disabled={disabled}
+      fieldClass={fieldClass}
       fieldName={fieldName} 
       labelText={labelText} 
-      validationOptions={validationOptions}
-      refObject={refObject}
-      type={type || 'text'} 
       maxLength={maxLength}
-      placeholder={placeholder} 
-      disabled={disabled}
-      readonly={readonly}
-      value={value}
       multiline={multiline}
+      placeholder={placeholder} 
+      readonly={readonly}
+      refObject={refObject}
       rows={rows}
-      fieldClass={fieldClass}
+      type={type || 'text'} 
+      validationRules={validationRules}
+      value={value}
     />
   );
 };

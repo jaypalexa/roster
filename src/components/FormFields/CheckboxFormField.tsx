@@ -4,26 +4,26 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { FormFieldProps } from './FormField';
 
 interface CheckboxFormFieldProps extends FormFieldProps {
-  disabled?: boolean;
+  labelText?: string;
   value?: string;
 }
 
-export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({fieldName, labelText, disabled, value, validationOptions}) => {
+export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({disabled, fieldName, labelText, validationRules, value}) => {
   const { control, errors } = useFormContext();
   return (
     <Grid item xs={12} md>
       <Controller 
-        name={fieldName} 
         control={control}
-        rules={validationOptions}
+        name={fieldName} 
+        rules={validationRules}
         as={
           <FormControlLabel
             label={labelText}
             control={<Checkbox
-              id={fieldName}
-              name={fieldName} 
               color='primary'
               disabled={disabled}
+              id={fieldName}
+              name={fieldName} 
               value={value}
             />}
           />

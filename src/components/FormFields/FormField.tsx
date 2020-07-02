@@ -4,18 +4,17 @@ import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React from 'react';
-import { useFormContext, ValidationOptions } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import { ValidationRules } from 'react-hook-form/dist/types/form';
 
 export interface FormFieldProps {
-  fieldName: string;
-  fieldClass?: string;
-  labelText?: string;
-  validationOptions?: ValidationOptions;
-  refObject?: any;
   disabled?: boolean;
+  fieldClass?: string;
+  fieldName: string;
+  validationRules?: ValidationRules;
 };
 
-export const FormField: React.FC<FormFieldProps> = ({ fieldName, fieldClass, labelText, disabled, children }) => {
+export const FormField: React.FC<FormFieldProps> = ({ children, disabled, fieldClass, fieldName }) => {
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -39,7 +38,7 @@ export const FormField: React.FC<FormFieldProps> = ({ fieldName, fieldClass, lab
       <FormControl 
         className={clsx(classes.margin, fieldClass)} 
         disabled={disabled}
-        error={errors[fieldName] && formState.dirty} 
+        error={errors[fieldName] && formState.isDirty} 
         fullWidth={true}
       >
         {children}

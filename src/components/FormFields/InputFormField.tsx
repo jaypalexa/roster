@@ -13,21 +13,22 @@ import sharedStyles from 'styles/sharedStyles';
 import FormField, { FormFieldProps } from './FormField';
 
 interface InputFormFieldProps extends FormFieldProps {
-  type: string;
-  placeholder?: string;
+  labelText?: string;
+  max?: number;
   maxLength?: number;
   min?: number;
-  max?: number;
-  pattern?: string;
-  step?: string;
-  disabled?: boolean;
-  readonly?: boolean;
-  value?: string | number | string[];
   multiline?: boolean;
+  pattern?: string;
+  placeholder?: string;
+  readonly?: boolean;
+  refObject?: any;
   rows?: string | number | undefined;
+  step?: string;
+  type: string;
+  value?: string | number | string[];
 }
 
-export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelText, validationOptions, refObject, type, placeholder, maxLength, min, max, pattern, step, disabled, readonly, value, multiline, rows, fieldClass}) => {
+export const InputFormField: React.FC<InputFormFieldProps> = ({disabled, fieldClass, fieldName, labelText, max, maxLength, min, multiline, pattern, placeholder, readonly, refObject, rows, step, type, validationRules, value}) => {
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -53,33 +54,12 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
   };
 
   return (
-    <FormField fieldName={fieldName} labelText={labelText}>
+    <FormField fieldName={fieldName}>
       <InputLabel htmlFor={fieldName} shrink={true}>{labelText}</InputLabel>
       <Input 
-        id={fieldName} 
-        name={fieldName}
-        type={isPasswordType ? (isPasswordVisible ? 'text' : 'password') : type}
+        className={clsx(fieldClass, (readonly ? classes.readOnlyField : ''))} 
         defaultValue={value}
-        multiline={multiline}
-        rows={rows || 3}
-        readOnly={readonly}
         disabled={disabled}
-        placeholder={placeholder}
-        inputRef={(e) => {
-          if (e) {
-            register(e, validationOptions || {});
-            if (refObject) {
-              refObject.current = e;
-            }
-          }
-        }}
-        inputProps={{
-          min: min,
-          max: max || 255,
-          maxLength: maxLength,
-          pattern: pattern,
-          step: step,
-        }}
         endAdornment={
           isPasswordType
             ? <InputAdornment position="end">
@@ -93,7 +73,28 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({fieldName, labelT
               </InputAdornment>
             : null
         }
-        className={clsx(fieldClass, (readonly ? classes.readOnlyField : ''))} 
+        id={fieldName} 
+        inputProps={{
+          max: max || 255,
+          maxLength: maxLength,
+          min: min,
+          pattern: pattern,
+          step: step,
+        }}
+        inputRef={(e) => {
+          if (e) {
+            register(e, validationRules || {});
+            if (refObject) {
+              refObject.current = e;
+            }
+          }
+        }}
+        multiline={multiline}
+        name={fieldName}
+        placeholder={placeholder}
+        readOnly={readonly}
+        rows={rows || 3}
+        type={isPasswordType ? (isPasswordVisible ? 'text' : 'password') : type}
       />
     </FormField>
   );

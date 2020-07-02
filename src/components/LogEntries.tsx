@@ -10,7 +10,7 @@ import useMount from 'hooks/UseMount';
 import MaterialTable from 'material-table';
 import LogEntryModel from 'models/LogEntryModel';
 import React, { useRef, useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import LogEntryService from 'services/LogEntryService';
 import ToastService from 'services/ToastService';
@@ -24,7 +24,7 @@ const LogEntries: React.FC = () => {
   );
   const classes = useStyles();
 
-  const methods = useForm<LogEntryModel>({ mode: 'onChange', defaultValues: new LogEntryModel() });
+  const methods = useForm<LogEntryModel>({ mode: 'onChange', defaultValues: new LogEntryModel(), shouldUnregister: false });
   const { reset } = methods;
   const [currentLogEntries, setCurrentLogEntries] = useState([] as Array<LogEntryModel>);
   const [currentLogEntry, setCurrentLogEntry] = useState(new LogEntryModel());
@@ -127,7 +127,7 @@ const LogEntries: React.FC = () => {
             {currentLogEntry.entryDateTime || 'Log Entry'}
           </Typography>
 
-          <FormContext {...methods} >
+          <FormProvider {...methods} >
             <FormFieldRow>
               <TextFormField fieldName='userName' labelText='User name' readonly={true} />
             </FormFieldRow>
@@ -145,7 +145,7 @@ const LogEntries: React.FC = () => {
                 Copy to clipboard
               </Button>
             </Box>
-          </FormContext>
+          </FormProvider>
           
         </Grid>
       </Grid>

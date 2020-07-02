@@ -16,7 +16,7 @@ import HatchlingsEventModel from 'models/HatchlingsEventModel';
 import NameValuePair from 'models/NameValuePair';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import HatchlingsEventService from 'services/HatchlingsEventService';
@@ -32,7 +32,7 @@ const HatchlingsEvents: React.FC = () => {
   );
   const classes = useStyles();
 
-  const methods = useForm<HatchlingsEventModel>({ mode: 'onChange', defaultValues: new HatchlingsEventModel() });
+  const methods = useForm<HatchlingsEventModel>({ mode: 'onChange', defaultValues: new HatchlingsEventModel(), shouldUnregister: false });
   const { handleSubmit, formState, reset } = methods;
   const [currentHatchlingsEvent, setCurrentHatchlingsEvent] = useState(new HatchlingsEventModel());
   const [currentHatchlingsEvents, setCurrentHatchlingsEvents] = useState([] as Array<HatchlingsEventModel>);
@@ -171,7 +171,7 @@ const HatchlingsEvents: React.FC = () => {
       setEditingStarted(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -198,7 +198,7 @@ const HatchlingsEvents: React.FC = () => {
       setIsFormEnabled(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -238,7 +238,7 @@ const HatchlingsEvents: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (modifiedHatchlingsEvent: HatchlingsEventModel) => {
-    if (!formState.dirty) return;
+    if (!formState.isDirty) return;
 
     await saveHatchlingsEvent(modifiedHatchlingsEvent);
     ToastService.success('Record saved');
@@ -295,7 +295,7 @@ const HatchlingsEvents: React.FC = () => {
   return (
     <Box id='hatchlingsEvents'>
       <Spinner isActive={showSpinner} />
-      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formState.isDirty} />
       <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
@@ -383,12 +383,12 @@ const HatchlingsEvents: React.FC = () => {
             {currentHatchlingsEvent.eventType ? `Hatchlings ${currentHatchlingsEvent.eventType} Event` : ''} {currentHatchlingsEvent.eventDate ? `on ${moment(currentHatchlingsEvent.eventDate).format('YYYY-MM-DD')}` : ''}
           </Typography>
 
-          <FormContext {...methods} >
+          <FormProvider {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  {showField('species', currentHatchlingsEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationOptions={{ required: 'Species is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} /> : null}
-                  {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationOptions={{ required: 'Event date is required' }} disabled={!isFormEnabled} /> : null}
+                  {showField('species', currentHatchlingsEvent.eventType) ? <ListFormField fieldName='species' labelText='Species' listItems={species} validationRules={{ required: 'Species is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} /> : null}
+                  {showField('eventDate', currentHatchlingsEvent.eventType) ? <DateFormField fieldName='eventDate' labelText='Event date' validationRules={{ required: 'Event date is required' }} disabled={!isFormEnabled} /> : null}
                   {showField('eventCount', currentHatchlingsEvent.eventType) ? <IntegerFormField fieldName='eventCount' labelText='Event count' disabled={!isFormEnabled} /> : null}
                   {showField('beachEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormField fieldName='beachEventCount' labelText={`${currentHatchlingsEvent.eventType} on beach`} disabled={!isFormEnabled} /> : null}
                   {showField('offshoreEventCount', currentHatchlingsEvent.eventType) ? <IntegerFormField fieldName='offshoreEventCount' labelText={`${currentHatchlingsEvent.eventType} offshore`} disabled={!isFormEnabled} /> : null}
@@ -396,16 +396,16 @@ const HatchlingsEvents: React.FC = () => {
                 </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
-                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.isDirty)}>
                     Save
                   </Button>
-                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.isDirty}>
                     Cancel
                   </Button>
                 </Box>
               </fieldset>
             </form>
-          </FormContext>
+          </FormProvider>
 
         </Grid>
       </Grid>

@@ -5,15 +5,15 @@ import { FormFieldProps } from './FormField';
 import TextFormField from './TextFormField';
 
 interface TextareaFormFieldProps extends FormFieldProps {
-  placeholder?: string;
+  labelText?: string;
   maxLength?: number;
-  rows?: string | number | undefined;
-  disabled?: boolean;
+  placeholder?: string;
   readonly?: boolean;
+  rows?: string | number | undefined;
   value?: string;
 }
 
-export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({fieldName, labelText, validationOptions, placeholder, maxLength, rows, disabled, readonly, value}) => {
+export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({disabled, fieldName, labelText, maxLength, placeholder, readonly, rows, validationRules, value}) => {
 
   const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -30,18 +30,18 @@ export const TextareaFormField: React.FC<TextareaFormFieldProps> = ({fieldName, 
 
   return (
     <TextFormField 
+      disabled={disabled}
+      fieldClass={classes.textareaWrapper}
       fieldName={fieldName} 
       labelText={labelText} 
-      multiline={true} 
-      validationOptions={validationOptions} 
-      placeholder={placeholder} 
       maxLength={maxLength} 
-      rows={rows} 
-      disabled={disabled}
+      multiline={true} 
+      placeholder={placeholder} 
       readonly={readonly}
+      rows={rows} 
+      validationRules={validationRules} 
       value={value} 
-      fieldClass={classes.textareaWrapper}
-      />
+    />
   );
 };
 

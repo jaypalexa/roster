@@ -7,7 +7,7 @@ import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import SignInModel from 'models/SignInModel';
 import React, { useRef, useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import AuthenticationService from 'services/AuthenticationService';
 import LogEntryService from 'services/LogEntryService';
 import MessageService from 'services/MessageService';
@@ -25,7 +25,7 @@ const SignIn: React.FC<SignInProps> = ({ redirectPathOnAuthentication }) => {
   );
   const classes = useStyles();
 
-  const methods = useForm<SignInModel>({ mode: 'onChange', defaultValues: new SignInModel() });
+  const methods = useForm<SignInModel>({ mode: 'onChange', defaultValues: new SignInModel(), shouldUnregister: false });
   const { handleSubmit, reset } = methods;
   const [currentLogin, setCurrentLogin] = useState(new SignInModel());
   const [showSpinner, setShowSpinner] = useState(false);
@@ -88,14 +88,14 @@ const SignIn: React.FC<SignInProps> = ({ redirectPathOnAuthentication }) => {
       <Grid container justify='center'>
         <Grid item md={3}>
           <Typography variant='h1' align='center' gutterBottom={true}>Sign In</Typography>
-          <FormContext {...methods}>
+          <FormProvider {...methods}>
             <form onSubmit={onSubmit}>
 
               <FormFieldRow>
-                <TextFormField fieldName='userName' labelText='User Name' validationOptions={{ required: 'User Name is required' }} refObject={userNameControlRef} />
+                <TextFormField fieldName='userName' labelText='User Name' validationRules={{ required: 'User Name is required' }} refObject={userNameControlRef} />
               </FormFieldRow>
               <FormFieldRow>
-                <TextFormField fieldName='password' labelText='Password' type='password' validationOptions={{ required: 'Password is required' }} refObject={passwordControlRef} />
+                <TextFormField fieldName='password' labelText='Password' type='password' validationRules={{ required: 'Password is required' }} refObject={passwordControlRef} />
               </FormFieldRow>
 
               <Box className={classes.formActionButtonsContainer}>
@@ -105,7 +105,7 @@ const SignIn: React.FC<SignInProps> = ({ redirectPathOnAuthentication }) => {
               </Box>
 
             </form>
-          </FormContext>
+          </FormProvider>
         </Grid>
       </Grid>
     </Box>

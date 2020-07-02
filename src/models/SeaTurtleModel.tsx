@@ -6,12 +6,12 @@ export default class SeaTurtleModel {
   sidNumber?: string;
   strandingIdNumber?: string;
   species!: string;
-  dateCaptured?: Date;
-  dateAcquired?: Date;
+  dateCaptured?: string;
+  dateAcquired?: string;
   acquiredFrom?: string;
   turtleSize!: string;
   status!: string;
-  dateRelinquished?: Date;
+  dateRelinquished?: string;
   relinquishedTo?: string;
   anomalies?: string;
   injuryBoatStrike!: boolean;

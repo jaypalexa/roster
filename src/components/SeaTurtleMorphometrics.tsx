@@ -19,7 +19,7 @@ import OrganizationModel from 'models/OrganizationModel';
 import SeaTurtleMorphometricModel from 'models/SeaTurtleMorphometricModel';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
-import { FormContext, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import OrganizationService from 'services/OrganizationService';
@@ -37,7 +37,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   const classes = useStyles();
 
   const [appContext] = useAppContext();
-  const methods = useForm<SeaTurtleMorphometricModel>({ mode: 'onChange', defaultValues: new SeaTurtleMorphometricModel() });
+  const methods = useForm<SeaTurtleMorphometricModel>({ mode: 'onChange', defaultValues: new SeaTurtleMorphometricModel(), shouldUnregister: false });
   const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState(new OrganizationModel());
   const [currentSeaTurtleMorphometric, setCurrentSeaTurtleMorphometric] = useState(new SeaTurtleMorphometricModel());
@@ -247,7 +247,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       setEditingStarted(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -274,7 +274,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       setIsFormEnabled(true);
     };
 
-    if (formState.dirty) {
+    if (formState.isDirty) {
       setDialogTitleText('Unsaved Changes');
       setDialogBodyText('Save changes?');
       setOnDialogYes(() => async () => {
@@ -314,7 +314,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   };
 
   const onSubmit = handleSubmit(async (modifiedSeaTurtleMorphometric: SeaTurtleMorphometricModel) => {
-    if (!formState.dirty) return;
+    if (!formState.isDirty) return;
 
     await saveSeaTurtleMorphometric(modifiedSeaTurtleMorphometric);
     ToastService.success('Record saved');
@@ -351,7 +351,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   return (
     <Box id='seaTurtleMorphometrics'>
       <Spinner isActive={showSpinner} />
-      <LeaveThisPagePrompt isDirty={formState.dirty} />
+      <LeaveThisPagePrompt isDirty={formState.isDirty} />
       <YesNoDialog
         isOpen={showYesNoDialog}
         titleText={dialogTitleText}
@@ -414,11 +414,11 @@ const SeaTurtleMorphometrics: React.FC = () => {
             />
           </Box>
 
-          <FormContext {...methods} >
+          <FormProvider {...methods} >
             <form onSubmit={onSubmit}>
               <fieldset disabled={!isFormEnabled}>
                 <FormFieldRow>
-                  <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationOptions={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
+                  <DateFormField fieldName='dateMeasured' labelText='Date Measured' validationRules={{ required: 'Date Measured is required' }} refObject={firstEditControlRef} disabled={!isFormEnabled} />
                 </FormFieldRow>
                 <FormFieldRow>
                   <TextFormField fieldName='sclNotchNotchValue' labelText='SCL notch-notch' disabled={!isFormEnabled} />
@@ -446,16 +446,16 @@ const SeaTurtleMorphometrics: React.FC = () => {
                 </FormFieldRow>
 
                 <Box className={classes.formActionButtonsContainer}>
-                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.dirty)}>
+                  <Button className={clsx(classes.fixedWidthMedium, classes.saveButton)} variant='contained' type='submit' disabled={!(formState.isValid && formState.isDirty)}>
                     Save
                   </Button>
-                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.dirty}>
+                  <Button className={classes.fixedWidthMedium} variant='contained' color='secondary' type='button' onClick={() => onCancelClick()} disabled={!formState.isDirty}>
                     Cancel
                   </Button>
                 </Box>
               </fieldset>
             </form>
-          </FormContext>
+          </FormProvider>
 
         </Grid>
       </Grid>

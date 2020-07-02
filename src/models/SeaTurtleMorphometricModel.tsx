@@ -2,7 +2,7 @@ export default class SeaTurtleMorphometricModel {
   [key: string]: any;
 	seaTurtleMorphometricId!: string;
 	seaTurtleId!: string;
-	dateMeasured?: Date;
+	dateMeasured?: string;
 	sclNotchNotchValue!: number | string; // kludge because input controls deal only with strings
 	sclNotchNotchUnits!: string;
 	sclNotchTipValue!: number | string; // kludge because input controls deal only with strings

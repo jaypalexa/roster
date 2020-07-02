@@ -7,26 +7,28 @@ import NameValuePair from '../../models/NameValuePair';
 import FormField, { FormFieldProps } from './FormField';
 
 interface ListFormFieldProps extends FormFieldProps {
+  labelText?: string;
   listItems: NameValuePair[];
+  refObject?: any;
 }
 
-export const ListFormField: React.FC<ListFormFieldProps> = ({fieldName, labelText, listItems, disabled, validationOptions}) => {
+export const ListFormField: React.FC<ListFormFieldProps> = ({disabled, fieldName, labelText, listItems, refObject, validationRules}) => {
   const { control } = useFormContext();
   return (
-    <FormField fieldName={fieldName} labelText={labelText}>
+    <FormField fieldName={fieldName}>
       <InputLabel htmlFor={fieldName} shrink={true}>{labelText}</InputLabel>
       <Controller
         as={
-          <Select disabled={disabled}>
+          <Select disabled={disabled} ref={refObject}>
             {listItems.map((e, key) => {
               return <MenuItem key={key} value={e.value} disabled={disabled}>{e.name}</MenuItem>;
             })}
           </Select>
         }
-        name={fieldName}
         control={control}
-        rules={validationOptions}
         defaultValue=''
+        name={fieldName}
+        rules={validationRules}
       />
     </FormField>
   );
