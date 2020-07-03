@@ -5,7 +5,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ValidationRules } from 'react-hook-form/dist/types/form';
+import { ValidationRules } from 'react-hook-form/dist/types';
 
 export interface FormFieldProps {
   disabled?: boolean;
