@@ -53,10 +53,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "eslint": "eslint . --ext js,jsx,ts,tsx",
+    "prettier": "prettier --write \"src/*.(ts|tsx)\""
   },
   "eslintConfig": {
     "extends": "react-app",
+    "ignorePatterns": ["build/**"],
     "overrides": [
       {
         "files": [
@@ -67,6 +70,9 @@
         }
       }
     ]
+  },
+  "prettier": {
+    "singleQuote": true
   },
   "browserslist": {
     "production": [

@@ -21,7 +21,7 @@ const theme = createMuiTheme({
           color: 'blue',
           textDecoration: 'none',
         },
-      }
+      },
     },
     MuiButtonBase: {
       root: {
@@ -38,7 +38,7 @@ const theme = createMuiTheme({
       root: {
         paddingTop: '0px',
         paddingBottom: '0px',
-      }
+      },
     },
     MuiInputBase: {
       input: {
@@ -71,7 +71,7 @@ const theme = createMuiTheme({
       root: {
         paddingTop: '3px',
         paddingBottom: '3px',
-      }
+      },
     },
     MuiSelect: {
       select: {
@@ -99,8 +99,8 @@ ReactDOM.render(
     <AppContextProvider>
       <App />
     </AppContextProvider>
-  </ThemeProvider>
-  , document.getElementById('root')
+  </ThemeProvider>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
