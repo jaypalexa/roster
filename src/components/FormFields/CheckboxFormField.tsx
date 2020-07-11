@@ -5,10 +5,9 @@ import { FormFieldProps } from './FormField';
 
 interface CheckboxFormFieldProps extends FormFieldProps {
   labelText?: string;
-  value?: string;
 }
 
-export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({disabled, fieldName, labelText, validationRules, value}) => {
+export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({disabled, fieldName, labelText, validationRules}) => {
   const { control, errors } = useFormContext();
   return (
     <Grid item xs={12} md>
@@ -16,7 +15,7 @@ export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({disabled, f
         control={control}
         name={fieldName} 
         rules={validationRules}
-        as={
+        render={props => (
           <FormControlLabel
             label={labelText}
             control={<Checkbox
@@ -24,10 +23,11 @@ export const CheckboxFormField: React.FC<CheckboxFormFieldProps> = ({disabled, f
               disabled={disabled}
               id={fieldName}
               name={fieldName} 
-              value={value}
+              onChange={e => props.onChange(e.target.checked)}
+              checked={props.value}
             />}
           />
-        }
+        )}
       />
       <FormHelperText id={`${fieldName}-helper-text`}>{errors[fieldName]?.message}</FormHelperText>
     </Grid>
