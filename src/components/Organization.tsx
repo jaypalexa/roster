@@ -42,7 +42,6 @@ const Organization: React.FC = () => {
 
   /* fetch table data */
   useMount(() => {
-
     const fetchOrganization = async () => {
       try {
         setShowSpinner(true);

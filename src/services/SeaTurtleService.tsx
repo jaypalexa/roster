@@ -38,7 +38,6 @@ const SeaTurtleService = {
   },
 
   async getSeaTurtles(): Promise<SeaTurtleModel[]> {
-   
     const apiRequestPayload = {} as ApiRequestPayload;
     apiRequestPayload.resource = RESOURCE_MANY;
 

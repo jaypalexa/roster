@@ -46,8 +46,8 @@ ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/
 | &check; Prevent tabbing outside of modal | [Material-UI](https://material-ui.com/) |
 | &check; Session / Token timeout | AWS Cognito and refresh tokens (JWT) |
 | &check; Material-UI or ~~Ant Design~~ instead of Bulma | [Material-UI](https://www.npmjs.com/package/@material-ui/core) / ~~[Ant Design](https://www.npmjs.com/package/antd)~~ |
-| &#10065; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
-| &#10065; Preventing denial-of-service attacks /excessive usage | ??? throttling |
+| &check; Counters for items on home screen and tabs | Sea Turtles > Tags, etc. |
+| &#10065; Preventing denial-of-service attacks / excessive usage | ??? throttling |
 | &#10065; Offline mode | ??? send updates if any made whilst offline...how to auth? Service worker unable to distinguish different payloads when calling AWS Lambda (https://lambda.us-east-2.amazonaws.com/2015-03-31/functions/roster-api-lambda/invocations)? |
 | &#10065; Poor man's caching ??? | [A guide to stale-while-revalidate data fetching with React Hooks](https://dev.to/aviaryan/a-guide-to-stale-while-revalidate-data-fetching-with-react-hooks-15do) |
 | &#10065; Ability to click/tap to set map marker ??? | ??? |
