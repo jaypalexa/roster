@@ -13,7 +13,7 @@
     "clsx": "^1.1.1",
     "jwt-decode": "^2.2.0",
     "leaflet": "^1.6.0",
-    "material-table": "^1.67.1",
+    "material-table": "^1.66.0",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
