@@ -205,7 +205,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenMobile}>
         <Link to='/'>Home</Link>
         <Link to='/sea-turtles'>Sea Turtles</Link>
-        <Typography color='textPrimary'>Water Graphs</Typography>
+        <Typography color='textPrimary'>Morphometrics Graphs</Typography>
       </Breadcrumbs>
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
         <Link to='/sea-turtles'>&#10094; Sea Turtles</Link>
