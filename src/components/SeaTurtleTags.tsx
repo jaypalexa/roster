@@ -24,7 +24,7 @@ import CodeListTableService, { CodeTableType } from 'services/CodeTableListServi
 import SeaTurtleTagService from 'services/SeaTurtleTagService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, constants, tableIcons } from 'utils';
+import { actionIcons, clone, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const SeaTurtleTags: React.FC = () => {
@@ -125,7 +125,7 @@ const SeaTurtleTags: React.FC = () => {
       setShowSpinner(true);
       const seaTurtleTag = await SeaTurtleTagService.getSeaTurtleTag(seaTurtleId, seaTurtleTagId);
       reset(seaTurtleTag);
-      setCurrentSeaTurtleTag(seaTurtleTag);
+      setCurrentSeaTurtleTag(clone(seaTurtleTag));
     } 
     catch (err) {
       console.log(err);
@@ -145,7 +145,7 @@ const SeaTurtleTags: React.FC = () => {
       await SeaTurtleTagService.deleteSeaTurtleTag(seaTurtleId, seaTurtleTagId);
       const seaTurtleTag = new SeaTurtleTagModel();
       reset(seaTurtleTag);
-      setCurrentSeaTurtleTag(seaTurtleTag);
+      setCurrentSeaTurtleTag(clone(seaTurtleTag));
       const index = currentSeaTurtleTags.findIndex(x => x.seaTurtleTagId === seaTurtleTagId);
       if (~index) {
         // if we are deleting the last item on the page, 
@@ -157,7 +157,7 @@ const SeaTurtleTags: React.FC = () => {
         }
         
         // remove the deleted item from the data table data source
-        var updatedCurrentSeaTurtleTags = [...currentSeaTurtleTags];
+        var updatedCurrentSeaTurtleTags = clone(currentSeaTurtleTags);
         updatedCurrentSeaTurtleTags.splice(index, 1)
         setCurrentSeaTurtleTags(updatedCurrentSeaTurtleTags);
       }
@@ -177,7 +177,7 @@ const SeaTurtleTags: React.FC = () => {
       seaTurtleTag.seaTurtleTagId = uuidv4().toLowerCase();
       seaTurtleTag.seaTurtleId = appContext.seaTurtle?.seaTurtleId || '';
       reset(seaTurtleTag);
-      setCurrentSeaTurtleTag(seaTurtleTag);
+      setCurrentSeaTurtleTag(clone(seaTurtleTag));
       setIsFormEnabled(true);
       setEditingStarted(true);
     };
@@ -261,14 +261,14 @@ const SeaTurtleTags: React.FC = () => {
       const patchedSeaTurtleTag = { ...currentSeaTurtleTag, ...modifiedSeaTurtleTag };
       await SeaTurtleTagService.saveSeaTurtleTag(patchedSeaTurtleTag);
       reset(patchedSeaTurtleTag);
-      setCurrentSeaTurtleTag(patchedSeaTurtleTag);
+      setCurrentSeaTurtleTag(clone(patchedSeaTurtleTag));
       const index = currentSeaTurtleTags.findIndex(x => x.seaTurtleTagId === patchedSeaTurtleTag.seaTurtleTagId);
       if (~index) {
-        currentSeaTurtleTags[index] = { ...patchedSeaTurtleTag };
+        currentSeaTurtleTags[index] = clone(patchedSeaTurtleTag);
       } else {
         currentSeaTurtleTags.push(patchedSeaTurtleTag);
       }
-      setCurrentSeaTurtleTags([...currentSeaTurtleTags]);
+      setCurrentSeaTurtleTags(clone(currentSeaTurtleTags));
     } 
     catch (err) {
       console.log(err);
@@ -331,7 +331,7 @@ const SeaTurtleTags: React.FC = () => {
             <MaterialTable tableRef={tableRef}
               icons={tableIcons}
               columns={tableColumns}
-              data={[...currentSeaTurtleTags]}
+              data={clone(currentSeaTurtleTags)}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditSeaTurtleTagClick(data as SeaTurtleTagModel)}
               actions={[

@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import OrganizationService from 'services/OrganizationService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { constants } from 'utils';
+import { clone, constants } from 'utils';
 
 const Organization: React.FC = () => {
 
@@ -30,7 +30,7 @@ const Organization: React.FC = () => {
   const classes = useStyles();
 
   const methods = useForm<OrganizationModel>({ mode: 'onChange', defaultValues: new OrganizationModel(), shouldUnregister: false });
-  const {  handleSubmit, formState, reset } = methods;
+  const { handleSubmit, formState, reset } = methods;
   const [currentOrganization, setCurrentOrganization] = useState(new OrganizationModel());
   const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
   const [showSpinner, setShowSpinner] = useState(false);
@@ -47,7 +47,7 @@ const Organization: React.FC = () => {
         setShowSpinner(true);
         const organization = await OrganizationService.getOrganization();
         reset(organization);
-        setCurrentOrganization(organization);
+        setCurrentOrganization(clone(organization));
       } 
       catch (err) {
         console.log(err);
@@ -77,8 +77,8 @@ const Organization: React.FC = () => {
       const patchedOrganization = { ...currentOrganization, ...modifiedOrganization };
       await OrganizationService.saveOrganization(patchedOrganization);
       reset(patchedOrganization);
-      setCurrentOrganization(patchedOrganization);
-    } 
+      setCurrentOrganization(clone(patchedOrganization));
+    }
     catch (err) {
       console.log(err);
       ToastService.error(constants.ERROR.GENERIC);

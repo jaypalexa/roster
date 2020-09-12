@@ -19,10 +19,15 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import ReportOptionsDateRangeDto from 'dtos/ReportOptions/ReportOptionsDateRangeDto';
 import moment from 'moment';
 import React, { forwardRef, RefObject } from 'react';
+import rfdc from 'rfdc';
 
 export interface Dictionary<T> {
   [key: string]: T;
 }
+
+export const clone = (obj: any) => {
+  return rfdc()(obj);
+};
 
 export const sortByProperty = (propertyName: string) => {
   const value = (x: any) => x[propertyName];

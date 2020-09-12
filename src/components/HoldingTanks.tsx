@@ -21,7 +21,7 @@ import AuthenticationService from 'services/AuthenticationService';
 import HoldingTankService from 'services/HoldingTankService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, constants, tableIcons } from 'utils';
+import { actionIcons, clone, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const HoldingTanks: React.FC = () => {
@@ -93,7 +93,7 @@ const HoldingTanks: React.FC = () => {
   }, [editingStarted]);
 
   const setCurrentHoldingTank = (holdingTank: HoldingTankModel) => {
-    setAppContext({ ...appContext, holdingTank: holdingTank });
+    setAppContext({ ...appContext, holdingTank: clone(holdingTank) });
   }
 
   const fetchHoldingTank = async (holdingTankId: string) => {
@@ -130,7 +130,7 @@ const HoldingTanks: React.FC = () => {
         }
 
         // remove the deleted item from the data table data source
-        var updatedCurrentHoldingTanks = [...currentHoldingTanks];
+        var updatedCurrentHoldingTanks = clone(currentHoldingTanks);
         updatedCurrentHoldingTanks.splice(index, 1)
         setCurrentHoldingTanks(updatedCurrentHoldingTanks);
       }
@@ -236,11 +236,11 @@ const HoldingTanks: React.FC = () => {
       setCurrentHoldingTank(patchedHoldingTank);
       const index = currentHoldingTanks.findIndex(x => x.holdingTankId === patchedHoldingTank.holdingTankId);
       if (~index) {
-        currentHoldingTanks[index] = { ...patchedHoldingTank };
+        currentHoldingTanks[index] = clone(patchedHoldingTank);
       } else {
         currentHoldingTanks.push(patchedHoldingTank);
       }
-      setCurrentHoldingTanks([...currentHoldingTanks]);
+      setCurrentHoldingTanks(clone(currentHoldingTanks));
     } 
     catch (err) {
       console.log(err);
@@ -310,7 +310,7 @@ const HoldingTanks: React.FC = () => {
             <MaterialTable tableRef={tableRef}
               icons={tableIcons}
               columns={tableColumns}
-              data={[...currentHoldingTanks]}
+              data={clone(currentHoldingTanks)}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditHoldingTankClick(data as HoldingTankModel)}
               actions={[

@@ -16,6 +16,9 @@ const Home: React.FC = () => {
       root: {
         flexGrow: 1,
       },
+      homeGridItem: {
+        display: 'flex', 
+      }
     }),
   );
   const classes = useStyles();
@@ -89,22 +92,22 @@ const Home: React.FC = () => {
     <Box id='home' className={classes.root}>
       <Spinner isActive={showSpinner} />
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} className={classes.homeGridItem}>
           <HomeTile color='darkgreen' content='Sea Turtles' linkTo='/sea-turtles' chipData={seaTurtlesChips} />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} className={classes.homeGridItem}>
           <HomeTile color='hsl(245, 100%, 25%)' content='Hatchlings Events' linkTo='/hatchlings-events' chipData={hatchlingsEventsChips} />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} className={classes.homeGridItem}>
           <HomeTile color='hsl(245, 100%, 40%)' content='Washbacks Events' linkTo='/washbacks-events' chipData={washbacksEventsChips} />
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={5} className={classes.homeGridItem}>
           <HomeTile color='darkmagenta' content='Holding Tanks' linkTo='/holding-tanks' chipData={holdingTanksChips} />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={3} className={classes.homeGridItem}>
           <HomeTile color='darkred' content='Reports' linkTo='/reports' chipData={reportsChips} />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} className={classes.homeGridItem}>
           <HomeTile color='firebrick' content='Blank Forms' linkTo='/blank-forms' chipData={blankFormsChips} />
         </Grid>
       </Grid>

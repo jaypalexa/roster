@@ -22,7 +22,7 @@ import CodeListTableService, { CodeTableType } from 'services/CodeTableListServi
 import HatchlingsEventService from 'services/HatchlingsEventService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, constants, tableIcons, toNumber } from 'utils';
+import { actionIcons, clone, constants, tableIcons, toNumber } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const HatchlingsEvents: React.FC = () => {
@@ -117,7 +117,7 @@ const HatchlingsEvents: React.FC = () => {
       setShowSpinner(true);
       const hatchlingsEvent = await HatchlingsEventService.getHatchlingsEvent(hatchlingsEventId);
       reset(hatchlingsEvent);
-      setCurrentHatchlingsEvent(hatchlingsEvent);
+      setCurrentHatchlingsEvent(clone(hatchlingsEvent));
     } 
     catch (err) {
       console.log(err);
@@ -134,7 +134,7 @@ const HatchlingsEvents: React.FC = () => {
       await HatchlingsEventService.deleteHatchlingsEvent(hatchlingsEventId);
       const hatchlingsEvent = new HatchlingsEventModel();
       reset(hatchlingsEvent);
-      setCurrentHatchlingsEvent(hatchlingsEvent);
+      setCurrentHatchlingsEvent(clone(hatchlingsEvent));
       const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === hatchlingsEventId);
       if (~index) {
         // if we are deleting the last item on the page, 
@@ -146,7 +146,7 @@ const HatchlingsEvents: React.FC = () => {
         }
         
         // remove the deleted item from the data table data source
-        var updatedCurrentHatchlingsEvents = [...currentHatchlingsEvents];
+        var updatedCurrentHatchlingsEvents = clone(currentHatchlingsEvents);
         updatedCurrentHatchlingsEvents.splice(index, 1)
         setCurrentHatchlingsEvents(updatedCurrentHatchlingsEvents);
       }
@@ -166,7 +166,7 @@ const HatchlingsEvents: React.FC = () => {
       hatchlingsEvent.hatchlingsEventId = uuidv4().toLowerCase();
       hatchlingsEvent.eventType = eventType;
       reset(hatchlingsEvent);
-      setCurrentHatchlingsEvent(hatchlingsEvent);
+      setCurrentHatchlingsEvent(clone(hatchlingsEvent));
       setIsFormEnabled(true);
       setEditingStarted(true);
     };
@@ -250,14 +250,14 @@ const HatchlingsEvents: React.FC = () => {
       const patchedHatchlingsEvent = { ...currentHatchlingsEvent, ...modifiedHatchlingsEvent };
       await HatchlingsEventService.saveHatchlingsEvent(patchedHatchlingsEvent);
       reset(patchedHatchlingsEvent);
-      setCurrentHatchlingsEvent(patchedHatchlingsEvent);
+      setCurrentHatchlingsEvent(clone(patchedHatchlingsEvent));
       const index = currentHatchlingsEvents.findIndex(x => x.hatchlingsEventId === patchedHatchlingsEvent.hatchlingsEventId);
       if (~index) {
-        currentHatchlingsEvents[index] = { ...patchedHatchlingsEvent };
+        currentHatchlingsEvents[index] = clone(patchedHatchlingsEvent);
       } else {
         currentHatchlingsEvents.push(patchedHatchlingsEvent);
       }
-      setCurrentHatchlingsEvents([...currentHatchlingsEvents]);
+      setCurrentHatchlingsEvents(clone(currentHatchlingsEvents));
     } 
     catch (err) {
       console.log(err);
@@ -361,7 +361,7 @@ const HatchlingsEvents: React.FC = () => {
             <MaterialTable tableRef={tableRef}
               icons={tableIcons}
               columns={tableColumns}
-              data={[...currentHatchlingsEvents]}
+              data={clone(currentHatchlingsEvents)}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditHatchlingsEventClick(data as HatchlingsEventModel)}
               actions={[

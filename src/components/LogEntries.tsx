@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import LogEntryService from 'services/LogEntryService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, constants, tableIcons } from 'utils';
+import { actionIcons, clone, constants, tableIcons } from 'utils';
 
 const LogEntries: React.FC = () => {
 
@@ -107,7 +107,7 @@ const LogEntries: React.FC = () => {
             <MaterialTable tableRef={tableRef}
               icons={tableIcons}
               columns={tableColumns}
-              data={[...currentLogEntries]}
+              data={clone(currentLogEntries)}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onViewLogEntryClick(data as LogEntryModel)}
               actions={[

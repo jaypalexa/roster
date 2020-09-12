@@ -26,7 +26,7 @@ import OrganizationService from 'services/OrganizationService';
 import SeaTurtleMorphometricService from 'services/SeaTurtleMorphometricService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, constants, tableIcons } from 'utils';
+import { actionIcons, clone, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const SeaTurtleMorphometrics: React.FC = () => {
@@ -179,7 +179,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       setShowSpinner(true);
       const seaTurtleMorphometric = await SeaTurtleMorphometricService.getSeaTurtleMorphometric(seaTurtleId, seaTurtleMorphometricId);
       reset(seaTurtleMorphometric);
-      setCurrentSeaTurtleMorphometric(seaTurtleMorphometric);
+      setCurrentSeaTurtleMorphometric(clone(seaTurtleMorphometric));
     } 
     catch (err) {
       console.log(err);
@@ -199,7 +199,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       await SeaTurtleMorphometricService.deleteSeaTurtleMorphometric(seaTurtleId, seaTurtleMorphometricId);
       const seaTurtleMorphometric = new SeaTurtleMorphometricModel();
       reset(seaTurtleMorphometric);
-      setCurrentSeaTurtleMorphometric(seaTurtleMorphometric);
+      setCurrentSeaTurtleMorphometric(clone(seaTurtleMorphometric));
       const index = currentSeaTurtleMorphometrics.findIndex(x => x.seaTurtleMorphometricId === seaTurtleMorphometricId);
       if (~index) {
         // if we are deleting the last item on the page, 
@@ -211,7 +211,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
         }
         
         // remove the deleted item from the data table data source
-        var updatedCurrentSeaTurtleMorphometrics = [...currentSeaTurtleMorphometrics];
+        var updatedCurrentSeaTurtleMorphometrics = clone(currentSeaTurtleMorphometrics);
         updatedCurrentSeaTurtleMorphometrics.splice(index, 1)
         setCurrentSeaTurtleMorphometrics(updatedCurrentSeaTurtleMorphometrics);
       }
@@ -242,7 +242,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       seaTurtleMorphometric.ccwUnits = defaultLengthUnits();
       seaTurtleMorphometric.weightUnits = defaultWeightUnits();
       reset(seaTurtleMorphometric);
-      setCurrentSeaTurtleMorphometric(seaTurtleMorphometric);
+      setCurrentSeaTurtleMorphometric(clone(seaTurtleMorphometric));
       setIsFormEnabled(true);
       setEditingStarted(true);
     };
@@ -326,14 +326,14 @@ const SeaTurtleMorphometrics: React.FC = () => {
       const patchedSeaTurtleMorphometric = { ...currentSeaTurtleMorphometric, ...modifiedSeaTurtleMorphometric };
       await SeaTurtleMorphometricService.saveSeaTurtleMorphometric(patchedSeaTurtleMorphometric);
       reset(patchedSeaTurtleMorphometric);
-      setCurrentSeaTurtleMorphometric(patchedSeaTurtleMorphometric);
+      setCurrentSeaTurtleMorphometric(clone(patchedSeaTurtleMorphometric));
       const index = currentSeaTurtleMorphometrics.findIndex(x => x.seaTurtleMorphometricId === patchedSeaTurtleMorphometric.seaTurtleMorphometricId);
       if (~index) {
-          currentSeaTurtleMorphometrics[index] = { ...patchedSeaTurtleMorphometric };
+          currentSeaTurtleMorphometrics[index] = clone(patchedSeaTurtleMorphometric);
       } else {
           currentSeaTurtleMorphometrics.push(patchedSeaTurtleMorphometric);
       }
-      setCurrentSeaTurtleMorphometrics([...currentSeaTurtleMorphometrics]);
+      setCurrentSeaTurtleMorphometrics(clone(currentSeaTurtleMorphometrics));
     } 
     catch (err) {
       console.log(err);
@@ -396,7 +396,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
             <MaterialTable tableRef={tableRef}
               icons={tableIcons}
               columns={tableColumns} 
-              data={[...currentSeaTurtleMorphometrics]}
+              data={clone(currentSeaTurtleMorphometrics)}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditSeaTurtleMorphometricClick(data as SeaTurtleMorphometricModel)}
               actions={[

@@ -24,7 +24,7 @@ import CodeListTableService, { CodeTableType } from 'services/CodeTableListServi
 import ToastService from 'services/ToastService';
 import WashbacksEventService from 'services/WashbacksEventService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, constants, tableIcons, toNumber } from 'utils';
+import { actionIcons, clone, constants, tableIcons, toNumber } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const WashbacksEvents: React.FC = () => {
@@ -126,7 +126,7 @@ const WashbacksEvents: React.FC = () => {
       setShowSpinner(true);
       const washbacksEvent = await WashbacksEventService.getWashbacksEvent(washbacksEventId);
       reset(washbacksEvent);
-      setCurrentWashbacksEvent(washbacksEvent);
+      setCurrentWashbacksEvent(clone(washbacksEvent));
     } 
     catch (err) {
       console.log(err);
@@ -143,7 +143,7 @@ const WashbacksEvents: React.FC = () => {
       await WashbacksEventService.deleteWashbacksEvent(washbacksEventId);
       const washbacksEvent = new WashbacksEventModel();
       reset(washbacksEvent);
-      setCurrentWashbacksEvent(washbacksEvent);
+      setCurrentWashbacksEvent(clone(washbacksEvent));
       const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === washbacksEventId);
       if (~index) {
         // if we are deleting the last item on the page, 
@@ -155,7 +155,7 @@ const WashbacksEvents: React.FC = () => {
         }
 
         // remove the deleted item from the data table data source
-        var updatedCurrentWashbacksEvents = [...currentWashbacksEvents];
+        var updatedCurrentWashbacksEvents = clone(currentWashbacksEvents);
         updatedCurrentWashbacksEvents.splice(index, 1)
         setCurrentWashbacksEvents(updatedCurrentWashbacksEvents);
       }
@@ -175,7 +175,7 @@ const WashbacksEvents: React.FC = () => {
       washbacksEvent.washbacksEventId = uuidv4().toLowerCase();
       washbacksEvent.eventType = eventType;
       reset(washbacksEvent);
-      setCurrentWashbacksEvent(washbacksEvent);
+      setCurrentWashbacksEvent(clone(washbacksEvent));
       setIsFormEnabled(true);
       setEditingStarted(true);
     };
@@ -259,14 +259,14 @@ const WashbacksEvents: React.FC = () => {
       const patchedWashbacksEvent = { ...currentWashbacksEvent, ...modifiedWashbacksEvent };
       await WashbacksEventService.saveWashbacksEvent(patchedWashbacksEvent);
       reset(patchedWashbacksEvent);
-      setCurrentWashbacksEvent(patchedWashbacksEvent);
+      setCurrentWashbacksEvent(clone(patchedWashbacksEvent));
       const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === patchedWashbacksEvent.washbacksEventId);
       if (~index) {
-        currentWashbacksEvents[index] = { ...patchedWashbacksEvent };
+        currentWashbacksEvents[index] = clone(patchedWashbacksEvent);
       } else {
         currentWashbacksEvents.push(patchedWashbacksEvent);
       }
-      setCurrentWashbacksEvents([...currentWashbacksEvents]);
+      setCurrentWashbacksEvents(clone(currentWashbacksEvents));
     } 
     catch (err) {
       console.log(err);
@@ -370,7 +370,7 @@ const WashbacksEvents: React.FC = () => {
             <MaterialTable tableRef={tableRef}
               icons={tableIcons}
               columns={tableColumns}
-              data={[...currentWashbacksEvents]}
+              data={clone(currentWashbacksEvents)}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditWashbacksEventClick(data as WashbacksEventModel)}
               actions={[

@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import HoldingTankMeasurementService from 'services/HoldingTankMeasurementService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, constants, tableIcons } from 'utils';
+import { actionIcons, clone, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const HoldingTankMeasurements: React.FC = () => {
@@ -116,7 +116,7 @@ const HoldingTankMeasurements: React.FC = () => {
       setShowSpinner(true);
       const holdingTankMeasurement = await HoldingTankMeasurementService.getHoldingTankMeasurement(holdingTankId, holdingTankMeasurementId);
       reset(holdingTankMeasurement);
-      setCurrentHoldingTankMeasurement(holdingTankMeasurement);
+      setCurrentHoldingTankMeasurement(clone(holdingTankMeasurement));
     } 
     catch (err) {
       console.log(err);
@@ -136,7 +136,7 @@ const HoldingTankMeasurements: React.FC = () => {
       await HoldingTankMeasurementService.deleteHoldingTankMeasurement(holdingTankId, holdingTankMeasurementId);
       const holdingTankMeasurement = new HoldingTankMeasurementModel();
       reset(holdingTankMeasurement);
-      setCurrentHoldingTankMeasurement(holdingTankMeasurement);
+      setCurrentHoldingTankMeasurement(clone(holdingTankMeasurement));
       const index = currentHoldingTankMeasurements.findIndex(x => x.holdingTankMeasurementId === holdingTankMeasurementId);
       if (~index) {
         // if we are deleting the last item on the page, 
@@ -148,7 +148,7 @@ const HoldingTankMeasurements: React.FC = () => {
         }
         
         // remove the deleted item from the data table data source
-        var updatedCurrentHoldingTankMeasurements = [...currentHoldingTankMeasurements];
+        var updatedCurrentHoldingTankMeasurements = clone(currentHoldingTankMeasurements);
         updatedCurrentHoldingTankMeasurements.splice(index, 1)
         setCurrentHoldingTankMeasurements(updatedCurrentHoldingTankMeasurements);
       }
@@ -168,7 +168,7 @@ const HoldingTankMeasurements: React.FC = () => {
       holdingTankMeasurement.holdingTankMeasurementId = uuidv4().toLowerCase();
       holdingTankMeasurement.holdingTankId = appContext.holdingTank?.holdingTankId || '';
       reset(holdingTankMeasurement);
-      setCurrentHoldingTankMeasurement(holdingTankMeasurement);
+      setCurrentHoldingTankMeasurement(clone(holdingTankMeasurement));
       setIsFormEnabled(true);
       setEditingStarted(true);
     };
@@ -252,14 +252,14 @@ const HoldingTankMeasurements: React.FC = () => {
       const patchedHoldingTankMeasurement = { ...currentHoldingTankMeasurement, ...modifiedHoldingTankMeasurement };
       await HoldingTankMeasurementService.saveHoldingTankMeasurement(patchedHoldingTankMeasurement);
       reset(patchedHoldingTankMeasurement);
-      setCurrentHoldingTankMeasurement(patchedHoldingTankMeasurement);
+      setCurrentHoldingTankMeasurement(clone(patchedHoldingTankMeasurement));
       const index = currentHoldingTankMeasurements.findIndex(x => x.holdingTankMeasurementId === patchedHoldingTankMeasurement.holdingTankMeasurementId);
       if (~index) {
-        currentHoldingTankMeasurements[index] = { ...patchedHoldingTankMeasurement };
+        currentHoldingTankMeasurements[index] = clone(patchedHoldingTankMeasurement);
       } else {
         currentHoldingTankMeasurements.push(patchedHoldingTankMeasurement);
       }
-      setCurrentHoldingTankMeasurements([...currentHoldingTankMeasurements]);
+      setCurrentHoldingTankMeasurements(clone(currentHoldingTankMeasurements));
 
       ToastService.success('Record saved');
     } 
@@ -324,7 +324,7 @@ const HoldingTankMeasurements: React.FC = () => {
             <MaterialTable tableRef={tableRef}
               icons={tableIcons}
               columns={tableColumns}
-              data={[...currentHoldingTankMeasurements]}
+              data={clone(currentHoldingTankMeasurements)}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditHoldingTankMeasurementClick(data as HoldingTankMeasurementModel)}
               actions={[

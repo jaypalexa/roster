@@ -34,7 +34,7 @@ import CodeListTableService, { CodeTableType } from 'services/CodeTableListServi
 import SeaTurtleService from 'services/SeaTurtleService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, constants, tableIcons } from 'utils';
+import { actionIcons, clone, constants, tableIcons } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const SeaTurtles: React.FC = () => {
@@ -177,7 +177,7 @@ const SeaTurtles: React.FC = () => {
   const resetFilteredSeaTurtleListItems = (seaTurtleListItems: SeaTurtleListItemModel[], isChecked: boolean) => {
     setShowSpinner(true);
     if (isChecked) {
-      setFilteredSeaTurtleListItems([...seaTurtleListItems]);
+      setFilteredSeaTurtleListItems(clone(seaTurtleListItems));
     } else {
       setFilteredSeaTurtleListItems(seaTurtleListItems.filter(x => !x.dateRelinquished));
     }
@@ -185,7 +185,7 @@ const SeaTurtles: React.FC = () => {
   };
 
   const setCurrentSeaTurtle = (seaTurtle: SeaTurtleModel) => {
-    setAppContext({ ...appContext, seaTurtle: seaTurtle });
+    setAppContext({ ...appContext, seaTurtle: clone(seaTurtle) });
   }
 
   const fetchSeaTurtle = async (seaTurtleId: string) => {
@@ -222,7 +222,7 @@ const SeaTurtles: React.FC = () => {
         }
         
         // remove the deleted item from the data table data source
-        var updatedCurrentSeaTurtleListItems = [...currentSeaTurtleListItems];
+        var updatedCurrentSeaTurtleListItems = clone(currentSeaTurtleListItems);
         updatedCurrentSeaTurtleListItems.splice(index, 1)
         setCurrentSeaTurtleListItems(updatedCurrentSeaTurtleListItems);
         resetFilteredSeaTurtleListItems(updatedCurrentSeaTurtleListItems, isCheckedShowRelinquishedTurtles);
@@ -329,12 +329,12 @@ const SeaTurtles: React.FC = () => {
       setCurrentSeaTurtle(patchedSeaTurtle);
       const index = currentSeaTurtleListItems.findIndex(x => x.seaTurtleId === patchedSeaTurtle.seaTurtleId);
       if (~index) {
-        currentSeaTurtleListItems[index] = { ...patchedSeaTurtle as SeaTurtleListItemModel };
+        currentSeaTurtleListItems[index] = clone(patchedSeaTurtle as SeaTurtleListItemModel);
       } else {
         currentSeaTurtleListItems.push(patchedSeaTurtle as SeaTurtleListItemModel);
       }
-      setCurrentSeaTurtleListItems([...currentSeaTurtleListItems]);
-      resetFilteredSeaTurtleListItems([...currentSeaTurtleListItems], isCheckedShowRelinquishedTurtles);
+      setCurrentSeaTurtleListItems(clone(currentSeaTurtleListItems));
+      resetFilteredSeaTurtleListItems(clone(currentSeaTurtleListItems), isCheckedShowRelinquishedTurtles);
     } 
     catch (err) {
       console.log(err);
@@ -433,7 +433,7 @@ const SeaTurtles: React.FC = () => {
             <MaterialTable tableRef={tableRef}
               icons={tableIcons}
               columns={tableColumns}
-              data={[...filteredSeaTurtleListItems]}
+              data={clone(filteredSeaTurtleListItems)}
               options={{filtering: true, showTitle: false}}
               onRowClick={(event, data) => onEditSeaTurtleClick(data as SeaTurtleListItemModel)}
               actions={[
