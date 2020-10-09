@@ -280,7 +280,7 @@ const SeaTurtleTags: React.FC = () => {
   };
 
   const onCancelClick = () => {
-    reset(currentSeaTurtleTag);
+    reset(clone(currentSeaTurtleTag));
   };
 
   return (

@@ -278,7 +278,7 @@ const WashbacksEvents: React.FC = () => {
   };
 
   const onCancelClick = () => {
-    reset(currentWashbacksEvent);
+    reset(clone(currentWashbacksEvent));
   };
 
   const showField = (fieldName: string, eventType: string) => {

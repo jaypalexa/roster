@@ -345,7 +345,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
   };
 
   const onCancelClick = () => {
-    reset(currentSeaTurtleMorphometric);
+    reset(clone(currentSeaTurtleMorphometric));
   };
 
   return (

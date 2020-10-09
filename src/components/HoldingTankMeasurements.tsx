@@ -273,7 +273,7 @@ const HoldingTankMeasurements: React.FC = () => {
   };
 
   const onCancelClick = () => {
-    reset(currentHoldingTankMeasurement);
+    reset(clone(currentHoldingTankMeasurements));
   };
 
   return (

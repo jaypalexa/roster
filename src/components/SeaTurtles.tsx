@@ -346,7 +346,7 @@ const SeaTurtles: React.FC = () => {
   };
 
   const onCancelClick = () => {
-    reset(appContext.seaTurtle);
+    reset(clone(appContext.seaTurtle));
   };
 
   const onShowRelinquishedTurtlesChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -89,7 +89,7 @@ const Organization: React.FC = () => {
   };
 
   const onCancelClick = () => {
-    reset(currentOrganization);
+    reset(clone(currentOrganization));
   };
 
   return (

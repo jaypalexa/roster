@@ -252,7 +252,7 @@ const HoldingTanks: React.FC = () => {
   };
 
   const onCancelClick = () => {
-    reset(appContext.holdingTank);
+    reset(clone(appContext.holdingTank));
   };
 
   const onChildNavigationClick = async (linkTo: string) => {

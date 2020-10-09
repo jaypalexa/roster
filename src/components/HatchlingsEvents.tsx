@@ -269,7 +269,7 @@ const HatchlingsEvents: React.FC = () => {
   };
 
   const onCancelClick = () => {
-    reset(currentHatchlingsEvent);
+    reset(clone(currentHatchlingsEvents));
   };
 
   const showField = (fieldName: string, eventType: string) => {
