@@ -59,7 +59,7 @@ export const AuthenticationService = {
             this.setConfigCredentials(session.getIdToken().getJwtToken());
             const organization = await OrganizationService.getOrganization();
             MessageService.notifyOrganizationNameChanged(organization.organizationName);
-            resolve();
+            resolve(session);
           },
           onFailure: (err: any) => {
             console.log('ERROR in UseAuthentication::authenticateUserAsync()::cognitoUser.authenticateUser()', err);

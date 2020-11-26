@@ -196,7 +196,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
 
     const newLabels = currentSeaTurtleMorphometrics.map(x => x.dateMeasured ? moment(x.dateMeasured).format('YYYY-MM-DD') : '');
     setData(data => Object.assign({}, data, { labels: newLabels }, { datasets: buildNewDatasets() }));
-  }, [currentSeaTurtleMorphometrics, currentGraphTypes, graphTypeSettings]);
+  }, [currentSeaTurtleMorphometrics, currentGraphTypes, graphTypeSettings]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Box id='seaTurtleMorphometricsGraphs'>
