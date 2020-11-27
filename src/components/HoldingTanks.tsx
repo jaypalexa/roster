@@ -301,7 +301,6 @@ const HoldingTanks: React.FC = () => {
             columns={tableColumns}
             data={currentHoldingTanks}
             defaultSortField="holdingTankName"
-            defaultSortAsc={false}
             onRowClicked={row => onEditHoldingTankClick(row as HoldingTankModel)}
             onDeleteClicked={row => onDeleteHoldingTankClick(row as HoldingTankModel)}
           />
