@@ -3,7 +3,7 @@ import { Icon } from 'leaflet';
 import MapDataModel from 'models/MapDataModel';
 import MapPointModel from 'models/MapPointModel';
 import React, { useEffect, useState } from 'react';
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import sharedStyles from 'styles/sharedStyles';
 
 interface MapDialogProps {
@@ -78,14 +78,14 @@ const MapDialog: React.FC<MapDialogProps> = ({isOpen, mapData, onCloseClick}) =>
           {mapData.subtitle ? <p className={classes.dialogSubtitle}>{mapData.subtitle || ''}</p> : null}
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
-          <Map id='mapComponent' center={[centerMapPoint.latitude, centerMapPoint.longitude]} zoom={mapData.initialZoom || 7}>
+          <MapContainer id='mapComponent' center={[centerMapPoint.latitude, centerMapPoint.longitude]} zoom={mapData.initialZoom || 7}>
             {mapData.markers ? 
               mapData.markers.map(marker => (
                 <Marker
                   key={`${marker.latitude}${marker.longitude}`}
                   position={[marker.latitude, marker.longitude]}
-                  onClick={() => setActiveMarker(marker)}
                   icon={mapIcon}
+                  eventHandlers={{ click: () => { setActiveMarker(marker); } }}
                 /> 
               ))
             : null}
@@ -109,7 +109,7 @@ const MapDialog: React.FC<MapDialogProps> = ({isOpen, mapData, onCloseClick}) =>
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
-          </Map>
+          </MapContainer>
         </DialogContent>
         <DialogActions>
           <Button onClick={onCloseClick} color='primary'>

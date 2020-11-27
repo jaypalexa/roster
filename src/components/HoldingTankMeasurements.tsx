@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Divider, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -12,17 +12,17 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
-import MaterialTable from 'material-table';
 import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import HoldingTankMeasurementService from 'services/HoldingTankMeasurementService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, clone, constants, tableIcons } from 'utils';
+import { clone, constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
+import DisplayTable from './DisplayTable';
 
 const HoldingTankMeasurements: React.FC = () => {
 
@@ -47,30 +47,32 @@ const HoldingTankMeasurements: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
-  const tableRef = useRef<any>(null);
 
-  const [tableColumns] = useState([
+  const tableColumns = useMemo(() => [
     {
-      title: 'Date Measured',
-      field: 'dateMeasured',
-      render: (rowData: HoldingTankMeasurementModel) => <span>{rowData.dateMeasured ? moment(rowData.dateMeasured).format('YYYY-MM-DD') : ''}</span>,
+      name: 'Date Measured',
+      selector: 'dateMeasured',
+      sortable: true,
     },
     {
-      title: 'Temperature',
-      field: 'temperature',
-      align: 'right' as const,
+      name: 'Temperature',
+      selector: 'temperature',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'Salinity',
-      field: 'salinity',
-      align: 'right' as const,
+      name: 'Salinity',
+      selector: 'salinity',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'pH',
-      field: 'ph',
-      align: 'right' as const,
+      name: 'pH',
+      selector: 'ph',
+      sortable: true,
+      right: true,
     }
-  ]);
+  ], []);
 
   /* scroll to top */
   useMount(() => {
@@ -139,17 +141,10 @@ const HoldingTankMeasurements: React.FC = () => {
       setCurrentHoldingTankMeasurement(clone(holdingTankMeasurement));
       const index = currentHoldingTankMeasurements.findIndex(x => x.holdingTankMeasurementId === holdingTankMeasurementId);
       if (~index) {
-        // if we are deleting the last item on the page, 
-        // "go back" one page to account for MaterialTable bug
-        const dataManager = tableRef.current.dataManager;
-        const numberOfItemsDisplayedInCurrentPage = dataManager.searchedData.length % dataManager.pageSize;
-        if (numberOfItemsDisplayedInCurrentPage === 1 && dataManager.currentPage > 0) {
-          dataManager.changeCurrentPage(dataManager.currentPage - 1);
-        }
-        
+       
         // remove the deleted item from the data table data source
         var updatedCurrentHoldingTankMeasurements = clone(currentHoldingTankMeasurements);
-        updatedCurrentHoldingTankMeasurements.splice(index, 1)
+        updatedCurrentHoldingTankMeasurements.splice(index, 1);
         setCurrentHoldingTankMeasurements(updatedCurrentHoldingTankMeasurements);
       }
     } 
@@ -320,27 +315,16 @@ const HoldingTankMeasurements: React.FC = () => {
             </Grid>
           </Grid>
 
-          <Box className={classes.dataTableContainer}>
-            <MaterialTable tableRef={tableRef}
-              icons={tableIcons}
-              columns={tableColumns}
-              data={clone(currentHoldingTankMeasurements)}
-              options={{filtering: true, showTitle: false}}
-              onRowClick={(event, data) => onEditHoldingTankMeasurementClick(data as HoldingTankMeasurementModel)}
-              actions={[
-                {
-                  icon: actionIcons.EditIcon,
-                  tooltip: 'Edit',
-                  onClick: (event, data) => onEditHoldingTankMeasurementClick(data as HoldingTankMeasurementModel)
-                },
-                {
-                  icon: actionIcons.DeleteIcon,
-                  tooltip: 'Delete',
-                  onClick: (event, data) => onDeleteHoldingTankMeasurementClick(data as HoldingTankMeasurementModel)
-                },
-              ]}
-            />
-          </Box>
+          <DisplayTable
+            columns={tableColumns}
+            data={currentHoldingTankMeasurements}
+            defaultSortField="dateMeasured"
+            defaultSortAsc={false}
+            onRowClicked={row => onEditHoldingTankMeasurementClick(row as HoldingTankMeasurementModel)}
+            onDeleteClicked={row => onDeleteHoldingTankMeasurementClick(row as HoldingTankMeasurementModel)}
+          />
+
+          <Divider />
 
           <FormProvider {...methods} >
             <form onSubmit={onSubmit}>

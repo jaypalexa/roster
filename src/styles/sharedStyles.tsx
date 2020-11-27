@@ -1,6 +1,6 @@
 import { Theme } from '@material-ui/core/styles';
 
-export default (theme: Theme) => ({
+const sharedStyles = (theme: Theme) => ({
   dataTableContainer: {
     borderColor: '#EFEFEF',
     borderRadius: '.5rem',
@@ -86,3 +86,5 @@ export default (theme: Theme) => ({
     whiteSpace: 'nowrap' as 'nowrap',
   },
 });
+
+export default sharedStyles;

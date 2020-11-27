@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Divider, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import copy from 'clipboard-copy';
 import clsx from 'clsx';
@@ -7,15 +7,15 @@ import TextareaFormField from 'components/FormFields/TextareaFormField';
 import TextFormField from 'components/FormFields/TextFormField';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
-import MaterialTable from 'material-table';
 import LogEntryModel from 'models/LogEntryModel';
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import LogEntryService from 'services/LogEntryService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, clone, constants, tableIcons } from 'utils';
+import { constants } from 'utils';
+import DisplayTable from './DisplayTable';
 
 const LogEntries: React.FC = () => {
 
@@ -30,23 +30,27 @@ const LogEntries: React.FC = () => {
   const [currentLogEntry, setCurrentLogEntry] = useState(new LogEntryModel());
   const [isFormEnabled, setIsFormEnabled] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
-  const tableRef = useRef<any>(null);
 
-  const [tableColumns] = useState([
+  const tableColumns = useMemo(() => [
     {
-      title: 'Entry Date/Time',
-      field: 'entryDateTime',
-      defaultSort: 'desc' as 'desc'
+      name: 'Entry Date/Time',
+      selector: 'entryDateTime',
+      sortable: true,
+      width: '200px',
     },
     {
-      title: 'User Name',
-      field: 'userName',
+      name: 'User Name',
+      selector: 'userName',
+      sortable: true,
+      width: '200px',
     },
     {
-      title: 'Message',
-      field: 'message',
+      name: 'Message',
+      selector: 'message',
+      sortable: true,
+      grow: 2,
     },
-  ]);
+  ], []);
 
   /* scroll to top */
   useMount(() => {
@@ -103,30 +107,19 @@ const LogEntries: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Log Entries</Typography>
 
-          <Box className={classes.dataTableContainer}>
-            <MaterialTable tableRef={tableRef}
-              icons={tableIcons}
-              columns={tableColumns}
-              data={clone(currentLogEntries)}
-              options={{filtering: true, showTitle: false}}
-              onRowClick={(event, data) => onViewLogEntryClick(data as LogEntryModel)}
-              actions={[
-                {
-                  icon: actionIcons.ViewIcon,
-                  tooltip: 'View',
-                  onClick: (event, data) => onViewLogEntryClick(data as LogEntryModel)
-                },
-                {
-                  icon: actionIcons.CopyToClipboardIcon,
-                  tooltip: 'Copy to clipboard',
-                  onClick: (event, data) => onCopyToClipboardClick(data as LogEntryModel)
-                },
-              ]}
-            />
-          </Box>
+          <DisplayTable
+            columns={tableColumns}
+            data={currentLogEntries}
+            defaultSortField="entryDateTime"
+            defaultSortAsc={false}
+            onRowClicked={row => onViewLogEntryClick(row as LogEntryModel)}
+            readOnly={true}
+          />
+
+          <Divider />
 
           <Typography variant='h2' align='center' gutterBottom={true}>
-            {currentLogEntry.entryDateTime || 'Log Entry'}
+            {currentLogEntry.entryDateTime ? `Log Entry at ${currentLogEntry.entryDateTime}` : 'Log Entry'}
           </Typography>
 
           <FormProvider {...methods} >

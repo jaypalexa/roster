@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Divider, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import YesNoCancelDialog from 'components/Dialogs/YesNoCancelDialog';
@@ -13,19 +13,19 @@ import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
-import MaterialTable from 'material-table';
 import NameValuePair from 'models/NameValuePair';
 import WashbacksEventModel from 'models/WashbacksEventModel';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import ToastService from 'services/ToastService';
 import WashbacksEventService from 'services/WashbacksEventService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, clone, constants, tableIcons, toNumber } from 'utils';
+import { clone, constants, toNumber } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
+import DisplayTable from './DisplayTable';
 
 const WashbacksEvents: React.FC = () => {
 
@@ -51,38 +51,42 @@ const WashbacksEvents: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
-  const tableRef = useRef<any>(null);
 
-  const [tableColumns] = useState([
+  const tableColumns = useMemo(() => [
     {
-      title: 'Species',
-      field: 'species',
+      name: 'Species',
+      selector: 'species',
+      sortable: true,
     },
     {
-      title: 'Event Type',
-      field: 'eventType',
+      name: 'Event Type',
+      selector: 'eventType',
+      sortable: true,
     },
     {
-      title: 'Event Date',
-      field: 'eventDate',
-      render: (rowData: WashbacksEventModel) => <span>{rowData.eventDate ? moment(rowData.eventDate).format('YYYY-MM-DD') : ''}</span>,
+      name: 'Event Date',
+      selector: 'eventDate',
+      sortable: true,
     },
     {
-      title: 'Event Count',
-      field: 'eventCount',
-      align: 'right' as const,
-      render: (rowData: WashbacksEventModel) => <span>{rowData.eventType === 'Released' ? toNumber(rowData.beachEventCount) + toNumber(rowData.offshoreEventCount) : rowData.eventCount}</span>,
+      name: 'Event Count',
+      selector: 'eventCount',
+      sortable: true,
+      right: true,
+      cell: (row: WashbacksEventModel) => <div>{row.eventType === 'Released' ? toNumber(row.beachEventCount) + toNumber(row.offshoreEventCount) : row.eventCount}</div>,
     },
     {
-      title: 'County',
-      field: 'eventCounty',
+      name: 'County',
+      selector: 'eventCounty',
+      sortable: true,
     },
     {
-      title: 'Under 5cm CLSL?',
-      field: 'under5cmClsl',
-      render: (rowData: WashbacksEventModel) => <span>{rowData.under5cmClsl ? 'Yes' : ''}</span>,
+      name: 'Under 5cm CLSL?',
+      selector: 'under5cmClsl',
+      sortable: true,
+      cell: (row: WashbacksEventModel) => <div>{row.under5cmClsl ? 'Yes' : ''}</div>,
     },
-  ]);
+  ], []);
 
   /* scroll to top */
   useMount(() => {
@@ -146,17 +150,9 @@ const WashbacksEvents: React.FC = () => {
       setCurrentWashbacksEvent(clone(washbacksEvent));
       const index = currentWashbacksEvents.findIndex(x => x.washbacksEventId === washbacksEventId);
       if (~index) {
-        // if we are deleting the last item on the page, 
-        // "go back" one page to account for MaterialTable bug
-        const dataManager = tableRef.current.dataManager;
-        const numberOfItemsDisplayedInCurrentPage = dataManager.searchedData.length % dataManager.pageSize;
-        if (numberOfItemsDisplayedInCurrentPage === 1 && dataManager.currentPage > 0) {
-          dataManager.changeCurrentPage(dataManager.currentPage - 1);
-        }
-
         // remove the deleted item from the data table data source
         var updatedCurrentWashbacksEvents = clone(currentWashbacksEvents);
-        updatedCurrentWashbacksEvents.splice(index, 1)
+        updatedCurrentWashbacksEvents.splice(index, 1);
         setCurrentWashbacksEvents(updatedCurrentWashbacksEvents);
       }
     } 
@@ -366,27 +362,16 @@ const WashbacksEvents: React.FC = () => {
             </Grid>
           </Grid>
 
-          <Box className={classes.dataTableContainer}>
-            <MaterialTable tableRef={tableRef}
-              icons={tableIcons}
-              columns={tableColumns}
-              data={clone(currentWashbacksEvents)}
-              options={{filtering: true, showTitle: false}}
-              onRowClick={(event, data) => onEditWashbacksEventClick(data as WashbacksEventModel)}
-              actions={[
-                {
-                  icon: actionIcons.EditIcon,
-                  tooltip: 'Edit',
-                  onClick: (event, data) => onEditWashbacksEventClick(data as WashbacksEventModel)
-                },
-                {
-                  icon: actionIcons.DeleteIcon,
-                  tooltip: 'Delete',
-                  onClick: (event, data) => onDeleteWashbacksEventClick(data as WashbacksEventModel)
-                },
-              ]}
-            />
-          </Box>
+          <DisplayTable
+            columns={tableColumns}
+            data={currentWashbacksEvents}
+            defaultSortField="eventDate"
+            defaultSortAsc={false}
+            onRowClicked={row => onEditWashbacksEventClick(row as WashbacksEventModel)}
+            onDeleteClicked={row => onDeleteWashbacksEventClick(row as WashbacksEventModel)}
+          />
+
+          <Divider />
 
           <Typography variant='h1' align='center' gutterBottom={true}>
             {currentWashbacksEvent.eventType ? `Washbacks ${currentWashbacksEvent.eventType} Event` : ''} {currentWashbacksEvent.eventDate ? `on ${moment(currentWashbacksEvent.eventDate).format('YYYY-MM-DD')}` : ''}

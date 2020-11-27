@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Divider, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -13,12 +13,11 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
-import MaterialTable from 'material-table';
 import NameValuePair from 'models/NameValuePair';
 import OrganizationModel from 'models/OrganizationModel';
 import SeaTurtleMorphometricModel from 'models/SeaTurtleMorphometricModel';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
@@ -26,8 +25,9 @@ import OrganizationService from 'services/OrganizationService';
 import SeaTurtleMorphometricService from 'services/SeaTurtleMorphometricService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, clone, constants, tableIcons } from 'utils';
+import { clone, constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
+import DisplayTable from './DisplayTable';
 
 const SeaTurtleMorphometrics: React.FC = () => {
 
@@ -55,61 +55,68 @@ const SeaTurtleMorphometrics: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
-  const tableRef = useRef<any>(null);
 
-  const [tableColumns] = useState([
+  const tableColumns = useMemo(() => [
     {
-      title: 'Date Measured',
-      field: 'dateMeasured',
-      render: (rowData: SeaTurtleMorphometricModel) => <span>{rowData.dateMeasured ? moment(rowData.dateMeasured).format('YYYY-MM-DD') : ''}</span>,
+      name: 'Date Measured',
+      selector: 'dateMeasured',
+      sortable: true,
     },
     {
-      title: 'SCL notch-notch',
-      field: 'sclNotchNotchValue',
-      align: 'right' as const,
+      name: 'SCL notch-notch',
+      selector: 'sclNotchNotchValue',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'SCL notch-tip',
-      field: 'sclNotchTipValue',
-      align: 'right' as const,
+      name: 'SCL notch-tip',
+      selector: 'sclNotchTipValue',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'SCL tip-tip',
-      field: 'sclTipTipValue',
-      align: 'right' as const,
+      name: 'SCL tip-tip',
+      selector: 'sclTipTipValue',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'SCW',
-      field: 'scwValue',
-      align: 'right' as const,
+      name: 'SCW',
+      selector: 'scwValue',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'CCL notch-notch',
-      field: 'cclNotchNotchValue',
-      align: 'right' as const,
+      name: 'CCL notch-notch',
+      selector: 'cclNotchNotchValue',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'CCL notch-tip',
-      field: 'cclNotchTipValue',
-      align: 'right' as const,
+      name: 'CCL notch-tip',
+      selector: 'cclNotchTipValue',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'CCL tip-tip',
-      field: 'cclTipTipValue',
-      align: 'right' as const,
+      name: 'CCL tip-tip',
+      selector: 'cclTipTipValue',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'CCW',
-      field: 'ccwValue',
-      align: 'right' as const,
+      name: 'CCW',
+      selector: 'ccwValue',
+      sortable: true,
+      right: true,
     },
     {
-      title: 'Weight',
-      field: 'weightValue',
-      align: 'right' as const,
+      name: 'Weight',
+      selector: 'weightValue',
+      sortable: true,
+      right: true,
     }
-  ]);
-
+  ], []);
   
   /* scroll to top */
   useMount(() => {
@@ -202,17 +209,9 @@ const SeaTurtleMorphometrics: React.FC = () => {
       setCurrentSeaTurtleMorphometric(clone(seaTurtleMorphometric));
       const index = currentSeaTurtleMorphometrics.findIndex(x => x.seaTurtleMorphometricId === seaTurtleMorphometricId);
       if (~index) {
-        // if we are deleting the last item on the page, 
-        // "go back" one page to account for MaterialTable bug
-        const dataManager = tableRef.current.dataManager;
-        const numberOfItemsDisplayedInCurrentPage = dataManager.searchedData.length % dataManager.pageSize;
-        if (numberOfItemsDisplayedInCurrentPage === 1 && dataManager.currentPage > 0) {
-          dataManager.changeCurrentPage(dataManager.currentPage - 1);
-        }
-        
         // remove the deleted item from the data table data source
         var updatedCurrentSeaTurtleMorphometrics = clone(currentSeaTurtleMorphometrics);
-        updatedCurrentSeaTurtleMorphometrics.splice(index, 1)
+        updatedCurrentSeaTurtleMorphometrics.splice(index, 1);
         setCurrentSeaTurtleMorphometrics(updatedCurrentSeaTurtleMorphometrics);
       }
     } 
@@ -392,27 +391,16 @@ const SeaTurtleMorphometrics: React.FC = () => {
             </Grid>
           </Grid>
 
-          <Box className={classes.dataTableContainer}>
-            <MaterialTable tableRef={tableRef}
-              icons={tableIcons}
-              columns={tableColumns} 
-              data={clone(currentSeaTurtleMorphometrics)}
-              options={{filtering: true, showTitle: false}}
-              onRowClick={(event, data) => onEditSeaTurtleMorphometricClick(data as SeaTurtleMorphometricModel)}
-              actions={[
-                {
-                  icon: actionIcons.EditIcon,
-                  tooltip: 'Edit',
-                  onClick: (event, data) => onEditSeaTurtleMorphometricClick(data as SeaTurtleMorphometricModel)
-                },
-                {
-                  icon: actionIcons.DeleteIcon,
-                  tooltip: 'Delete',
-                  onClick: (event, data) => onDeleteSeaTurtleMorphometricClick(data as SeaTurtleMorphometricModel)
-                },
-              ]}
-            />
-          </Box>
+          <DisplayTable
+            columns={tableColumns}
+            data={currentSeaTurtleMorphometrics}
+            defaultSortField="dateMeasured"
+            defaultSortAsc={false}
+            onRowClicked={row => onEditSeaTurtleMorphometricClick(row as SeaTurtleMorphometricModel)}
+            onDeleteClicked={row => onDeleteSeaTurtleMorphometricClick(row as SeaTurtleMorphometricModel)}
+          />
+
+          <Divider />
 
           <FormProvider {...methods} >
             <form onSubmit={onSubmit}>

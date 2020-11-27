@@ -29,6 +29,14 @@ export const clone = (obj: any) => {
   return rfdc()(obj);
 };
 
+export const filterable = (obj: any) => {
+  const nonIdValues = Object.entries(obj)
+    .filter(([key, _]) => !key.endsWith('Id'))
+    .map(([_, value]) => value);
+  const combined = nonIdValues.reduce((acc: string, cur: any) => acc + (cur ? cur.toString().toLowerCase() : '') + '|', '');
+  return combined;
+};
+
 export const sortByProperty = (propertyName: string) => {
   const value = (x: any) => x[propertyName];
   return (a: any, b: any) => {

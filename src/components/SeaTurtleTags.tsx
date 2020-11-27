@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Divider, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -13,19 +13,18 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
-import MaterialTable from 'material-table';
 import NameValuePair from 'models/NameValuePair';
 import SeaTurtleTagModel from 'models/SeaTurtleTagModel';
-import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CodeListTableService, { CodeTableType } from 'services/CodeTableListService';
 import SeaTurtleTagService from 'services/SeaTurtleTagService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, clone, constants, tableIcons } from 'utils';
+import { clone, constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
+import DisplayTable from './DisplayTable';
 
 const SeaTurtleTags: React.FC = () => {
 
@@ -52,28 +51,29 @@ const SeaTurtleTags: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
-  const tableRef = useRef<any>(null);
 
-  const [tableColumns] = useState([
+  const tableColumns = useMemo(() => [
     {
-      title: 'Tag Number',
-      field: 'tagNumber',
+      name: 'Tag Number',
+      selector: 'tagNumber',
+      sortable: true,
     },
     {
-      title: 'Tag Type',
-      field: 'tagType',
+      name: 'Tag Type',
+      selector: 'tagType',
+      sortable: true,
     },
     {
-      title: 'Location',
-      field: 'location',
+      name: 'Location',
+      selector: 'location',
+      sortable: true,
     },
     {
-      title: 'Date Tagged',
-      field: 'dateTagged',
-      render: (rowData: SeaTurtleTagModel) => <span>{rowData.dateTagged ? moment(rowData.dateTagged).format('YYYY-MM-DD') : ''}</span>,
-      defaultSort: 'asc' as 'asc'
+      name: 'Date Tagged',
+      selector: 'dateTagged',
+      sortable: true,
     },
-  ]);
+  ], []);
 
   /* scroll to top */
   useMount(() => {
@@ -148,17 +148,9 @@ const SeaTurtleTags: React.FC = () => {
       setCurrentSeaTurtleTag(clone(seaTurtleTag));
       const index = currentSeaTurtleTags.findIndex(x => x.seaTurtleTagId === seaTurtleTagId);
       if (~index) {
-        // if we are deleting the last item on the page, 
-        // "go back" one page to account for MaterialTable bug
-        const dataManager = tableRef.current.dataManager;
-        const numberOfItemsDisplayedInCurrentPage = dataManager.searchedData.length % dataManager.pageSize;
-        if (numberOfItemsDisplayedInCurrentPage === 1 && dataManager.currentPage > 0) {
-          dataManager.changeCurrentPage(dataManager.currentPage - 1);
-        }
-        
         // remove the deleted item from the data table data source
         var updatedCurrentSeaTurtleTags = clone(currentSeaTurtleTags);
-        updatedCurrentSeaTurtleTags.splice(index, 1)
+        updatedCurrentSeaTurtleTags.splice(index, 1);
         setCurrentSeaTurtleTags(updatedCurrentSeaTurtleTags);
       }
     } 
@@ -327,27 +319,16 @@ const SeaTurtleTags: React.FC = () => {
             </Grid>
           </Grid>
 
-          <Box className={classes.dataTableContainer}>
-            <MaterialTable tableRef={tableRef}
-              icons={tableIcons}
-              columns={tableColumns}
-              data={clone(currentSeaTurtleTags)}
-              options={{filtering: true, showTitle: false}}
-              onRowClick={(event, data) => onEditSeaTurtleTagClick(data as SeaTurtleTagModel)}
-              actions={[
-                {
-                  icon: actionIcons.EditIcon,
-                  tooltip: 'Edit',
-                  onClick: (event, data) => onEditSeaTurtleTagClick(data as SeaTurtleTagModel)
-                },
-                {
-                  icon: actionIcons.DeleteIcon,
-                  tooltip: 'Delete',
-                  onClick: (event, data) => onDeleteSeaTurtleTagClick(data as SeaTurtleTagModel)
-                },
-              ]}
-            />
-          </Box>
+          <DisplayTable
+            columns={tableColumns}
+            data={currentSeaTurtleTags}
+            defaultSortField="dateTagged"
+            defaultSortAsc={false}
+            onRowClicked={row => onEditSeaTurtleTagClick(row as SeaTurtleTagModel)}
+            onDeleteClicked={row => onDeleteSeaTurtleTagClick(row as SeaTurtleTagModel)}
+          />
+
+          <Divider />
 
           <FormProvider {...methods} >
             <form onSubmit={onSubmit}>

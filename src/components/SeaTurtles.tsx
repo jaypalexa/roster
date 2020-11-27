@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Breadcrumbs, Button, Divider, Grid, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import clsx from 'clsx';
@@ -20,13 +20,11 @@ import Spinner from 'components/Spinner/Spinner';
 import ToggleSwitch from 'components/ToggleSwitch';
 import { useAppContext } from 'contexts/AppContext';
 import useMount from 'hooks/UseMount';
-import MaterialTable, { MTableToolbar } from 'material-table';
 import MapDataModel from 'models/MapDataModel';
 import NameValuePair from 'models/NameValuePair';
 import SeaTurtleListItemModel from 'models/SeaTurtleListItemModel';
 import SeaTurtleModel from 'models/SeaTurtleModel';
-import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
@@ -34,8 +32,9 @@ import CodeListTableService, { CodeTableType } from 'services/CodeTableListServi
 import SeaTurtleService from 'services/SeaTurtleService';
 import ToastService from 'services/ToastService';
 import sharedStyles from 'styles/sharedStyles';
-import { actionIcons, clone, constants, tableIcons } from 'utils';
+import { clone, constants } from 'utils';
 import { v4 as uuidv4 } from 'uuid';
+import DisplayTable from './DisplayTable';
 
 const SeaTurtles: React.FC = () => {
 
@@ -81,45 +80,51 @@ const SeaTurtles: React.FC = () => {
   const [isCheckedShowRelinquishedTurtles, setIsCheckedShowRelinquishedTurtles] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
-  const tableRef = useRef<any>(null);
 
-  const [tableColumns] = useState([
+  const tableColumns = useMemo(() => [
     {
-      title: 'Name',
-      field: 'seaTurtleName',
-      defaultSort: 'asc' as 'asc'
+      name: 'Name',
+      selector: 'seaTurtleName',
+      sortable: true,
+      width: '150px',
     },
     {
-      title: 'SID #',
-      field: 'sidNumber',
+      name: 'SID #',
+      selector: 'sidNumber',
+      sortable: true,
     },
     {
-      title: 'Species',
-      field: 'species',
+      name: 'Species',
+      selector: 'species',
+      sortable: true,
+      width: '100px',
     },
     {
-      title: 'Date Acquired',
-      field: 'dateAcquired',
-      render: (rowData: SeaTurtleListItemModel) => <span>{rowData.dateAcquired ? moment(rowData.dateAcquired).format('YYYY-MM-DD') : ''}</span>,
+      name: 'Date Acquired',
+      selector: 'dateAcquired',
+      sortable: true,
     },
     {
-      title: 'County',
-      field: 'acquiredCounty',
+      name: 'County',
+      selector: 'acquiredCounty',
+      sortable: true,
     },
     {
-      title: 'Size',
-      field: 'turtleSize',
+      name: 'Size',
+      selector: 'turtleSize',
+      sortable: true,
     },
     {
-      title: 'Status',
-      field: 'status',
+      name: 'Status',
+      selector: 'status',
+      sortable: true,
     },
     {
-      title: 'Date Relinquished',
-      field: 'dateRelinquished',
-      render: (rowData: SeaTurtleListItemModel) => <span>{rowData.dateRelinquished ? moment(rowData.dateRelinquished).format('YYYY-MM-DD') : ''}</span>,
+      name: 'Date Relinquished',
+      selector: 'dateRelinquished',
+      sortable: true,
     }
-  ]);
+  ], []);
 
   /* scroll to top */
   useMount(() => {
@@ -213,17 +218,9 @@ const SeaTurtles: React.FC = () => {
       setCurrentSeaTurtle(seaTurtle);
       const index = currentSeaTurtleListItems.findIndex(x => x.seaTurtleId === seaTurtleId);
       if (~index) {
-        // if we are deleting the last item on the page, 
-        // "go back" one page to account for MaterialTable bug
-        const dataManager = tableRef.current.dataManager;
-        const numberOfItemsDisplayedInCurrentPage = dataManager.searchedData.length % dataManager.pageSize;
-        if (numberOfItemsDisplayedInCurrentPage === 1 && dataManager.currentPage > 0) {
-          dataManager.changeCurrentPage(dataManager.currentPage - 1);
-        }
-        
         // remove the deleted item from the data table data source
         var updatedCurrentSeaTurtleListItems = clone(currentSeaTurtleListItems);
-        updatedCurrentSeaTurtleListItems.splice(index, 1)
+        updatedCurrentSeaTurtleListItems.splice(index, 1);
         setCurrentSeaTurtleListItems(updatedCurrentSeaTurtleListItems);
         resetFilteredSeaTurtleListItems(updatedCurrentSeaTurtleListItems, isCheckedShowRelinquishedTurtles);
       }
@@ -428,43 +425,23 @@ const SeaTurtles: React.FC = () => {
               </Button>
             </Grid>
           </Grid>
+
+          <ToggleSwitch 
+            name='showRelinquishedTurtles' 
+            labelText='Show relinquished turtles?'
+            checked={isCheckedShowRelinquishedTurtles}
+            onChange={onShowRelinquishedTurtlesChange}
+          />
           
-          <Box className={classes.dataTableContainer}>
-            <MaterialTable tableRef={tableRef}
-              icons={tableIcons}
-              columns={tableColumns}
-              data={clone(filteredSeaTurtleListItems)}
-              options={{filtering: true, showTitle: false}}
-              onRowClick={(event, data) => onEditSeaTurtleClick(data as SeaTurtleListItemModel)}
-              actions={[
-                {
-                  icon: actionIcons.EditIcon,
-                  tooltip: 'Edit',
-                  onClick: (event, data) => onEditSeaTurtleClick(data as SeaTurtleListItemModel)
-                },
-                {
-                  icon: actionIcons.DeleteIcon,
-                  tooltip: 'Delete',
-                  onClick: (event, data) => onDeleteSeaTurtleClick(data as SeaTurtleListItemModel)
-                },
-              ]}
-              components={{
-                Toolbar: props => (
-                  <div>
-                    <MTableToolbar {...props} />
-                    <div style={{padding: '0px 10px'}}>
-                      <ToggleSwitch 
-                        name='showRelinquishedTurtles' 
-                        labelText='Show relinquished turtles?'
-                        checked={isCheckedShowRelinquishedTurtles}
-                        onChange={onShowRelinquishedTurtlesChange}
-                      />
-                    </div>
-                  </div>
-                ),
-              }}
-            />
-          </Box>
+          <DisplayTable
+            columns={tableColumns}
+            data={filteredSeaTurtleListItems}
+            defaultSortField="seaTurtleName"
+            onRowClicked={row => onEditSeaTurtleClick(row as SeaTurtleListItemModel)}
+            onDeleteClicked={row => onDeleteSeaTurtleClick(row as SeaTurtleListItemModel)}
+          />
+
+          <Divider />
 
           <Typography variant='h1' align='center' gutterBottom={true}>
             {appContext.seaTurtle?.seaTurtleName || 'Sea Turtle'}

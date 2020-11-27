@@ -1,4 +1,4 @@
-# ROSTER (Record Of Sea Turtles Electronic Reports) 
+# ROSTER (Record Of Sea Turtles Electronic Reports)
 ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) for collecting and reporting on marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
 
 ---
@@ -15,11 +15,12 @@ ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/
 * [React](https://reactjs.org/) - [Typescript](https://www.typescriptlang.org/) UI library
   * [react-router](https://www.npmjs.com/package/react-router) for client-side routing
   * [react-hook-form](https://www.npmjs.com/package/react-hook-form) for forms
+  * [react-data-table-component](https://www.npmjs.com/package/react-data-table-component) for display tables
   * [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2) for charts and graphs
   * [leaflet](https://www.npmjs.com/package/leaflet) and [react-leaflet](https://www.npmjs.com/package/react-leaflet) for maps
   * [rxjs](https://www.npmjs.com/package/rxjs) for reactive programming using Observables
 * [Material-UI](https://material-ui.com/) - React UI framework and components
-  * [material-table](https://material-table.com/) - React data table component that based on material-ui
+  * [typeface-roboto] - Font used by Material-UI
 * [Amazon Web Services](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=tier%23always-free) ("Always Free" tier *only*)
   * [Amazon Cognito](https://aws.amazon.com/cognito/) for authentication
   * ~~[Amazon S3](https://aws.amazon.com/s3/)~~ (not "Always Free" tier), 

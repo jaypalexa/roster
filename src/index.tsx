@@ -40,6 +40,12 @@ const theme = createMuiTheme({
         paddingBottom: '0px',
       },
     },
+    MuiDivider: {
+      root: {
+        marginTop: '1rem',
+        marginBottom: '1rem',
+      },
+    },
     MuiInputBase: {
       input: {
         '&$disabled': {
