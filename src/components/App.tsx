@@ -2,8 +2,7 @@ import { Box, Container, createStyles, makeStyles, Theme } from '@material-ui/co
 import browserHistory from 'browserHistory';
 import NavBar from 'components/NavBar';
 import Toast, { ToastProps } from 'components/Toast';
-import useMount from 'hooks/UseMount';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Router } from 'react-router-dom';
 import routes from 'routes';
 import AppService from 'services/AppService';
@@ -40,7 +39,7 @@ const App: React.FC = () => {
   const [toastProps, setToastProps] = useState<ToastProps>({} as ToastProps);
 
   /* register service worker onUpdate() */
-  useMount(() => {
+  useEffect(() => {
     const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
       AppService.setNewServiceWorker(registration.installing || registration.waiting);
       MessageService.notifyIsUpdateAvailableChanged(true);
@@ -50,26 +49,26 @@ const App: React.FC = () => {
     // if (!isIosDevice) {
       AppService.checkForUpdate();
     // }
-  });
+  }, []);
 
   /* start the session activity polling */
-  useMount(() => {
+  useEffect(() => {
     const startSessionActivityPolling = async () => {
       await AuthenticationService.checkSessionStatusAsync();
       AuthenticationService.resetSessionStatusPolling();
     }
     startSessionActivityPolling();
-  });
+  }, []);
 
   /* listen for toast messages */
-  useMount(() => {
+  useEffect(() => {
     const subscription = MessageService.observeToastRequest().subscribe(toastProps => {
       if (toastProps) {
         setToastProps(toastProps);
       }
     });
     return () => subscription.unsubscribe();
-  });
+  }, []);
 
   return (
     <Container id='app' className={classes.root}>

@@ -2,8 +2,7 @@ import { Box, Grid } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { ChipData } from 'components/ChipsPanel';
 import HomeTile from 'components/HomeTile';
-import useMount from 'hooks/UseMount';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HomeSummaryService from 'services/HomeSummaryService';
 import ToastService from 'services/ToastService';
 import { constants } from 'utils';
@@ -32,12 +31,12 @@ const Home: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   /* scroll to top */
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   /* fetch table data */
-  useMount(() => {
+  useEffect(() => {
     const fetchOrganization = async () => {
       try {
         setShowSpinner(true);
@@ -84,9 +83,7 @@ const Home: React.FC = () => {
       }
     };
     fetchOrganization();
-  });
-
-
+  }, []);
 
   return (
     <Box id='home' className={classes.root}>

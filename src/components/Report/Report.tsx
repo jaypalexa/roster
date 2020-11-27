@@ -2,7 +2,6 @@ import { Box, Breadcrumbs, Button, createStyles, Grid, makeStyles, Paper, Theme,
 import clsx from 'clsx';
 import Icon from 'components/Icon';
 import Spinner from 'components/Spinner/Spinner';
-import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import ReportRouteStateModel from 'models/ReportRouteStateModel';
 import React, { useEffect, useState } from 'react';
@@ -42,14 +41,14 @@ const Report: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(true);
   const reportRouteState = useLocation().state as ReportRouteStateModel;
 
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
-  useMount(() => {
+  useEffect(() => {
     setReportDefinition(reportRouteState.reportDefinition);
     setReportOptions(reportRouteState.reportOptions);
-  });
+  }, [reportRouteState.reportDefinition, reportRouteState.reportOptions]);
 
   useEffect(() => {
     if (!reportDefinition.reportId || !reportOptions) return;

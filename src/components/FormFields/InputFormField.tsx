@@ -6,8 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
-import useMount from 'hooks/UseMount';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import sharedStyles from 'styles/sharedStyles';
 import FormField, { FormFieldProps } from './FormField';
@@ -45,9 +44,9 @@ export const InputFormField: React.FC<InputFormFieldProps> = ({disabled, fieldCl
   const [isPasswordType, setIsPasswordType] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  useMount(() => {
+  useEffect(() => {
     setIsPasswordType(type === 'password');
-  });
+  }, [type]);
 
   const togglePasswordVisiblity = () => {
     setIsPasswordVisible(!isPasswordVisible);

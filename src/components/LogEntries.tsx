@@ -6,9 +6,8 @@ import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import TextFormField from 'components/FormFields/TextFormField';
 import Spinner from 'components/Spinner/Spinner';
-import useMount from 'hooks/UseMount';
 import LogEntryModel from 'models/LogEntryModel';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import LogEntryService from 'services/LogEntryService';
@@ -53,12 +52,12 @@ const LogEntries: React.FC = () => {
   ], []);
 
   /* scroll to top */
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   /* fetch table data */
-  useMount(() => {
+  useEffect(() => {
     const getLogEntries = async () => {
       try {
         setShowSpinner(true);
@@ -74,7 +73,7 @@ const LogEntries: React.FC = () => {
       }
     };
     getLogEntries();
-  });
+  }, []);
 
   const onViewLogEntryClick = (logEntry: LogEntryModel) => {
     reset(logEntry);

@@ -8,8 +8,7 @@ import WifiIcon from '@material-ui/icons/Wifi';
 import WifiOffIcon from '@material-ui/icons/WifiOff';
 import browserHistory from 'browserHistory';
 import MenuItemLink from 'components/MenuItemLink';
-import useMount from 'hooks/UseMount';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
 import LogEntryService from 'services/LogEntryService';
@@ -129,23 +128,23 @@ const NavBar: React.FC = (props: any) => {
   }
 
   /* fetch user name */
-  useMount(() => {
+  useEffect(() => {
     const userName = AuthenticationService.getCognitoUserNameFromToken();
     setLoggedInUserName(userName);
-  });
+  }, []);
 
   /* listen for 'user name changed' notifications */
-  useMount(() => {
+  useEffect(() => {
     const subscription = MessageService.observeUserNameChanged().subscribe(message => {
       if (message) {
         setLoggedInUserName(message.userName);
       }
     });
     return () => subscription.unsubscribe();
-  });
+  }, []);
 
   /* listen for 'organization name changed' notifications */
-  useMount(() => {
+  useEffect(() => {
     const subscription = MessageService.observeOrganizationNameChanged().subscribe(message => {
       if (message) {
         setLoggedInOrganizationName(message.organizationName);
@@ -153,27 +152,27 @@ const NavBar: React.FC = (props: any) => {
       }
     });
     return () => subscription.unsubscribe();
-  });
+  }, []);
 
   /* listen for 'is update available' notifications */
-  useMount(() => {
+  useEffect(() => {
     const subscription = MessageService.observeIsUpdateAvailableChanged().subscribe(message => {
       if (message) {
         setIsUpdateAvailable(message.isUpdateAvailable);
       }
     });
     return () => subscription.unsubscribe();
-  });
+  }, []);
 
   /* add online/offline event handlers */
-  useMount(() => {
+  useEffect(() => {
     window.addEventListener('online', onlineOfflineHandler);
     window.addEventListener('offline', onlineOfflineHandler);
     return () => {
       window.removeEventListener('online', onlineOfflineHandler);
       window.removeEventListener('offline', onlineOfflineHandler);
     }
-  });
+  }, []);
 
   return (
     <Box id='navBar'>

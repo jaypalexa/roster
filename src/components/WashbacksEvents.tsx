@@ -12,7 +12,6 @@ import ListFormField from 'components/FormFields/ListFormField';
 import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
-import useMount from 'hooks/UseMount';
 import NameValuePair from 'models/NameValuePair';
 import WashbacksEventModel from 'models/WashbacksEventModel';
 import moment from 'moment';
@@ -89,18 +88,18 @@ const WashbacksEvents: React.FC = () => {
   ], []);
 
   /* scroll to top */
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   /* fetch listbox data */
-  useMount(() => {
+  useEffect(() => {
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setSpecies(CodeListTableService.getList(CodeTableType.Species, true));
-  });
+  }, []);
 
   /* fetch table data */
-  useMount(() => {
+  useEffect(() => {
     const getWashbacksEvents = async () => {
       try {
         setShowSpinner(true);
@@ -116,7 +115,7 @@ const WashbacksEvents: React.FC = () => {
       }
     };
     getWashbacksEvents();
-  });
+  }, []);
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {

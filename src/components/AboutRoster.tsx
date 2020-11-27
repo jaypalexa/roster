@@ -1,7 +1,6 @@
 import { Box, Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
-import useMount from 'hooks/UseMount';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppService from 'services/AppService';
 import MessageService from 'services/MessageService';
@@ -32,36 +31,36 @@ const AboutRoster: React.FC = () => {
   }
 
   /* scroll to top */
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   /* check for update */
-  useMount(() => {
+  useEffect(() => {
     // if (!isIosDevice) {
       AppService.checkForUpdate();
     // }
-  });
+  }, []);
 
   /* listen for 'is update available' notifications */
-  useMount(() => {
+  useEffect(() => {
     const subscription = MessageService.observeIsUpdateAvailableChanged().subscribe(message => {
       if (message) {
         setIsUpdateAvailable(message.isUpdateAvailable);
       }
     });
     return () => subscription.unsubscribe();
-  });
+  }, []);
 
   /* listen for 'last update check datetime' notifications */
-  useMount(() => {
+  useEffect(() => {
     const subscription = MessageService.observeLastUpdateCheckDateTimeChanged().subscribe(message => {
       if (message) {
         setLastUpdateCheckDateTime(message.lastUpdateCheckDateTime);
       }
     });
     return () => subscription.unsubscribe();
-  });
+  }, []);
 
   return (
     <div id='aboutRoster'>
@@ -76,7 +75,7 @@ const AboutRoster: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>About ROSTER</Typography>
           <Box textAlign='center'>
-            <p>v2020.11.27.1700</p>
+            <p>v2020.11.27.1900</p>
             {isUpdateAvailable
               ? <p>
                   <span>(</span>

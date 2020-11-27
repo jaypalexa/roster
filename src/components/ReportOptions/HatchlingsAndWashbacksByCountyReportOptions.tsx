@@ -1,8 +1,7 @@
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import { useAppContext } from 'contexts/AppContext';
-import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import ReportOptionsDateRange from './ReportOptionsDateRange';
 
@@ -10,9 +9,9 @@ const HatchlingsAndWashbacksByCountyReportOptions: React.FC<{reportDefinition: R
   const [appContext] = useAppContext();
   const { reset } = useFormContext();
     
-  useMount(() => {
+  useEffect(() => {
     reset(appContext.reportOptions[reportDefinition.reportId]);
-  });
+  }, [reset, appContext.reportOptions, reportDefinition.reportId]);
 
   return (
     <FormFieldRow>

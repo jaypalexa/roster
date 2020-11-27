@@ -19,12 +19,11 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import ToggleSwitch from 'components/ToggleSwitch';
 import { useAppContext } from 'contexts/AppContext';
-import useMount from 'hooks/UseMount';
 import MapDataModel from 'models/MapDataModel';
 import NameValuePair from 'models/NameValuePair';
 import SeaTurtleListItemModel from 'models/SeaTurtleListItemModel';
 import SeaTurtleModel from 'models/SeaTurtleModel';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
@@ -80,6 +79,10 @@ const SeaTurtles: React.FC = () => {
   const [isCheckedShowRelinquishedTurtles, setIsCheckedShowRelinquishedTurtles] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
+  
+  const setCurrentSeaTurtle = useCallback((seaTurtle: SeaTurtleModel) => {
+    setAppContext({ ...appContext, seaTurtle: clone(seaTurtle) });
+  }, [appContext, setAppContext]);
 
   const tableColumns = useMemo(() => [
     {
@@ -127,12 +130,12 @@ const SeaTurtles: React.FC = () => {
   ], []);
 
   /* scroll to top */
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   /* fetch listbox data */
-  useMount(() => {
+  useEffect(() => {
     setCaptureProjectTypes(CodeListTableService.getList(CodeTableType.CaptureProjectType, true));
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setRecaptureTypes(CodeListTableService.getList(CodeTableType.RecaptureType, true));
@@ -140,10 +143,10 @@ const SeaTurtles: React.FC = () => {
     setTurtleSizes(CodeListTableService.getList(CodeTableType.TurtleSize, true));
     setTurtleStatuses(CodeListTableService.getList(CodeTableType.TurtleStatus, true));
     setYesNoUndetermineds(CodeListTableService.getList(CodeTableType.YesNoUndetermined, true));
-  });
+  }, []);
 
   /* fetch table data */
-  useMount(() => {
+  useEffect(() => {
     const getSeaTurtleListItems = async () => {
       try {
         setShowSpinner(true);
@@ -165,12 +168,12 @@ const SeaTurtles: React.FC = () => {
       }
     };
     getSeaTurtleListItems();
-  });
+  }, [appContext.isCheckedShowRelinquishedTurtles, appContext.seaTurtle, reset, setCurrentSeaTurtle]);
 
   /* reset previous setting of options */
-  useMount(() => {
+  useEffect(() => {
     setIsCheckedShowRelinquishedTurtles(appContext.isCheckedShowRelinquishedTurtles);
-  });
+  }, [appContext.isCheckedShowRelinquishedTurtles]);
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
@@ -188,10 +191,6 @@ const SeaTurtles: React.FC = () => {
     }
     setShowSpinner(false);
   };
-
-  const setCurrentSeaTurtle = (seaTurtle: SeaTurtleModel) => {
-    setAppContext({ ...appContext, seaTurtle: clone(seaTurtle) });
-  }
 
   const fetchSeaTurtle = async (seaTurtleId: string) => {
     try {

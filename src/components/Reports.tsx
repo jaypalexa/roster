@@ -2,9 +2,8 @@ import { Box, Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } f
 import browserHistory from 'browserHistory';
 import ChildNavigation from 'components/ChildNavigation';
 import Spinner from 'components/Spinner/Spinner';
-import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReportService from 'services/ReportService';
 import sharedStyles from 'styles/sharedStyles';
@@ -25,16 +24,16 @@ const Reports: React.FC = () => {
   const [reportDefinitions, setReportDefinitions] = useState([] as Array<ReportDefinitionModel>);
   const [showSpinner, setShowSpinner] = useState(false);
 
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
-  useMount(() => {
+  useEffect(() => {
     setShowSpinner(true);
     const definitions = ReportService.getReportList();
     setReportDefinitions(definitions);
     setShowSpinner(false);
-  });
+  }, []);
 
   const onChildNavigationClick = (reportDefinition: ReportDefinitionModel) => {
     setTimeout(() => {

@@ -3,7 +3,6 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
-import useMount from 'hooks/UseMount';
 import SeaTurtleMorphometricModel from 'models/SeaTurtleMorphometricModel';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -29,9 +28,9 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   /* scroll to top */
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   interface GraphDataset {
     label: string;
@@ -65,7 +64,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
     dataset: GraphDataset;
   }
 
-  useMount(() => {
+  useEffect(() => {
     const defaultGraphDataset: GraphDataset = {
       label: '',
       fill: false,
@@ -126,7 +125,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
       graphTypes.set(key, true);
     })
     setCurrentGraphTypes(graphTypes);
-  });
+  }, []);
 
   const options = {
     scales: {
@@ -156,7 +155,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
     spanGaps: true,
   }
 
-  useMount(() => {
+  useEffect(() => {
     const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
@@ -177,7 +176,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
       };
       getSeaTurtleMorphometricsForTurtle();
     }
-  });
+  }, [appContext.seaTurtle?.seaTurtleId]);
 
   useEffect(() => {
     if (!currentGraphTypes || !currentSeaTurtleMorphometrics || currentSeaTurtleMorphometrics.length === 0) return;

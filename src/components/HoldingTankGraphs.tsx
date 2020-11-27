@@ -3,7 +3,6 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import browserHistory from 'browserHistory';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
-import useMount from 'hooks/UseMount';
 import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -29,9 +28,9 @@ const HoldingTankGraphs: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   /* scroll to top */
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   interface GraphDataset {
     label: string;
@@ -65,7 +64,7 @@ const HoldingTankGraphs: React.FC = () => {
     dataset: GraphDataset;
   }
 
-  useMount(() => {
+  useEffect(() => {
     const defaultGraphDataset: GraphDataset = {
       label: '',
       fill: false,
@@ -120,7 +119,7 @@ const HoldingTankGraphs: React.FC = () => {
       graphTypes.set(key, true);
     })
     setCurrentGraphTypes(graphTypes);
-  });
+  }, []);
 
   const options = {
     scales: {
@@ -150,7 +149,7 @@ const HoldingTankGraphs: React.FC = () => {
     spanGaps: true,
   }
 
-  useMount(() => {
+  useEffect(() => {
     const holdingTankId = appContext.holdingTank?.holdingTankId;
     if (!holdingTankId) {
       browserHistory.push('/holding-tanks')
@@ -171,7 +170,7 @@ const HoldingTankGraphs: React.FC = () => {
       };
       getHoldingTankMeasurements();
     }
-  });
+  }, [appContext.holdingTank?.holdingTankId]);
 
   useEffect(() => {
     if (!currentGraphTypes || !currentHoldingTankMeasurements || currentHoldingTankMeasurements.length === 0) return;

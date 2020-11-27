@@ -11,7 +11,6 @@ import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
-import useMount from 'hooks/UseMount';
 import HoldingTankMeasurementModel from 'models/HoldingTankMeasurementModel';
 import moment from 'moment';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
@@ -75,12 +74,12 @@ const HoldingTankMeasurements: React.FC = () => {
   ], []);
 
   /* scroll to top */
-  useMount(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   /* fetch table data */
-  useMount(() => {
+  useEffect(() => {
     const holdingTankId = appContext.holdingTank?.holdingTankId;
     if (!holdingTankId) {
       browserHistory.push('/holding-tanks')
@@ -101,7 +100,7 @@ const HoldingTankMeasurements: React.FC = () => {
       };
       getHoldingTankMeasurements();
     } 
-  });
+  }, [appContext.holdingTank?.holdingTankId]);
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
