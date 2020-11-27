@@ -1,5 +1,5 @@
 # ROSTER (Record Of Sea Turtles Electronic Reports)
-ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/progressive-web-apps/)) for collecting and reporting on marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
+ROSTER is a responsive, multi-tenant web application for collecting and reporting on marine turtle and holding tank data required by the [Florida Fish and Wildlife Conservation Commission](https://myfwc.com/wildlifehabitats/wildlife/sea-turtle/) (FWC).
 
 ---
 
@@ -36,7 +36,6 @@ ROSTER is a responsive, multi-tenant PWA ([Progressive Web App](https://web.dev/
 | Item | Notes |
 |------|-------|
 | &check; User Authenication | [Amazon Cognito](https://aws.amazon.com/cognito/) |
-| &check; Make app a basic PWA | ??? notify that update is available; mechanism to update to latest |
 | &check; Graphs for Sea Turtle > Morphometrics (temperature, salinity, pH) | ??? holding-tank-temperature-graph, etc. |
 | &check; Mapping | &bull; [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/) ([article](https://blog.logrocket.com/how-to-use-react-leaflet/))<br /> ~~&bull; [Mapbox](https://www.mapbox.com/)~~ |
 | &check; Data tables | [material-table](https://material-table.com/) |
@@ -142,37 +141,6 @@ You may serve it with a static server; available at http://localhost:5000:
 * Access to add-ons
 
 [Build & deploy > Environment > Environment variables](https://app.netlify.com/sites/roster-turtlegeek/settings/deploys#environment)
-
----
-
-## Progressive Web Applications (PWA)
-
-[Progressive Web Applications (PWA) on iOS Provide a Rich Channel to Reach Customers Despite the Platform Limitations](https://love2dev.com/pwa/ios/)
-
-* Because Apple assumes space on its devices is cramped, they aggressively throw unused items overboard to free up disk space. If your PWA or any website for that matter, goes unused for a few days (we think it is roughly 14 days, it is not documented) the device will remove all cached assets associated with the origin. This includes IndexedDB, service worker cache, localStorage, etc.
-
-To be classified as a progressive web application:
-* Use HTTPS
-* Register a Service Worker with a fetch event handler
-* Valid web manifest file with a minimal homescreen icon set (not supported by iOS)
-
-[iOS Getting Into The PWA Space Faster Than Ever](https://aureatelabs.com/pwa/ios-getting-into-pwa-space-faster-than-ever/)
-* Apple imposes the caching limit to paltry **50 Mb**, which makes heavy formatted and high definition audios and videos reload— that’s terribly frustrating. 
-* Apple frees up the phone storage by removing PWAs if you are not using them for undefined time (**~14 days**). Though the web app icon will remain on the screen, clicking on it will result in re-downloading.
-
----
-
-## Service Workers
-
-* [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers)
-* [The Service Worker Lifecycle](https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle)
-* [Service Worker Registration](https://developers.google.com/web/fundamentals/primers/service-workers/registration)
-* [How to Fix the Refresh Button When Using Service Workers](https://redfin.engineering/how-to-fix-the-refresh-button-when-using-service-workers-a8e27af6df68)
-* [serviceworker.skipWaiting #1016](https://github.com/w3c/ServiceWorker/issues/1016)
-* [Provide a one-line way to listen for a waiting Service Worker #1222](https://github.com/w3c/ServiceWorker/issues/1222)
-* [Provide an easier way to listen for waiting/activated/redundant Service Workers #1247](https://github.com/w3c/ServiceWorker/issues/1247)
-* [Chrome Service Worker iOS Support](https://stackoverflow.com/questions/50607343/chrome-service-worker-ios-support)
-* [developer.google.com - Service Workers - Overview - Prerequisites - Browser Support](https://developers.google.com/web/fundamentals/primers/service-workers/#browser_support)
 
 ---
 

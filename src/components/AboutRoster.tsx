@@ -1,9 +1,6 @@
 import { Box, Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import AppService from 'services/AppService';
-import MessageService from 'services/MessageService';
 import sharedStyles from 'styles/sharedStyles';
 
 const AboutRoster: React.FC = () => {
@@ -19,47 +16,9 @@ const AboutRoster: React.FC = () => {
   );
   const classes = useStyles();
 
-  const [lastUpdateCheckDateTime, setLastUpdateCheckDateTime] = useState<string | null>(moment().format('YYYY-MM-DD HH:mm:ss'));
-  const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
-  
-  const onInstallUpdateClick = () => {
-    AppService.installUpdate();
-  };
-
-  const onCheckForUpdateClick = () => {
-    AppService.checkForUpdate();
-  }
-
   /* scroll to top */
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  /* check for update */
-  useEffect(() => {
-    // if (!isIosDevice) {
-      AppService.checkForUpdate();
-    // }
-  }, []);
-
-  /* listen for 'is update available' notifications */
-  useEffect(() => {
-    const subscription = MessageService.observeIsUpdateAvailableChanged().subscribe(message => {
-      if (message) {
-        setIsUpdateAvailable(message.isUpdateAvailable);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, []);
-
-  /* listen for 'last update check datetime' notifications */
-  useEffect(() => {
-    const subscription = MessageService.observeLastUpdateCheckDateTimeChanged().subscribe(message => {
-      if (message) {
-        setLastUpdateCheckDateTime(message.lastUpdateCheckDateTime);
-      }
-    });
-    return () => subscription.unsubscribe();
   }, []);
 
   return (
@@ -75,20 +34,7 @@ const AboutRoster: React.FC = () => {
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>About ROSTER</Typography>
           <Box textAlign='center'>
-            <p>v2020.11.27.1900</p>
-            {isUpdateAvailable
-              ? <p>
-                  <span>(</span>
-                  <span className={classes.spanLink} onClick={onInstallUpdateClick}>install update</span>
-                  <span>)</span>
-                </p>
-              : <p>
-                  <span>(</span>
-                  <span className={classes.spanLink} onClick={onCheckForUpdateClick}>check for update</span>
-                  {lastUpdateCheckDateTime ? <span> - last checked: {lastUpdateCheckDateTime}</span> : null}
-                  <span>)</span>
-                </p>
-            }
+            <p>v2020.11.27.2200</p>
             <br />
             <p>
               Copyright &copy; 2006-2020 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='TurtleGeek.com'>TurtleGeek.com</a>

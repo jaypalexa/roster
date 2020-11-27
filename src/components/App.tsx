@@ -5,10 +5,8 @@ import Toast, { ToastProps } from 'components/Toast';
 import React, { useEffect, useState } from 'react';
 import { Router } from 'react-router-dom';
 import routes from 'routes';
-import AppService from 'services/AppService';
 import AuthenticationService from 'services/AuthenticationService';
 import MessageService from 'services/MessageService';
-import * as serviceWorker from 'serviceWorker';
 import sharedStyles from 'styles/sharedStyles';
 
 const App: React.FC = () => {
@@ -37,19 +35,6 @@ const App: React.FC = () => {
   const classes = useStyles();
 
   const [toastProps, setToastProps] = useState<ToastProps>({} as ToastProps);
-
-  /* register service worker onUpdate() */
-  useEffect(() => {
-    const onServiceWorkerUpdate = (registration: ServiceWorkerRegistration) => {
-      AppService.setNewServiceWorker(registration.installing || registration.waiting);
-      MessageService.notifyIsUpdateAvailableChanged(true);
-    }
-    serviceWorker.register({ onUpdate: onServiceWorkerUpdate });
-
-    // if (!isIosDevice) {
-      AppService.checkForUpdate();
-    // }
-  }, []);
 
   /* start the session activity polling */
   useEffect(() => {
