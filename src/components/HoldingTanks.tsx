@@ -12,7 +12,7 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
 import HoldingTankModel from 'models/HoldingTankModel';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
@@ -45,6 +45,10 @@ const HoldingTanks: React.FC = () => {
   const [editingStarted, setEditingStarted] = useState(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const firstEditControlRef = useRef<HTMLInputElement>(null);
+
+  const setCurrentHoldingTank = useCallback((holdingTank: HoldingTankModel) => {
+    setAppContext({ ...appContext, holdingTank: clone(holdingTank) });
+  }, [appContext, setAppContext]);
 
   const tableColumns = useMemo(() => [
     {
@@ -81,7 +85,7 @@ const HoldingTanks: React.FC = () => {
       }
     };
     getHoldingTanks();
-  }, []);
+  }, [appContext.holdingTank, reset, setCurrentHoldingTank]);
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {
@@ -89,10 +93,6 @@ const HoldingTanks: React.FC = () => {
     }
     setEditingStarted(false);
   }, [editingStarted]);
-
-  const setCurrentHoldingTank = (holdingTank: HoldingTankModel) => {
-    setAppContext({ ...appContext, holdingTank: clone(holdingTank) });
-  }
 
   const fetchHoldingTank = async (holdingTankId: string) => {
     try {
