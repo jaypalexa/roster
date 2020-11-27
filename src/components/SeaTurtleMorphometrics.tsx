@@ -12,6 +12,7 @@ import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
+import useMount from 'hooks/UseMount';
 import NameValuePair from 'models/NameValuePair';
 import OrganizationModel from 'models/OrganizationModel';
 import SeaTurtleMorphometricModel from 'models/SeaTurtleMorphometricModel';
@@ -118,18 +119,18 @@ const SeaTurtleMorphometrics: React.FC = () => {
   ], []);
   
   /* scroll to top */
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
   });
 
   /* fetch listbox data */
-  useEffect(() => {
+  useMount(() => {
     setCmIns(CodeListTableService.getList(CodeTableType.CmIn, true));
     setKgLbs(CodeListTableService.getList(CodeTableType.KgLb, true));
-  }, []);
+  });
 
   /* fetch table data */
-  useEffect(() => {
+  useMount(() => {
     const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
@@ -150,9 +151,9 @@ const SeaTurtleMorphometrics: React.FC = () => {
       };
       getSeaTurtleMorphometrics();
     }
-  }, [appContext.seaTurtle?.seaTurtleId]);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     const getOrganization = async () => {
       try {
         setShowSpinner(true);
@@ -168,7 +169,7 @@ const SeaTurtleMorphometrics: React.FC = () => {
       }
     };
     getOrganization();
-  }, []);
+  });
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {

@@ -12,8 +12,9 @@ import TextFormField from 'components/FormFields/TextFormField';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import TabPanel, { a11yProps } from 'components/TabPanel';
+import useMount from 'hooks/UseMount';
 import OrganizationModel from 'models/OrganizationModel';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import OrganizationService from 'services/OrganizationService';
@@ -35,12 +36,12 @@ const Organization: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   /* scroll to top */
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
   /* fetch table data */
-  useEffect(() => {
+  useMount(() => {
     const fetchOrganization = async () => {
       try {
         setShowSpinner(true);
@@ -57,7 +58,7 @@ const Organization: React.FC = () => {
       }
     };
     fetchOrganization();
-  }, [reset]);
+  });
 
   const onTabChange = (event: React.ChangeEvent<{}>, newIndex: number) => {
     setCurrentTabIndex(newIndex);

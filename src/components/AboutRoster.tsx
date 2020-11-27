@@ -1,5 +1,6 @@
 import { Box, Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import useMount from 'hooks/UseMount';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import sharedStyles from 'styles/sharedStyles';
 
@@ -17,9 +18,9 @@ const AboutRoster: React.FC = () => {
   const classes = useStyles();
 
   /* scroll to top */
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
   return (
     <div id='aboutRoster'>

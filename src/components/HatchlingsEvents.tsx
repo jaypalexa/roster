@@ -10,6 +10,7 @@ import ListFormField from 'components/FormFields/ListFormField';
 import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
+import useMount from 'hooks/UseMount';
 import HatchlingsEventModel from 'models/HatchlingsEventModel';
 import NameValuePair from 'models/NameValuePair';
 import moment from 'moment';
@@ -80,16 +81,16 @@ const HatchlingsEvents: React.FC = () => {
   ], []);
 
   /* scroll to top */
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setSpecies(CodeListTableService.getList(CodeTableType.Species, true));
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     const getHatchlingsEvents = async () => {
       try {
         setShowSpinner(true);
@@ -105,7 +106,7 @@ const HatchlingsEvents: React.FC = () => {
       }
     };
     getHatchlingsEvents();
-  }, []);
+  });
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {

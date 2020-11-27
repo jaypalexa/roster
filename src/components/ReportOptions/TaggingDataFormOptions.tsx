@@ -5,8 +5,9 @@ import ListFormField from 'components/FormFields/ListFormField';
 import RadioButtonFormField from 'components/FormFields/RadioButtonFormField';
 import RadioButtonGroupFormField from 'components/FormFields/RadioButtonGroupFormField';
 import { useAppContext } from 'contexts/AppContext';
+import useMount from 'hooks/UseMount';
 import NameValuePair from 'models/NameValuePair';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import SeaTurtleService from 'services/SeaTurtleService';
 import ToastService from 'services/ToastService';
@@ -18,7 +19,7 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportD
   const { reset } = useFormContext();
   const [seaTurtleListItems, setSeaTurtleListItems] = useState([] as Array<NameValuePair>);
 
-  useEffect(() => {
+  useMount(() => {
     const fetchReportDefinition = async () => {
       try {
         setShowSpinner(true);
@@ -34,7 +35,7 @@ const TaggingDataFormOptions: React.FC<ReportOptionsFormFieldsProps> = ({reportD
       }
     };
     fetchReportDefinition();
-  }, [reset, appContext.reportOptions, reportDefinition.reportId, setShowSpinner]);
+  });
 
   return (
     <>

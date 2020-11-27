@@ -3,9 +3,10 @@ import browserHistory from 'browserHistory';
 import clsx from 'clsx';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
+import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import ReportRouteStateModel from 'models/ReportRouteStateModel';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
@@ -28,16 +29,16 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
   const { handleSubmit } = methods;
   const [showSpinner, setShowSpinner] = useState(false);
 
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     setShowSpinner(true);
     const definition = ReportService.getReportDefinition(match.params.reportId);
     setReportDefinition(definition);
     setShowSpinner(false);
-  }, [match.params.reportId]);
+  });
 
   const onSubmit = handleSubmit(async (reportOptions: any) => {
     AuthenticationService.updateUserActivity();

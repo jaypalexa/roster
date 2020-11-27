@@ -2,8 +2,9 @@ import CheckboxFormField from 'components/FormFields/CheckboxFormField';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextareaFormField from 'components/FormFields/TextareaFormField';
 import { useAppContext } from 'contexts/AppContext';
+import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import ReportOptionsDateRange from './ReportOptionsDateRange';
 
@@ -11,9 +12,9 @@ const MarineTurtleCaptiveFacilityQuarterlyReportOptions: React.FC<{reportDefinit
   const [appContext] = useAppContext();
   const { reset } = useFormContext();
     
-  useEffect(() => {
+  useMount(() => {
     reset(appContext.reportOptions[reportDefinition.reportId]);
-  }, [reset, appContext.reportOptions, reportDefinition.reportId]);
+  });
 
   return (
     <>

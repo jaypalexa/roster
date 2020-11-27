@@ -2,9 +2,10 @@ import { Box, Breadcrumbs, Button, createStyles, Grid, makeStyles, Paper, Theme,
 import clsx from 'clsx';
 import Icon from 'components/Icon';
 import Spinner from 'components/Spinner/Spinner';
+import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import ReportRouteStateModel from 'models/ReportRouteStateModel';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ReportService from 'services/ReportService';
 import ToastService from 'services/ToastService';
@@ -41,16 +42,16 @@ const Report: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(true);
   const reportRouteState = useLocation().state as ReportRouteStateModel;
 
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     setReportDefinition(reportRouteState.reportDefinition);
     setReportOptions(reportRouteState.reportOptions);
-  }, [reportRouteState.reportDefinition, reportRouteState.reportOptions]);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     if (!reportDefinition.reportId || !reportOptions) return;
     const generateReport = async (reportOptions: any) => {
       try {
@@ -85,7 +86,7 @@ const Report: React.FC = () => {
       }
     }
     generateReport(reportOptions);
-  }, [reportOptions, reportDefinition]);
+  });
 
   return (
     <Box id='report'>

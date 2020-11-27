@@ -4,8 +4,9 @@ import clsx from 'clsx';
 import FormFieldRow from 'components/FormFields/FormFieldRow';
 import TextFormField from 'components/FormFields/TextFormField';
 import Spinner from 'components/Spinner/Spinner';
+import useMount from 'hooks/UseMount';
 import SignInModel from 'models/SignInModel';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import AuthenticationService from 'services/AuthenticationService';
 import LogEntryService from 'services/LogEntryService';
@@ -31,11 +32,11 @@ const SignIn: React.FC<SignInProps> = ({ redirectPathOnAuthentication }) => {
   const userNameControlRef = useRef<HTMLInputElement>()
   const passwordControlRef = useRef<HTMLInputElement>()
 
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
-  useEffect(() => {
+  useMount(() => {
     const lastUserName = localStorage.getItem('lastUserName') || '';
     const initialLogin = { userName: lastUserName, password: '' };
     setCurrentLogin(initialLogin);
@@ -46,7 +47,7 @@ const SignIn: React.FC<SignInProps> = ({ redirectPathOnAuthentication }) => {
     } else {
       userNameControlRef?.current?.focus();
     }
-  }, [reset]);
+  });
 
   const getPath = (): string => {
     if (!redirectPathOnAuthentication || redirectPathOnAuthentication === '/login') {

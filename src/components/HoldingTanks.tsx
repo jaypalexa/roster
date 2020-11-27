@@ -11,6 +11,7 @@ import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
+import useMount from 'hooks/UseMount';
 import HoldingTankModel from 'models/HoldingTankModel';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -59,12 +60,12 @@ const HoldingTanks: React.FC = () => {
   ], []);
 
   /* scroll to top */
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
   /* fetch table data */
-  useEffect(() => {
+  useMount(() => {
     const getHoldingTanks = async () => {
       try {
         setShowSpinner(true);
@@ -85,7 +86,8 @@ const HoldingTanks: React.FC = () => {
       }
     };
     getHoldingTanks();
-  }, [appContext.holdingTank, reset, setCurrentHoldingTank]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  });
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {

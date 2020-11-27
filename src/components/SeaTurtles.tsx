@@ -19,6 +19,7 @@ import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import ToggleSwitch from 'components/ToggleSwitch';
 import { useAppContext } from 'contexts/AppContext';
+import useMount from 'hooks/UseMount';
 import MapDataModel from 'models/MapDataModel';
 import NameValuePair from 'models/NameValuePair';
 import SeaTurtleListItemModel from 'models/SeaTurtleListItemModel';
@@ -130,12 +131,12 @@ const SeaTurtles: React.FC = () => {
   ], []);
 
   /* scroll to top */
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
   /* fetch listbox data */
-  useEffect(() => {
+  useMount(() => {
     setCaptureProjectTypes(CodeListTableService.getList(CodeTableType.CaptureProjectType, true));
     setCounties(CodeListTableService.getList(CodeTableType.County, true));
     setRecaptureTypes(CodeListTableService.getList(CodeTableType.RecaptureType, true));
@@ -143,10 +144,10 @@ const SeaTurtles: React.FC = () => {
     setTurtleSizes(CodeListTableService.getList(CodeTableType.TurtleSize, true));
     setTurtleStatuses(CodeListTableService.getList(CodeTableType.TurtleStatus, true));
     setYesNoUndetermineds(CodeListTableService.getList(CodeTableType.YesNoUndetermined, true));
-  }, []);
+  });
 
   /* fetch table data */
-  useEffect(() => {
+  useMount(() => {
     const getSeaTurtleListItems = async () => {
       try {
         setShowSpinner(true);
@@ -168,12 +169,13 @@ const SeaTurtles: React.FC = () => {
       }
     };
     getSeaTurtleListItems();
-  }, [appContext.isCheckedShowRelinquishedTurtles, appContext.seaTurtle, reset, setCurrentSeaTurtle]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  });
 
   /* reset previous setting of options */
-  useEffect(() => {
+  useMount(() => {
     setIsCheckedShowRelinquishedTurtles(appContext.isCheckedShowRelinquishedTurtles);
-  }, [appContext.isCheckedShowRelinquishedTurtles]);
+  });
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {

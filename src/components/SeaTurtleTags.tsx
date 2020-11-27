@@ -12,6 +12,7 @@ import Icon from 'components/Icon';
 import LeaveThisPagePrompt from 'components/LeaveThisPagePrompt';
 import Spinner from 'components/Spinner/Spinner';
 import { useAppContext } from 'contexts/AppContext';
+import useMount from 'hooks/UseMount';
 import NameValuePair from 'models/NameValuePair';
 import SeaTurtleTagModel from 'models/SeaTurtleTagModel';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
@@ -75,18 +76,18 @@ const SeaTurtleTags: React.FC = () => {
   ], []);
 
   /* scroll to top */
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
   /* fetch listbox data */
-  useEffect(() => {
+  useMount(() => {
     setTagTypes(CodeListTableService.getList(CodeTableType.TagType, true));
     setLocations(CodeListTableService.getList(CodeTableType.TagLocation, true));
-  }, []);
+  });
 
   /* fetch table data */
-  useEffect(() => {
+  useMount(() => {
     const seaTurtleId = appContext.seaTurtle?.seaTurtleId;
     if (!seaTurtleId) {
       browserHistory.push('/sea-turtles')
@@ -107,7 +108,7 @@ const SeaTurtleTags: React.FC = () => {
       };
       getSeaTurtleTags();
     } 
-  }, [appContext.seaTurtle?.seaTurtleId]);
+  });
 
   useEffect(() => {
     if (editingStarted && firstEditControlRef?.current !== null) {

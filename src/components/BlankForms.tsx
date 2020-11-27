@@ -1,8 +1,9 @@
 import { Box, Breadcrumbs, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import ChildNavigation from 'components/ChildNavigation';
 import Spinner from 'components/Spinner/Spinner';
+import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthenticationService from 'services/AuthenticationService';
 import ReportService from 'services/ReportService';
@@ -19,17 +20,17 @@ const BlankForms: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
 
   /* scroll to top */
-  useEffect(() => {
+  useMount(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
   /* load blank form definitions */
-  useEffect(() => {
+  useMount(() => {
     setShowSpinner(true);
     const definitions = ReportService.getBlankFormList();
     setReportDefinitions(definitions);
     setShowSpinner(false);
-  }, []);
+  });
 
   const onChildNavigationClick = (reportDefinition: ReportDefinitionModel) => {
     AuthenticationService.updateUserActivity();
