@@ -5,7 +5,7 @@ import Spinner from 'components/Spinner/Spinner';
 import useMount from 'hooks/UseMount';
 import ReportDefinitionModel from 'models/ReportDefinitionModel';
 import ReportRouteStateModel from 'models/ReportRouteStateModel';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ReportService from 'services/ReportService';
 import ToastService from 'services/ToastService';
@@ -51,7 +51,7 @@ const Report: React.FC = () => {
     setReportOptions(reportRouteState.reportOptions);
   });
 
-  useMount(() => {
+  useEffect(() => {
     if (!reportDefinition.reportId || !reportOptions) return;
     const generateReport = async (reportOptions: any) => {
       try {
@@ -86,7 +86,7 @@ const Report: React.FC = () => {
       }
     }
     generateReport(reportOptions);
-  });
+  }, [reportOptions, reportDefinition]);
 
   return (
     <Box id='report'>
