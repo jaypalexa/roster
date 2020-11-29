@@ -315,7 +315,7 @@ const HatchlingsEvents: React.FC = () => {
       </Breadcrumbs>
       <Grid container justify='center'>
         <Grid item xs={12} md={8}>
-          <Typography variant='h1' align='center' gutterBottom={true}>Hatchling Events</Typography>
+          <Typography variant='h1' align='center' gutterBottom={true}>Hatchlings Events</Typography>
 
           <Grid container justify='center' className={classes.formAddButtonsContainer}>
             <Grid item className={classes.formAddButtonContainer}>
