@@ -5,13 +5,13 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ValidationRules } from 'react-hook-form/dist/types';
+import { RegisterOptions } from 'react-hook-form/dist/types';
 
 export interface FormFieldProps {
   disabled?: boolean;
   fieldClass?: string;
   fieldName: string;
-  validationRules?: ValidationRules;
+  validationRules?: RegisterOptions;
 };
 
 export const FormField: React.FC<FormFieldProps> = ({ children, disabled, fieldClass, fieldName }) => {
