@@ -52,6 +52,9 @@
     "sass": "^1.32.8",
     "source-map-explorer": "^2.5.2"
   },
+  "resolutions": {
+    "@types/react": "^17.0.1"
+  },  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
