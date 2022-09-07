@@ -47,6 +47,8 @@
     "@types/yup": "^0.29.11",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
+    "eslint": "^8.23.0",
+    "eslint-config-react-app": "^7.0.1",
     "fibers": "^5.0.0",
     "mutationobserver-shim": "^0.3.7",
     "sass": "^1.32.8",
