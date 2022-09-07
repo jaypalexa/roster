@@ -7,6 +7,13 @@ import ReactDOM from 'react-dom';
 import 'typeface-roboto';
 import './index.sass';
 
+export {}
+declare global {
+  interface Window {
+    MSStream:any;
+  }
+}
+
 const theme = createMuiTheme({
   overrides: {
     MuiBreadcrumbs: {
