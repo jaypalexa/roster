@@ -8,7 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@types/rfdc": "^1.1.0",
     "amazon-cognito-identity-js": "^4.5.12",
-    "aws-sdk": "^2.858.0",
+    "aws-sdk": "^2.1174.0",
     "chart.js": "^2.9.4",
     "clipboard-copy": "^4.0.1",
     "clsx": "^1.1.1",
