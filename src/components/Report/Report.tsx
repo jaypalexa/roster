@@ -102,7 +102,7 @@ const Report: React.FC = () => {
         <Link to={`/report-options/${reportDefinition.reportId}`}>&#10094; Report Options</Link>
       </Breadcrumbs>
 
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={8}>
 
           {pdfReportUrl ? 

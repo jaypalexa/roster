@@ -304,11 +304,11 @@ const SeaTurtleTags: React.FC = () => {
         <Link to='/sea-turtles'>&#10094; Sea Turtles</Link>
       </Breadcrumbs>
 
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Tags for {appContext.seaTurtle?.seaTurtleName}</Typography>
 
-          <Grid container justify='center' className={classes.formAddButtonsContainer}>
+          <Grid container justifyContent='center' className={classes.formAddButtonsContainer}>
             <Grid item className={classes.formAddButtonContainer}>
               <Button className={classes.fixedWidthLarge} variant='contained' color='primary' type='button' 
                 onClick={onAddSeaTurtleTagButtonClick} 

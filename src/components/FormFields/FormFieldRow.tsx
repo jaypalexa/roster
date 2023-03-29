@@ -16,7 +16,7 @@ export const FormFieldRow: React.FC = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid container justify='center' spacing={3} className={classes.root}>
+    <Grid container justifyContent='center' spacing={3} className={classes.root}>
       {props.children}
     </Grid>
   );

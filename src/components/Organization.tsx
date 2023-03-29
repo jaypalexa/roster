@@ -104,7 +104,7 @@ const Organization: React.FC = () => {
         <Link to='/'>&#10094; Home</Link>
       </Breadcrumbs>
 
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Organization</Typography>
           <FormProvider {...methods} >
@@ -156,7 +156,7 @@ const Organization: React.FC = () => {
                 </FormFieldRow>
               </TabPanel>
               <TabPanel value={currentTabIndex} index={1}> {/* Hatchling and Washback Starting Balances */}
-                <Grid container justify='center' spacing={2}>
+                <Grid container justifyContent='center' spacing={2}>
                   <Grid item md={6}>
                     <Typography variant='h2' align='center' gutterBottom={true}>Hatchlings</Typography>
                     <DateFormField fieldName='hatchlingsBalanceAsOfDate' labelText='Balance As Of' />

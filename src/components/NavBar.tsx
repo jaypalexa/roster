@@ -180,7 +180,7 @@ const NavBar: React.FC = (props: any) => {
         <AppBar position='static' className={classes.appBar}>
           <Toolbar>
             <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu' onClick={toggleDrawer(true)}>
-              <Badge badgeContent={1} color='error' invisible={!isUpdateAvailable}>
+              <Badge badgeContent={1} color='error' invisible={!isUpdateAvailable} overlap='rectangular'>
                 <MenuIcon />
               </Badge>
             </IconButton>
@@ -253,7 +253,7 @@ const NavBar: React.FC = (props: any) => {
               content={<>
                 <span>About ROSTER</span>
                 <span>
-                  <Badge variant='dot' color='error' invisible={!isUpdateAvailable} className={classes.badgeMenuItem}>
+                  <Badge variant='dot' color='error' invisible={!isUpdateAvailable} className={classes.badgeMenuItem} overlap='rectangular'>
                   </Badge>
                 </span>
                 </>}

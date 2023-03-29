@@ -12,7 +12,7 @@ const NotFound: React.FC = () => {
 
   return (
     <Box id='not-found'>
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Not Found</Typography>
           <Box className={classes.formActionButtonsContainer}>

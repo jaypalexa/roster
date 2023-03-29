@@ -85,7 +85,7 @@ const SignIn: React.FC<SignInProps> = ({ redirectPathOnAuthentication }) => {
   return (
     <Box id='login'>
       <Spinner isActive={showSpinner} />
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item md={3}>
           <Typography variant='h1' align='center' gutterBottom={true}>Sign In</Typography>
           <FormProvider {...methods}>

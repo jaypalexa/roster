@@ -103,7 +103,7 @@ const LogEntries: React.FC = () => {
         <Link to='/'>&#10094; Home</Link>
       </Breadcrumbs>
 
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Log Entries</Typography>
 

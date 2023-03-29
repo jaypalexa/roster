@@ -210,7 +210,7 @@ const SeaTurtleMorphometricsGraphs: React.FC = () => {
         <Link to='/sea-turtles'>&#10094; Sea Turtles</Link>
       </Breadcrumbs>
 
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Morphometrics Graphs for {appContext.seaTurtle?.seaTurtleName}</Typography>
 

@@ -205,7 +205,7 @@ const HoldingTankGraphs: React.FC = () => {
         <Link to='/holding-tanks'>&#10094; Holding Tanks</Link>
       </Breadcrumbs>
 
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>Water Graphs for {appContext.holdingTank?.holdingTankName}</Typography>
 

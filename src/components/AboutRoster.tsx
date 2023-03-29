@@ -31,14 +31,14 @@ const AboutRoster: React.FC = () => {
       <Breadcrumbs aria-label='breadcrumb' className={classes.hiddenWhenNotMobile}>
         <Link to='/'>&#10094; Home</Link>
       </Breadcrumbs>
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={8}>
           <Typography variant='h1' align='center' gutterBottom={true}>About ROSTER</Typography>
           <Box textAlign='center'>
-            <p>v2021.03.07.1500</p>
+            <p>v2023.03.29.1630</p>
             <br />
             <p>
-              Copyright &copy; 2006-2021 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='TurtleGeek.com'>TurtleGeek.com</a>
+              Copyright &copy; 2006-2023 <a href='http://www.turtlegeek.com' target='_blank' rel='noopener noreferrer' title='TurtleGeek.com'>TurtleGeek.com</a>
               &nbsp;|&nbsp;
               <a href='https://github.com/jaypalexa/roster' target='_blank' rel='noopener noreferrer' title='GitHub'>
                 GitHub

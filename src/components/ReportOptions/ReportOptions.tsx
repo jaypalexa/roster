@@ -65,7 +65,7 @@ const ReportOptions: React.FC<RouteComponentProps<ReportOptionsParams>> = ({matc
         <Link to='/reports'>&#10094; Reports</Link>
       </Breadcrumbs>
 
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item xs={12} md={4}>
           <Typography variant='h1' align='center' gutterBottom={true}>{reportDefinition.reportName} Options</Typography>
           <FormProvider {...methods} >

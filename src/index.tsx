@@ -1,20 +1,19 @@
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { createTheme, ThemeProvider } from '@material-ui/core';
 import App from 'components/App';
 import { AppContextProvider } from 'contexts/AppContext';
 import 'leaflet/dist/leaflet.css';
-import React from 'react';
 import ReactDOM from 'react-dom';
 import 'typeface-roboto';
 import './index.sass';
 
-export {}
+export { };
 declare global {
   interface Window {
     MSStream:any;
   }
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
   overrides: {
     MuiBreadcrumbs: {
       root: {
