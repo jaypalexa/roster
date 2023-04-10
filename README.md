@@ -104,6 +104,10 @@ Lists npm packages that are not the latest allowable version as per the `package
 
 Updates npm packages (top-level only) to the latest allowable version as per the `package.json` file.
 
+### `npm dedupe`
+
+Fixes "blah cannot be used as a JSX component" errors.
+
 ### `npm start`
 
 Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
